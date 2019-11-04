@@ -1,11 +1,12 @@
-#+TITLE: Mindustry Modding Guide
+#+TITLE: Mindustry 模组开发文档
 :PREAMBLE:
 #+AUTHOR: Simon Woodbury-Forget
 #+EMAIL: simonwoodburyforget@gmail.com
 #+DATE: 2019-10-31
+#+TRANSLATOR: Plas_Gensokyo
 
 #+SUBTITLE: for build v99 (release v5)
-#+LANGUAGE: en
+#+LANGUAGE: zh_CN
 #+TEXINFO_DEFFN: t
 #+OPTIONS: H:4 num:3 toc:2
 
@@ -15,113 +16,114 @@
 
 #+TEXINFO_HEADER: Modding documentation for Mindustry v99 (87)
 
-Submit pull requests, issues or suggestions on Github: https://github.com/SimonWoodburyForget/mindustry-modding
+提出PR和issue建议请去作者 Github: https://github.com/SimonWoodburyForget/mindustry-modding
 
 :END:
 
-* Overview
+* 概览
   :PROPERTIES:
-  :DESCRIPTION: the things you may not know.
+  :DESCRIPTION: mod开发简介
   :END:
 
-  Mindustry mods are simply directories of assests. You reuse existing types and can use different values to initialize them, and you can even overwrite initialization of vanilla content.
+  Mindustry的mod是一些内容物的整合，你可以用内置的种类，改变其中的数据来加载你的物品，也可以重写原版的内容
 
-  You can add custom sprites and sounds; sharing your mod is as simple as giving someone your project directory; mods are also cross platfrom to any platform that supports them.
+  你可以添加自己的贴图和音效，打包上传并分享自己的mod，mod在所有平台上都是同一格式。
 
-** Directory Structure
+** 文件结构
    :PROPERTIES:
-   :DESCRIPTION: how things should look.
+   :DESCRIPTION: mod文件结构
    :END:
 
-   Your project directory should look something like this:
+  你的mod文件结构必须类似于如下结构:
 
    #+BEGIN_SRC fundamental
-   project
+   mod名
    ├── bundles
    ├── content
    │   ├── blocks
    │   └── items
    ├── mod.json
    ├── sounds
+   ├── maps
    └── sprites
    #+END_SRC
 
-   Every platform has a different user application data directory, and this is where your mods should be placed:
+   每个平台都有不一样的数据存储目录，存储目录的mods文件夹就是加载mod的地方:
    * Linux: =~/.local/share/Mindustry/mods/=
    * Steam: =steam/steamapps/common/Mindustry/mods/=
    * Windows: =%appdata%/Mindustry/mods/=
 
 ** ~mod.json~
    :PROPERTIES:
-   :DESCRIPTION: the project configuration file.
+   :DESCRIPTION: 模组配置文件
    :END:
 
 
-   At the root of your project directory, you must have a ~mod.json~ which defines the basic metadata for your project.
+   在mod的根目录，你必须要有 ~mod.json~ 这个文件来定义你的mod的基础数据。
 
    #+BEGIN_SRC json
    {
-       "name": "Mod Name",
-       "author": "Yourself",
-       "description": "This is a useless description.",
+       "name": "Mod名字",
+       "author": "作者名字",
+       "description": "这是一段介绍。",
        "version": "1.0",
        "dependencies": [ ]
    }
    #+END_SRC
 
-   Notes:
-   * ~name~ will be used to reference to your mod, so name it carefully, and avoid giving it the same name as another mod.
-   * ~description~ of the mod will be rendered in the ingame mod manager, so keep it short and to the point.
-   * ~dependencies~ is optional; if you want to know more about that, go to the [[Dependencies][dependencies]] section.
+   说明:
+   * ~name~ 会用来引用你的mod，慎重地去命名来避免和其他mod的名字重复
+   * ~description~ 是mod加载界面会显示的文本，尽量的写简洁扼要一点。
+   * ~dependencies~ 是非必须的;如果你想知道更多，去看[[前置][前置]] 部分.
 
-** Content
+** 内容
    :PROPERTIES:
-   :DESCRIPTION: content configuration directory
+   :DESCRIPTION: 内容物目录结构
    :END:
 
-   At the root of your project directory you can have a ~content/~ directory, this is where all the JSON data goes for your content, and in this directory you have subdirectories for the various content types, these are the current common ones:
+   在你的mod的根目录你会有一个 ~content/~ 目录，这里是所有json文件存储的地方，各种type会有不一样的子文件夹，在这个文件夹里面有如下子文件夹:
 
-   * ~content/items/~ for [[Item][items]], like ~copper~ and ~surge-alloy~;
-   * ~content/blocks/~ for [[Block][blocks]], like turrets and floors;
-   * ~content/mechs/~ for [[Mech][mechs]], like ~tau~ and ~glaive~;
-   * ~content/liquids/~ for [[Liquid][liquids]], like ~water~ and ~slag~;
-   * ~content/units/~ for flying or ground [[UnitType][units]], like ~reaper~ and ~dagger~;
-   * ~content/zones/~ for [[Zone][zones]], configuration of campaign maps.
+   * ~content/items/~ 用来放 [[物品][物品]], 比如 ~copper~ 和 ~surge-alloy~;
+   * ~content/blocks/~ 用来放 [[方块][方块]], 比如炮塔和地板;
+   * ~content/mechs/~ 用来放 [[玩家机甲][玩家机甲]], 比如 ~tau~ 和 ~glaive~;
+   * ~content/liquids/~ 用来放 [[液体][液体]], 比如 ~water~ 和 ~slag~;
+   * ~content/units/~ 用来放飞行或地面 [[单位][单位]], 比如 ~reaper~ 和 ~dagger~;
+   * ~content/zones/~ 用来放 [[区域][区域]], 战役地图的配置文件.
 
-   This is important, because it's how Mindustry will know which types to lookup. -- How you name your files is also important as the stem ~name~ of your path ~content/blocks/<name>.json~ is going to be used to reference it.
+   这个非常重要，这种结构是游戏本体加载mod所读取和结构。里面的各个文件名也很重要，比如在 ~content/blocks/<name>.json~ 目录的 ~name~ 将被当作数据节读取
 
-   The content of these files should look as follows:
+   内容文件夹的json文件开头应该像这样:
 
    #+BEGIN_SRC json
    {
-       "type": "TypeOfThing",
-       "name": "Name Of Thing",
-       "description": "Description of thing."
+       "type": "物品的种类",
+       "name": "物品的显示名",
+       "description": "物品介绍."
    }
    #+END_SRC
 
-   | field       | type   | notes                             |
+   | 接口       | 类型   | 描述                             |
    |-------------+--------+-----------------------------------|
-   | type        | String | Content type of this object.      |
-   | name        | String | Displayed name of content.        |
-   | description | String | Displayed description of content. |
+   | type        | String | 内容物的种类.      |
+   | name        | String | 内容物的显示名称.        |
+   | description | String | 内容物的显示介绍. |
 
-   Other fields included would be the fields of the ~type~ in question.
+   其他接口会在~种类~中提及。
 
-** Types
+** 种类
    :PROPERTIES:
-   :DESCRIPTION: what you need to know about ~type~
+   :DESCRIPTION: 你所要知道的关于 ~种类~ 的东西
    :END:
 
-   Types have numerous fields, but the important one is ~type~; this is a special field used by the content parser, that changes which type your object is. /A ~Router~ type can't be a ~Turret~ type/, as they're just completely different.
+   种类有很多接口,其中最重要的是 ~种类~;这是一个内容分析器分析的关键节点,用来决定这个内容物的种类. /一个 ~Router~ 不能是 ~Turret~ 类/, 因为它们完全不一样.
 
-   Types /extend/ each other, so if ~MissileBulletType~ extends ~BasicBulletType~, you'll have access to all the fields of ~BasicBulletType~ inside of ~MissileBulletType~ like ~damage~, ~lifetime~ and ~speed~. Fields are case sensitive: ~hitSize =/= hitsize~.
+   种类会互相 /继承/ ,比如 ~MissileBulletType~ 继承了 ~BasicBulletType~, 你可以在 ~MissileBulletType~ 中使用 ~BasicBulletType~ 中的所有接口,比如 ~damage~, ~lifetime~ 和 ~speed~. 接口都是大小写敏感的，比如: ~hitSize 不等于 hitsize~.
 
-   What you can expect a field to do is up to the specific type, some types do absolutely nothing with their fields, and work mostly as a base types will extend from. One such type is ~Block~.
+   每个内容物能做什么取决于它们的种类,有一些种类几乎不能做任何东西,它们大多数都是一些会被继承的父类. 比如 ~Block~.
 
-   ~type~ can be refer to the actual type field of the object. A type may also refer to other things like ~float~ is a type so it means you can type ~0.3~ in a field.
+   ~种类~ 也可以指各个种类的接口的数据种类.种类可以指其他东西,比如 ~float~ 是一个你可以使用 ~0.3~ 为数据的种类.
 
-   Here you can see, the type of the top level object is ~Revenant~, but the type of the ~bullet~ is ~BulletType~ so you can use ~MissileBulletType~, because ~MissileBulletType~ extends ~BulletType~.
+   在这里你可以看到, 最高级的种类是 ~Revenant~, 但是 ~bullet~ is的种类是 ~BulletType~ 所以你可以使用 ~MissileBulletType~, 因为 ~MissileBulletType~ 继承了 ~BulletType~.
 
    #+BEGIN_SRC json
    {
@@ -135,37 +137,37 @@ Submit pull requests, issues or suggestions on Github: https://github.com/SimonW
    }
    #+END_SRC
 
-** Sprites
+** 贴图
    :PROPERTIES:
-   :DESCRIPTION: image files and how to name them
+   :DESCRIPTION: 如何命名图片文件
    :END:
 
-   All you need to make sprites, is an image editor that supports transparency /(aka: not paint)./ Block sprites should be ~32 * size~, so a ~2x2~ block would require a ~64x64~ image. Images must be ~.png~ files.
+   制作贴图所需的软件, 是一个支持透明编辑的软件 /(比如: PS)./ 方块的贴图大小是 ~32 * 大小~, 所以一个 ~2x2~ 的方块将会需要 ~64x64~ 的贴图.贴图必须是 ~.png~ 格式.
 
-   Sprites can simply be dropped in the ~sprites/~ subdirectory. The content parser will look through it recursively, so you can organize them how ever you feel. 
+   贴图可以直接放在 ~sprites/~ 文件夹.内容分析器会正确地分析它们,所以你可以凭感觉来组织它们. 
 
-   Content is going to look for sprites relative to it's own name. ~content/blocks/my-hail.json~ has the name ~my-hail~ and similarly ~sprites/my-hail.png~ has the name ~my-hail~, so it'll be used by this content.
+   内容物会根据自己的名字寻找贴图.比如 ~content/blocks/my-hail.json~ 的名字是 ~my-hail~ 然后 ~sprites/my-hail.png~ 也有 ~my-hail~这个名字 , 所以这个贴图会被内容物使用.
 
-   Content may look for multiple sprites. ~my-hail~ could be a turret, and it could look for the suffix ~<name>-heat~ and what this means is it'll look for ~my-hail-heat~.
+   内容物可能会寻找多个贴图. ~my-hail~ 是一个炮塔, 所以它会寻找一个叫 ~<name>-heat~ 的贴图，换句话来说，它会寻找叫 ~my-hail-heat~ 的贴图.
 
-   You can find all the vanilla sprites here:
+   你可以在这里找到所有原版贴图:
    * https://github.com/Anuken/Mindustry/tree/master/core/assets-raw/sprites
 
-   Another thing to know about sprites is that they're passed through /anti-aliasing filters/ and what that means is that they may look a little different in game. -- The turrets specifically have a special black border filter added to them, so you must account for that while making your sprites, and leave a border of transparent space around them, for example: [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/blocks/turrets/ripple.png][Ripple]]
+   你需要知道的另外一个事情是，材质都会通过一个叫 /anti-aliasing filters/ 的东西，这个东西会让贴图在游戏中显示的有少许不一样. -- 这个过滤器会给炮塔贴图加一个特殊的黑色边,所有你在制作贴图的时候必须注意,留一圈透明的边框,比如: [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/blocks/turrets/ripple.png][Ripple]]
 
-** Sound
+** 音效
    :PROPERTIES:
-   :DESCRIPTION: sound files and where to put them
+   :DESCRIPTION: 音效文件描述和放置位置
    :END:
 
-  Custom sounds can be added through the modding system by dropping them in the ~sounds/~ subdirectory. It doesn't matter where you put them. Two formats are needed:
+  自定义的音效文件可以放在 ~sounds/~ 文件夹中来添加. 只要在音效文件夹里，就没有问题.各个音效需要两种格式:
 
-  * ~.ogg~ required for Desktop/Android
-  * ~.mp3~ required for iOS
+  * 电脑版和安卓版需要 ~.ogg~
+  * IOS版需要 ~.mp3~ 
 
-  Just like any other assets, you reference them by the stem of your filenames, so ~pewpew.ogg~ and ~pewpew.mp3~ can be referenced with ~pewpew~ from a field of type ~Sound~.
+  就像其他资源, 你可以通过文件名调用它, 比如so ~pewpew.ogg~ 和and ~pewpew.mp3~ 可以被 ~pewpew~ 在 ~Sound~ 种类中被调用.
 
-  Here's a list of built-in sounds:
+  这个是原版音效列表:
   * ~artillery~
   * ~back~
   * ~bang~
@@ -209,12 +211,12 @@ Submit pull requests, issues or suggestions on Github: https://github.com/SimonW
   * ~wave~
   * ~windowHide~
 
-** Dependencies
+** 前置
    :PROPERTIES:
-   :DESCRIPTION: mods extending mods
+   :DESCRIPTION: 使mod成为拓展mod
    :END:
 
-   You can add dependencies to your mod by simple adding other mods name in your ~mod.json~:
+   你可以添加依赖mod在 ~mod.json~ 里面:
 
    #+BEGIN_SRC json
    {
@@ -225,36 +227,36 @@ Submit pull requests, issues or suggestions on Github: https://github.com/SimonW
    }
    #+END_SRC
 
-   The name of dependencies are lower-cased and spaces are replaced with ~-~ hyphens, for example ~Other MOD NamE~ becomes ~other-mod-name~.
+   依赖mod的名字全小写，其中的空格用 ~-~ 代替, 比如 ~Other MOD NamE~ 变成 ~other-mod-name~.
 
-   To reference the other mods assets, you must prefix the asset with the other mods name:
+   要调用其他mod的资源,你必须给资源加上其他mod的前缀:
 
-   * ~other-mod-name-not-copper~ would reference ~not-copper~ in ~other-mod-name~
-   * ~other-mod-name-angry-dagger~ would reference ~angry-dagger~ in ~other-mod-name~
-   * ~not-a-mod-angry-dagger~ would reference ~angry-dagger~ in ~not-a-mod~
+   * ~other-mod-name-not-copper~ 将会引用 ~other-mod-name~ 中的 ~not-copper~ 
+   * ~other-mod-name-angry-dagger~ 将会引用 ~other-mod-name~ 中的 ~angry-dagger~ 
+   * ~not-a-mod-angry-dagger~ 将会引用 ~not-a-mod~ 中的 ~angry-dagger~ 
 
-** Bundles
+** 语言包
    :PROPERTIES:
-   :DESCRIPTION: translations and renaming
+   :DESCRIPTION: 翻译和重命名
    :END:
 
-   An optional addition to your mod is called bundles. The main use of bundles are give translations of your content, but there's no reason you couldn't use them in English. These are plaintext files which go in the ~bundles/~ subdirectory, and they should be named something like ~bundle_ru.properties~ (for Russian).
+   一个mod非必须的部分.语言包主要用来翻译你的内容物,但是这不是你不使用英文的理由.语言包手一个放在 ~bundles/~ 文件夹里面的文件,它必须像这样命名 ~bundle_ru.properties~ (俄语).
 
-   The contents of this file is very simple:
+   这个文件的内容十分简单:
 
    #+BEGIN_SRC fundamental
    block.example-mod-silver-wall.name = Серебряная Стена
    block.example-mod-silver-wall.description = Стена из серебра.
    #+END_SRC
 
-   If you've read the first few sections of this guide, you'll spot it right away:
+   If you've read the first few sections of this guide如果你读了上面的几个部分, you'll spot it right away你就会知道这个怎么写:
    * ~<content type>.<mod name>-<content name>.name~
    * ~<content type>.<mod name>-<content name>.description~
 
    Notes:
-   * mod/content names are lowercased and hyphen separated.
+   * mod和内容物名称需要用小写，空格要用 ~-~ 代替.
 
-   List of content type:
+   内容物种类表:
    * ~item~
    * ~block~
    * ~mech~
@@ -268,7 +270,7 @@ Submit pull requests, issues or suggestions on Github: https://github.com/SimonW
    * ~loadout~
    * ~typeid~
 
-   List of filenames relative to languages:
+   语言文件表:
 
    * English ~bundle.properties~
    * Czech ~bundle_cs.properties~
@@ -297,95 +299,95 @@ Submit pull requests, issues or suggestions on Github: https://github.com/SimonW
 
 ** FAQ
     :PROPERTIES:
-    :DESCRIPTION: simple questions and awnsers
+    :DESCRIPTION: 一些问题和答案
     :END:
 
-    * ~time~ in game is calculated through ~ticks~;
-    * ~ticks~ /sometimes called ~frames~,/ are assumed to be 60/1 second;
-    * ~range~ or most forms of distance is 1/10 of a tile;
-    * to calculate range out of ~lifetime~ and ~speed~ you can do ~lifetime * speed = range~;
-    * <<Abstract>> *Abstract:* all you need to know about abstract types, is this is a Java specific term, which means you cannot instantiate/initialize this specific type by itself. If you do so you'll probably get an /"initialization exception"/ of some kind.
+    * ~time~ 在游戏中用 ~ticks~ 计算;
+    * ~ticks~ /有时叫 ~帧数~,/ 是 60/1 秒;
+    * ~range~ 和其他距离都是 1/10 格;
+    * 计算子弹范围需要用 ~lifetime~ 和 ~speed~ ，公式是 ~lifetime * speed = range~;
+    * <<Abstract>> *Abstract:* 你需要知道关于abstract的东西只有这是一个Java的定义,这个定义下的物体不能被自身加载. 如果你强上会出现 /"initialization exception"/ 类似这种的错误.
 
 
-* World
+* 世界
   :PROPERTIES:
-  :DESCRIPTION: the universe and everything in it.
+  :DESCRIPTION: 所有物品都在这里
   :END:
-** Block
+** 方块
    :PROPERTIES:
-   :DESCRIPTION: base type of types that go on tiles
+   :DESCRIPTION: 方块的基础类
    :end:
 
-  Extends [[BlockStorage][BlockStorage]] -- Fields for all objects that are blocks.
+  继承 [[方块存储][方块存储]] -- 所有的物品和方块的基础类，英文:Block
 
-  | field               | type            |      default | notes      |
+  | 接口               | 种类            |      默认值 | 解释      |
   |---------------------+-----------------+--------------+------------|
   |                     |                 |          <r> | <10>       |
-  | update              | boolean         |              | whether this block has a tile entity that updates |
-  | destructible        | boolean         |              | whether this block has health and can be destroyed |
-  | unloadable          | boolean         |         true | whether unloaders work on this block |
-  | solid               | boolean         |              | whether this is solid |
-  | solidifes           | boolean         |              | whether this block CAN be solid. |
-  | rotate              | boolean         |              | whether this is rotateable |
-  | breakable           | boolean         |              | whether you can break this with rightclick |
-  | placeableOn         | boolean         |         true | whether this [[Floor][floor]] can be placed on. |
-  | insulated           | boolean         |        false | whether this block has insulating properties. |
-  | health              | int             |           -1 | tile entity health |
-  | baseExplosiveness   | float           |            0 | base block explosiveness |
-  | floating            | boolean         |        false | whether this block can be placed on edges of liquids. |
-  | size                | int             |            1 | multiblock size |
-  | expanded            | boolean         |        false | Whether to draw this block in the expanded draw range. |
-  | timers              | int             |            0 | Max of timers used. |
-  | fillesTile          | true            |              | Special flag; if false, [[Floor][floor]] will be drawn under this block even if it is cached. |
-  | alwaysReplace       | boolean         |        false | whether this block can be replaced in all cases |
-  | group               | [[BlockGroup][BlockGroup]]      |         none | Unless ~canReplace~ is overriden, blocks in the same group can replace each other. |
-  | priority            | TargetPriority  |         base | Targeting priority of this block, as seen by enemies. |
-  | configurable        | boolean         |              | Whether the block can be tapped and selected to configure. |
-  | consumesTap         | boolean         |              | Whether this block consumes touchDown events when tapped. |
-  | posConfig           | boolean         |              | Whether the config is positional and needs to be shifted. |
-  | targetable          | boolean         |         true | Whether units target this block. |
-  | canOverdrive        | boolean         |         true | Whether the overdrive core has any effect on this block. |
-  | outlineColor        | [[Color][Color]]           |       404049 | Outlined icon color. |
-  | outlineIcon         | boolean         |        false | Whether the icon region has an outline added. |
-  | hasShadow           | boolean         |         true | Whether this block has a shadow under it. |
-  | breakSound          | [[Sound][Sound]]           |         boom | Sounds made when this block breaks. |
-  | activeSound         | [[Sound][Sound]]           |         none | The sound that this block makes while active. One sound loop. Do not overuse. |
-  | activeSoundVolume   | float           |          0.5 | Active sound base volume. |
-  | idleSound           | [[Sound][Sound]]           |         none | The sound that this block makes while idle. Uses one sound loop for all blocks. |
-  | idleSoundVolume     | float           |          0.5 | Idle sound base volume. |
-  | requirements        | [[ItemStack][ItemStack]]       |              | Cost of constructing and researching this block. |
-  | category            | [[Category][Category]]        | distribution | Category in place menu. |
-  | buildCost           | float           |              | Cost of building this block; do not modify directly! |
-  | buildVisibility     | [[BuildVisibility][BuildVisibility]] |       hidden | Whether this block is visible and can currently be built. |
-  | buildCostMultiplier | float           |            1 | Multiplier for speed of building this block. |
-  | instantTransfer     | boolean         |        false | Whether this block has instant transfer. |
+  | update              | boolean         |              | 这个物品是否会更新 |
+  | destructible        | boolean         |              | 这个物品是否有血量和被破坏 |
+  | unloadable          | boolean         |         true | 卸载器是否作用于这个方块 |
+  | solid               | boolean         |              | 是否是固体 |
+  | solidifes           | boolean         |              | 这个物体是否能变成固体. |
+  | rotate              | boolean         |              | 这个物体是否能旋转 |
+  | breakable           | boolean         |              | 这个方块是否能通过右键拆除 |
+  | placeableOn         | boolean         |         true | 这个 [[地板][地板]] 是否能被放上方块. |
+  | insulated           | boolean         |        false | 这个方块是否绝缘. |
+  | health              | int             |           -1 | 方块血量 |
+  | baseExplosiveness   | float           |            0 | 方块基础爆炸性 |
+  | floating            | boolean         |        false | 这个方块能不能放在液体地板边上. |
+  | size                | int             |            1 | 方块大小 |
+  | expanded            | boolean         |        false | 是否超范围渲染. |
+  | timers              | int             |            0 | 计时器最大记录时间. |
+  | fillesTile          | true            |              | 特殊的接口; 如果是false, [[地板][地板]] 将会在这个方块上面渲染. |
+  | alwaysReplace       | boolean         |        false | 这个方块是否自动自动填充空间 |
+  | group               | [[方块组别][方块组别]]      |         none | 除非 ~canReplace~ 被重写, 同一组别的方块可以呼吸替换. |
+  | priority            | TargetPriority  |         base | 当方块看到敌人时瞄准的优先配置. |
+  | configurable        | boolean         |              | 这个方块是否能被打开GUI配置. |
+  | consumesTap         | boolean         |              | 点击这个方块是否触发事件. |
+  | posConfig           | boolean         |              | 配置这个方块是否需要点击. |
+  | targetable          | boolean         |         true | 单位是否会攻击这个方块. |
+  | canOverdrive        | boolean         |         true | 这个方块是否能超频. |
+  | outlineColor        | [[颜色][颜色]]           |       404049 | 图标描边颜色. |
+  | outlineIcon         | boolean         |        false | 这个方块图标是否描边. |
+  | hasShadow           | boolean         |         true | 这个方块是否有阴影. |
+  | breakSound          | [[音效][音效]]           |         boom | 破坏方块时播放的音效. |
+  | activeSound         | [[音效][音效]]           |         none | 方块工作时的音效，会循环播放 |
+  | activeSoundVolume   | float           |          0.5 | 工作音效音量. |
+  | idleSound           | [[音效][音效]]           |         none | 方块空闲时音效. |
+  | idleSoundVolume     | float           |          0.5 | 空闲音效音量. |
+  | requirements        | [[物品组][物品组]]       |              | 建筑方块的消耗，会影响到研究消耗，公式在下面. |
+  | category            | [[种类组][种类组]]        | distribution | 建造菜单上面的种类. |
+  | buildCost           | float           |              | 建造时间，在这里写没有用 |
+  | buildVisibility     | [[在建造菜单可见性][在建造菜单可见性]] |       hidden | 这个物品在建筑菜单是否可见. |
+  | buildCostMultiplier | float           |            1 | 方块建筑时间倍率. |
+  | instantTransfer     | boolean         |        false | 这个物品是否瞬间运输物品. |
   | alwaysUnlocked      | boolean         |        false |            |
-  | layer               | [[Layer][Layer]]           |         null | Layer to draw extra stuff on. |
-  | layer2              | [[Layer][Layer]]           |         null | Extra layer to draw extra stuff on. |
+  | layer               | [[渲染层][渲染层]]           |         null | 渲染在哪一层. |
+  | layer2              | [[渲染层][渲染层]]           |         null | 额外渲染在哪一层. |
 
-  Notes:
-  * research cost is ~30 + <requirements> * 6~
+  备注:
+  * 研究消耗公式 ~30 + <requirements> * 6~
 
-** Consumers
+** 消耗器
    :PROPERTIES:
-   :DESCRIPTION: base type to consume liquid, items and power
+   :DESCRIPTION:消耗液体，物体和能量的基础类，英文:Consumer
    :END:
 
-   This type is commonly used in block type with it's field ~consumes~, it's a type that allows your block to consume something, and how this field works is up to the specific type extension you're using.
+   这个类经常在接口 ~consumes~ 中被使用, 它允许你的方块消耗什么东西, 这个接口如何工作取决于方块的主类.
 
-   | field         | type                  | notes      |
+   | 接口         | 种类                  | 备注      |
    |---------------+-----------------------+------------|
    |               |                       | <10>       |
-   | item          | String                | shorthand for =items= |
+   | item          | String                |  =items= 的简略表达 |
    | items         | ConsumeItems          |            |
    | liquid        | ConsumeLiquid         |            |
    | power         | float or ConsumePower |            |
-   | powerBuffered | float                 | for batteries |
+   | powerBuffered | float                 | 电池参数 |
 
    Notes:
-   * you shouldn't have ~power~ and ~powerBuffered~
+   * 你不能同时拥有 ~power~ 和 ~powerBuffered~
 
-   For example with [[ConsumeItems][ConsumeItems]]:
+   消耗物品例子 [[消耗物品][消耗物品]]:
    #+BEGIN_SRC json
    {
        "items": {
@@ -395,154 +397,154 @@ Submit pull requests, issues or suggestions on Github: https://github.com/SimonW
        }
    }
    #+END_SRC
-*** Consume
+*** 消耗
 
-    [[Abstract][Abstract]] type base, that defines a type of resource that a block can consume.
+    [[Abstract][Abstract]] 修饰类, 定义了资源被消耗的种类和效果.英文:Consume
 
     | field    | type    | default | notes      |
     |----------+---------+---------+------------|
     |          |         |         | <10>       |
-    | optional | boolean |         | consumer will not influence consumer validity. |
-    | booster  | boolean |         | consumer will be displayed as a boost input. |
+    | optional | boolean |         | 是否消耗任一物品. |
+    | booster  | boolean |         | 此物品将作为加速物质消耗. |
     | update   | boolean | true    |            |
 
-*** ConsumeItems
-    Extends [[Consume][Consume]] -- To consume an itemstack.
+*** 消耗物品
+    继承 [[消耗][消耗]] -- 消耗物品组.英文:ConsumeItems
 
     | field | type      |
     |-------+-----------|
-    | items | [[ItemStack][ItemStack]] |
+    | items | [[物品组][物品组]] |
 
-*** ConsumeLiquidBase
+*** 基础消耗流体
 
-    [[Abstract][Abstract]] type which extends [[Consume][Consume]]
+    [[Abstract][Abstract]] 修饰类继承 [[消耗][消耗]]，英文:ConsumeLiquidBase
 
-    | field      | type  | default | notes      |
+    | 接口      | 种类  | 默认值 | 备注      |
     |------------+-------+---------+------------|
     |            |       |         | <10>       |
-    | float      | final |         | amount used per frame |
-    | timePeriod | float |      60 | how much time is taken to use this liquid |
+    | float      | final |         | 一帧消耗液体量 |
+    | timePeriod | float |      60 | 消耗一次液体持续时间 |
 
     Notes:
-    * ~timePeriod~ example: a normal ConsumeLiquid with 10/s and a 10 second timePeriod would display as "100 seconds", but without a time override it would display as "10 liquid/second". This is used for generic crafters.
+    * ~timePeriod~ 例子: 消耗液体 10/s 和 10 秒的间隔时间会显示成 "100 秒", 如果没有时间无效化它会显示 "10液体/秒".这个用于普通加工厂.
 
-*** ConsumeLiquid
-    Extends [[ConsumeLiquidBase][ConsumeLiquidBase]] -- To consume a liquid type.
+*** 消耗液体
+    继承 [[基础消耗流体][基础消耗流体]] -- 消耗液体.英文:ConsumeLiquid
 
 
-    | field  | type   | default |
-    |--------+--------+---------|
-    | liquid | [[Liquid][Liquid]] | null    |
-    | amount | float  | 0       |
+    | 接口  | 种类   | 默认 | 备注 |
+    |--------+--------+---+-----|
+    | liquid | [[液体][液体]] | null    | 液体种类|
+    | amount | float  | 0       | 液体数量 |
 
-*** ConsumePower
-    Extends [[Consume][Consume]] -- To consume or buffer power.
+*** 能量消耗
+    继承 [[消耗][消耗]] -- 消耗或存储能量.英文:ConsumePower
 
-    | field    | type    | default | notes      |
+    | 接口    | 种类    | 默认值 | 备注      |
     |----------+---------+---------+------------|
     |          |         |         | <10>       |
-    | usage    | float   |         | The maximum amount of power which can be processed per tick. |
-    | capacity | float   |         | The maximum power capacity in power units. |
-    | buffered | boolean |         | True if the module can store power. |
+    | usage    | float   |         | 每秒最大耗能. |
+    | capacity | float   |         | 能量缓存. |
+    | buffered | boolean |         | 是否时电池. |
 
     Notes:
-    * ~usage~ might influence efficiency or load a buffer.
-** BlockStorage
+    * ~usage~ 影响工作效率并且与 ~buffered~ 不兼容.
+** 方块存储
    :PROPERTIES:
    :DESCRIPTION:
    :END:
 
-   [[Abstract][Abstract]] type that extends [[Content][Content]] -- This is for blocks that can store a buffer of items.
+   [[Abstract][Abstract]] 修饰类继承 [[内容物][内容物]] -- 这里定义方块存储的资源.英文:BlockStorage
 
-   | field          | type      | default |
+   | 接口          | 种类      | 默认值 | 备注 |
    |----------------+-----------+---------|
    |                |           |     <r> |
-   | hasItems       | boolean   |         |
-   | hasLiquids     | boolean   |         |
-   | hasPower       | boolean   |         |
-   | outputsLiquid  | boolean   |   false |
-   | consumesPower  | boolean   |    true |
-   | outputsPower   | bolean    |   false |
-   | itemCapacity   | int       |      10 |
-   | liquidCapacity | float     |      10 |
-   | item           | float     |      10 |
-   | consumes       | [[Consumers][Consumers]] |         |
+   | hasItems       | boolean   |         | 是否存储物品 |
+   | hasLiquids     | boolean   |         | 是否存储液体 |
+   | hasPower       | boolean   |         | 是否存储能量 |
+   | outputsLiquid  | boolean   |   false | 是否输出液体 |
+   | consumesPower  | boolean   |    true | 是否消耗能量 |
+   | outputsPower   | bolean    |   false | 是否输出能量 |
+   | itemCapacity   | int       |      10 | 物品储量 |
+   | liquidCapacity | float     |      10 | 液体储量 |
+   | item           | float     |      10 | |
+   | consumes       | [[消耗器][消耗器]] |         |
 
-** Environment
+** 环境
 
-   Environmental blocks are blocks that must be placed from the editor, and they're the ones that will generally dictate how the game can or will be played. These blocks wont appear on a map unless you've built a map to support them.
+   环境方块只能在地图编辑器里面加入地图,它们也是决定游戏怎么玩的关键方块.这一些方块不会出现在地图上面除非你画一个地图来生成它们.
 
-*** Floor
-    Extends [[Block][Block]] -- Environmental floors. Requires a sprite, so to be visible in the map editor.
+*** 地板
+    继承 [[方块][方块]] -- 环境里面的地板.需要贴图，可以在编辑器中看到。英文:Floor
 
-    | field             | type         | default | notes      |
+    | 接口             | 种类         | 默认值 | 备注      |
     |-------------------+--------------+---------+------------|
     |                   |              |     <r> | <10>       |
-    | variants          | int          |       3 | number of different variant regions to use. |
-    | edge              | String       |   stone | edge fallback, used mainly for ores. |
-    | speedMultiplier   | float        |       1 | multiplies unit velocity by this when walked on. |
-    | dragMultiplier    | float        |       0 | multiplies unit drag by this when walked on. |
-    | damageTaken       | float        |       0 | damage taken per tick on this tile. |
-    | drownTime         | float        |       0 | how many ticks it takes to drown on this. |
-    | walkEffect        | [[Effect][Effect]]       |  ripple | effect when walking on this [[Floor][floor]]. |
-    | drownUpdateEffect | [[Effect][Effect]]       |  bubble | effect displayed when drowning on this [[Floor][floor]]. |
-    | status            | StatusEffect |    none | status effect applied when walking on. |
-    | statusDuration    | float        |      60 | intensity of applied status effect. |
-    | liquidDrop        | [[Liquid][Liquid]]       |         | liquids that drop from this block, used for pumps. |
-    | itemDrop          | [[Item][Item]]         |         | item that drops from this block, used for drills. |
-    | isLiquid          | boolean      |         | whether this block can be drowned in. |
-    | playerUnmineable  | boolean      |   false | block cannot be mined by players if true. |
-    | blendGroup        | [[Block][Block]]        |    this | group of blocks that this block does not draw edges on. |
-    | updateEffect      | [[Effect][Effect]]       |    none | effect displayed when randomly updated. |
-    | attributes        | [[Attributes][Attributes]]   |         | array of affinities to certain things. |
+    | variants          | int          |       3 | 使用的贴图数量. |
+    | edge              | String       |   stone | 边缘地板，通常在矿物上使用. |
+    | speedMultiplier   | float        |       1 | 单位行走在上面的速度倍率. |
+    | dragMultiplier    | float        |       0 | 地板减速倍率. |
+    | damageTaken       | float        |       0 | 每 1/60秒受到的伤害. |
+    | drownTime         | float        |       0 | 单位站在上面多久会淹死. |
+    | walkEffect        | [[特效][特效]]       |  ripple | 单位在这个 [[地板][地板]].上行走的特效 |
+    | drownUpdateEffect | [[特效][特效]]       |  bubble | 单位在这个 [[地板][地板]].上溺水的特效. |
+    | status            | [[状态][状态]] |    none | 单位行走在上面时给予的状态. |
+    | statusDuration    | float        |      60 | 状态持续时间. |
+    | liquidDrop        | [[液体][液体]]       |         | 产出液体种类，用泵获取. |
+    | itemDrop          | [[物品][物品]]         |         | 产出物品种类，用钻头采集. |
+    | isLiquid          | boolean      |         | 这个方块是否会淹死单位. |
+    | playerUnmineable  | boolean      |   false | 玩家是否不能直接挖此地板的矿物. |
+    | blendGroup        | [[方块][方块]]        |    this | 这个地板不会拓展渲染到什么方块上. |
+    | updateEffect      | [[特效][特效]]       |    none | 地板更新时的特效. |
+    | attributes        | [[属性][属性]]   |         | 地板对各种机器的效率倍数. |
 
-    Sprite lookup names:
+    多种贴图命名规则:
     - ~<name><1..>~
 
-*** OverlayFloor
+*** 覆盖地板
 
-    Extends [[Floor][Floor]] -- A type of floor that is overlaid on top of other floors.
+    继承 [[地板][地板]] -- 一种地板渲染在其他地板上一层.英文:OverlayFloor
 
-    For example:
+    例子:
     * ~tendrils~
 
-*** DoubleOverlayFloor
+*** 双层覆盖地板
 
-    Extends [[OverlayFloor][OverlayFloor]]
+    继承 [[覆盖地板][覆盖地板]]，英文:DoubleOverlayFloor
 
-    For example:
+    例子:
     * ~pebbles~
 
-*** OreBlock
+*** 矿物
 
-    Extends [[OverlayFloor][OverlayFloor]] -- An overlay ore for a specific item type.
+    继承 [[覆盖地板][覆盖地板]] -- 获取特定的物品所产生的矿物.英文:OreBlock
 
-    | field    | default |
+    | 接口    | 默认值 |
     |----------+---------|
     |          |     <r> |
     | variants |       3 |
 
-*** Rock
+*** 岩石
 
-    Extends [[Block][Block]]
+    继承 [[方块][方块]]，英文:Rock
 
-    | field    | type |
+    | 接口    | 类型 |
     |----------+------|
     | variants | int  |
 
-    Defaults:
-    | field         | default |
+    默认值:
+    | 接口         | 默认值 |
     |---------------+---------|
     |               |     <r> |
     | breakable     |    true |
     | alwaysReplace |    true |
 
-*** StaticWall
+*** 静止墙
 
-    Extends [[Rock][Rock]]
+    继承 [[岩石][岩石]] -不可破坏的墙，英文:StaticWall
 
-    Defaults:
-    | field         | default |
+    默认值:
+    | 接口         | 默认值 |
     |---------------+---------|
     |               |     <r> |
     | breakable     |   false |
@@ -550,45 +552,45 @@ Submit pull requests, issues or suggestions on Github: https://github.com/SimonW
     | solid         |    true |
     | variants      |       2 |
 
-    Extra Sprites:
-    * ~<name>-large.png~ which is a 2x2 variant of the block.
+    非必须贴图:
+    * ~<name>-large.png~ 可以使用2x2的材质.
 
-*** StaticTree
+*** 静止树
 
-    Extends [[StaticWall][StaticWall]]
+    继承 [[静止墙][静止墙]]，英文:StaticTree
 
-    For example:
+    比如:
     * ~spore-pine~
     * ~snow-pine~
     * ~pine~
     * ~shrubs~
 
-*** TreeBlock
+*** 树
 
-    Extends [[Block][Block]]
+    继承 [[方块][方块]]，英文:TreeBlock
 
-    Defaults:
-    | field    | default |
+    默认值:
+    | 接口    | 默认值 |
     |----------+---------|
     | solid    | true    |
     | layer    | power   |
     | expanded | true    |
-** Crafting
-*** GenericCrafter
-    Extends [[Block][Block]]
+** 工厂
+*** 普通加工厂
+    继承 [[方块][方块]]，英文:GenericCratfer
 
-    | field              | type        | default |
-    |--------------------+-------------+---------|
+    | 接口              | 类型        | 默认值 | 备注 |
+    |--------------------+-------------+--------+--|
     |                    |             |     <r> |
-    | outputItem         | [[ItemStack][ItemStack]]   |         |
-    | outputLiquid       | [[LiquidStack][LiquidStack]] |         |
-    | craftTime          | float       |      80 |
-    | craftEffect        | [[Effect][Effect]]      |    none |
-    | updateEffect       | [[Effect][Effect]]      |    none |
-    | updateEffectChance | float       |    0.04 |
+    | outputItem         | [[物品组][物品组]]   |         | 输出物品 |
+    | outputLiquid       | [[液体组][液体组]] |         | 输出液体 |
+    | craftTime          | float       |      80 | 加工时间 |
+    | craftEffect        | [[特效][特效]]      |    none | 工作特效 |
+    | updateEffect       | [[特效][特效]]      |    none | 更新特效 |
+    | updateEffectChance | float       |    0.04 | 触发更新特效概率 |
 
-    Defaults:
-    | field           | default |
+    默认值:
+    | 接口           | 默认值 |
     |-----------------+---------|
     |                 |     <r> |
     | update          |    true |
@@ -598,36 +600,36 @@ Submit pull requests, issues or suggestions on Github: https://github.com/SimonW
     | idleSound       | machine |
     | idleSoundVolume |    0.03 |
 
-*** GenericSmelter
-    Extends [[GenericCrafter][GenericCrafter]] -- A GenericCrafter with a new glowing region drawn on top.
+*** 普通冶炼炉
+    继承 [[普通加工厂][普通加工厂]] -- 一个有工作贴图的普通加工厂.英文:GenericSmelter
 
-    | field      | type  | default |
-    |------------+-------+---------|
-    |            |       |     <r> |
-    | flameColor | [[Color][Color]] |  ffc999 |
+    | 接口      | 类型  | 默认值 | 备注 |
+    |------------+-------+-------+-----|
+    |            |       | |     <r> |
+    | flameColor | [[颜色][颜色]] |  ffc999 | 火焰颜色 |
 
-    Sprite suffix:
+    额外贴图:
     * ~-top~
 
-*** Separator
-    Extends [[Block][Block]]
+*** 分离机
+    继承 [[方块][方块]]
 
-    Separator will take liquid as an input and produce items from it's stack randomly relative to their amount.
+    分离机是一个输入液体并以物品组中和数量为概率随机输出物品的机器.英文:Separator
 
-    | field            | type      | default | notes      |
+    | 接口            | 类型      | 默认值 | 备注      |
     |------------------+-----------+---------+------------|
     |                  |           |         | <10>       |
-    | results          | [[ItemStack][ItemStack]] |         | *[required]* |
+    | results          | [[物品组][物品组]] |         | *[必须]*输出物品及概率 |
     | craftTime        | float     |         |            |
-    | spinnerRadius    | float     |     2.5 |            |
-    | spinnerLength    | float     |       1 |            |
-    | spinnerThickness | float     |       1 |            |
-    | spinnerSpeed     | float     |       2 |            |
-    | color            | [[Color][Color]]     |  858585 |            |
-    | liquidRegion     | int       |         |            |
+    | spinnerRadius    | float     |     2.5 |  转子范围          |
+    | spinnerLength    | float     |       1 |   转子长         |
+    | spinnerThickness | float     |       1 |    转子宽        |
+    | spinnerSpeed     | float     |       2 |   转子速度         |
+    | color            | [[颜色][颜色]]     |  858585 | 工作颜色           |
+    | liquidRegion     | int       |         |    液体区域        |
 
-    Defaults:
-    | field      | default |
+    默认值:
+    | 接口      | 默认值 |
     |------------+---------|
     |            |     <r> |
     | update     |    true |
@@ -635,37 +637,37 @@ Submit pull requests, issues or suggestions on Github: https://github.com/SimonW
     | hasItems   |    true |
     | hasLiquids |    true |
 
-    Sprite suffixes:
+    额外贴图:
     * ~-liquid~
-** Sandbox
-*** PowerVoid
-    Extends [[PowerBlock][PowerBlock]]
+** 沙盒
+*** 能量黑洞
+    继承 [[能量方块][能量方块]]，英文:PowerVoid
 
-    Deafults:
+    默认值:
 
-    | field         |   default |
+    | 接口         |   默认值 |
     |---------------+-----------|
     |               |       <r> |
     | consumesPower | MAX_VALUE |
 
-*** PowerSource
-    Extends [[PowerNode][PowerNode]]
+*** 无限能源
+    继承 [[能量节点][能量节点]]，英文:PowerSource
 
-    Defaults:
+    默认值:
 
-    | field         | default |
+    | 接口         | 默认值 |
     |---------------+---------|
     |               |     <r> |
     | maxNodes      |     100 |
     | outputsPower  |    true |
     | consumesPower |   false |
 
-*** ItemSource
-    Extends [[Block][Block]]
+*** 物品源
+    继承 [[方块][方块]]，英文:ItemSource
 
-    Defaults:
+    默认值:
 
-    | field        |        default |
+    | 接口        |        默认值 |
     |--------------+----------------|
     |              |            <r> |
     | hasItems     |           true |
@@ -674,23 +676,23 @@ Submit pull requests, issues or suggestions on Github: https://github.com/SimonW
     | group        | transportation |
     | configurable |           true |
 
-*** ItemVoid
-    Extends [[Block][Block]]
+*** 物品黑洞
+    继承 [[方块][方块]]，英文:ItemVoid
 
-    Defaults:
+    默认值:
 
-    | field  | default |
+    | 接口  | 默认值 |
     |--------+---------|
     |        |     <r> |
     | update |    true |
     | soild  |    true |
 
-*** LiquidSource
-    Extends [[Block][Block]]
+*** 液体源
+    继承 [[方块][方块]]，英文:LiquidSource
 
-    Defaults:
+    默认值:
 
-    | field          | default |
+    | 接口          | 默认值 |
     |----------------+---------|
     |                |     <r> |
     | hasLiquids     |    true |
@@ -700,36 +702,36 @@ Submit pull requests, issues or suggestions on Github: https://github.com/SimonW
     | configurable   |    true |
     | outputsLiquid  |    true |
 
-** Logic
-*** MessageBlock
-    Extends [[Block][Block]]
+** 逻辑
+*** 消息块
+    继承 [[方块][方块]]，英文：MessageBlock
 
-    | field         | type | default |
-    |---------------+------+---------|
-    |               |      |     <r> |
-    | maxTextLength | int  |     220 |
-    | maxNewlines   | int  |      24 |
+    | 接口         | 类型 | 默认值 | 备注 |
+    |---------------+------+----+----|
+    |               |      |     <r> | |
+    | maxTextLength | int  |     220 | 信息最大长度 |
+    | maxNewlines   | int  |      24 | 信息最大行数 |
 
-    Defaults:
+    默认值:
 
-    | field        | default |
+    | 接口        | 默认值 |
     |--------------+---------|
     |              |     <r> |
     | soild        |    true |
     | configurable |    true |
     | destructible |    true |
-** Defense
-*** Wall
-    Extends [[Block][Block]]
+** 防御
+*** 墙
+    继承 [[方块][方块]]，英文：Wall
 
-    | field    | type | default |
+    | 接口    | 类型 | 默认值 |
     |----------+------+---------|
     |          |      | <r>     |
     | variants | int  |       0 |
 
-    Defaults:
+    默认值:
 
-    | field               | default |
+    | 接口               | 默认值 |
     |---------------------+---------|
     |                     |     <r> |
     | solid               |    true |
@@ -737,24 +739,24 @@ Submit pull requests, issues or suggestions on Github: https://github.com/SimonW
     | group               |   walls |
     | buildCostMultiplier |       5 |
 
-*** DeflectorWall
-    Extends [[Wall][Wall]] -- Wall that deflects low damage bullets.
+*** 反射墙
+    继承 [[墙][墙]] -- 可以反射低伤害子弹的墙.英文：DeflectorWall
 
-    | field            | type  | default |
-    |------------------+-------+---------|
-    |                  |       |     <r> |
-    | hitTime          | float |      10 |
-    | maxDamageDeflect | float |      10 |
+    | 接口            | 类型  | 默认值 | 备注 |
+    |------------------+-------+---+------|
+    |                  |       |     <r> | |
+    | hitTime          | float |      10 | 反射间隔 |
+    | maxDamageDeflect | float |      10 | 最大反射伤害 |
 
-*** SurgeWall
-    Extends [[Wall][Wall]] -- Wall that creates lightning when shot.
+*** 闪电墙
+    继承 [[墙][墙]] -- 一种被攻击产生闪电的墙.英文：SurgeWall
 
-    | field           | type  | default |
-    |-----------------+-------+---------|
-    |                 |       |     <r> |
-    | lightningChance | float |    0.05 |
-    | lightningDamage | float |      15 |
-    | lightningLength | int   |      17 |
+    | 接口           | 类型  | 默认值 | 备注 |
+    |-----------------+-------+----+-----|
+    |                 |       |     <r> | |
+    | lightningChance | float |    0.05 | 产生闪电概率 |
+    | lightningDamage | float |      15 | 闪电伤害 |
+    | lightningLength | int   |      17 | 闪电长度 |
 
 *** Door
     Extends [[Wall][Wall]]
