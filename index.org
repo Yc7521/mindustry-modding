@@ -401,7 +401,7 @@
 
     [[Abstract][Abstract]] 修饰类, 定义了资源被消耗的种类和效果.英文:Consume
 
-    | field    | type    | default | notes      |
+    | 接口    | 类型    | 默认值 | notes      |
     |----------+---------+---------+------------|
     |          |         |         | <10>       |
     | optional | boolean |         | 是否消耗任一物品. |
@@ -411,7 +411,7 @@
 *** 消耗物品
     继承 [[消耗][消耗]] -- 消耗物品组.英文:ConsumeItems
 
-    | field | type      |
+    | 接口 | 类型      |
     |-------+-----------|
     | items | [[物品组][物品组]] |
 
@@ -758,62 +758,62 @@
     | lightningDamage | float |      15 | 闪电伤害 |
     | lightningLength | int   |      17 | 闪电长度 |
 
-*** Door
-    Extends [[Wall][Wall]]
+*** 门
+    继承 [[墙][墙]]，英文:Wall
 
-    | field   | type   |   default |
-    |---------+--------+-----------|
-    |         |        |       <r> |
-    | openfx  | [[Effect][Effect]] |  dooropen |
-    | closefx | [[Effect][Effect]] | doorclose |
+    | 接口   | 类型   |   default | 备注 |
+    |---------+--------+-----------+-|
+    |         |        |       <r> | |
+    | openfx  | [[Effect][Effect]] |  dooropen | 开门特效 |
+    | closefx | [[Effect][Effect]] | doorclose | 关门特效 |
 
-    Defaults:
+    默认值:
 
-    | field       | default |
+    | 接口       | 默认值 |
     |-------------+---------|
     | solid       | false   |
     | solidfies   | true    |
     | consumesTap | true    |
 
-    Sprites:
+    额外贴图:
     * ~<name>-open~
 
-*** MendProjector
-    Extends [[Block][Block]]
+*** 修理投影
+    继承 [[方块][方块]]，英文：MendProjector
 
-    | field           | type  | default |
-    |-----------------+-------+---------|
-    |                 |       |     <r> |
-    | color           | [[Color][Color]] |  84f491 |
-    | phase           | [[Color][Color]] |  ffd59e |
-    | reload          | float |     250 |
-    | range           | float |      60 |
-    | healPercent     | float |      12 |
-    | phaseBoost      | float |      12 |
-    | phaseRangeBoost | float |      50 |
-    | useTime         | float |     400 |
+    | 接口           | 类型  | 默认值 | 备注 |
+    |-----------------+-------+---------+-|
+    |                 |       |     <r> | |
+    | color           | [[颜色][颜色]] |  84f491 | 颜色 |
+    | phase           | [[颜色][颜色]] |  ffd59e | 加速颜色 |
+    | reload          | float |     250 | 修复间隔 |
+    | range           | float |      60 | 修复距离 |
+    | healPercent     | float |      12 | 修复百分比 |
+    | phaseBoost      | float |      12 | 加速百分比 |
+    | phaseRangeBoost | float |      50 | 加速范围百分比 |
+    | useTime         | float |     400 | 使用一个加速物品的时间 |
 
-    Sprites:
+    额外贴图:
     * ~<name>-top~
 
-*** OverdriveProjector
-    Extends [[Block][Block]]
+*** 超频投影
+    继承 [[方块][方块]]，英文：OverdriveProjector
 
-    | field           | type  | default |
-    |-----------------+-------+---------|
-    |                 |       |     <r> |
-    | color           | [[Color][Color]] |  feb380 |
-    | phase           | [[Color][Color]] |  ffd59e |
-    | reload          | float |      60 |
-    | range           | float |      80 |
-    | speedBoost      | float |     1.5 |
-    | speedBoostPhase | float |    0.75 |
-    | useTime         | float |     400 |
-    | phaseRangeBoost | float |      20 |
+    | 接口           | 类型  | 默认值 | 备注 |
+    |-----------------+-------+---------+-|
+    |                 |       |     <r> | |
+    | color           | [[颜色][颜色]] |  feb380 | 颜色 | 
+    | phase           | [[颜色][颜色]] |  ffd59e | 加速颜色 |
+    | reload          | float |      60 | 重载间隔 |
+    | range           | float |      80 | 范围 |
+    | speedBoost      | float |     1.5 | 速度加成 |
+    | speedBoostPhase | float |    0.75 | 加速加成 |
+    | useTime         | float |     400 | 使用一个加速物品的时间 |
+    | phaseRangeBoost | float |      20 | 加速范围百分比 |
 
 
-    Defaults:
-    | field        | default |
+    默认值:
+    | 接口        | 默认值 |
     |--------------+---------|
     | solid        | true    |
     | update       | true    |
@@ -821,27 +821,27 @@
     | hasItems     | true    |
     | canOverdrive | false   |
 
-    Sprites:
+    额外贴图:
     * ~<name>-top~
 
-*** ForceProjector
+*** 力墙投影
 
-    Extends [[Block][Block]]
+    继承 [[方块][方块]]，英文：ForceProjector
 
-    | field              | type  | default |
-    |--------------------+-------+---------|
-    | phaseUseTime       | float |     350 |
-    | phaseRadiusBoost   | float |      80 |
-    | radius             | float |   101.7 |
-    | breakage           | float |     550 |
-    | cooldownNormal     | float |    1.75 |
-    | cooldownLiquid     | float |     1.5 |
-    | cooldownBrokenBase | float |    0.35 |
-    | basePowerDraw      | float |     0.2 |
-    | powerDamage        | float |     0.1 |
+    | 接口              | 类型  | 默认值 | 备注 |
+    |--------------------+-------+---------+-|
+    | phaseUseTime       | float |     350 | 使用一个加速物品的时间 |
+    | phaseRadiusBoost   | float |      80 | 加速范围百分比 |
+    | radius             | float |   101.7 | 范围 |
+    | breakage           | float |     550 | 过载伤害 |
+    | cooldownNormal     | float |    1.75 | 冷却指数 |
+    | cooldownLiquid     | float |     1.5 | 加速冷却指数 |
+    | cooldownBrokenBase | float |    0.35 | 过载冷却指数 |
+    | basePowerDraw      | float |     0.2 | 基础能量消耗 |
+    | powerDamage        | float |     0.1 | 抵消伤害能量消耗 |
 
-    Defaults:
-    | field        | default     |
+    默认值:
+    | 接口        | 默认值     |
     |--------------+-------------|
     | update       | true        |
     | solid        | true        |
@@ -849,31 +849,31 @@
     | canOverdrive | false       |
     | hasLiquids   | true        |
     | hasItems     | true        |
-    | consumes     | [[cold-liquid][cold-liquid]] |
+    | consumes     | [[冷液体][冷液体]] |
 
-    <<cold-liquid>>[[cold-liquid][cold-liquid]]:
-    * temperature less then 0.5
-    * flammability less then 0.1
-    * booster true
-    * optional true
-    * update false
+    <<冷液体>>[[冷液体][冷液体]]:
+    * 温度小于0.5
+    * 可燃性小于0.1
+    * booster：true
+    * optional：true
+    * update：false
 
-    Sprites:
+    额外贴图:
     * ~<name>-top~
 
-*** ShockMine
-    Extends [[Block][Block]]
+*** 地雷
+    继承 [[方块][方块]]，英文：ShockMine
 
-    | field      | type  | default |
-    |------------+-------+---------|
-    | cooldown   | float |      80 |
-    | tileDamage | float |       5 |
-    | damage     | float |      13 |
-    | length     | int   |      10 |
-    | tendrils   | int   |       6 |
+    | 接口      | 类型  | 默认值 | 备注 |
+    |------------+-------+---------+-|
+    | cooldown   | float |      80 | 冷却时间 |
+    | tileDamage | float |       5 | 范围伤害 |
+    | damage     | float |      13 | 伤害 |
+    | length     | int   |      10 | 伤害范围 |
+    | tendrils   | int   |       6 | 震动 |
 
-    Defaults:
-    | field        | default |
+    默认值:
+    | 接口        | 默认值 |
     |--------------+---------|
     |              |     <r> |
     | update       |   false |
@@ -881,42 +881,42 @@
     | solid        |   false |
     | targetable   |   false |
     | layer        | overlay |
-** Turrets
+** 炮塔s
 
-   This section is for turret types. All turrets shoot [[BulletType]], and this means [[LiquidTurret]] can shoot [[MissileBulletType]] and [[ItemTurret]] can shoot [[LiquidBulletType]].
+   这一节是关于炮塔. 所以炮塔的子弹都是 [[子弹类]], 这代表 [[液体炮塔]] 可以使用 [[导弹]] 和 [[物品炮塔]] 可以使用 [[液体子弹]].
 
-*** Turret
+*** 炮塔
 
-    [[Abstract][Abstract]] type which extends [[Block][Block]] -- All turrets extend from [[Turret]], which holds all the common fields.
+    [[Abstract][Abstract]] 修饰类继承 [[方块][方块]] -- 所有炮塔的父类 [[炮塔s]], 有所有炮塔的一般参数.
 
-    | field         | type    |    default | notes      |
+    | 接口         | 类型    |    默认值 | 备注      |
     |---------------+---------+------------+------------|
     |               |         |            | <10>       |
-    | heatColor     | [[Color][Color]]   | turretHeat |            |
-    | shootEffect   | [[Effect][Effect]]  |       none |            |
-    | smokeEffect   | [[Effect][Effect]]  |       none |            |
-    | ammoUseEffect | [[Effect][Effect]]  |       none |            |
-    | shootSound    | [[Sound][Sound]]   |      shoot |            |
-    | ammoPerShot   | int     |          1 |            |
-    | ammoEjectBack | float   |          1 |            |
-    | range         | float   |         50 |            |
-    | reload        | float   |         10 |            |
-    | inaccuracy    | float   |          0 |            |
-    | shots         | int     |          1 |            |
+    | heatColor     | [[颜色][颜色]]   | turretHeat |      发热颜色      |
+    | shootEffect   | [[特效][特效]]  |       none |      射击特效      |
+    | smoke特效   | [[特效][特效]]  |       none |           冒烟特效 |
+    | ammoUseEffect | [[特效][特效]]  |       none |        用子弹特效    |
+    | shootSound    | [[音效][音效]]   |      shoot |          射击声音  |
+    | ammoPerShot   | int     |          1 |      射击一次用子弹      |
+    | ammoEjectBack | float   |          1 |        自动返还    |
+    | range         | float   |         50 |       范围     |
+    | reload        | float   |         10 |          装弹时间  |
+    | inaccuracy    | float   |          0 |         精准度   |
+    | shots         | int     |          1 |         一发打出子弹   |
     | spread        | float   |          4 |            |
-    | recoil        | float   |          1 |            |
-    | restitution   | float   |       0.02 |            |
-    | cooldown      | float   |       0.02 |            |
-    | rotatespeed   | float   |          5 | in degrees per tick |
-    | shootCone     | float   |          8 |            |
-    | shootShake    | float   |          0 |            |
+    | recoil        | float   |          1 |       后坐力     |
+    | restitution   | float   |       0.02 |        回复原位速度    |
+    | cooldown      | float   |       0.02 |       冷却     |
+    | rotatespeed   | float   |          5 | 转速 |
+    | shootCone     | float   |          8 |     瞄准最大偏角       |
+    | shootShake    | float   |          0 |       射击抖动     |
     | xRand         | float   |          0 |            |
-    | targetAir     | boolean |       true |            |
-    | targetGround  | boolean |       true |            |
+    | targetAir     | boolean |       true |         瞄准空军   |
+    | targetGround  | boolean |       true |          瞄准陆军  |
 
-    Defaults:
+    默认值:
 
-    | field       | default |
+    | 接口       | 默认值 |
     |-------------+---------|
     | priority    | turret  |
     | update      | true    |
@@ -925,27 +925,27 @@
     | group       | turrets |
     | outlineIcon | true    |
 
-    Sprites:
-    * ~<name>~ the turret sprite
-    * ~<name>-heat~ the heat map
+    额外贴图:
+    * ~<name>~ 炮塔贴图
+    * ~<name>-heat~ 热时贴图
 
-*** CooledTurret
+*** 冷却炮塔
 
-    Extends [[Turret][Turret]] -- This is a base type that turrets which use [[Liquid]] to cool themselves extend from.
+    继承 [[炮塔][炮塔]] -- 这是一个用 [[液体]] 加速的炮塔的类.英文：CoolTurret
 
-    | field             | type   | default | notes      |
+    | 接口             | 类型   | 默认值 | 备注      |
     |-------------------+--------+---------+------------|
     |                   |        |         | <10>       |
-    | coolantMultiplier | float  | 5       | How much reload is lowered by for each unit of liquid of heat capacity. |
-    | coolEffect        | [[Effect][Effect]] | shoot   |            |
+    | coolantMultiplier | float  | 5       | 冷却百分比. |
+    | coolEffect        | [[特效][特效]] | shoot   |     冷却特效       |
 
-    Notes:
-    * doesn't take flammable fluid
-    * doesn't take hot fluid
+    备注:
+    * 不接受会燃烧的液体
+    * 不接受热的液体
 
-*** ItemTurret
+*** 物品炮塔
 
-    Extends [[CooledTurret][CooledTurret]] -- Turrets that uses items as ammo. The ~ammo~ field is simple an object of items names, paired with an [[BulletType]].
+    继承 [[冷却炮塔][冷却炮塔]] -- 用物品作子弹的炮塔. 用 ~ammo~ 接口加上 [[子弹类]] 来实现.英文：ItemTurret
 
     #+BEGIN_SRC json
     {
@@ -959,81 +959,81 @@
     }
     #+END_SRC
 
-    Here we're using ~copper~ to shoot ~standardCopper~ (built-in bullet) and ~metalglass~ to shoot a custom bullet type.
+    以上是用 ~copper~ 射出 ~standardCopper~ (内建子弹) 和用 ~metaglass~ 射击一个自定义子弹类型.
 
-    | field   | type                 | default |
-    |---------+----------------------+---------|
-    | maxAmmo | int                  |      30 |
-    | ammo    | { [[Item][Item]]: [[BulletType][BulletType]] } |         |
+    | 接口   | 类型                 | 默认值 | 备注 |
+    |---------+----------------------+----------+-|
+    | maxAmmo | int                  |      30 | 弹仓 |
+    | ammo    | { [[物品][物品]]: [[子弹类][子弹类]] } |         | 使用子弹 |
 
-    Defaults:
+    默认值:
 
-    | field    | default |
+    | 接口    | 默认值 |
     |----------+---------|
     | hasItems | true    |
 
-*** DoubleTurret
-    Extends [[ItemTurret][ItemTurret]] -- Turret that shoots from two side by side barrels.
+*** 双管炮
+    继承 [[物品炮塔][物品炮塔]] -- 有两个炮口的炮.英文：DoubleTurret
 
-    | field     | type  | default |
-    |-----------+-------+---------|
-    | shotWidth | float |       2 |
+    | 接口     | 类型  | 默认值 | 备注
+    |-----------+-------+------+---|
+    | shotWidth | float |       2 | 两炮口间距 |
 
     Default:
-    | field | default |
+    | 接口 | 默认值 |
     |-------+---------|
     | shots |       2 |
 
-*** ArtilleryTurret
-    Extends [[ItemTurret][ItemTurret]] -- Artillery turrets have special shooting calculations done to hit targets.
+*** 火炮塔
+    继承 [[物品炮塔][物品炮塔]] -- 火炮塔有特殊的命中计算.英文：ArtilleryTurret
 
-    | field     | default |
+    | 接口     | 默认值 |
     |-----------+---------|
     | targetAir | false   |
 
-*** BurstTurret
-    Extends [[ItemTurret][ItemTurret]] -- Turrets capable of bursts of specially spaced bullets, separated by long reload times.
+*** 破片炮塔
+    继承 [[物品炮塔][物品炮塔]] -- Turrets capable of bursts of specially spaced bullets, separated by long reload times.英文：BurstTurret
 
-    | field        | type  | default |
+    | 接口        | 类型  | 默认值 |
     |--------------+-------+---------|
     | burstSpacing | float |       5 |
 *** PowerTurret
-    [[Abstract][Abstract]] type that extends [[CooledTurret][CooledTurret]] -- Turret which uses power has ammo to shoot.
+    [[Abstract][Abstract]] type that 继承 [[CooledTurret][CooledTurret]] -- Turret which uses power has ammo to shoot.
 
-    | field     | type       | default |
+    | 接口     | 类型       | 默认值 |
     |-----------+------------+---------|
-    | shootType | [[BulletType][BulletType]] |         |
+    | shootType | [[子弹类][子弹类]] |         |
     | powerUse  | float      |       1 |
 
-    Defaults:
+    默认值:
 
-    | field    | default |
+    | 接口    | 默认值 |
     |----------+---------|
     | hasPower | true    |
 
 *** ChargeTurret
 
-    Extends [[PowerTurret]]
+    继承 [[PowerTurret]]
 
-    | field             | type   | default |
+    | 接口             | 类型   | 默认值 |
     |-------------------+--------+---------|
     | chargeTime        | float  |      30 |
     | chargeEffects     | int    |       5 |
     | chargeMaxDelay    | float  |      10 |
-    | chargeEffect      | [[Effect]] |    none |
-    | chargeBeginEffect | [[Effect]] |    none |
+    | chargeEffect      | [[特效]] |    none |
+    | chargeBeginEffect | [[特效]] |    none |
 
 *** LaserTurret
-    Extends [[PowerTurret][PowerTurret]]
+    继承 [[PowerTurret][PowerTurret]]
 
-    | field           | type  | default | notes      |
+    | 接口           | 类型  | 默认值 | notes      |
     |-----------------+-------+---------+------------|
     |                 |       |         | <10>       |
     | firingMoveFract | float |    0.25 | rotatespeed fraction when turret is shooting |
     | shootDuration   | float |     100 |            |
 
-    Defaults:
-    | field             | default |
+    默认值:
+    | 接口             | 默认值 |
     |-------------------+---------|
     | canOverdrive      | false   |
     | coolantMultiplier | 1       |
@@ -1042,29 +1042,29 @@
     * liquid temperature greater or equal to ~0.5~
     * liquid flammability greater then ~0.1~
 
-*** LiquidTurret
-    Extends [[Turret]]
+*** 液体炮塔
+    继承 [[Turret]]
 
-    | fields | type                 |
+    | 接口s | 类型                 |
     |--------+----------------------|
-    | ammo   | { [[Item]]: [[BulletType]] } |
+    | ammo   | { [[物品]]: [[子弹类]] } |
 
-    Defaults:
-    | fields      | default |
+    默认值:
+    | 接口s      | 默认值 |
     |-------------+---------|
     | hasLiquids  | true    |
     | activeSound | spray   |
 ** Distribution
 *** Conveyor
-    Extends [[Block][Block]]
+    继承 [[方块][方块]]
 
-    | field | type  | default |
+    | 接口 | 类型  | 默认值 |
     |-------+-------+---------|
     | speed | float |       0 |
 
     Default:
 
-    | field           |        default |
+    | 接口           |        default |
     |-----------------+----------------|
     |                 |            <r> |
     | rotate          |           true |
@@ -1081,19 +1081,19 @@
     * ~-<0..4>-<0..3>~ example: [[https://github.com/Anuken/Mindustry/tree/master/core/assets-raw/sprites/blocks/distribution/conveyors][Conveyors-sprites]]
 
 *** ArmoredConveyor
-    Extends [[Conveyor][Conveyor]]  -A type of conveyor don't accept item coming from side
+    继承 [[Conveyor][Conveyor]]  -A type of conveyor don't accept item coming from side
 
 *** Junction
-    Extends [[Block][Block]]
+    继承 [[方块][方块]]
 
-    | field    | type     | default | notes      |
+    | 接口    | 类型     | 默认值 | notes      |
     |----------+----------+---------+------------|
     |          |          |         | <10>       |
     | speed    | float    |      26 | frames taken to go through this junction |
     | capacity | capacity |       6 |            |
 
-    Defaults:
-    | field           | default        |
+    默认值:
+    | 接口           | 默认值        |
     |-----------------+----------------|
     | update          | true           |
     | solid           | true           |
@@ -1102,15 +1102,15 @@
     | unloadable      | false          |
 
 *** ItemBridge
-    Extends [[Block][Block]]
+    继承 [[方块][方块]]
 
-    | field         | type  | default |
+    | 接口         | 类型  | 默认值 |
     |---------------+-------+---------|
     | range         | int   |         |
     | transportTime | float |       2 |
 
-    Defaults:
-    | field        | default        |
+    默认值:
+    | 接口        | 默认值        |
     |--------------+----------------|
     | update       | true           |
     | solid        | true           |
@@ -1130,38 +1130,38 @@
     * ~<name>-arrow~ example: [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/blocks/distribution/bridge-conveyor-arrow.png][bridge-conveyor-arrow]]
 
 *** ExtendingItemBridge
-    Extends [[ItemBridge][ItemBridge]]
+    继承 [[ItemBridge][ItemBridge]]
 
-    Defaults:
-    | field    | default |
+    默认值:
+    | 接口    | 默认值 |
     |----------+---------|
     | hasItems | true    |
 
 *** BufferedItemBridge
-    Extends [[ExtendingItemBridge][ExtendingItemBridge]]
+    继承 [[ExtendingItemBridge][ExtendingItemBridge]]
 
-    | field          | type  | default |
+    | 接口          | 类型  | 默认值 |
     |----------------+-------+---------|
     | speed          | float |      40 |
     | bufferCapacity | int   |      50 |
 
-    Defaults:
-    | field    | default |
+    默认值:
+    | 接口    | 默认值 |
     |----------+---------|
     | hasItems | true    |
     | hasPower | false   |
 
 *** Sorter
 
-    Extends [[Block][Block]]
+    继承 [[方块][方块]]
 
-    | field  | type    | default | notes        |
+    | 接口  | 类型    | 默认值 | notes        |
     |--------+---------+---------+--------------|
     | invert | boolean |         | *[optional]* |
 
-    Defaults:
+    默认值:
 
-    | field           | default        |
+    | 接口           | 默认值        |
     |-----------------+----------------|
     | update          | true           |
     | solid           | true           |
@@ -1171,15 +1171,15 @@
     | unloadable      | false          |
 
 *** OverflowGate
-    Extends [[Block][Block]]
+    继承 [[方块][方块]]
 
-    | field | type  | default |
+    | 接口 | 类型  | 默认值 |
     |-------+-------+---------|
     | speed | float | 1       |
 
-    Defaults:
+    默认值:
 
-    | field      | default        |
+    | 接口      | 默认值        |
     |------------+----------------|
     | hasItems   | true           |
     | soild      | true           |
@@ -1188,9 +1188,9 @@
     | unloadable | false          |
 
 *** MassDriver
-    Extends [[Block][Block]] -- Uses ~driverBolt~ to transfer items.
+    继承 [[方块][方块]] -- Uses ~driverBolt~ to transfer items.
 
-    | field         | type   |        default |
+    | 接口         | 类型   |        default |
     |---------------+--------+----------------|
     | range         | float  |                |
     | rotateSpeed   | float  |           0.04 |
@@ -1198,16 +1198,16 @@
     | minDistribute | int    |             10 |
     | knockback     | float  |              4 |
     | reloadTime    | float  |            100 |
-    | shootEffect   | [[Effect][Effect]] |      shootBig2 |
-    | smokeEffect   | [[Effect][Effect]] | shootBigSmoke2 |
-    | recieveEffect | [[Effect][Effect]] |        mineBig |
+    | shootEffect   | [[特效][特效]] |      shootBig2 |
+    | smokeEffect   | [[特效][特效]] | shootBigSmoke2 |
+    | recieveEffect | [[特效][特效]] |        mineBig |
     | shake         | float  |              3 |
 
     Notes:
     * range is limited by ~driverBolt~'s max range, which is hard coded, so you cannot change it.
 
-    Defaults:
-    | field        | default |
+    默认值:
+    | 接口        | 默认值 |
     |--------------+---------|
     | update       | true    |
     | solid        | true    |
@@ -1222,11 +1222,11 @@
     * ~<name>-base~
 ** Liquid Blocks
 *** LiquidBlock
-    Extends [[Block][Block]] -- For blocks that can carry liquids. Apart from the better defaults, it also fetches extra sprites.
+    继承 [[方块][方块]] -- For blocks that can carry liquids. Apart from the better 默认值, it also fetches extra sprites.
 
-    Defaults:
+    默认值:
 
-   | field         | default |
+   | 接口         | 默认值 |
    |---------------+---------|
    | update        | true    |
    | solid         | true    |
@@ -1240,24 +1240,24 @@
    * ~<name>-bottom~
 
 *** Pump
-    Extends [[LiquidBlock][LiquidBlock]]
+    继承 [[LiquidBlock][LiquidBlock]]
 
-    | field      | type  | default |
+    | 接口      | 类型  | 默认值 |
     |------------+-------+---------|
     | pumpAmount | float |       1 |
 
-    | field    | default |
+    | 接口    | 默认值 |
     |----------+---------|
     | layer    | overlay |
     | group    | liquids |
     | floating | true    |
 
 *** Conduit
-    Extends [[LiquidBlock][LiquidBlock]]
+    继承 [[LiquidBlock][LiquidBlock]]
 
-    Defaults:
+    默认值:
 
-    | field    | default |
+    | 接口    | 默认值 |
     |----------+---------|
     | rotate   | true    |
     | solid    | false   |
@@ -1267,22 +1267,22 @@
     * ~<name>-top-<i>~
 
 *** LiquidRouter
-    Extends [[LiquidBlock][LiquidBlock]]
+    继承 [[LiquidBlock][LiquidBlock]]
 
 *** LiquidTank
-    Extends [[LiquidRouter][LiquidRouter]]
+    继承 [[LiquidRouter][LiquidRouter]]
 
 *** LiquidJunction
-    Extends [[LiquidBlock][LiquidBlock]]
+    继承 [[LiquidBlock][LiquidBlock]]
 
-    | field      | default |
+    | 接口      | 默认值 |
     |------------+---------|
     | hasLiquids | true    |
 
 *** LiquidBridge
-    Extends [[LiquidBridge][LiquidBridge]]
+    继承 [[LiquidBridge][LiquidBridge]]
 
-    | field         | default |
+    | 接口         | 默认值 |
     |---------------+---------|
     | hasItems      | false   |
     | hasLiquids    | true    |
@@ -1290,9 +1290,9 @@
     | group         | liquids |
 
 *** LiquidExtendingBridge
-    Extends [[ExtendingItemBridge][ExtendingItemBridge]]
+    继承 [[ExtendingItemBridge][ExtendingItemBridge]]
 
-    | field         | default |
+    | 接口         | 默认值 |
     |---------------+---------|
     | hasItems      | false   |
     | hasLiquids    | true    |
@@ -1300,11 +1300,11 @@
     | group         | liquids |
 ** Power
 *** PowerBlock
-    [[Abstract][Abstract]] type which extends [[Block][Block]]
+    [[Abstract][Abstract]] 类型 which 继承 [[方块][方块]]
 
-    Defaults:
+    默认值:
 
-    | field    | default |
+    | 接口    | 默认值 |
     |----------+---------|
     | update   | true    |
     | solid    | true    |
@@ -1312,16 +1312,16 @@
     | group    | power   |
 
 *** PowerNode
-    Extends [[PowerBlock][PowerBlock]]
+    继承 [[PowerBlock][PowerBlock]]
 
-    | field      | type  | default |
+    | 接口      | 类型  | 默认值 |
     |------------+-------+---------|
     | laserRange | float |       6 |
     | maxNodes   | int   |       3 |
 
-    Defaults:
+    默认值:
 
-    | field         | default |
+    | 接口         | 默认值 |
     |---------------+---------|
     | expanded      | true    |
     | layer         | power   |
@@ -1330,28 +1330,28 @@
     | outputsPower  | false   |
 
 *** PowerDistributor
-    Extends [[PowerBlock][PowerBlock]]
+    继承 [[PowerBlock][PowerBlock]]
 
-    Defaults:
-    | field         | default |
+    默认值:
+    | 接口         | 默认值 |
     |---------------+---------|
     | consumesPower | false   |
     | outputsPower  | true    |
 
 *** Battery
-    Extends [[PowerDistributor][PowerDistributor]] -- Just a change of defaults for batteries.
+    继承 [[PowerDistributor][PowerDistributor]] -- Just a change of 默认值 for batteries.
 
     Defauts:
 
-    | field         | default |
+    | 接口         | 默认值 |
     |---------------+---------|
     | outputsPower  | true    |
     | consumesPower | true    |
 
 *** PowerGenerator
-    Extends [[PowerDistributor][PowerDistributor]] -- Base of power generators.
+    继承 [[PowerDistributor][PowerDistributor]] -- Base of power generators.
 
-    | field           | type      | default             | notes      |
+    | 接口           | 类型      | 默认值             | notes      |
     |-----------------+-----------+---------------------+------------|
     |                 |           |                     | <10>       |
     | powerProduction | float     |                     | power produced per tick at 100% (=1.0=) efficiency |
@@ -1360,34 +1360,34 @@
     Notes:
     * ~1 powerProduction ~ 60 pu/s~
 
-    Defaults:
-    | field             | default |
+    默认值:
+    | 接口             | 默认值 |
     |-------------------+---------|
     | baseExplosiveness | 5       |
 
 *** ThermalGenerator
-    Extends [[PowerGenerator][PowerGenerator]] -- Generates power with the heat [[Attributes][attribute]] of a tile. Power production is ~powerProduction * heat~, and ~heat~ must be greater then ~0.01~.
+    继承 [[PowerGenerator][PowerGenerator]] -- Generates power with the heat [[Attributes][attribute]] of a tile. Power production is ~powerProduction * heat~, and ~heat~ must be greater then ~0.01~.
 
-    | field          | type   | default | notes      |
+    | 接口          | 类型   | 默认值 | notes      |
     |----------------+--------+---------+------------|
     |                |        |         | <10>       |
-    | generateEffect | [[Effect][Effect]] | none    |            |
+    | generateEffect | [[特效][特效]] | none    |            |
 
 *** ItemLiquidGenerator
-    Extends [[PowerGenerator][PowerGenerator]] -- Base power generation block which can use items, liquids or both as input sources for power production. Liquids will take priority over items.
+    继承 [[PowerGenerator][PowerGenerator]] -- Base power generation block which can use items, liquids or both as input sources for power production. Liquids will take priority over items.
 
-   | field               | type    | default       | notes      |
+   | 接口               | 类型    | 默认值       | notes      |
    |---------------------+---------+---------------+------------|
    |                     |         |               | <10>       |
    | minItemEfficiency   | float   | 0.2           |            |
    | itemDuration        | float   | 70            | number of ticks during which a single item will produce power. |
    | minLiquidEfficiency | float   | 0.2           |            |
    | maxLiquidGenerate   | float   | 0.4           | Maximum liquid used per frame. |
-   | generateEffect      | [[Effect][Effect]]  | generatespark |            |
-   | explodeEffect       | [[Effect][Effect]]  | generatespark |            |
-   | heatColor           | [[Color][Color]]   | ff9b59        |            |
+   | generateEffect      | [[特效][特效]]  | generatespark |            |
+   | explodeEffect       | [[特效][特效]]  | generatespark |            |
+   | heatColor           | [[颜色][颜色]]   | ff9b59        |            |
    | randomlyExplode     | boolean | true          |            |
-   | defaults            | boolean | false         |            |
+   | default            | boolean | false         |            |
 
    Notes:
    * item efficiency is always 0.0
@@ -1398,32 +1398,32 @@
    * ~<name>-liquid~
 
 *** SingleTypeGenerator
-    Extends [[ItemLiquidGenerator][ItemLiquidGenerator]] -- Generates power from an item.
+    继承 [[ItemLiquidGenerator][ItemLiquidGenerator]] -- Generates power from an item.
 *** BurnerGenerator
-    Extends [[ItemLiquidGenerator][ItemLiquidGenerator]] -- Generates power from item flamability.
+    继承 [[ItemLiquidGenerator][ItemLiquidGenerator]] -- Generates power from item flamability.
 *** DecayGenerator
-    Extends [[ItemLiquidGenerator][ItemLiquidGenerator]] -- Generates power from item radioactivity.
+    继承 [[ItemLiquidGenerator][ItemLiquidGenerator]] -- Generates power from item radioactivity.
 
-    Defaults:
-    | field      | default |
+    默认值:
+    | 接口      | 默认值 |
     |------------+---------|
     | hasItems   | true    |
     | hasLiquids | false   |
 
 *** SolarGenerator
-    Extends [[PowerGenerator][PowerGenerator]] -- A generator that always produces 100% efficiency power.
+    继承 [[PowerGenerator][PowerGenerator]] -- A generator that always produces 100% efficiency power.
 
     Notes:
     * Lower targetting priority then other generators.
 
 *** NuclearReactor
-    Extends [[PowerGenerator][PowerGenerator]] -- Generates power relative to how many items are in storage, and explodes if it runs out of coolant.
+    继承 [[PowerGenerator][PowerGenerator]] -- Generates power relative to how many items are in storage, and explodes if it runs out of coolant.
 
-    | field           | type  |  default | notes      |
+    | 接口           | 类型  |  默认值 | notes      |
     |-----------------+-------+----------+------------|
     |                 |       |          | <10>       |
-    | coolColor       | [[Color][Color]] | ffffff00 |            |
-    | hotColor        | [[Color][Color]] | ff9575a3 |            |
+    | coolColor       | [[颜色][颜色]] | ffffff00 |            |
+    | hotColor        | [[颜色][颜色]] | ff9575a3 |            |
     | itemDuration    | float |      120 | time to consume 1 fuel |
     | heating         | float |     0.01 | heating per frame * fullness |
     | smokeThreshold  | float |      0.3 | heat at which blocks start smoking |
@@ -1432,9 +1432,9 @@
     | flashThreshold  | float |     0.46 | heat at which lights start flashing |
     | coolantPower    | float |      0.5 |            |
 
-    Defaults:
+    默认值:
 
-    | field          | default |
+    | 接口          | 默认值 |
     |----------------+---------|
     | itemCapacity   | 30      |
     | liquidCapacity | 30      |
@@ -1446,9 +1446,9 @@
     * ~<name>-lights~ lights region
 
 *** ImpactReactor
-    Extends [[PowerGenerator][PowerGenerator]] -- Generator that uses power and has a startup time.
+    继承 [[PowerGenerator][PowerGenerator]] -- Generator that uses power and has a startup time.
 
-    | field           | type  | default | notes      |
+    | 接口           | 类型  | 默认值 | notes      |
     |-----------------+-------+---------+------------|
     |                 |       |         | <10>       |
     | plasmas         | int   |       4 | number of plasma sprites |
@@ -1456,11 +1456,11 @@
     | itemDuration    | float |      60 |            |
     | explosionRadius | int   |      50 |            |
     | explosionDamage | int   |    2000 |            |
-    | plasma1         | [[Color][Color]] |  ffd06b |            |
-    | plasma2         | [[Color][Color]] |  ff361b |            |
+    | plasma1         | [[颜色][颜色]] |  ffd06b |            |
+    | plasma2         | [[颜色][颜色]] |  ff361b |            |
 
-    Defaults:
-    | field          | default |
+    默认值:
+    | 接口          | 默认值 |
     |----------------+---------|
     | hasPower       | true    |
     | hasLiquids     | true    |
@@ -1474,9 +1474,9 @@
     * ~<name>-plasma-<i>~ plasma regions, where ~i~ is ~0~ to ~plasmas - 1~.
 ** Production
 *** Drill
-    Extends [[Block][Block]] -- Types which can be placed on ore blocks to extract the [[OreBlock]]'s item.
+    继承 [[方块][方块]] -- Types which can be placed on ore blocks to extract the [[OreBlock]]'s item.
 
-    | field                | type    | default        | notes      |
+    | 接口                | 类型    | 默认值        | notes      |
     |----------------------+---------+----------------+------------|
     |                      |         |                | <10>       |
     | tier                 | int     |                | Maximum tier of blocks this drill can mine. |
@@ -1484,15 +1484,15 @@
     | liquidBoostIntensity | float   | 1.6            | How many times faster the drill will progress when boosted by liquid. |
     | warmupSpeed          | float   | 0.02           | Speed at which the drill speeds up. |
     | drawMineItem         | boolean | false          | Whether to draw the item this drill is mining. |
-    | drillEffect          | [[Effect][Effect]]  | mine           | Effect played when an item is produced. This is colored. |
+    | drillEffect          | [[特效][特效]]  | mine           | Effect played when an item is produced. This is colored. |
     | rotateSpeed          | float   | 2              | Speed the drill bit rotates at. |
-    | updateEffect         | [[Effect][Effect]]  | pulverizeSmall | Effect randomly played while drilling. |
+    | updateEffect         | [[特效][特效]]  | pulverizeSmall | Effect randomly played while drilling. |
     | updateEffectChance   | float   | 0.02           | Chance the update effect will appear. |
     | drawRim              | boolean | false          |            |
-    | heatColor            | [[Color][Color]]   | ff5512         |            |
+    | heatColor            | [[颜色][颜色]]   | ff5512         |            |
 
-    Defaults:
-    | field           | default |
+    默认值:
+    | 接口           | 默认值 |
     |-----------------+---------|
     | update          | true    |
     | solid           | true    |
@@ -1510,18 +1510,18 @@
     * ~<name>-top~
 
 *** SolidPump
-    Extends [[Pump][Pump]] -- Pump that makes liquid from solids and takes in power. Only works on solid floor blocks.
+    继承 [[Pump][Pump]] -- Pump that makes liquid from solids and takes in power. Only works on solid floor blocks.
 
-    | field              | type      | default |
+    | 接口              | 类型      | 默认值 |
     |--------------------+-----------+---------|
     | result             | [[Liquid][Liquid]]    | water   |
-    | updateEffect       | [[Effect][Effect]]    | none    |
+    | updateEffect       | [[特效][特效]]    | none    |
     | updateEffectChance | float     | 0.02    |
     | rotateSpeed        | float     | 1       |
     | attribute          | [[Attribute][Attribute]] |         |
 
-    Defaults:
-    | field    | default |
+    默认值:
+    | 接口    | 默认值 |
     |----------+---------|
     | hasPower | true    |
 
@@ -1529,14 +1529,14 @@
     * ~<name>-liquid~
 
 *** Cultivator
-    Extends [[GenericCrafter][GenericCrafter]]
+    继承 [[GenericCrafter][GenericCrafter]]
 
-    | field      | type  | default |
+    | 接口      | 类型  | 默认值 |
     |------------+-------+---------|
     | recurrence | float |       6 |
 
-    Defaults:
-    | field       | default |
+    默认值:
+    | 接口       | 默认值 |
     |-------------+---------|
     | craftEffect | none    |
 
@@ -1545,14 +1545,14 @@
     * ~<name>-top~
 
 *** Fracker
-    Extends [[SolidPump][SolidPump]]
+    继承 [[SolidPump][SolidPump]]
 
-    | field       | default |
+    | 接口       | 默认值 |
     |-------------+---------|
     | itemUseTime |     100 |
 
-    Defaults:
-    | field    | default |
+    默认值:
+    | 接口    | 默认值 |
     |----------+---------|
     | hasItems | true    |
 
@@ -1561,17 +1561,17 @@
     * ~<name>-rotater~
     * ~<name>-top~
 *** Incinerator
-    Extends [[Block][Block]]
+    继承 [[方块][方块]]
 
-    | field      | type   |  default |
+    | 接口      | 类型   |  default |
     |------------+--------+----------|
     |            |        |      <r> |
-    | effect     | [[Effect][Effect]] | fuelburn |
-    | flameColor | [[Color][Color]]  |   ffad9d |
+    | effect     | [[特效][特效]] | fuelburn |
+    | flameColor | [[颜色][颜色]]  |   ffad9d |
 
-    Defaults:
+    默认值:
 
-    | field     | default |
+    | 接口     | 默认值 |
     |-----------+---------|
     |           |     <r> |
     | hasPower  |    true |
@@ -1580,16 +1580,16 @@
     | soild     |    true |
 ** Unit Blocks
 *** RepairPoint
-    Extends [[Block][Block]] -- Block which can repair units within range, with a laser.
+    继承 [[方块][方块]] -- Block which can repair units within range, with a laser.
 
-    | field        | type  | default |
+    | 接口        | 类型  | 默认值 |
     |--------------+-------+---------|
     | repairRadius | float |      50 |
     | repairSpeed  | float |     0.3 |
     | powerUse     | float |         |
 
-    Defaults:
-    | field       | default |
+    默认值:
+    | 接口       | 默认值 |
     |-------------+---------|
     | update      | true    |
     | solid       | true    |
@@ -1602,18 +1602,18 @@
     * ~<name>-base~
 
 *** UnitFactory
-    Extends [[Block][block]] -- A block can produce units
+    继承 [[方块][方块]] -- A block can produce units
 
-    | field          | type     | default |
+    | 接口          | 类型     | 默认值 |
     |----------------+----------+---------|
     | produceTime    | float    |    1000 |
     | launchVelocity | float    |       0 |
     | maxSpawn       | int      |       4 |
     | unitType       | [[UnitType][UnitType]] |    none |
 
-    Defaults:
+    默认值:
 
-    | field    | default  |
+    | 接口    | 默认值  |
     |----------+----------|
     | update   | true     |
     | hasPower | true     |
@@ -1625,17 +1625,17 @@
     * ~-top~
 
 *** CommandCenter
-    Extends [[Block][Block]] -- A block which can issue commands to your unit.
+    继承 [[方块][方块]] -- A block which can issue commands to your unit.
 
-    | field       | type   | default     |
+    | 接口       | 类型   | 默认值     |
     |-------------+--------+-------------|
-    | topColor    | [[Color][Color]]  | command     |
-    | bottomColor | [[Color][Color]]  | 5e5e5e      |
-    | effect      | [[Effect][Effect]] | commandSend |
+    | topColor    | [[颜色][颜色]]  | command     |
+    | bottomColor | [[颜色][颜色]]  | 5e5e5e      |
+    | effect      | [[特效][特效]] | commandSend |
 
-    Defaults:
+    默认值:
 
-    | field        | default      |
+    | 接口        | 默认值      |
     |--------------+--------------|
     | flags        | comandCenter |
     | destructible | true         |
@@ -1643,16 +1643,16 @@
     | configurable | true         |
 
 *** MechPad
-    Extends [[Block][Block]] -- A block which will spawn a player in a mech.
+    继承 [[方块][方块]] -- A block which will spawn a player in a mech.
 
-    | field     | type  | default |
+    | 接口     | 类型  | 默认值 |
     |-----------+-------+---------|
     | mech      | [[Mech][Mech]]  | none    |
     | buildTime | float | 60 * 5  |
 
-    Defaults:
+    默认值:
 
-    | field    | default |
+    | 接口    | 默认值 |
     |----------+---------|
     | update   | true    |
     | soild    | true    |
@@ -1663,24 +1663,24 @@
 ** Storage
 *** StorageBlock
 
-    [[Abstract][Abstract]] type which extends [[Block]]
+    [[Abstract][Abstract]] 类型 which 继承 [[方块]]
 
-    Defaults:
-    | field    | default |
+    默认值:
+    | 接口    | 默认值 |
     |----------+---------|
     | hasItems | true    |
 
 *** CoreBlock
 
-    Extends [[StorageBlock]]
+    继承 [[StorageBlock]]
 
-    | field | type | default |
+    | 接口 | 类型 | 默认值 |
     |-------+------+---------|
     | mech  | Mech | starter |
 
-    Defaults:
+    默认值:
 
-    | field             | default    |
+    | 接口             | 默认值    |
     |-------------------+------------|
     | solid             | true       |
     | update            | true       |
@@ -1691,11 +1691,11 @@
 
 *** Vault
 
-    Extends [[StorageBlock][StorageBlock]] -- A type of storage block
+    继承 [[StorageBlock][StorageBlock]] -- A type of storage block
 
-    Defaults:
+    默认值:
 
-    | field             | default    |
+    | 接口             | 默认值    |
     |-------------------+------------|
     | solid             | true       |
     | destructible      | true       |
@@ -1703,15 +1703,15 @@
 
 *** Unloader
 
-    Extends [[Block][Block]] -- A block can unload items from storage block and machine
+    继承 [[方块][方块]] -- A block can unload items from storage block and machine
 
-    | field | type  | default |
+    | 接口 | 类型  | 默认值 |
     |-------+-------+---------|
     | speed | float | 1       |
 
-    Defaults:
+    默认值:
 
-    | field        | default |
+    | 接口        | 默认值 |
     |--------------+---------|
     | solid        | true    |
     | health       | 70      |
@@ -1724,15 +1724,15 @@
 
 
 *** LaunchPad
-    Extends [[StorageBlock][StroageBlock]] -a block can launch materials without coreblock
+    继承 [[StorageBlock][StroageBlock]] -a block can launch materials without coreblock
 
-    | field      | type  | default |
+    | 接口      | 类型  | 默认值 |
     |------------+-------+---------|
     | launchTime | float | none    |
 
-    Defaults:
+    默认值:
 
-    | field    | default |
+    | 接口    | 默认值 |
     |----------+---------|
     | update   | true    |
     | hasItems | true    |
@@ -1800,15 +1800,15 @@
   :DESCRIPTION: the building blocks of the universe.
   :END:
 
-** Item
+** 物品
 
-   Extends [[Content][Content]] -- It's the object that can ride conveyors, sorters and be stored in containers, and is commonly used in crafters.
+   继承 [[Content][Content]] -- It's the object that can ride conveyors, sorters and be stored in containers, and is commonly used in crafters.
 
-   | field          | type     | default | notes      |
+   | 接口          | 类型     | 默认值 | notes      |
    |----------------+----------+---------+------------|
    |                |          |         | <10>       |
-   | color          | [[Color][Color]]    |         | hex string of color |
-   | type           | [[Item][ItemType]] |         | resource or material; used for tabs and core acceptance |
+   | color          | [[颜色][颜色]]    |         | hex string of color |
+   | type           | [[物品][ItemType]] |         | resource or material; used for tabs and core acceptance |
    | explosiveness  | float    | ~0~     | how explosive this item is. |
    | flammability   | float    | ~0~     | flammability above 0.3 makes this eleigible for item burners. |
    | radioactivity  | float    |         | how radioactive this item is. 0=none, 1=chernobyl ground zero |
@@ -1817,12 +1817,12 @@
    | alwaysUnlocked | boolean  | ~false~ | If true, item is always unlocked. |
 ** ItemStack
 
-   This type is used to tell blocks to calculate their output/input rates. An item stack is simply an array of objects with the following fields:
+   This type is used to tell blocks to calculate their output/input rates. An item stack is simply an array of objects with the following 接口s:
 
-   | field  | type | default |
+   | 接口  | 类型 | 默认值 |
    |--------+------+---------|
    | amount | int  |       1 |
-   | item   | [[Item][Item]] |         |
+   | item   | [[物品][物品]] |         |
 
    For example:
 
@@ -1835,25 +1835,25 @@
 
 ** Liquid
 
-   Extends [[Content]] -- Object that defines the properties of a liquid.
+   继承 [[Content]] -- Object that defines the properties of a liquid.
 
-   | field         | type         | default | notes      |
+   | 接口         | 类型         | 默认值 | notes      |
    |---------------+--------------+---------+------------|
    |               |              |     <r> | <10>       |
-   | color         | [[Color][Color]]        |         | color of liquid |
+   | color         | [[颜色][颜色]]        |         | color of liquid |
    | flammability  | float        |         | 0 to 1; 0 is completely inflammable, above that may catch fire when exposed to heat. |
    | temperature   | float        |     0.5 | 0.5 is 'room' temperature, 0 is very cold, 1 is molten hot |
    | heatCapacity  | float        |     0.5 | used in cooling; water is 0.4 |
    | viscosity     | float        |     0.5 | how thick this liquid is; water is 0.5, tar is 1. |
    | explosiveness | float        |         | explosiveness when heated; 0 is nothing, 1 is nuke |
-   | flameColor    | [[Color][Color]]        |  ffb763 | the burning color of this liquid |
+   | flameColor    | [[颜色][颜色]]        |  ffb763 | the burning color of this liquid |
    | effect        | [[StatusEffect][StatusEffect]] |    none | the associated status effect. |
 
 ** LiquidStack
 
     This type is used by blocks, to consume a liquid, just like [[ItemStack][ItemStack]] except that it can only contain 1 liquid.
 
-    | field  | type   |
+    | 接口  | 类型   |
     |--------+--------|
     | liquid | [[Liquid][Liquid]] |
     | amount | float  |
@@ -1871,14 +1871,14 @@
 
    Weapons are used by units types, flying or ground, and mechs alike. They're what actually shoots the bullets.
 
-   | field          | type       | default | notes      |
+   | 接口          | 类型       | 默认值 | notes      |
    |----------------+------------+---------+------------|
    |                |            |         | <10>       |
    | name           | string     |         |            |
    | nimPlayerDist  | float      |      20 | minimum cursor distance from player, fixes 'cross-eyed' shooting. |
    | sequenceNum    | int        |       0 |            |
-   | bullet         | [[BulletType][BulletType]] |         | bullet shot |
-   | ejectEffect    | [[Effect][Effect]]     |    none | shell ejection effect |
+   | bullet         | [[子弹类][子弹类]] |         | bullet shot |
+   | ejectEffect    | [[特效][特效]]     |    none | shell ejection effect |
    | reload         | float      |         | weapon reload in frames |
    | shots          | int        |       1 | amount of shots per fire |
    | spacing        | float      |      12 | spacing in degrees between multiple shots, if applicable |
@@ -1892,12 +1892,12 @@
    | lengthRand     | float      |       0 | randomization of shot length |
    | shotDelay      | float      |       0 | delay in ticks between shots |
    | ignoreRotation | boolean    |   false | whether shooter rotation is ignored when shooting. |
-   | shootSound     | [[Sound][Sound]]      |     pew |            |
+   | shootSound     | [[音效][音效]]      |     pew |            |
 ** UnitType
 
-   Extends [[Content]]
+   继承 [[Content]]
 
-   | field           | type     | default |
+   | 接口           | 类型     | 默认值 |
    |-----------------+----------+---------|
    | type            | [[BaseUnit][BaseUnit]] |         |
    | health          | float    |      60 |
@@ -1926,9 +1926,9 @@
 
 ** Mech
 
-   Extends [[Content]] -- Mechs are the player controlled entities.
+   继承 [[Content]] -- Mechs are the player controlled entities.
 
-   | field              | type    | default |
+   | 接口              | 类型    | 默认值 |
    |--------------------+---------+---------|
    | flying             | boolean |         |
    | speed              | float   |     1.1 |
@@ -1943,7 +1943,7 @@
    | mineSpeed          | float   |       1 |
    | drillPower         | int     |      -1 |
    | buildPower         | float   |       1 |
-   | engineColor        | [[Color][Color]]   | boostTo |
+   | engineColor        | [[颜色][颜色]]   | boostTo |
    | itemCapacity       | int     |      30 |
    | turnCursor         | boolean |    true |
    | canHeal            | boolean |   false |
@@ -1973,10 +1973,10 @@
    :DESCRIPTION: type used to add maps into campaign
    :END:
 
-   Extends [[Content]] -- Type used to get maps into campaign.
+   继承 [[Content]] -- Type used to get maps into campaign.
 
 
-   | field                | type          | default    | notes                                            |
+   | 接口                | 类型          | 默认值    | notes                                            |
    |----------------------+---------------+------------+--------------------------------------------------|
    | baseLaunchCost       | [[ItemStack]]     |            |                                                  |
    | launchCost           | [[ItemStack]]     |            |                                                  |
@@ -1999,7 +1999,7 @@
    :DESCRIPTION:
    :END:
 
-   Extends [[Content]]
+   继承 [[Content]]
 
    Below you'll see a table of characters used to express the loadouts.
 
@@ -2065,17 +2065,17 @@
 
 ** StatusEffect
 
-   /Not be be confused with [[Effect][Effect]]/, a status effect will give an entity special properties. It is currently *not possible to add custom status effects*. -- Status effects are used as transitions between intermediate effects. If some a ~wet~ unit gets ~shocked~ it then gets 20 damage.
+   /Not be be confused with [[特效][特效]]/, a status effect will give an entity special properties. It is currently *not possible to add custom status effects*. -- Status effects are used as transitions between intermediate effects. If some a ~wet~ unit gets ~shocked~ it then gets 20 damage.
 
-   | field            | type   | default |            |
+   | 接口            | 类型   | 默认值 |            |
    |------------------+--------+---------+------------|
    |                  |        |         | <10>       |
    | damageMultiplier | float  |       1 |            |
    | armorMultiplier  | float  |       1 |            |
    | speedMultiplier  | float  |       1 |            |
-   | color            | [[Color][Color]]  |   white |            |
+   | color            | [[颜色][颜色]]  |   white |            |
    | damage           | float  |         | Damage (or healing) per frame. |
-   | effect           | [[Effect][Effect]] |    none | Random effect (0.15% per frame), on affected units. |
+   | effect           | [[特效][特效]] |    none | Random effect (0.15% per frame), on affected units. |
 
    * opposites: effect which reduces anothers lifetime.
 
@@ -2084,7 +2084,7 @@
    * ~none~ -- Does nothing.
 
    * ~burning~
-     | field  | value   |
+     | 接口  | value   |
      |--------+---------|
      | damage | 0.06    |
      | effect | burning |
@@ -2092,7 +2092,7 @@
      * tarred: 1 damage and keeps burning
 
    * ~freezing~
-     | field           |    value |
+     | 接口           |    value |
      |-----------------+----------|
      | speedMultiplier |      0.6 |
      | armorMultiplier |      0.8 |
@@ -2100,7 +2100,7 @@
      * opposites: ~melting~ ~burning~
 
    * ~wet~
-     | field           | value |
+     | 接口           | value |
      |-----------------+-------|
      | speedMultiplier | 0.9   |
      | effect          | wet   |
@@ -2108,7 +2108,7 @@
      * shocked: 20 damage
 
    * ~melting~
-     | field           |   value |
+     | 接口           |   value |
      |-----------------+---------|
      | speedMultiplier |     0.8 |
      | armorMultiplier |     0.8 |
@@ -2118,7 +2118,7 @@
      * tarred: keeps melting
 
    * ~tarred~
-     | field           | value |
+     | 接口           | value |
      |-----------------+---------|
      | speedMultiplier | 0.6     |
      | effect          | oily    |
@@ -2126,7 +2126,7 @@
      * melting: keeps burning
 
    * ~overdrive~
-     | field            |      value |
+     | 接口            |      value |
      |------------------+------------|
      | armorMultiplier  |       0.95 |
      | speedMultiplier  |       1.15 |
@@ -2135,12 +2135,12 @@
      | effect           | overdriven |
 
    * ~shielded~
-     | field           | value |
+     | 接口           | value |
      |-----------------+-------|
      | armorMultiplier |     3 |
 
    * ~boss~
-     | field            | value |
+     | 接口            | value |
      |------------------+-------|
      | armorMultiplier  |     3 |
      | damageMultiplier |     3 |
@@ -2149,7 +2149,7 @@
    * ~shocked~ -- Does nothing.
 
    * ~corroded~
-     | field  | value |
+     | 接口  | value |
      |--------+-------|
      | damage |   0.1 |
 
@@ -2167,7 +2167,7 @@
    * ~overlay~, first overlay stuff like conveyor items;
    * ~turret~, "high" blocks like turrets;
    * ~power~ power lasers
-** Color
+** 颜色
 
    Color is a hexadecimal string, ~<rr><gg><bb>~ for example:
 
@@ -2183,13 +2183,13 @@
   :PROPERTIES:
   :DESCRIPTION: the things that exists as themselves.
   :END:
-** BulletType
+** 子弹类
 
-   [[Abstract][Abstract]] type which extends [[Content][Content]] -- BulletType can either be an object or a string, where a string would be reusing a built-in one, and an object would be making a custom one. There are two major categories of bullet types:
+   [[Abstract][Abstract]] type which 继承 [[Content][Content]] -- 子弹类 can either be an object or a string, where a string would be reusing a built-in one, and an object would be making a custom one. There are two major categories of bullet types:
    * [[BasicBulletType]]
    * /everything else/
 
-   | field              | type         | default | notes      |
+   | 接口              | 类型         | 默认值 | notes      |
    |--------------------+--------------+---------+------------|
    |                    |              |         | <10>       |
    | lifetime           | float        |         | amount of ticks it will lasts |
@@ -2199,11 +2199,11 @@
    | drawSize           | float        |      40 |            |
    | drag               | float        |       0 | decelleration per tick |
    | pierce             | boolean      |         | whether it can collide |
-   | hitEffect          | [[Effect][Effect]]       |         | created when bullet hits something |
-   | despawnEffect      | [[Effect][Effect]]       |         | created when bullet despawns |
-   | shootEffect        | [[Effect][Effect]]       |         | created when shooting |
-   | smokeEffect        | [[Effect][Effect]]       |         | created when shooting |
-   | hitSound           | Sound        |         | made when hitting something or getting removed |
+   | hitEffect          | [[特效][特效]]       |         | created when bullet hits something |
+   | despawnEffect      | [[特效][特效]]       |         | created when bullet despawns |
+   | shootEffect        | [[特效][特效]]       |         | created when shooting |
+   | smokeEffect        | [[特效][特效]]       |         | created when shooting |
+   | hitSound           | [[音效]]        |         | made when hitting something or getting removed |
    | inaccuracy         | float        |       0 | extra inaccuracy |
    | ammoMultiplier     | float        |       2 | how many bullets get created per item/liquid |
    | reloadMultiplier   | float        |       1 | multiplied by turret reload speed |
@@ -2221,7 +2221,7 @@
    | fragBullets        | int          |       9 |            |
    | fragVelocityMin    | float        |     0.2 |            |
    | fragVelocityMax    | float        |       1 |            |
-   | fragBullet         | [[BulletType][BulletType]]   |    null |            |
+   | fragBullet         | [[子弹类][子弹类]]   |    null |            |
    | splashDamageRadius | float        |      -1 | Use a negative value to disable splash damage. |
    | incendAmount       | int          |       0 |            |
    | incendSpread       | float        |       8 |            |
@@ -2234,13 +2234,13 @@
 
 *** BasicBulletType
 
-    Extends [[BulletType]] -- This type is special in it allows you to set colors and sprites.
+    继承 [[子弹类]] -- This type is special in it allows you to set colors and sprites.
 
-    | field        | type   |          default |            |
+    | 接口        | 类型   |          default |            |
     |--------------+--------+------------------+------------|
     |              |        |                  | <10>       |
-    | backColor    | [[Color][Color]]  | bulletYellowBack | Color of ~<name>-back~ sprite. |
-    | frontColor   | [[Color][Color]]  |     bulletYellow | Color of ~<name>~ sprite. |
+    | backColor    | [[颜色][颜色]]  | bulletYellowBack | Color of ~<name>-back~ sprite. |
+    | frontColor   | [[颜色][颜色]]  |     bulletYellow | Color of ~<name>~ sprite. |
     | bulletWidth  | float  |                5 |            |
     | bulletHeight | float  |                7 |            |
     | bulletShrink | float  |              0.5 |            |
@@ -2252,15 +2252,15 @@
 
 **** ArtilleryBulletType
 
-     Extends [[BasicBulletType]]
+     继承 [[BasicBulletType]]
 
-     | field       | type   | default        |
+     | 接口       | 类型   | 默认值        |
      |-------------+--------+----------------|
-     | trailEffect | [[Effect][Effect]] | artilleryTrail |
+     | trailEffect | [[特效][特效]] | artilleryTrail |
 
-     Defaults:
+     默认值:
 
-     | field         | type      |
+     | 接口         | 类型      |
      |---------------+-----------|
      | collidesTiles | false     |
      | collides      | false     |
@@ -2270,11 +2270,11 @@
 
 **** BombBulletType
 
-     Extends [[BasicBulletType]]
+     继承 [[BasicBulletType]]
 
-     Defaults:
+     默认值:
 
-     | field         | default   |
+     | 接口         | 默认值   |
      |---------------+-----------|
      | collidesTiles | false     |
      | collides      | false     |
@@ -2287,18 +2287,18 @@
 
 **** FlakBulletType
 
-     Extends [[BasicBulletType]]
+     继承 [[BasicBulletType]]
 
      Bullets that explode near enemies.
 
-     | field        | type  | default |
+     | 接口        | 类型  | 默认值 |
      |--------------+-------+---------|
      |              |       |         |
      | explodeRange | float |      30 |
 
-     Defaults:
+     默认值:
 
-     | field              |             type |
+     | 接口              |             type |
      |--------------------+------------------|
      | splashDamage       |               15 |
      | splashDamageRadius |               34 |
@@ -2306,27 +2306,27 @@
      | bulletWidth        |                8 |
      | bulletHeight       |               10 |
 
-**** MissileBulletType
+**** 导弹
 
-     Extends [[BasicBulletType]]
+     继承 [[BasicBulletType]]
 
-     | field      | type  |           default |
+     | 接口      | 类型  |           default |
      |------------+-------+-------------------|
-     | trailColor | [[Color][Color]] | missileYellowBack |
+     | trailColor | [[颜色][颜色]] | missileYellowBack |
      | weaveScale | float |                 0 |
      | weaveMag   | float |                -1 |
 
 *** HealBulletType
 
-    Extends [[BulletType]] -- Bullets that can heal blocks of the same team as the shooter.
+    继承 [[子弹类]] -- Bullets that can heal blocks of the same team as the shooter.
 
-    | field       | type  | default |
+    | 接口       | 类型  | 默认值 |
     |-------------+-------+---------|
     | healPercent | float |       3 |
 
-    Defaults:
+    默认值:
 
-    | field         | default  |
+    | 接口         | 默认值  |
     |---------------+-----------|
     | shootEffect   | shootHeal |
     | smokeEffect   | hitLaser  |
@@ -2334,17 +2334,17 @@
     | despawnEffect | hitLaser  |
     | collidesTeam  | true      |
 
-*** LiquidBulletType
+*** 液体子弹
 
-    Extends [[BulletType]]
+    继承 [[子弹类]]
 
-    | field  | type   | default | notes        |
+    | 接口  | 类型   | 默认值 | notes        |
     |--------+--------+---------+--------------|
     | liquid | Liquid | null    | *[required]* |
 
-    Defaults:
+    默认值:
 
-    | field          | default   |
+    | 接口          | 默认值   |
     |----------------+-----------|
     | lifetime       | 74        |
     | statusDuration | 90        |
@@ -2357,11 +2357,11 @@
 
 *** MassDriverBolt
 
-    Extends [[BulletType]]
+    继承 [[子弹类]]
 
-    Defaults:
+    默认值:
 
-    | field         | default      |
+    | 接口         | 默认值      |
     |---------------+--------------|
     | collidesTiles | false        |
     | lifetime      | 200          |
@@ -2400,7 +2400,7 @@
        * ~RepairDrone~
    * ~GroundUnit~
 
-** Effect
+** 特效
 
    Type should be a ~string~. You can't currently create custom effects. List of built-in effects are as follows:
 
@@ -2444,7 +2444,7 @@
 
     [[Abstract][Abstract]] type that implements [[Objective]]
 
-    | field | default |
+    | 接口 | 默认值 |
     |-------+---------|
     | zone  | Zone    |
 
@@ -2453,9 +2453,9 @@
     :DESCRIPTION: zone and wave specific condition
     :END:
 
-    Extends [[ZoneObjective]]
+    继承 [[ZoneObjective]]
 
-    | field | type |
+    | 接口 | 类型 |
     |-------+------|
     | wave  | int  |
 
@@ -2466,7 +2466,7 @@
     :DESCRIPTION: zone and launched specific condition
     :END:
 
-    Extends [[ZoneObjective]]
+    继承 [[ZoneObjective]]
 
     * complete if ~zone~ has launched.
 
@@ -2475,11 +2475,11 @@
     :DESCRIPTION: block unlock specific condition
     :END:
 
-    Extends [[Objective]]
+    继承 [[Objective]]
 
-    | field | type  |
+    | 接口 | 类型  |
     |-------+-------|
-    | block | [[Block]] |
+    | block | [[方块]] |
 
     * complete if ~block~ is unlocked.
 
