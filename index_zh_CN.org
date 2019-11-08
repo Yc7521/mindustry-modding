@@ -366,7 +366,7 @@
   | requirements        | [[物品组][物品组]]       |              | 建筑方块的消耗，会影响到研究消耗，公式在下面. |
   | category            | [[种类组][种类组]]        | distribution | 建造菜单上面的种类. |
   | buildCost           | float           |              | 建造时间，在这里写没有用 |
-  | buildVisibility     | [[在建造菜单可见性][在建造菜单可见性]] |       hidden | 这个物品在建筑菜单是否可见. |
+  | buildVisibility     | [[建筑菜单可见性][建筑菜单可见性]] |       hidden | 这个物品在建筑菜单是否可见. |
   | buildCostMultiplier | float           |            1 | 方块建筑时间倍率. |
   | instantTransfer     | boolean         |        false | 这个物品是否瞬间运输物品. |
   | alwaysUnlocked      | boolean         |        false |            |
@@ -454,7 +454,7 @@
    :DESCRIPTION: 基础存储
    :END:
 
-   [[Abstract][Abstract]] 修饰类继承 [[内容物][内容物]] -- 这里定义方块存储的资源.英文:BlockStorage
+   [[Abstract][Abstract]] 修饰类继承 [[内容][内容]] -- 这里定义方块存储的资源.英文:BlockStorage
 
    | 接口          | 种类      | 默认值 | 备注 |
    |----------------+-----------+---------|
@@ -1298,8 +1298,8 @@
     |------------+---------|
     | hasLiquids | true    |
 
-*** LiquidBridge
-    继承 [[LiquidBridge][LiquidBridge]]
+*** 液体桥
+    继承 [[物品桥][物品桥]]，英文：LiquidBridge
 
     | 接口         | 默认值 |
     |---------------+---------|
@@ -1308,8 +1308,8 @@
     | outputsLiquid | true    |
     | group         | liquids |
 
-*** LiquidExtendingBridge
-    继承 [[ExtendingItemBridge][ExtendingItemBridge]]
+*** 拓展液体桥
+    继承 [[物品桥][物品桥]]，英文：LiquidExtendingBridge
 
     | 接口         | 默认值 |
     |---------------+---------|
@@ -1376,56 +1376,56 @@
     :END:
     继承 [[能量运输器][能量运输器]]，英文：PowerGenerator
 
-    Power generators will produce power with their [[Consumers]] type.
+    发电机会用 [[消耗器]] 产生能量.
 
-    | field           | type  | notes      |
+    | 接口           | 类型  | 备注      |
     |-----------------+-------+------------|
     |                 |       | <10>       |
-    | powerProduction | float | Power produced per tick at 100% (=1.0=) efficiency; 1 ~powerProduction~ is approximately ~60 pu/s~. |
+    | powerProduction | float | 效率100%时输出的能量，1 ~powerProduction~ 是 ~60 pu/s~ . |
 
     默认值:
     | 接口             | 默认值 |
     |-------------------+---------|
     | baseExplosiveness | 5       |
 
-**** ThermalGenerator
-    继承 [[PowerGenerator][PowerGenerator]] -- Generates power with the heat [[Attributes][attribute]] of a tile. Power production is ~powerProduction * heat~, and ~heat~ must be greater then ~0.01~.
+**** 地热发电机
+    继承 [[发电机][发电机]] -- 用热 [[属性]] 的地板发电. 输出公式是 ~powerProduction * heat~, 和 ~heat~ 必须大于 ~0.01~.英文：ThermalGenerator
 
-    | 接口          | 类型   | 默认值 | notes      |
+    | 接口          | 类型   | 默认值 | 备注      |
     |----------------+--------+---------+------------|
     |                |        |         | <10>       |
-    | generateEffect | [[特效][特效]] | none    |            |
+    | generateEffect | [[特效][特效]] | none    |   发电特效         |
 
-**** ItemLiquidGenerator
-    继承 [[PowerGenerator][PowerGenerator]] -- Base power generation block which can use items, liquids or both as input sources for power production. Liquids will take priority over items.
+**** 物品液体发电机
+    继承 [[发电机][发电机]] -- 消耗物品液体的基础发电机类.液体会比物品优先消耗.英文：ItemLiquidGenerator
 
-   | 接口               | 类型    | 默认值       | notes      |
+   | 接口               | 类型    | 默认值       | 备注      |
    |---------------------+---------+---------------+------------|
    |                     |         |               | <10>       |
-   | minItemEfficiency   | float   | 0.2           |            |
-   | itemDuration        | float   | 70            | number of ticks during which a single item will produce power. |
-   | minLiquidEfficiency | float   | 0.2           |            |
-   | maxLiquidGenerate   | float   | 0.4           | Maximum liquid used per frame. |
-   | generateEffect      | [[特效][特效]]  | generatespark |            |
-   | explodeEffect       | [[特效][特效]]  | generatespark |            |
-   | heatColor           | [[颜色][颜色]]   | ff9b59        |            |
-   | randomlyExplode     | boolean | true          |            |
-   | default            | boolean | false         |            |
+   | minItemEfficiency   | float   | 0.2           |  物品最小效率          |
+   | itemDuration        | float   | 70            | 一个物品发电时间. |
+   | minLiquidEfficiency | float   | 0.2           | 液体最小效率           |
+   | maxLiquidGenerate   | float   | 0.4           | 一帧消耗流体. |
+   | generateEffect      | [[特效][特效]]  | generatespark |      发电特效      |
+   | explodeEffect       | [[特效][特效]]  | generatespark |    爆炸特效        |
+   | heatColor           | [[颜色][颜色]]   | ff9b59        |     热的颜色       |
+   | randomlyExplode     | boolean | true          |     随机爆炸       |
+   | default            | boolean | false         |      默认值      |
 
-   Notes:
-   * item efficiency is always 0.0
-   * liquid efficiency is always 0.0
+   备注:
+   * 物品效率默认 0.0
+   * 液体效率默认 0.0
 
-   Extra sprites:
-   * ~<name>-top~ if ~hasItems~ is ~true~
+   额外贴图:
+   * ~<name>-top~ 当 ~hasItems~ 是 ~true~ 时
    * ~<name>-liquid~
 
-**** SingleTypeGenerator
-    继承 [[ItemLiquidGenerator][ItemLiquidGenerator]] -- Generates power from an item.
-**** BurnerGenerator
-    继承 [[ItemLiquidGenerator][ItemLiquidGenerator]] -- Generates power from item flamability.
-**** DecayGenerator
-    继承 [[ItemLiquidGenerator][ItemLiquidGenerator]] -- Generates power from item radioactivity.
+**** 物品发电机
+    继承 [[物品液体发电机][物品液体发电机]] -- 从物体中发电.英文：SingleTypeGenerator
+**** 火力发电机
+    继承 [[物品液体发电机][物品液体发电机]] -- 通过可燃物发电.英文：BurnerGenerator
+**** 衰变发电机
+    继承 [[物品液体发电机][物品液体发电机]] -- 通过辐射性发电.英文：DecayGenerator
 
     默认值:
     | 接口      | 默认值 |
@@ -1433,27 +1433,27 @@
     | hasItems   | true    |
     | hasLiquids | false   |
 
-*** SolarGenerator
-    继承 [[PowerGenerator][PowerGenerator]] -- A generator that always produces 100% efficiency power.
+*** 太阳能发电机
+    继承 [[发电机][发电机]] -- 一个一直满效率的发电机.英文：SolarGenerator
 
-    Notes:
-    * Lower targetting priority then other generators.
+    备注:
+    * 相比于其他发电机，被怪打优先度最低.
 
-**** NuclearReactor
-    继承 [[PowerGenerator][PowerGenerator]] -- Generates power relative to how many items are in storage, and explodes if it runs out of coolant.
+**** 核电站
+    继承 [[发电机][发电机]] -- 通过物品除了发电，无冷却爆炸.英文：NuclearReactor
 
-    | 接口           | 类型  |  默认值 | notes      |
+    | 接口           | 类型  |  默认值 | 备注      |
     |-----------------+-------+----------+------------|
     |                 |       |          | <10>       |
-    | coolColor       | [[颜色][颜色]] | ffffff00 |            |
-    | hotColor        | [[颜色][颜色]] | ff9575a3 |            |
-    | itemDuration    | float |      120 | time to consume 1 fuel |
-    | heating         | float |     0.01 | heating per frame * fullness |
-    | smokeThreshold  | float |      0.3 | heat at which blocks start smoking |
-    | explosionRadius | int   |       40 |            |
-    | explosionDamage | int   |     1350 |            |
-    | flashThreshold  | float |     0.46 | heat at which lights start flashing |
-    | coolantPower    | float |      0.5 |            |
+    | coolColor       | [[颜色][颜色]] | ffffff00 |  冷却液颜色          |
+    | hotColor        | [[颜色][颜色]] | ff9575a3 |     过热颜色       |
+    | itemDuration    | float |      120 | 一个物品发电时间 |
+    | heating         | float |     0.01 | 每帧乘容量百分比产热 |
+    | smokeThreshold  | float |      0.3 | 开始冒烟温度 |
+    | explosionRadius | int   |       40 |       爆炸范围     |
+    | explosionDamage | int   |     1350 |       爆炸伤害     |
+    | flashThreshold  | float |     0.46 | 开始警告温度 |
+    | coolantPower    | float |      0.5 |    冷却液倍率        |
 
     默认值:
 
@@ -1464,23 +1464,23 @@
     | hasItems       | true    |
     | hasLiquids     | true    |
 
-    Extra Sprites:
-    * ~<name>-center~ top region
-    * ~<name>-lights~ lights region
+    额外贴图:
+    * ~<name>-center~ 顶部
+    * ~<name>-lights~ 亮光部分
 
-**** ImpactReactor
-    继承 [[PowerGenerator][PowerGenerator]] -- Generator that uses power and has a startup time.
+**** 冲击反应堆
+    继承 [[发电机][发电机]] -- 需要能量和时间启动的发电机.英文：ImpactReactor
 
-    | 接口           | 类型  | 默认值 | notes      |
+    | 接口           | 类型  | 默认值 | 备注      |
     |-----------------+-------+---------+------------|
     |                 |       |         | <10>       |
-    | plasmas         | int   |       4 | number of plasma sprites |
-    | warmupSpeed     | float |   0.001 |            |
-    | itemDuration    | float |      60 |            |
-    | explosionRadius | int   |      50 |            |
-    | explosionDamage | int   |    2000 |            |
-    | plasma1         | [[颜色][颜色]] |  ffd06b |            |
-    | plasma2         | [[颜色][颜色]] |  ff361b |            |
+    | plasmas         | int   |       4 | 等离子体数量 |
+    | warmupSpeed     | float |   0.001 | 启动时间倍率           |
+    | itemDuration    | float |      60 | 一个物品发电时间           |
+    | explosionRadius | int   |      50 |  爆炸范围          |
+    | explosionDamage | int   |    2000 |  爆炸伤害          |
+    | plasma1         | [[颜色][颜色]] |  ffd06b |   等离子体1颜色         |
+    | plasma2         | [[颜色][颜色]] |  ff361b |   等离子体2颜色         |
 
     默认值:
     | 接口          | 默认值 |
@@ -1492,30 +1492,30 @@
     | outputsPower   | true    |
     | consumesPower  | true    |
 
-    Sprites:
-    * ~<name>-bottom~ bottom region
-    * ~<name>-plasma-<i>~ plasma regions, where ~i~ is ~0~ to ~plasmas - 1~.
-** Production
+    额外贴图:
+    * ~<name>-bottom~ 底部
+    * ~<name>-plasma-<i>~ 等离子体贴图,  ~i~ 是 ~0~ 到 ~plasmas - 1~.
+** 生产工厂
    :PROPERTIES:
-   :DESCRIPTION: blocks to extract materials from the environment
+   :DESCRIPTION: 从自然获取资源的工厂
    :END:
-*** Drill
-    继承 [[方块][方块]] -- Types which can be placed on ore blocks to extract the [[OreBlock]]'s item.
+*** 钻头
+    继承 [[方块][方块]] -- 一组能从 [[矿物]] 获取物品的方块.英文：Drill
 
-    | 接口                | 类型    | 默认值        | notes      |
+    | 接口                | 类型    | 默认值        | 备注      |
     |----------------------+---------+----------------+------------|
     |                      |         |                | <10>       |
-    | tier                 | int     |                | Maximum tier of blocks this drill can mine. |
-    | drillTime            | float   | 300            | Base time to drill one ore, in frames. |
-    | liquidBoostIntensity | float   | 1.6            | How many times faster the drill will progress when boosted by liquid. |
-    | warmupSpeed          | float   | 0.02           | Speed at which the drill speeds up. |
-    | drawMineItem         | boolean | false          | Whether to draw the item this drill is mining. |
-    | drillEffect          | [[特效][特效]]  | mine           | Effect played when an item is produced. This is colored. |
-    | rotateSpeed          | float   | 2              | Speed the drill bit rotates at. |
-    | updateEffect         | [[特效][特效]]  | pulverizeSmall | Effect randomly played while drilling. |
-    | updateEffectChance   | float   | 0.02           | Chance the update effect will appear. |
-    | drawRim              | boolean | false          |            |
-    | heatColor            | [[颜色][颜色]]   | ff5512         |            |
+    | tier                 | int     |                | 挖掘等级. |
+    | drillTime            | float   | 300            | 挖一个矿的时间. |
+    | liquidBoostIntensity | float   | 1.6            | 液体加速倍率. |
+    | warmupSpeed          | float   | 0.02           | 预热速度. |
+    | drawMineItem         | boolean | false          | 是否显示正在挖什么. |
+    | drillEffect          | [[特效][特效]]  | mine           | 工作特效. |
+    | rotateSpeed          | float   | 2              | 转动速度. |
+    | updateEffect         | [[特效][特效]]  | pulverizeSmall | 随机特效. |
+    | updateEffectChance   | float   | 0.02           | 随机特效概率. |
+    | drawRim              | boolean | false          |   是否画悬臂         |
+    | heatColor            | [[颜色][颜色]]   | ff5512         |    加热颜色        |
 
     默认值:
     | 接口           | 默认值 |
@@ -1530,70 +1530,70 @@
     | idleSound       | drill   |
     | idleSoundVolume | 0.003   |
 
-    Sprites:
+    贴图:
     * ~<name>-rim~
     * ~<name>-rotator~
     * ~<name>-top~
 
-*** SolidPump
-    继承 [[Pump][Pump]] -- Pump that makes liquid from solids and takes in power. Only works on solid floor blocks.
+*** 固体泵
+    继承 [[泵][泵]] -- 一个用能量在固体地面抽液体的机器，只能放在固体上面.英文：SolidPump
 
-    | 接口              | 类型      | 默认值 |
-    |--------------------+-----------+---------|
-    | result             | [[Liquid][Liquid]]    | water   |
-    | updateEffect       | [[特效][特效]]    | none    |
-    | updateEffectChance | float     | 0.02    |
-    | rotateSpeed        | float     | 1       |
-    | attribute          | [[Attribute][Attribute]] |         |
+    | 接口              | 类型      | 默认值 | 备注 |
+    |--------------------+-----------+-------+--|
+    | result             | [[液体][液体]]    | water   | 产物 |
+    | updateEffect       | [[特效][特效]]    | none    | 随机特效 |
+    | updateEffectChance | float     | 0.02    | 随机特效概率 |
+    | rotateSpeed        | float     | 1       | 转动速度 |
+    | attribute          | [[属性][属性]] |         | 加速需求属性 |
 
     默认值:
     | 接口    | 默认值 |
     |----------+---------|
     | hasPower | true    |
 
-    Sprites:
+    额外贴图:
     * ~<name>-liquid~
 
-*** Cultivator
-    继承 [[GenericCrafter][GenericCrafter]]
+*** 培养机
+    继承 [[普通加工厂][普通加工厂]]，英文：Cultivator
 
-    | 接口      | 类型  | 默认值 |
-    |------------+-------+---------|
-    | recurrence | float |       6 |
+    | 接口      | 类型  | 默认值 | 备注 |
+    |------------+-------+------+---|
+    | recurrence | float |       6 | 循环 |
 
     默认值:
     | 接口       | 默认值 |
     |-------------+---------|
     | craftEffect | none    |
 
-    Sprites:
+    额外贴图:
     * ~<name>-middle~
     * ~<name>-top~
 
-*** Fracker
-    继承 [[SolidPump][SolidPump]]
+*** 石油钻
+    继承 [[固体泵][固体泵]]，英文：Fracker
 
-    | 接口       | 默认值 |
-    |-------------+---------|
-    | itemUseTime |     100 |
+    | 接口       | 默认值 | 备注 |
+    |-------------+--------+-|
+    | itemUseTime |     100 | 一个物体使用时间 |
 
     默认值:
     | 接口    | 默认值 |
     |----------+---------|
     | hasItems | true    |
 
-    Sprites:
+    额外贴图:
     * ~<name>-liquid~
     * ~<name>-rotater~
     * ~<name>-top~
-*** Incinerator
-    继承 [[方块][方块]]
+*** 焚化炉
+    继承 [[方块][方块]]，英文：Incinerator
 
-    | 接口      | 类型   |  default |
-    |------------+--------+----------|
-    |            |        |      <r> |
-    | effect     | [[特效][特效]] | fuelburn |
-    | flameColor | [[颜色][颜色]]  |   ffad9d |
+    | 接口      | 类型   |  默认值 | 备注 |
+    |------------+--------+---+-------|
+    |            |        |     | <r> |
+    | effect     | [[特效][特效]] | fuelburn | 特效 |
+    | flameColor | [[颜色][颜色]]  |   ffad9d | 火焰颜色 |
 
     默认值:
 
@@ -1604,21 +1604,21 @@
     | hasLiquid |    true |
     | update    |    true |
     | soild     |    true |
-** Unit Blocks
+** 单位方块
    :PROPERTIES:
-   :DESCRIPTION: blocks to do things with units
+   :DESCRIPTION: 和单位做事的方块
    :END:
-*** RepairPoint
+*** 修复点
     :PROPERTIES:
-    :DESCRIPTION: block which can repair units
+    :DESCRIPTION: 修单位的方块
     :END:
-    继承 [[方块][方块]] -- Block which can repair units within range, with a laser.
+    继承 [[方块][方块]] -- 用激光修复附近单位.英文：RepairPoint
 
-    | 接口        | 类型  | 默认值 |
-    |--------------+-------+---------|
-    | repairRadius | float |      50 |
-    | repairSpeed  | float |     0.3 |
-    | powerUse     | float |         |
+    | 接口        | 类型  | 默认值 | 备注 |
+    |--------------+-------+--------+-|
+    | repairRadius | float |      50 | 范围 |
+    | repairSpeed  | float |     0.3 | 速度 |
+    | powerUse     | float |         | 能量消耗 |
 
     默认值:
     | 接口       | 默认值 |
@@ -1630,21 +1630,21 @@
     | layer       | turret  |
     | layer2      | power   |
 
-    Extra sprites:
+    额外贴图:
     * ~<name>-base~
 
-*** UnitFactory
+*** 单位工厂
     :PROPERTIES:
-    :DESCRIPTION: block which can produce units
+    :DESCRIPTION: 生产单位的工厂
     :END:
-    继承 [[方块][方块]] -- A block can produce units
+    继承 [[方块][方块]]，英文：UnitFactory
 
-    | 接口          | 类型     | 默认值 |
-    |----------------+----------+---------|
-    | produceTime    | float    |    1000 |
-    | launchVelocity | float    |       0 |
-    | maxSpawn       | int      |       4 |
-    | unitType       | [[UnitType][UnitType]] |    none |
+    | 接口          | 类型     | 默认值 | 备注 |
+    |----------------+----------+--------+-|
+    | produceTime    | float    |    1000 | 制造时间 |
+    | launchVelocity | float    |       0 | 出厂速度 |
+    | maxSpawn       | int      |       4 | 最大容纳量 |
+    | unitType       | [[单位类][单位类]] |    none | 制作单位 |
 
     默认值:
 
@@ -1656,20 +1656,20 @@
     | soild    | false    |
     | flags    | producer |
 
-    Sprite suffix:
+    额外贴图:
     * ~-top~
 
-*** CommandCenter
+*** 指挥中心
     :PROPERTIES:
-    :DESCRIPTION: block which can command units
+    :DESCRIPTION: 命令单位的方块
     :END:
-    继承 [[方块][方块]] -- A block which can issue commands to your unit.
+    继承 [[方块][方块]]，英文：CommandCenter
 
-    | 接口       | 类型   | 默认值     |
-    |-------------+--------+-------------|
-    | topColor    | [[颜色][颜色]]  | command     |
-    | bottomColor | [[颜色][颜色]]  | 5e5e5e      |
-    | effect      | [[特效][特效]] | commandSend |
+    | 接口       | 类型   | 默认值     | 备注 |
+    |-------------+--------+--------+-----|
+    | topColor    | [[颜色][颜色]]  | command     | 顶部颜色 |
+    | bottomColor | [[颜色][颜色]]  | 5e5e5e      | 底部颜色 |
+    | effect      | [[特效][特效]] | commandSend | 特效 |
 
     默认值:
 
@@ -1680,16 +1680,16 @@
     | soild        | true         |
     | configurable | true         |
 
-*** MechPad
+*** 玩家机甲板
     :PROPERTIES:
     :DESCRIPTION: 
     :END:
-    继承 [[方块][方块]] -- A block which will spawn a player in a mech.
+    继承 [[方块][方块]] -- 生存玩家机甲的板子.英文：MechPad
 
-    | 接口     | 类型  | 默认值 |
-    |-----------+-------+---------|
-    | mech      | [[Mech][Mech]]  | none    |
-    | buildTime | float | 60 * 5  |
+    | 接口     | 类型  | 默认值 | 备注 |
+    |-----------+-------+--------+-|
+    | mech      | [[玩家机甲][玩家机甲]]  | none    | 玩家机甲种类 |
+    | buildTime | float | 60 * 5  | 制作时间 |
 
     默认值:
 
@@ -1701,31 +1701,31 @@
     | layer    | overlay |
     | flags    | mechpad |
 
-** Storage
+** 存储
    :PROPERTIES:
-   :DESCRIPTION: block who's main purpose is storing items
+   :DESCRIPTION: 主要用来存储物品的方块
    :END:
-*** StorageBlock
+*** 存储方块
     :PROPERTIES:
-    :DESCRIPTION: base of all storage blocks
+    :DESCRIPTION: 所有存储方块的父类
     :END:
 
-    [[Abstract][Abstract]] 类型 which 继承 [[方块]]
+    [[Abstract][Abstract]] 修饰类继承 [[方块]]，英文：StorageBlock
 
     默认值:
     | 接口    | 默认值 |
     |----------+---------|
     | hasItems | true    |
 
-*** CoreBlock
+*** 核心
     :PROPERTIES:
-    :DESCRIPTION: the core block
+    :DESCRIPTION: 核心方块
     :END:
-    继承 [[StorageBlock]]
+    继承 [[StorageBlock]]，英文：CoreBlock
 
-    | 接口 | 类型 | 默认值 |
-    |-------+------+---------|
-    | mech  | Mech | starter |
+    | 接口 | 类型 | 默认值 | 备注 |
+    |-------+------+--------+-|
+    | mech  | Mech | starter | 初始玩家机甲 |
 
     默认值:
 
@@ -1738,11 +1738,11 @@
     | activeSoundVolume | 1          |
     | layer             | overlay    |
 
-*** Vault
+*** 仓库
     :PROPERTIES:
-    :DESCRIPTION: block who's only purpose is to store things
+    :DESCRIPTION: 存储物品的方块
     :END:
-    继承 [[StorageBlock][StorageBlock]]
+    继承 [[存储方块][存储方块]]，英文：Vault
 
     默认值:
 
@@ -1752,17 +1752,17 @@
     | destructible      | true       |
     | update            | false      |
 
-*** Unloader
+*** 卸载器
     :PROPERTIES:
-    :DESCRIPTION: block to unload things from storage blocks
+    :DESCRIPTION: 从存储方块中卸载物品
     :END:
 
-    Extends [[Block][Block]]
-    A block which can take items from [[StorageBlock]], like [[Vault]], [[CoreBlock]] or [[Crafting][Crafters]].
+    继承 [[方块][方块]]
+    一个方块可以从 [[存储方块]], 比如 [[仓库]], [[核心]] 或 [[工厂][工厂]] 中拿物品.英文：Unloader
 
-    | 接口 | 类型  | 默认值 |
-    |-------+-------+---------|
-    | speed | float | 1       |
+    | 接口 | 类型  | 默认值 | 备注 |
+    |-------+-------+--------+-|
+    | speed | float | 1       | 速度 |
 
     默认值:
 
@@ -1774,21 +1774,21 @@
     | hasItems     | true    |
     | confugurable | true    |
 
-    Sprites:
+    额外贴图:
     * ~<name>-center~
 
 
-*** LaunchPad
+*** 发射器
     :PROPERTIES:
-    :DESCRIPTION: block to launch things to space
+    :DESCRIPTION: 不经过核心发射物品
     :END:
-    Extends [[StorageBlock][StroageBlock]]
+    继承 [[存储方块][存储方块]]，英文：LaunchPad
 
-    A block which can launch materials.
+    一个可以发射物品的方块.
 
-    | 接口      | 类型  | 默认值 |
-    |------------+-------+---------|
-    | launchTime | float | none    |
+    | 接口      | 类型  | 默认值 | 备注 |
+    |------------+-------+--------+-|
+    | launchTime | float | none    | 发射间隔 |
 
     默认值:
 
@@ -1798,18 +1798,18 @@
     | hasItems | true    |
     | soild    | true    |
 
-** Attributes
+** 属性
 
-   An object with an array of [[Attribute][attribute]]. Used in the ~Floor~ type to give a tile specific properties, like /hottness/ or /sporness/ for efficiency of various systems, like ThermalPumps and WaterExtractors.
+   属于一个抽象物品的一个组 [[属性][属性]]. 在 ~地板~ 中使用来给地板一个特殊属性, 比如 /热量/ 和 /孢子度/ 来给某些机器提效, 比如泵和培养机.
 
-   ~array~ has 4 items:
+   ~属性组~ 有4个属性:
 
-   * index ~0~ is ~heat~,
-   * index ~1~ is ~spores~,
-   * index ~2~ is ~water~,
-   * index ~3~ is ~oil~.
+   * 第 ~0~ 个是 ~热量~,
+   * 第 ~1~ 个是 ~孢子度~,
+   * 第 ~2~ 个是 ~含水度~,
+   * 第 ~3~ 个是 ~含油度~.
 
-    For example, this would give you ~100~ heat, ~1~ spores, ~0.5~ water and ~0.1~ oil.
+    举个例子, 当你给一个地板 ~100~ 热量, ~1~ 孢子度, ~0.5~ 含水度和 ~0.1~ 含油度.
 
     #+BEGIN_SRC json
     {
@@ -1817,7 +1817,7 @@
     }
     #+END_SRC
 
-    You could use it inside of [[Floor][Floor]] type as such:
+    你可以把这个放 [[地板][地板]] 类的文件里面，比如:
 
     #+BEGIN_SRC json
     {
@@ -1827,25 +1827,25 @@
     }
     #+END_SRC
 
-** Attribute
+** 属性
 
-   New attributes cannot be added. List of built-in attributes:
+   不能添加新属性. 这里是内建属性:
 
-   * ~heat~
-   * ~spores~
-   * ~water~
-   * ~oil~
-** BuildVisibility
+   * ~heat~ 热量
+   * ~spores~ 孢子度
+   * ~water~ 含水度
+   * ~oil~ 含油度
+** 建筑菜单可见性
 
-   Options for build visibility include:
-   * ~hidden~
-   * ~shown~
-   * ~debugOnly~
-   * ~sandboxOnly~
-   * ~campaignOnly~
-** BlockGroup
+   有以下选项:
+   * ~hidden~ 隐藏
+   * ~shown~ 显示
+   * ~debugOnly~ debug模式显示
+   * ~sandboxOnly~ 沙盒模式显示
+   * ~campaignOnly~ 战役模式显示
+** 方块组别
 
-   Groups for blocks to build on top of each other:
+   各个内建组别:
    * ~none~
    * ~walls~
    * ~turrets~
@@ -1855,36 +1855,36 @@
    * ~drills~
 
 
-* Type
+* 种类
   :PROPERTIES:
-  :DESCRIPTION: the building blocks of the universe.
+  :DESCRIPTION: 所有的建筑物.
   :END:
 
 ** 物品
 
-   继承 [[Content][Content]] -- It's the object that can ride conveyors, sorters and be stored in containers, and is commonly used in crafters.
+   继承 [[内容][内容]] -- 只是一个可以上传送带，分类器和物品容器的东西的东西，经常用于工厂中。
 
-   | 接口          | 类型     | 默认值 | notes      |
+   | 接口          | 类型     | 默认值 | 备注      |
    |----------------+----------+---------+------------|
    |                |          |         | <10>       |
-   | color          | [[颜色][颜色]]    |         | hex string of color |
-   | type           | [[物品][物品]] |         | resource or material; used for tabs and core acceptance |
-   | explosiveness  | float    | ~0~     | how explosive this item is. |
-   | flammability   | float    | ~0~     | flammability above 0.3 makes this eleigible for item burners. |
-   | radioactivity  | float    |         | how radioactive this item is. 0=none, 1=chernobyl ground zero |
-   | hardness       | int      | ~0~     | drill hardness of the item |
-   | cost           | float    | ~1~     | used for calculating place times; 1 cost = 1 tick added to build time |
-   | alwaysUnlocked | boolean  | ~false~ | If true, item is always unlocked. |
-** ItemStack
+   | color          | [[颜色][颜色]]    |         | 分类器显示色 |
+   | type           | [[物品][物品]] |         | ~resource~ 或是 ~material~ ; resource不能进核心，反之 |
+   | explosiveness  | float    | ~0~     | 爆炸性. |
+   | flammability   | float    | ~0~     | 可燃性，大于 0.3 就可以用于燃烧发电机. |
+   | radioactivity  | float    |         | 辐射性，0=是没有, 1=切尔诺贝利的辐射性 |
+   | hardness       | int      | ~0~     | 挖掘等级 |
+   | cost           | float    | ~1~     | 用于计算建筑物建筑时间; 1 cost = 增加建筑世界一帧 |
+   | alwaysUnlocked | boolean  | ~false~ | 是否始终解锁. |
+** 物品组
 
-   This type is used to tell blocks to calculate their output/input rates. An item stack is simply an array of objects with the following 接口s:
+   告诉工厂输入/输出的物品的类.一个物品组应该包含以下元素:
 
-   | 接口  | 类型 | 默认值 |
-   |--------+------+---------|
-   | amount | int  |       1 |
-   | item   | [[物品][物品]] |         |
+   | 接口  | 类型 | 默认值 | 备注 |
+   |--------+------+--------+-|
+   | amount | int  |       1 | 数量 |
+   | item   | [[物品][物品]] |         | 物品名字 |
 
-   For example:
+   例子:
 
    #+BEGIN_SRC json
    [
@@ -1893,21 +1893,21 @@
    ]
    #+END_SRC
 
-** Liquid
+** 液体
 
-   继承 [[Content]] -- Object that defines the properties of a liquid.
+   继承 [[内容]] -- 定义液体的东西.
 
-   | 接口         | 类型         | 默认值 | notes      |
+   | 接口         | 类型         | 默认值 | 备注      |
    |---------------+--------------+---------+------------|
    |               |              |     <r> | <10>       |
-   | color         | [[颜色][颜色]]        |         | *[required]* color of liquid |
-   | barColor      | [[Color]]        |         | /[optional]/ color used in bars. |
-   | flammability  | float        |         | 0 to 1; 0 is completely inflammable, above that may catch fire when exposed to heat. |
-   | temperature   | float        |     0.5 | 0.5 is 'room' temperature, 0 is very cold, 1 is molten hot |
-   | heatCapacity  | float        |     0.5 | used in cooling; water is 0.4 |
-   | viscosity     | float        |     0.5 | how thick this liquid is; water is 0.5, tar is 1. |
-   | explosiveness | float        |         | explosiveness when heated; 0 is nothing, 1 is nuke |
-   | effect        | [[StatusEffect][StatusEffect]] |    none | the associated status effect. |
+   | color         | [[颜色][颜色]]        |         | *[必须]* 液体颜色 |
+   | barColor      | [[颜色]]        |         | /[非必须]/ UI中颜色. |
+   | flammability  | float        |         | 可燃性，从0 到 1; 0 是完全不可燃, 向上增长会被热源点燃. |
+   | temperature   | float        |     0.5 | 温度，0.5 是室温, 0 是很冷, 1 是像融化了一样热 |
+   | heatCapacity  | float        |     0.5 | 比热容，用于冷却; 水是 0.4 |
+   | viscosity     | float        |     0.5 | 粘度; 水是 0.5, 石油是 1. |
+   | explosiveness | float        |         | 爆炸性; 0 什么都没有, 1 是核弹 |
+   | effect        | [[状态][状态]] |    none | 接触此液体获得的状态. |
 
 ** LiquidStack
 
