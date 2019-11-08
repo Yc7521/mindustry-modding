@@ -1374,23 +1374,21 @@
     :PROPERTIES:
     :DESCRIPTION: 基础发电机
     :END:
-    继承 [[能量运输器][能量运输器]] -- 基础发电机.
+    继承 [[能量运输器][能量运输器]]，英文：PowerGenerator
 
-    | 接口           | 类型      | 默认值             | notes      |
-    |-----------------+-----------+---------------------+------------|
-    |                 |           |                     | <10>       |
-    | powerProduction | float     |                     | power produced per tick at 100% (=1.0=) efficiency |
-    | generationType  | BlockStat | basePowerGeneration |            |
+    Power generators will produce power with their [[Consumers]] type.
 
-    Notes:
-    * ~1 powerProduction ~ 60 pu/s~
+    | field           | type  | notes      |
+    |-----------------+-------+------------|
+    |                 |       | <10>       |
+    | powerProduction | float | Power produced per tick at 100% (=1.0=) efficiency; 1 ~powerProduction~ is approximately ~60 pu/s~. |
 
     默认值:
     | 接口             | 默认值 |
     |-------------------+---------|
     | baseExplosiveness | 5       |
 
-*** ThermalGenerator
+**** ThermalGenerator
     继承 [[PowerGenerator][PowerGenerator]] -- Generates power with the heat [[Attributes][attribute]] of a tile. Power production is ~powerProduction * heat~, and ~heat~ must be greater then ~0.01~.
 
     | 接口          | 类型   | 默认值 | notes      |
@@ -1398,7 +1396,7 @@
     |                |        |         | <10>       |
     | generateEffect | [[特效][特效]] | none    |            |
 
-*** ItemLiquidGenerator
+**** ItemLiquidGenerator
     继承 [[PowerGenerator][PowerGenerator]] -- Base power generation block which can use items, liquids or both as input sources for power production. Liquids will take priority over items.
 
    | 接口               | 类型    | 默认值       | notes      |
@@ -1422,11 +1420,11 @@
    * ~<name>-top~ if ~hasItems~ is ~true~
    * ~<name>-liquid~
 
-*** SingleTypeGenerator
+**** SingleTypeGenerator
     继承 [[ItemLiquidGenerator][ItemLiquidGenerator]] -- Generates power from an item.
-*** BurnerGenerator
+**** BurnerGenerator
     继承 [[ItemLiquidGenerator][ItemLiquidGenerator]] -- Generates power from item flamability.
-*** DecayGenerator
+**** DecayGenerator
     继承 [[ItemLiquidGenerator][ItemLiquidGenerator]] -- Generates power from item radioactivity.
 
     默认值:
@@ -1441,7 +1439,7 @@
     Notes:
     * Lower targetting priority then other generators.
 
-*** NuclearReactor
+**** NuclearReactor
     继承 [[PowerGenerator][PowerGenerator]] -- Generates power relative to how many items are in storage, and explodes if it runs out of coolant.
 
     | 接口           | 类型  |  默认值 | notes      |
@@ -1470,7 +1468,7 @@
     * ~<name>-center~ top region
     * ~<name>-lights~ lights region
 
-*** ImpactReactor
+**** ImpactReactor
     继承 [[PowerGenerator][PowerGenerator]] -- Generator that uses power and has a startup time.
 
     | 接口           | 类型  | 默认值 | notes      |
@@ -1498,6 +1496,9 @@
     * ~<name>-bottom~ bottom region
     * ~<name>-plasma-<i>~ plasma regions, where ~i~ is ~0~ to ~plasmas - 1~.
 ** Production
+   :PROPERTIES:
+   :DESCRIPTION: blocks to extract materials from the environment
+   :END:
 *** Drill
     继承 [[方块][方块]] -- Types which can be placed on ore blocks to extract the [[OreBlock]]'s item.
 
@@ -1604,7 +1605,13 @@
     | update    |    true |
     | soild     |    true |
 ** Unit Blocks
+   :PROPERTIES:
+   :DESCRIPTION: blocks to do things with units
+   :END:
 *** RepairPoint
+    :PROPERTIES:
+    :DESCRIPTION: block which can repair units
+    :END:
     继承 [[方块][方块]] -- Block which can repair units within range, with a laser.
 
     | 接口        | 类型  | 默认值 |
@@ -1627,6 +1634,9 @@
     * ~<name>-base~
 
 *** UnitFactory
+    :PROPERTIES:
+    :DESCRIPTION: block which can produce units
+    :END:
     继承 [[方块][方块]] -- A block can produce units
 
     | 接口          | 类型     | 默认值 |
@@ -1650,6 +1660,9 @@
     * ~-top~
 
 *** CommandCenter
+    :PROPERTIES:
+    :DESCRIPTION: block which can command units
+    :END:
     继承 [[方块][方块]] -- A block which can issue commands to your unit.
 
     | 接口       | 类型   | 默认值     |
@@ -1668,6 +1681,9 @@
     | configurable | true         |
 
 *** MechPad
+    :PROPERTIES:
+    :DESCRIPTION: 
+    :END:
     继承 [[方块][方块]] -- A block which will spawn a player in a mech.
 
     | 接口     | 类型  | 默认值 |
@@ -1686,7 +1702,13 @@
     | flags    | mechpad |
 
 ** Storage
+   :PROPERTIES:
+   :DESCRIPTION: block who's main purpose is storing items
+   :END:
 *** StorageBlock
+    :PROPERTIES:
+    :DESCRIPTION: base of all storage blocks
+    :END:
 
     [[Abstract][Abstract]] 类型 which 继承 [[方块]]
 
@@ -1696,7 +1718,9 @@
     | hasItems | true    |
 
 *** CoreBlock
-
+    :PROPERTIES:
+    :DESCRIPTION: the core block
+    :END:
     继承 [[StorageBlock]]
 
     | 接口 | 类型 | 默认值 |
@@ -1715,8 +1739,10 @@
     | layer             | overlay    |
 
 *** Vault
-
-    继承 [[StorageBlock][StorageBlock]] -- A type of storage block
+    :PROPERTIES:
+    :DESCRIPTION: block who's only purpose is to store things
+    :END:
+    继承 [[StorageBlock][StorageBlock]]
 
     默认值:
 
@@ -1727,8 +1753,12 @@
     | update            | false      |
 
 *** Unloader
+    :PROPERTIES:
+    :DESCRIPTION: block to unload things from storage blocks
+    :END:
 
-    继承 [[方块][方块]] -- A block can unload items from storage block and machine
+    Extends [[Block][Block]]
+    A block which can take items from [[StorageBlock]], like [[Vault]], [[CoreBlock]] or [[Crafting][Crafters]].
 
     | 接口 | 类型  | 默认值 |
     |-------+-------+---------|
@@ -1744,12 +1774,17 @@
     | hasItems     | true    |
     | confugurable | true    |
 
-    Sprite suffix:
-    * ~-center~
+    Sprites:
+    * ~<name>-center~
 
 
 *** LaunchPad
-    继承 [[StorageBlock][StroageBlock]] -a block can launch materials without coreblock
+    :PROPERTIES:
+    :DESCRIPTION: block to launch things to space
+    :END:
+    Extends [[StorageBlock][StroageBlock]]
+
+    A block which can launch materials.
 
     | 接口      | 类型  | 默认值 |
     |------------+-------+---------|
@@ -1833,7 +1868,7 @@
    |----------------+----------+---------+------------|
    |                |          |         | <10>       |
    | color          | [[颜色][颜色]]    |         | hex string of color |
-   | type           | [[物品][ItemType]] |         | resource or material; used for tabs and core acceptance |
+   | type           | [[物品][物品]] |         | resource or material; used for tabs and core acceptance |
    | explosiveness  | float    | ~0~     | how explosive this item is. |
    | flammability   | float    | ~0~     | flammability above 0.3 makes this eleigible for item burners. |
    | radioactivity  | float    |         | how radioactive this item is. 0=none, 1=chernobyl ground zero |
@@ -1865,13 +1900,13 @@
    | 接口         | 类型         | 默认值 | notes      |
    |---------------+--------------+---------+------------|
    |               |              |     <r> | <10>       |
-   | color         | [[颜色][颜色]]        |         | color of liquid |
+   | color         | [[颜色][颜色]]        |         | *[required]* color of liquid |
+   | barColor      | [[Color]]        |         | /[optional]/ color used in bars. |
    | flammability  | float        |         | 0 to 1; 0 is completely inflammable, above that may catch fire when exposed to heat. |
    | temperature   | float        |     0.5 | 0.5 is 'room' temperature, 0 is very cold, 1 is molten hot |
    | heatCapacity  | float        |     0.5 | used in cooling; water is 0.4 |
    | viscosity     | float        |     0.5 | how thick this liquid is; water is 0.5, tar is 1. |
    | explosiveness | float        |         | explosiveness when heated; 0 is nothing, 1 is nuke |
-   | flameColor    | [[颜色][颜色]]        |  ffb763 | the burning color of this liquid |
    | effect        | [[StatusEffect][StatusEffect]] |    none | the associated status effect. |
 
 ** LiquidStack
@@ -1998,95 +2033,54 @@
    :DESCRIPTION: type used to add maps into campaign
    :END:
 
-   继承 [[Content]] -- Type used to get maps into campaign.
+   Extends [[Content]] 
 
+   A ~Zone~ is a type that takes a map named and puts it into campaign. /(a zone isn't a map)/
 
-   | 接口                | 类型          | 默认值    | notes                                            |
-   |----------------------+---------------+------------+--------------------------------------------------|
-   | baseLaunchCost       | [[ItemStack]]     |            |                                                  |
-   | launchCost           | [[ItemStack]]     |            |                                                  |
-   | startingItems        | [[ItemStack]]     |            | Items you start with on the map.                 |
-   | conditionWave        | int           | MAX_VALUE  |                                                  |
-   | alwaysUnlocked       | boolean       | false      | Whether this map is always unlocked              |
-   | launchPeriod         | int           | 10         | Rate of waves at which the core may be launched. |
-   | loadout              | [[Loadout]]       | basicShard | The core size and drills.                        |
-   | resources            | [ String ]    |            | Array of item names.                             |
-   | requirements         | [ [[Objective]] ] |            |                                                  |
-   | configureObjective   | [[Objective]]     | wave 15    |                                                  |
-   | defaultStartingItems | [[ItemStack]]     |            |                                                  |
+   Every ~Zone~ has a ~Generator~, which once initialized, ~MapGenerator~ will run through the map and do /initialization related stuff./ One of those notable things, is deleting all cores on in your map and placing a ~loadout~ on top of a random one of them. This allows your campaign map to have multiple core locations. /(it doesn't matter which core was previously on the map, ~loadout~ will dictate that)/
+
+   It is entirely possible to produce a custom schematic, but take note that this schematic must contain a ~CoreBlock~ within it.
+
+   | field                | type          | default     | notes      |
+   |----------------------+---------------+-------------+------------|
+   |                      |               |             | <10>       |
+   | baseLaunchCost       | [[ItemStack]]     |             |            |
+   | launchCost           | [[ItemStack]]     |             |            |
+   | startingItems        | [[ItemStack]]     |             | Items you start with on the map. |
+   | conditionWave        | int           | MAX_VALUE   |            |
+   | alwaysUnlocked       | boolean       | false       | Whether this map is always unlocked |
+   | launchPeriod         | int           | 10          | Rate of waves at which the core may be launched. |
+   | loadout              | [[Schematic]]     | basicShard  | Core layout placed by MapGenerators. |
+   | resources            | [ String ]    |             | Array of [[Item][item]] names. |
+   | requirements         | [ [[Objective]] ] |             | An array of requirements to unlock configuration. |
+   | configureObjective   | [[Objective]]     | ZoneWave 15 |            |
+   | defaultStartingItems | [[ItemStack]]     |             |            |
+
 
    Sprites:
    * ~zone-<name>~ preview
    * ~<name>-zone~ preview
-
-** Loadout
-   :PROPERTIES:
-   :DESCRIPTION:
-   :END:
-
-   继承 [[Content]]
-
-   Below you'll see a table of characters used to express the loadouts.
-
-
-   | char  | definition                         |
-   |-------+------------------------------------|
-   | ~" "~ | air                                |
-   | ~">"~ | conveyor right                     |
-   | ~"^"~ | conveyor up                        |
-   | ~"<"~ | conveyor left                      |
-   | ~"v"~ | conveyor down                      |
-   | ~"1"~ | coreShard                          |
-   | ~"2"~ | coreFoundation                     |
-   | ~"3"~ | coreNucleus                        |
-   | ~"C"~ | mechicalDrill on top of copper ore |
-   | ~"#"~ | occupied by core or drill          |
-
-
+   
    Built-in loadouts:
-
-   * ~basicShard~
-     #+BEGIN_SRC fundamental
-       ###
-       #1#
-       ###
-       ^ ^
-      ## ##
-      C# C#
-     #+END_SRC
-
-   * ~advancedShard~
-     #+BEGIN_SRC fundamental
-       ###
-       #1#
-     #######
-     C#^ ^C#
-      ## ##
-      C# C#
-     #+END_SRC
-
-   * ~basicFoundation~
-     #+BEGIN_SRC fundamental
-       ####
-       ####
-       #2##
-       ####
-       ^^^^
-      ######
-      C#C#C#
-     #+END_SRC
-
-   * ~basicNucleus~
-     #+BEGIN_SRC fundamental
-       #####
-       #####
-       ##3##
-       #####
-      >#####<
-      ^ ^ ^ ^
-     #### ####
-     C#C# C#C#
-     #+END_SRC
+   * basicShard ~bXNjaAB4nD2K2wqAIBiD5ymibnoRn6YnEP1BwUMoBL19FuJ2sbFvUFgYZDaJsLeQrkinN9UJHImsNzlYE7WrIUastuSbnlKx2VJJt+8IQGGKdfO/8J5yrGJSMegLg+YUIA==~ \\
+    [[file:img/basicShard.png]]
+   * advancedShard ~bXNjaAB4nD2LjQqAIAyET7OMIOhFfJqeYMxBgSkYCL199gu33fFtB4tOwUTaBCP5QpHFzwtl32DahBeKK1NwPq8hoOcUixwpY+CUxe3XIwBbB/pa6tadVCUP02hgHvp5vZq/0b7pBHPYFOQ=~ \\
+    [[file:img/advancedShard.png]]
+   * basicFoundation ~bXNjaAB4nD1OSQ6DMBBzFhVu8BG+0X8MQyoiJTNSukj8nlCi2Adbtg/GA4OBF8oB00rvyE/9ykafqOIw58A7SWRKy1ZiShhZ5RcOLZhYS1hefQ1gRIeptH9jq/qW2lvc1d2tgWsOfVX/tOwE86AYBA==~ \\
+    [[file:img/basicFoundation.png]]
+   * basicNucleus ~bXNjaAB4nD2MUQqAIBBEJy0s6qOLdJXuYNtCgikYBd2+LNmdj308hkGHtkId7M4YFns4mk/yfB4a48602eDI+mlNznu0FMPFd0wYKCaewl8F0EOueqM+yKSLVfJrNKWnSw/FZGzEGXFG9sy/px4gEBW1~ \\
+    [[file:img/basicNucleus.png]]
+	
+   Built-in zones:
+   * nuclearComplexe
+   * desolateRift
+   * tarFields
+   * overgrowth
+   * stainedMountains
+   * frozenForest
+   * saltFlats
+   * desertWastes
+   * groundZero
 
 ** StatusEffect
 
@@ -2210,9 +2204,7 @@
   :END:
 ** 子弹类
 
-   [[Abstract][Abstract]] type which 继承 [[Content][Content]] -- 子弹类 can either be an object or a string, where a string would be reusing a built-in one, and an object would be making a custom one. There are two major categories of bullet types:
-   * [[BasicBulletType]]
-   * /everything else/
+   [[Abstract][Abstract]] type which extends [[Content][Content]] -- BulletType can either be an object or a string, where a string would be reusing a built-in one, and an object would be making a custom one. There are two major categories of bullet types: [[BasicBulletType]] and other special bullets.
 
    | 接口              | 类型         | 默认值 | notes      |
    |--------------------+--------------+---------+------------|
@@ -2258,27 +2250,57 @@
    | hitShake           | float        |       0 |            |
 
 *** BasicBulletType
+    :PROPERTIES:
+    :DESCRIPTION: colored destruction
+    :END:
+    Extends [[BulletType]] 
 
-    继承 [[子弹类]] -- This type is special in it allows you to set colors and sprites.
+    This types purpose is to give basic bullets their sprites. The ~bulletSprite~ will be used as the shape of the bullet. The visible pixels in your sprites will be tinted with ~backColor~ and ~frontColor~ respectively. For example if you had sprites ~router.png~ and ~router-back.png~ where ~Test Mod~ was your mods name, you could do this to include your ~bulletSprite~:
+
+    #+BEGIN_SRC json
+    {
+        "ammo": {
+            "copper": {
+                "type": "BasicBulletType",
+                "bulletSprite": "test-mod-router"
+            }
+        }
+    }
+    #+END_SRC
+
+    [[file:img/router-bullets.png]]
 
     | 接口        | 类型   |          default |            |
     |--------------+--------+------------------+------------|
-    |              |        |                  | <10>       |
+    |              |        |              <r> | <10>       |
     | backColor    | [[颜色][颜色]]  | bulletYellowBack | Color of ~<name>-back~ sprite. |
     | frontColor   | [[颜色][颜色]]  |     bulletYellow | Color of ~<name>~ sprite. |
+    | bulletSprite | String |           bullet | Mapping sprite used to make the shape of the bullet. |
     | bulletWidth  | float  |                5 |            |
     | bulletHeight | float  |                7 |            |
     | bulletShrink | float  |              0.5 |            |
     | bulletSprite | String |                  | Mapping sprite used to make the shape of the bullet. |
 
     Sprites:
-    * ~<name>~ top layer sprite
-    * ~<name>-back~ bottom layer sprite
+    * ~<mod-name>-<sprite-name>~ top layer ~bulletSprite~
+    * ~<mod-name>-<sprite-name>-back~ bottom layer ~bulletSprite~
+
+    Built-in ~bulletSprites~:
+    * [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/effects/bullet.png][bullet]]
+    * [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/effects/bullet-back.png][bullet-back]]
+    * [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/effects/missile.png][missile]]
+    * [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/effects/missile-back.png][missile-back]]
+    * [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/effects/shell.png][shell]]
+    * [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/effects/shell-back.png][shell-back]]
 
 **** ArtilleryBulletType
-
+     :PROPERTIES:
+     :DESCRIPTION: raining bullet effects
+     :END:
      继承 [[BasicBulletType]]
 
+     Makes special calculations to give the effect that the bullet is going up and back down.
+	 
      | 接口       | 类型   | 默认值        |
      |-------------+--------+----------------|
      | trailEffect | [[特效][特效]] | artilleryTrail |
@@ -2292,34 +2314,20 @@
      | collidesAir   | false     |
      | hitShake      | 1         |
      | hitSound      | explosion |
-
-**** BombBulletType
-
-     继承 [[BasicBulletType]]
-
-     默认值:
-
-     | 接口         | 默认值   |
-     |---------------+-----------|
-     | collidesTiles | false     |
-     | collides      | false     |
-     | bulletShrink  | 0.7       |
-     | lifetime      | 30        |
-     | drag          | 0.05      |
-     | keepVelocity  | false     |
-     | collidesAir   | false     |
-     | hitSound      | explosion |
-
+     | bulletSprite  | shell     |
+	 
 **** FlakBulletType
-
+     :PROPERTIES:
+     :DESCRIPTION: proximity fuze
+     :END:
      继承 [[BasicBulletType]]
 
      Bullets that explode near enemies.
 
-     | 接口        | 类型  | 默认值 |
-     |--------------+-------+---------|
-     |              |       |         |
-     | explodeRange | float |      30 |
+     | 接口        | 类型  | 默认值 | 备注 |
+     |--------------+-------+---------+------------|
+     |              |       |         | <10>       |
+     | explodeRange | float |      30 | The range at which the bullets explode from enemies. |
 
      默认值:
 
@@ -2332,7 +2340,9 @@
      | bulletHeight       |               10 |
 
 **** 导弹
-
+     :PROPERTIES:
+     :DESCRIPTION: weave and trail effects
+     :END:
      继承 [[BasicBulletType]]
 
      | 接口      | 类型  |           default |
@@ -2340,6 +2350,31 @@
      | trailColor | [[颜色][颜色]] | missileYellowBack |
      | weaveScale | float |                 0 |
      | weaveMag   | float |                -1 |
+
+     Defaults:
+     | field        | default |
+     |--------------+---------|
+     | bulletSprite | missile |
+	 
+**** BombBulletType
+     :PROPERTIES:
+     :DESCRIPTION: minor overwrite of defaults
+     :END:
+
+     Extends [[BasicBulletType]]
+
+     Defaults:
+
+     | field         | default   |
+     |---------------+-----------|
+     | collidesTiles | false     |
+     | collides      | false     |
+     | bulletShrink  | 0.7       |
+     | lifetime      | 30        |
+     | drag          | 0.05      |
+     | keepVelocity  | false     |
+     | collidesAir   | false     |
+     | hitSound      | explosion |
 
 *** HealBulletType
 
@@ -2363,9 +2398,10 @@
 
     继承 [[子弹类]]
 
-    | 接口  | 类型   | 默认值 | notes        |
-    |--------+--------+---------+--------------|
-    | liquid | Liquid | null    | *[required]* |
+    | field  | type   | default | notes      |
+    |--------+--------+---------+------------|
+    |        |        |         | <10>       |
+    | liquid | String | null    | *[required]* name of [[Liquid]] |
 
     默认值:
 
@@ -2454,60 +2490,29 @@
    * ~turret~
 
 
-* Game
+* Objective
   :PROPERTIES:
-  :DESCRIPTION: the rules and goals of it all.
+  :DESCRIPTION: types to set game objectives
   :END:
-** Objective
+  
+  Objective is a trait, which a few types implement, which is used by [[Zone]] to give campaign maps objectives. 
 
-   Objective is a trait, of which a few types implement. It's used by [[Zone]] to give campaign objectives.
+  Types which implement Objective are as follows:
+  * ~ZoneWave~ -- complete if best wave within ~zone~ is heigher then target ~wave~
+    | field | type   | notes                |
+    |-------+--------+----------------------|
+    | zone  | String | target [[Zone]] name     |
+    | wave  | int    | target wave to reach |
 
-*** ZoneObjective
-    :PROPERTIES:
-    :DESCRIPTION: zone specific condition
-    :END:
-
-    [[Abstract][Abstract]] type that implements [[Objective]]
-
-    | 接口 | 默认值 |
-    |-------+---------|
-    | zone  | Zone    |
-
-*** ZoneWave
-    :PROPERTIES:
-    :DESCRIPTION: zone and wave specific condition
-    :END:
-
-    继承 [[ZoneObjective]]
-
-    | 接口 | 类型 |
-    |-------+------|
-    | wave  | int  |
-
-    * complete if zone best wave is larger then ~wave~.
-
-*** Launched
-    :PROPERTIES:
-    :DESCRIPTION: zone and launched specific condition
-    :END:
-
-    继承 [[ZoneObjective]]
-
-    * complete if ~zone~ has launched.
-
-*** Unlock
-    :PROPERTIES:
-    :DESCRIPTION: block unlock specific condition
-    :END:
-
-    继承 [[Objective]]
-
-    | 接口 | 类型  |
-    |-------+-------|
-    | block | [[方块]] |
-
-    * complete if ~block~ is unlocked.
-
+  * ~Launched~ -- complete if core launched from ~zone~
+    | field | type   | notes            |
+    |-------+--------+------------------|
+    | zone  | String | target [[Zone]] name |
+	
+  * ~Unlock~ -- complete if ~block~ is unlocked
+    | field | type   | notes             |
+    |-------+--------+-------------------|
+    | block | String | target [[Block]] name |
 
 * Other
   :PROPERTIES:
