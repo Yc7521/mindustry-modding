@@ -5,7 +5,6 @@
 #+DATE: 2019-10-31
 #+TRANSLATOR: Plas_Gensokyo
 
-#+SUBTITLE: for build v99 (release v5)
 #+LANGUAGE: zh_CN
 #+TEXINFO_DEFFN: t
 #+OPTIONS: H:4 num:3 toc:2
@@ -14,7 +13,7 @@
 
 #+TODO: TODO UNTESTED | DONE
 
-#+TEXINFO_HEADER: Modding documentation for Mindustry v99 (87)
+#+TEXINFO_HEADER: Modding documentation for Mindustry v99 (117)
 
 提出PR和issue建议请去作者 Github: https://github.com/SimonWoodburyForget/mindustry-modding
 
@@ -29,6 +28,8 @@
 
   你可以添加自己的贴图和音效，打包上传并分享自己的mod，mod在所有平台上都是同一格式。
 
+  你也可以添加蓝图到mod里面
+  
 ** 文件结构
    :PROPERTIES:
    :DESCRIPTION: mod文件结构
@@ -39,6 +40,7 @@
    #+BEGIN_SRC fundamental
    mod名
    ├── bundles
+   ├── schematics
    ├── content
    │   ├── blocks
    │   └── items
@@ -112,7 +114,7 @@
 
 ** 种类
    :PROPERTIES:
-   :DESCRIPTION: 你所要知道的关于 ~种类~ 的东西
+   :DESCRIPTION: 你所要知道的关于种类的东西
    :END:
 
    种类有很多接口,其中最重要的是 ~种类~;这是一个内容分析器分析的关键节点,用来决定这个内容物的种类. /一个 ~Router~ 不能是 ~Turret~ 类/, 因为它们完全不一样.
@@ -142,7 +144,7 @@
    :DESCRIPTION: 如何命名图片文件
    :END:
 
-   制作贴图所需的软件, 是一个支持透明编辑的软件 /(比如: PS)./ 方块的贴图大小是 ~32 * 大小~, 所以一个 ~2x2~ 的方块将会需要 ~64x64~ 的贴图.贴图必须是 ~.png~ 格式.
+   制作贴图所需的软件, 是一个支持透明编辑的软件 /(比如: PS)./ 方块的贴图大小是 ~32 * 大小~, 所以一个 ~2x2~ 的方块将会需要 ~64x64~ 的贴图.贴图必须是 ~.png~ 格式，要32位深度.
 
    贴图可以直接放在 ~sprites/~ 文件夹.内容分析器会正确地分析它们,所以你可以凭感觉来组织它们. 
 
@@ -297,6 +299,12 @@
    * Chinese CN ~bundle_zh_CN.properties~
    * Chinese TW ~bundle_zh_TW.properties~
 
+** Schematic
+
+   Fields that require the type ~Schematic~ can either take a built-in loadout /(see the [[Zone]] section)/ a base64 string, or the stem name of a ~.msch~ file in the ~schematics/~ subdirectory.
+
+   /As of now, the only purpose of schematics is to give a zone a loadout./
+
 ** FAQ
     :PROPERTIES:
     :DESCRIPTION: 一些问题和答案
@@ -306,8 +314,8 @@
     * ~ticks~ /有时叫 ~帧数~,/ 是 60/1 秒;
     * ~range~ 和其他距离都是 1/10 格;
     * 计算子弹范围需要用 ~lifetime~ 和 ~speed~ ，公式是 ~lifetime * speed = range~;
-    * <<Abstract>> *Abstract:* 你需要知道关于abstract的东西只有这是一个Java的定义,这个定义下的物体不能被自身加载. 如果你强上会出现 /"initialization exception"/ 类似这种的错误.
-
+    * <<Abstract>> /Abstract/: 你需要知道关于abstract的东西只有这是一个Java的定义,这个定义下的物体不能被自身加载. 如果你强上会出现 /"initialization exception"/ 类似这种的错误.
+    * research cost is ~30 + requirements * 6~
 
 * 世界
   :PROPERTIES:
@@ -365,12 +373,9 @@
   | layer               | [[渲染层][渲染层]]           |         null | 渲染在哪一层. |
   | layer2              | [[渲染层][渲染层]]           |         null | 额外渲染在哪一层. |
 
-  备注:
-  * 研究消耗公式 ~30 + <requirements> * 6~
-
 ** 消耗器
    :PROPERTIES:
-   :DESCRIPTION:消耗液体，物体和能量的基础类，英文:Consumer
+   :DESCRIPTION:消耗液体，物体和能量的基础类，英文:Consume
    :END:
 
    这个类经常在接口 ~consumes~ 中被使用, 它允许你的方块消耗什么东西, 这个接口如何工作取决于方块的主类.
@@ -379,21 +384,28 @@
    |---------------+-----------------------+------------|
    |               |                       | <10>       |
    | item          | String                |  =items= 的简略表达 |
-   | items         | ConsumeItems          |            |
-   | liquid        | ConsumeLiquid         |            |
-   | power         | float or ConsumePower |            |
+   | items         | [[消耗物品]]          |            |
+   | liquid        | [[消耗液体]]         |            |
+   | power         | float or [[能量消耗]] |            |
    | powerBuffered | float                 | 电池参数 |
 
-   Notes:
+   备注:
    * 你不能同时拥有 ~power~ 和 ~powerBuffered~
 
-   消耗物品例子 [[消耗物品][消耗物品]]:
+   消耗物品例子 [[消耗物品][消耗物品]] 和 [[消耗液体]]:
    #+BEGIN_SRC json
    {
        "items": {
-           "items": [ { "amount": 10, "item": "copper" } ],
+           "items": [ 
+               { "amount": 10, "item": "copper" },
+               { "amount": 5, "item": "surge-alloy" }
+           ],
            "booster": true,
            "optional": true
+       },
+       "liquid": {
+           "liquid": "water",
+           "amount": 1.0
        }
    }
    #+END_SRC
@@ -408,37 +420,24 @@
     | booster  | boolean |         | 此物品将作为加速物质消耗. |
     | update   | boolean | true    |            |
 
-*** 消耗物品
-    继承 [[消耗][消耗]] -- 消耗物品组.英文:ConsumeItems
+   * <<消耗物品>> ~消耗物品~, 消耗物品组.
 
-    | 接口 | 类型      |
-    |-------+-----------|
-    | items | [[物品组][物品组]] |
+     | 接口 | 类型      |
+     |-------+-----------|
+     | items | [[物品组][物品组]] |
 
-*** 基础消耗流体
+   * <<消耗液体>> ~消耗液体~, 消耗一种液体.
 
-    [[Abstract][Abstract]] 修饰类继承 [[消耗][消耗]]，英文:ConsumeLiquidBase
-
-    | 接口      | 种类  | 默认值 | 备注      |
-    |------------+-------+---------+------------|
-    |            |       |         | <10>       |
-    | float      | final |         | 一帧消耗液体量 |
-    | timePeriod | float |      60 | 消耗一次液体持续时间 |
-
-    Notes:
+     | 接口      | 类型   | 默认值 | 备注      |
+     |------------+--------+---------+------------|
+     |            |        |         | <10>       |
+     | liquid     | String |         | 消耗的 [[液体]] 名 |
+     | amount     | float  |         | 一帧消耗量 |
+	 | timePeriod | float  | 60      | 下面 |
+    备注:
     * ~timePeriod~ 例子: 消耗液体 10/s 和 10 秒的间隔时间会显示成 "100 秒", 如果没有时间无效化它会显示 "10液体/秒".这个用于普通加工厂.
 
-*** 消耗液体
-    继承 [[基础消耗流体][基础消耗流体]] -- 消耗液体.英文:ConsumeLiquid
-
-
-    | 接口  | 种类   | 默认 | 备注 |
-    |--------+--------+---+-----|
-    | liquid | [[液体][液体]] | null    | 液体种类|
-    | amount | float  | 0       | 液体数量 |
-
-*** 能量消耗
-    继承 [[消耗][消耗]] -- 消耗或存储能量.英文:ConsumePower
+   * <<能量消耗>> ~能量消耗~, consume or buffer power.
 
     | 接口    | 种类    | 默认值 | 备注      |
     |----------+---------+---------+------------|
@@ -449,9 +448,10 @@
 
     Notes:
     * ~usage~ 影响工作效率并且与 ~buffered~ 不兼容.
+	
 ** 方块存储
    :PROPERTIES:
-   :DESCRIPTION:
+   :DESCRIPTION: 基础存储
    :END:
 
    [[Abstract][Abstract]] 修饰类继承 [[内容物][内容物]] -- 这里定义方块存储的资源.英文:BlockStorage
@@ -471,7 +471,9 @@
    | consumes       | [[消耗器][消耗器]] |         |
 
 ** 环境
-
+   :PROPERTIES:
+   :DESCRIPTION: 环境方块
+   :END:
    环境方块只能在地图编辑器里面加入地图,它们也是决定游戏怎么玩的关键方块.这一些方块不会出现在地图上面除非你画一个地图来生成它们.
 
 *** 地板
@@ -576,6 +578,9 @@
     | layer    | power   |
     | expanded | true    |
 ** 工厂
+   :PROPERTIES:
+   :DESCRIPTION: 加工物品的方块
+   :END:
 *** 普通加工厂
     继承 [[方块][方块]]，英文:GenericCratfer
 
@@ -640,6 +645,9 @@
     额外贴图:
     * ~-liquid~
 ** 沙盒
+   :PROPERTIES:
+   :DESCRIPTION: 禁忌的东西
+   :END:
 *** 能量黑洞
     继承 [[能量方块][能量方块]]，英文:PowerVoid
 
@@ -721,6 +729,9 @@
     | configurable |    true |
     | destructible |    true |
 ** 防御
+   :PROPERTIES:
+   :DESCRIPTION: 保护你的东西的方块
+   :END:
 *** 墙
     继承 [[方块][方块]]，英文：Wall
 
@@ -838,7 +849,6 @@
     | cooldownLiquid     | float |     1.5 | 加速冷却指数 |
     | cooldownBrokenBase | float |    0.35 | 过载冷却指数 |
     | basePowerDraw      | float |     0.2 | 基础能量消耗 |
-    | powerDamage        | float |     0.1 | 抵消伤害能量消耗 |
 
     默认值:
     | 接口        | 默认值     |
@@ -882,7 +892,9 @@
     | targetable   |   false |
     | layer        | overlay |
 ** 炮塔s
-
+   :PROPERTIES:
+   :DESCRIPTION: 射东西的方块
+   :END:
    这一节是关于炮塔. 所以炮塔的子弹都是 [[子弹类]], 这代表 [[液体炮塔]] 可以使用 [[导弹]] 和 [[物品炮塔]] 可以使用 [[液体子弹]].
 
 *** 炮塔
@@ -979,7 +991,7 @@
     |-----------+-------+------+---|
     | shotWidth | float |       2 | 两炮口间距 |
 
-    Default:
+    默认值:
     | 接口 | 默认值 |
     |-------+---------|
     | shots |       2 |
@@ -992,18 +1004,18 @@
     | targetAir | false   |
 
 *** 破片炮塔
-    继承 [[物品炮塔][物品炮塔]] -- Turrets capable of bursts of specially spaced bullets, separated by long reload times.英文：BurstTurret
+    继承 [[物品炮塔][物品炮塔]] -- 射速很快的炮塔.英文：BurstTurret
 
-    | 接口        | 类型  | 默认值 |
-    |--------------+-------+---------|
-    | burstSpacing | float |       5 |
-*** PowerTurret
-    [[Abstract][Abstract]] type that 继承 [[CooledTurret][CooledTurret]] -- Turret which uses power has ammo to shoot.
+    | 接口        | 类型  | 默认值 | 备注 |
+    |--------------+-------+--------+-|
+    | burstSpacing | float |       5 | 爆裂半径 |
+*** 能量炮塔
+    [[Abstract][Abstract]] 修饰类继承 [[冷却炮塔][冷却炮塔]] -- 用电射击的炮.英文：PowerTurret
 
-    | 接口     | 类型       | 默认值 |
-    |-----------+------------+---------|
-    | shootType | [[子弹类][子弹类]] |         |
-    | powerUse  | float      |       1 |
+    | 接口     | 类型       | 默认值 | 备注 |
+    |-----------+------------+--------+-|
+    | shootType | [[子弹类][子弹类]] |         | |
+    | powerUse  | float      |       1 | 耗能 |
 
     默认值:
 
@@ -1011,26 +1023,26 @@
     |----------+---------|
     | hasPower | true    |
 
-*** ChargeTurret
+*** 充能炮塔
 
-    继承 [[PowerTurret]]
+    继承 [[能量炮塔]]，英文：ChargeTurret
 
-    | 接口             | 类型   | 默认值 |
-    |-------------------+--------+---------|
-    | chargeTime        | float  |      30 |
-    | chargeEffects     | int    |       5 |
-    | chargeMaxDelay    | float  |      10 |
-    | chargeEffect      | [[特效]] |    none |
-    | chargeBeginEffect | [[特效]] |    none |
+    | 接口             | 类型   | 默认值 | 备注 |
+    |-------------------+--------+---+------|
+    | chargeTime        | float  |      30 | 充能时间 |
+    | chargeEffects     | int    |       5 | 充能特效时间 |
+    | chargeMaxDelay    | float  |      10 | 充能延迟 |
+    | chargeEffect      | [[特效]] |    none | 充能特效 |
+    | chargeBeginEffect | [[特效]] |    none | 开始充能特效 |
 
-*** LaserTurret
-    继承 [[PowerTurret][PowerTurret]]
+*** 激光炮
+    继承 [[能量炮塔][能量炮塔]]，英文：LaserTurret
 
-    | 接口           | 类型  | 默认值 | notes      |
+    | 接口           | 类型  | 默认值 | 备注      |
     |-----------------+-------+---------+------------|
     |                 |       |         | <10>       |
-    | firingMoveFract | float |    0.25 | rotatespeed fraction when turret is shooting |
-    | shootDuration   | float |     100 |            |
+    | firingMoveFract | float |    0.25 | 启动时转速 |
+    | shootDuration   | float |     100 |    射击持续时间        |
 
     默认值:
     | 接口             | 默认值 |
@@ -1038,33 +1050,36 @@
     | canOverdrive      | false   |
     | coolantMultiplier | 1       |
 
-    Doesn't update shoot if:
-    * liquid temperature greater or equal to ~0.5~
-    * liquid flammability greater then ~0.1~
+    如果达到以下情况不射击:
+    * 液体温度大于等于 ~0.5~
+    * 液体可燃性大于 ~0.1~
 
 *** 液体炮塔
-    继承 [[Turret]]
+    继承 [[炮塔]]
 
-    | 接口s | 类型                 |
-    |--------+----------------------|
-    | ammo   | { [[物品]]: [[子弹类]] } |
+    | 接口 | 类型                 | 备注 |
+    |--------+--------------------+--|
+    | ammo   | { String: [[子弹类]] } | 一个 [[液体]] 作为消耗物 |
 
     默认值:
-    | 接口s      | 默认值 |
+    | 接口      | 默认值 |
     |-------------+---------|
     | hasLiquids  | true    |
     | activeSound | spray   |
-** Distribution
-*** Conveyor
-    继承 [[方块][方块]]
+** 运输
+   :PROPERTIES:
+   :DESCRIPTION: 让物品动的方块
+   :END:
+*** 传送带
+    继承 [[方块][方块]]，英文：Conveyor
 
-    | 接口 | 类型  | 默认值 |
-    |-------+-------+---------|
-    | speed | float |       0 |
+    | 接口 | 类型  | 默认值 | 备注 |
+    |-------+-------+-----+---|
+    | speed | float |       0 | 速度 |
 
-    Default:
+    默认值:
 
-    | 接口           |        default |
+    | 接口           |        默认值 |
     |-----------------+----------------|
     |                 |            <r> |
     | rotate          |           true |
@@ -1077,20 +1092,20 @@
     | idleSoundVolume |          0.004 |
     | unloadable      |          false |
 
-    Sprite suffix:
-    * ~-<0..4>-<0..3>~ example: [[https://github.com/Anuken/Mindustry/tree/master/core/assets-raw/sprites/blocks/distribution/conveyors][Conveyors-sprites]]
+    额外贴图:
+    * ~-<0..4>-<0..3>~ 例子: [[https://github.com/Anuken/Mindustry/tree/master/core/assets-raw/sprites/blocks/distribution/conveyors][Conveyors-sprites]]
 
-*** ArmoredConveyor
-    继承 [[Conveyor][Conveyor]]  -A type of conveyor don't accept item coming from side
+*** 装甲传送带
+    继承 [[Conveyor][Conveyor]]  -不接受两边来物从传送带，英文：ArmoredConveyor
 
-*** Junction
-    继承 [[方块][方块]]
+*** 连接器
+    继承 [[方块][方块]]，英文：Junction
 
-    | 接口    | 类型     | 默认值 | notes      |
+    | 接口    | 类型     | 默认值 | 备注      |
     |----------+----------+---------+------------|
     |          |          |         | <10>       |
-    | speed    | float    |      26 | frames taken to go through this junction |
-    | capacity | capacity |       6 |            |
+    | speed    | float    |      26 | 通过时间 |
+    | capacity | capacity |       6 |         容量   |
 
     默认值:
     | 接口           | 默认值        |
@@ -1101,13 +1116,13 @@
     | group           | transportation |
     | unloadable      | false          |
 
-*** ItemBridge
-    继承 [[方块][方块]]
+*** 物品桥
+    继承 [[方块][方块]]，英文：ItemBridge
 
-    | 接口         | 类型  | 默认值 |
-    |---------------+-------+---------|
-    | range         | int   |         |
-    | transportTime | float |       2 |
+    | 接口         | 类型  | 默认值 | 备注 |
+    |---------------+-------+------+---|
+    | range         | int   |         | 范围 |
+    | transportTime | float |       2 | 运输时间 |
 
     默认值:
     | 接口        | 默认值        |
@@ -1124,26 +1139,26 @@
     | unloadable   | false          |
     | group        | transportation |
 
-    Sprites:
-    * ~<name>-end~ example: [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/blocks/distribution/bridge-conveyor-end.png][bridge-conveyor-end]]
-    * ~<name>-bridge~ example: [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/blocks/distribution/bridge-conveyor-bridge.png][bridge-conveyor-bridge]]
-    * ~<name>-arrow~ example: [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/blocks/distribution/bridge-conveyor-arrow.png][bridge-conveyor-arrow]]
+    额外贴图:
+    * ~<name>-end~ 例子: [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/blocks/distribution/bridge-conveyor-end.png][bridge-conveyor-end]]
+    * ~<name>-bridge~ 例子: [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/blocks/distribution/bridge-conveyor-bridge.png][bridge-conveyor-bridge]]
+    * ~<name>-arrow~ 例子: [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/blocks/distribution/bridge-conveyor-arrow.png][bridge-conveyor-arrow]]
 
-*** ExtendingItemBridge
-    继承 [[ItemBridge][ItemBridge]]
+*** 延展物品桥
+    继承 [[物品桥][物品桥]]，英文：ExtendingItemBridge
 
     默认值:
     | 接口    | 默认值 |
     |----------+---------|
     | hasItems | true    |
 
-*** BufferedItemBridge
-    继承 [[ExtendingItemBridge][ExtendingItemBridge]]
+*** 储物物品桥
+    继承 [[延展物品桥][延展物品桥]]，英文：BufferedItemBridge
 
-    | 接口          | 类型  | 默认值 |
-    |----------------+-------+---------|
-    | speed          | float |      40 |
-    | bufferCapacity | int   |      50 |
+    | 接口          | 类型  | 默认值 | 备注 |
+    |----------------+-------+----+-----|
+    | speed          | float |      40 | 速度 |
+    | bufferCapacity | int   |      50 | 存储 |
 
     默认值:
     | 接口    | 默认值 |
@@ -1151,13 +1166,13 @@
     | hasItems | true    |
     | hasPower | false   |
 
-*** Sorter
+*** 分类器
 
-    继承 [[方块][方块]]
+    继承 [[方块][方块]]，英文：Sorter
 
-    | 接口  | 类型    | 默认值 | notes        |
+    | 接口  | 类型    | 默认值 | 备注        |
     |--------+---------+---------+--------------|
-    | invert | boolean |         | *[optional]* |
+    | invert | boolean |         | 是否反向 |
 
     默认值:
 
@@ -1170,10 +1185,10 @@
     | configurable    | true           |
     | unloadable      | false          |
 
-*** OverflowGate
-    继承 [[方块][方块]]
+*** 溢流门
+    继承 [[方块][方块]]，英文：OverflowGate
 
-    | 接口 | 类型  | 默认值 |
+    | 接口 | 类型  | 默认值 | 
     |-------+-------+---------|
     | speed | float | 1       |
 
@@ -1187,24 +1202,24 @@
     | group      | transportation |
     | unloadable | false          |
 
-*** MassDriver
-    继承 [[方块][方块]] -- Uses ~driverBolt~ to transfer items.
+*** 质量驱动器
+    继承 [[方块][方块]] -- 用 ~driverBolt~ 来传输物品.英文：MassDriver
 
-    | 接口         | 类型   |        default |
-    |---------------+--------+----------------|
-    | range         | float  |                |
-    | rotateSpeed   | float  |           0.04 |
-    | translation   | float  |              7 |
-    | minDistribute | int    |             10 |
-    | knockback     | float  |              4 |
-    | reloadTime    | float  |            100 |
-    | shootEffect   | [[特效][特效]] |      shootBig2 |
-    | smokeEffect   | [[特效][特效]] | shootBigSmoke2 |
-    | recieveEffect | [[特效][特效]] |        mineBig |
-    | shake         | float  |              3 |
+    | 接口         | 类型   |        默认值 | 备注 |
+    |---------------+--------+---------------+-|
+    | range         | float  |                | 范围 |
+    | rotateSpeed   | float  |           0.04 | 转动速度 |
+    | translation   | float  |              7 | |
+    | minDistribute | int    |             10 | 最小物品量 |
+    | knockback     | float  |              4 | 后坐力 |
+    | reloadTime    | float  |            100 | 重载时间 |
+    | shootEffect   | [[特效][特效]] |      shootBig2 | 射击特效 |
+    | smokeEffect   | [[特效][特效]] | shootBigSmoke2 | 冒烟特效 |
+    | recieveEffect | [[特效][特效]] |        mineBig | 到达特效 |
+    | shake         | float  |              3 | 摇晃 |
 
-    Notes:
-    * range is limited by ~driverBolt~'s max range, which is hard coded, so you cannot change it.
+    备注:
+    * 范围被 ~driverBolt~ 的范围限制, 无法更改.
 
     默认值:
     | 接口        | 默认值 |
@@ -1218,11 +1233,14 @@
     | hasPower     | true    |
     | outlineIcon  | true    |
 
-    Sprites:
+    额外贴图:
     * ~<name>-base~
-** Liquid Blocks
-*** LiquidBlock
-    继承 [[方块][方块]] -- For blocks that can carry liquids. Apart from the better 默认值, it also fetches extra sprites.
+** 液体方块M
+   :PROPERTIES:
+   :DESCRIPTION: 和液体做事的方块
+   :END:
+*** 液体方块
+    继承 [[方块][方块]] -- 用于有液体的方块. 比其他方块有更多参数, 和更多贴图.
 
     默认值:
 
@@ -1234,26 +1252,27 @@
    | group         | liquids |
    | outputsLiquid | true    |
 
-   Sprites:
+   额外贴图:
    * ~<name>-liquid~
    * ~<name>-top~
    * ~<name>-bottom~
 
-*** Pump
-    继承 [[LiquidBlock][LiquidBlock]]
+*** 泵
+    继承 [[液体方块][液体方块]]，英文：Pump
 
-    | 接口      | 类型  | 默认值 |
-    |------------+-------+---------|
-    | pumpAmount | float |       1 |
+    | 接口      | 类型  | 默认值 | 备注 |
+    |------------+-------+--------+-|
+    | pumpAmount | float |       1 | 出液体量 |
 
+     默认值：
     | 接口    | 默认值 |
     |----------+---------|
     | layer    | overlay |
     | group    | liquids |
     | floating | true    |
 
-*** Conduit
-    继承 [[LiquidBlock][LiquidBlock]]
+*** 导管
+    继承 [[液体方块][液体方块]]，英文：Conduit
 
     默认值:
 
@@ -1263,17 +1282,17 @@
     | solid    | false   |
     | floating | true    |
 
-    Sprite lookup name /(where ~i~ can be anything from 0-6)/:
+    额外贴图 /( ~i~ 可以被替换成 0-6)/:
     * ~<name>-top-<i>~
 
-*** LiquidRouter
-    继承 [[LiquidBlock][LiquidBlock]]
+*** 液体路由器
+    继承 [[液体方块][液体方块]]，英文：LiquidRouter
 
-*** LiquidTank
-    继承 [[LiquidRouter][LiquidRouter]]
+*** 液罐
+    继承 [[液体路由器][液体路由器]]，英文：LiquidTank
 
-*** LiquidJunction
-    继承 [[LiquidBlock][LiquidBlock]]
+*** 液体连接点
+    继承 [[液体方块][液体方块]]，英文：LiquidJunction
 
     | 接口      | 默认值 |
     |------------+---------|
@@ -1298,9 +1317,12 @@
     | hasLiquids    | true    |
     | outputsLiquid | true    |
     | group         | liquids |
-** Power
-*** PowerBlock
-    [[Abstract][Abstract]] 类型 which 继承 [[方块][方块]]
+** 能量
+   :PROPERTIES:
+   :DESCRIPTION: 和能量做事的方块
+   :END:
+*** 能量方块
+    [[Abstract][Abstract]] 修饰类继承 [[方块][方块]]
 
     默认值:
 
@@ -1311,13 +1333,13 @@
     | hasPower | true    |
     | group    | power   |
 
-*** PowerNode
-    继承 [[PowerBlock][PowerBlock]]
+*** 节点
+    继承 [[能量方块][能量方块]]，英文：PowerNode
 
-    | 接口      | 类型  | 默认值 |
-    |------------+-------+---------|
-    | laserRange | float |       6 |
-    | maxNodes   | int   |       3 |
+    | 接口      | 类型  | 默认值 | 备注 |
+    |------------+-------+--------+-|
+    | laserRange | float |       6 | 范围 |
+    | maxNodes   | int   |       3 | 接线限制数量 |
 
     默认值:
 
@@ -1329,8 +1351,8 @@
     | consumesPower | false   |
     | outputsPower  | false   |
 
-*** PowerDistributor
-    继承 [[PowerBlock][PowerBlock]]
+*** 能量运输器
+    继承 [[能量方块][能量方块]]，英文：PowerDistributor
 
     默认值:
     | 接口         | 默认值 |
@@ -1338,18 +1360,21 @@
     | consumesPower | false   |
     | outputsPower  | true    |
 
-*** Battery
-    继承 [[PowerDistributor][PowerDistributor]] -- Just a change of 默认值 for batteries.
+*** 电池
+    继承 [[能量运输器][能量运输器]] -- 就是一个普通方块.英文：Battery
 
-    Defauts:
+    默认值:
 
     | 接口         | 默认值 |
     |---------------+---------|
     | outputsPower  | true    |
     | consumesPower | true    |
 
-*** PowerGenerator
-    继承 [[PowerDistributor][PowerDistributor]] -- Base of power generators.
+*** 发电机
+    :PROPERTIES:
+    :DESCRIPTION: 基础发电机
+    :END:
+    继承 [[能量运输器][能量运输器]] -- 基础发电机.
 
     | 接口           | 类型      | 默认值             | notes      |
     |-----------------+-----------+---------------------+------------|
