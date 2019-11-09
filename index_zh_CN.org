@@ -89,7 +89,7 @@
    * ~content/blocks/~ 用来放 [[方块][方块]], 比如炮塔和地板;
    * ~content/mechs/~ 用来放 [[玩家机甲][玩家机甲]], 比如 ~tau~ 和 ~glaive~;
    * ~content/liquids/~ 用来放 [[液体][液体]], 比如 ~water~ 和 ~slag~;
-   * ~content/units/~ 用来放飞行或地面 [[单位][单位]], 比如 ~reaper~ 和 ~dagger~;
+   * ~content/units/~ 用来放飞行或地面 [[单位类][单位]], 比如 ~reaper~ 和 ~dagger~;
    * ~content/zones/~ 用来放 [[区域][区域]], 战役地图的配置文件.
 
    这个非常重要，这种结构是游戏本体加载mod所读取和结构。里面的各个文件名也很重要，比如在 ~content/blocks/<name>.json~ 目录的 ~name~ 将被当作数据节读取
@@ -373,7 +373,7 @@
   | idleSound           | [[音效][音效]]           |         none | 方块空闲时音效. |
   | idleSoundVolume     | float           |          0.5 | 空闲音效音量. |
   | requirements        | [[物品组][物品组]]       |              | 建筑方块的消耗，会影响到研究消耗，公式在下面. |
-  | category            | [[种类组][种类组]]        | distribution | 建造菜单上面的种类. |
+  | category            | [[内容菜单类型][种类组]]        | distribution | 建造菜单上面的种类. |
   | buildCost           | float           |              | 建造时间，在这里写没有用 |
   | buildVisibility     | [[建筑菜单可见性][建筑菜单可见性]] |       hidden | 这个物品在建筑菜单是否可见. |
   | buildCostMultiplier | float           |            1 | 方块建筑时间倍率. |
@@ -669,7 +669,7 @@
     | consumesPower | MAX_VALUE |
 
 *** 无限能源
-    继承 [[能量节点][能量节点]]，英文:PowerSource
+    继承 [[节点][能量节点]]，英文:PowerSource
 
     默认值:
 
@@ -785,8 +785,8 @@
     | 接口   | 类型   |   default | 备注 |
     |---------+--------+-----------+-|
     |         |        |       <r> | |
-    | openfx  | [[Effect][Effect]] |  dooropen | 开门特效 |
-    | closefx | [[Effect][Effect]] | doorclose | 关门特效 |
+    | openfx  | [[特效][特效]] |  dooropen | 开门特效 |
+    | closefx | [[特效][特效]] | doorclose | 关门特效 |
 
     默认值:
 
@@ -1106,7 +1106,7 @@
     * ~-<0..4>-<0..3>~ 例子: [[https://github.com/Anuken/Mindustry/tree/master/core/assets-raw/sprites/blocks/distribution/conveyors][Conveyors-sprites]]
 
 *** 装甲传送带
-    继承 [[Conveyor][Conveyor]]  -不接受两边来物从传送带，英文：ArmoredConveyor
+    继承 [[传送带][传送带]]  -不接受两边来物从传送带，英文：ArmoredConveyor
 
 *** 连接器
     继承 [[方块][方块]]，英文：Junction
@@ -1744,7 +1744,7 @@
     :PROPERTIES:
     :DESCRIPTION: 核心方块
     :END:
-    继承 [[StorageBlock]]，英文：CoreBlock
+    继承 [[存储方块][存储方块]]，英文：CoreBlock
 
     | 接口 | 类型 | 默认值 | 备注 |
     |-------+------+--------+-|
