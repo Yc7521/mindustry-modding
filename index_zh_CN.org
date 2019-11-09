@@ -443,7 +443,8 @@
      | liquid     | String |         | 消耗的 [[液体]] 名 |
      | amount     | float  |         | 一帧消耗量 |
 	 | timePeriod | float  | 60      | 下面 |
-    备注:
+    
+	备注:
     * ~timePeriod~ 例子: 消耗液体 10/s 和 10 秒的间隔时间会显示成 "100 秒", 如果没有时间无效化它会显示 "10液体/秒".这个用于普通加工厂.
 
    * <<能量消耗>> ~能量消耗~, consume or buffer power.
