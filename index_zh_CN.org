@@ -13,7 +13,7 @@
 
 #+TODO: TODO UNTESTED | DONE
 
-#+TEXINFO_HEADER: Modding documentation for Mindustry v99 (117)
+#+TEXINFO_HEADER: Modding documentation for Mindustry v99 (133)
 
 提出PR和issue建议请去作者 Github: https://github.com/SimonWoodburyForget/mindustry-modding
 
@@ -299,11 +299,20 @@
    * Chinese CN ~bundle_zh_CN.properties~
    * Chinese TW ~bundle_zh_TW.properties~
 
-** Schematic
+** 蓝图
 
-   Fields that require the type ~Schematic~ can either take a built-in loadout /(see the [[Zone]] section)/ a base64 string, or the stem name of a ~.msch~ file in the ~schematics/~ subdirectory.
+   需要 ~Schematic~ 接口的类，不能替换原版发射图 /(详情请看 [[区域]] 部分)/ 一个base64文字串,或者一个以 ~.msch~ 结尾的文件放在 ~schematics/~ 子目录里.
 
-   /As of now, the only purpose of schematics is to give a zone a loadout./
+   /现在,蓝图只能用于自定义发射图./
+
+** Mindustry JSON 格式
+
+   Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以下是和原版 JSON 格式的不同:
+   * ~//~ 双斜杠可以用于注释;
+   * ~//~ 双斜杠不能用于表示文字串;
+   * ~"~ 和 ~"~ 不是文字串所必须的;
+   * ~,~ 逗号在物品组 ~[]~ 和元素组中 ~{}~ 不是必须的;
+   * ~[ 值, ]~ 逗号可以包括在组里面.
 
 ** FAQ
     :PROPERTIES:
@@ -1010,7 +1019,7 @@
     |--------------+-------+--------+-|
     | burstSpacing | float |       5 | 爆裂半径 |
 *** 能量炮塔
-    [[Abstract][Abstract]] 修饰类继承 [[冷却炮塔][冷却炮塔]] -- 用电射击的炮.英文：PowerTurret
+    继承 [[冷却炮塔][冷却炮塔]] -- 用电射击的炮.英文：PowerTurret
 
     | 接口     | 类型       | 默认值 | 备注 |
     |-----------+------------+--------+-|
@@ -1311,10 +1320,6 @@
 *** 液体连接点
     继承 [[液体方块][液体方块]]，英文：LiquidJunction
 
-    | 接口      | 默认值 |
-    |------------+---------|
-    | hasLiquids | true    |
-
 *** 液体桥
     继承 [[物品桥][物品桥]]，英文：LiquidBridge
 
@@ -1504,7 +1509,7 @@
     |----------------+---------|
     | hasPower       | true    |
     | hasLiquids     | true    |
-    | liquidCapacity | 30f     |
+    | liquidCapacity | 30     |
     | hasItems       | true    |
     | outputsPower   | true    |
     | consumesPower  | true    |
@@ -2054,7 +2059,7 @@
 
    继承 [[内容]] 
 
-   一个 ~区域~ 是一个可以创建战役地图的类. /(区域不是地图)/
+   一个 ~区域~ 是一个可以创建战役地图 /(地图名要和区域JSON名相同)/ 的类. /(区域不是地图)/
 
    每个 ~区域~ 都有一个 ~生成器~, 当它们加载时, ~地图生成器~ 会加工这个地图 /加载一些装饰等./ 有一个要注意的是, 塔会删除地图上面的所有核心并在随机一个原核心处放置 ~发射图~ . 这让你的战役能有多个核心位置. /(原核心对生成后的没有影响, ~发射图~ 会生成其中的核心)/
 
@@ -2069,7 +2074,7 @@
    | conditionWave        | int           | MAX_VALUE   |  总波数          |
    | alwaysUnlocked       | boolean       | false       | 地图是否一直解锁 |
    | launchPeriod         | int           | 10          | 核心发射间隔波次. |
-   | loadout              | 蓝图     | basicShard  | 初始核心. |
+   | loadout              | [[蓝图]]     | basicShard  | 初始核心. |
    | resources            | [ String ]    |             | 一个 [[物品][物品]] 名字的组. |
    | requirements         | [ [[元素]] ] |             | 一组开启地图的条件. |
    | configureObjective   | [[元素]]     | ZoneWave 15 |  可自定义发射物品波次          |
