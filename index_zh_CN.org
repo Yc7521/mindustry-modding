@@ -76,7 +76,7 @@
    说明:
    * ~name~ 会用来引用你的mod，慎重地去命名来避免和其他mod的名字重复
    * ~description~ 是mod加载界面会显示的文本，尽量的写简洁扼要一点。
-   * ~dependencies~ 是非必须的;如果你想知道更多，去看[[#前置][前置]] 部分.
+   * ~dependencies~ 是非必须的;如果你想知道更多，去看[[前置][前置]] 部分.
 
 ** 内容
    :PROPERTIES:
@@ -85,12 +85,12 @@
 
    在你的mod的根目录你会有一个 ~content/~ 目录，这里是所有json文件存储的地方，各种type会有不一样的子文件夹，在这个文件夹里面有如下子文件夹:
 
-   * ~content/items/~ 用来放 [[#物品][物品]], 比如 ~copper~ 和 ~surge-alloy~;
-   * ~content/blocks/~ 用来放 [[#方块][方块]], 比如炮塔和地板;
-   * ~content/mechs/~ 用来放 [[#玩家机甲][玩家机甲]], 比如 ~tau~ 和 ~glaive~;
-   * ~content/liquids/~ 用来放 [[#液体][液体]], 比如 ~water~ 和 ~slag~;
-   * ~content/units/~ 用来放飞行或地面 [[#单位][单位]], 比如 ~reaper~ 和 ~dagger~;
-   * ~content/zones/~ 用来放 [[#区域][区域]], 战役地图的配置文件.
+   * ~content/items/~ 用来放 [[物品][物品]], 比如 ~copper~ 和 ~surge-alloy~;
+   * ~content/blocks/~ 用来放 [[方块][方块]], 比如炮塔和地板;
+   * ~content/mechs/~ 用来放 [[玩家机甲][玩家机甲]], 比如 ~tau~ 和 ~glaive~;
+   * ~content/liquids/~ 用来放 [[液体][液体]], 比如 ~water~ 和 ~slag~;
+   * ~content/units/~ 用来放飞行或地面 [[单位][单位]], 比如 ~reaper~ 和 ~dagger~;
+   * ~content/zones/~ 用来放 [[区域][区域]], 战役地图的配置文件.
 
    这个非常重要，这种结构是游戏本体加载mod所读取和结构。里面的各个文件名也很重要，比如在 ~content/blocks/<name>.json~ 目录的 ~name~ 将被当作数据节读取
 
@@ -335,7 +335,7 @@
    :DESCRIPTION: 方块的基础类
    :end:
 
-  继承 [[#方块存储][方块存储]] -- 所有的物品和方块的基础类，英文:Block
+  继承 [[方块存储][方块存储]] -- 所有的物品和方块的基础类，英文:Block
 
   | 接口               | 种类            |      默认值 | 解释      |
   |---------------------+-----------------+--------------+------------|
@@ -347,7 +347,7 @@
   | solidifes           | boolean         |              | 这个物体是否能变成固体. |
   | rotate              | boolean         |              | 这个物体是否能旋转 |
   | breakable           | boolean         |              | 这个方块是否能通过右键拆除 |
-  | placeableOn         | boolean         |         true | 这个 [[#地板][地板]] 是否能被放上方块. |
+  | placeableOn         | boolean         |         true | 这个 [[地板][地板]] 是否能被放上方块. |
   | insulated           | boolean         |        false | 这个方块是否绝缘. |
   | health              | int             |           -1 | 方块血量 |
   | baseExplosiveness   | float           |            0 | 方块基础爆炸性 |
@@ -355,32 +355,32 @@
   | size                | int             |            1 | 方块大小 |
   | expanded            | boolean         |        false | 是否超范围渲染. |
   | timers              | int             |            0 | 计时器最大记录时间. |
-  | fillesTile          | true            |              | 特殊的接口; 如果是false, [[#地板][地板]] 将会在这个方块上面渲染. |
+  | fillesTile          | true            |              | 特殊的接口; 如果是false, [[地板][地板]] 将会在这个方块上面渲染. |
   | alwaysReplace       | boolean         |        false | 这个方块是否自动自动填充空间 |
-  | group               | [[#方块组别][方块组别]]      |         none | 除非 ~canReplace~ 被重写, 同一组别的方块可以呼吸替换. |
+  | group               | [[方块组别][方块组别]]      |         none | 除非 ~canReplace~ 被重写, 同一组别的方块可以呼吸替换. |
   | priority            | TargetPriority  |         base | 当方块看到敌人时瞄准的优先配置. |
   | configurable        | boolean         |              | 这个方块是否能被打开GUI配置. |
   | consumesTap         | boolean         |              | 点击这个方块是否触发事件. |
   | posConfig           | boolean         |              | 配置这个方块是否需要点击. |
   | targetable          | boolean         |         true | 单位是否会攻击这个方块. |
   | canOverdrive        | boolean         |         true | 这个方块是否能超频. |
-  | outlineColor        | [[#颜色][颜色]]           |       404049 | 图标描边颜色. |
+  | outlineColor        | [[颜色][颜色]]           |       404049 | 图标描边颜色. |
   | outlineIcon         | boolean         |        false | 这个方块图标是否描边. |
   | hasShadow           | boolean         |         true | 这个方块是否有阴影. |
-  | breakSound          | [[#音效][音效]]           |         boom | 破坏方块时播放的音效. |
-  | activeSound         | [[#音效][音效]]           |         none | 方块工作时的音效，会循环播放 |
+  | breakSound          | [[音效][音效]]           |         boom | 破坏方块时播放的音效. |
+  | activeSound         | [[音效][音效]]           |         none | 方块工作时的音效，会循环播放 |
   | activeSoundVolume   | float           |          0.5 | 工作音效音量. |
-  | idleSound           | [[#音效][音效]]           |         none | 方块空闲时音效. |
+  | idleSound           | [[音效][音效]]           |         none | 方块空闲时音效. |
   | idleSoundVolume     | float           |          0.5 | 空闲音效音量. |
-  | requirements        | [[#物品组][物品组]]       |              | 建筑方块的消耗，会影响到研究消耗，公式在下面. |
-  | category            | [[#种类组][种类组]]        | distribution | 建造菜单上面的种类. |
+  | requirements        | [[物品组][物品组]]       |              | 建筑方块的消耗，会影响到研究消耗，公式在下面. |
+  | category            | [[种类组][种类组]]        | distribution | 建造菜单上面的种类. |
   | buildCost           | float           |              | 建造时间，在这里写没有用 |
-  | buildVisibility     | [[#建筑菜单可见性][建筑菜单可见性]] |       hidden | 这个物品在建筑菜单是否可见. |
+  | buildVisibility     | [[建筑菜单可见性][建筑菜单可见性]] |       hidden | 这个物品在建筑菜单是否可见. |
   | buildCostMultiplier | float           |            1 | 方块建筑时间倍率. |
   | instantTransfer     | boolean         |        false | 这个物品是否瞬间运输物品. |
   | alwaysUnlocked      | boolean         |        false |            |
-  | layer               | [[#渲染层][渲染层]]           |         null | 渲染在哪一层. |
-  | layer2              | [[#渲染层][渲染层]]           |         null | 额外渲染在哪一层. |
+  | layer               | [[渲染层][渲染层]]           |         null | 渲染在哪一层. |
+  | layer2              | [[渲染层][渲染层]]           |         null | 额外渲染在哪一层. |
 
 ** 消耗器
    :PROPERTIES:
@@ -401,7 +401,7 @@
    备注:
    * 你不能同时拥有 ~power~ 和 ~powerBuffered~
 
-   消耗物品例子 [[#消耗物品][消耗物品]] 和 [[消耗液体]]:
+   消耗物品例子 [[消耗物品][消耗物品]] 和 [[消耗液体]]:
    #+BEGIN_SRC json
    {
        "items": {
@@ -433,7 +433,7 @@
 
      | 接口 | 类型      |
      |-------+-----------|
-     | items | [[#物品组][物品组]] |
+     | items | [[物品组][物品组]] |
 
    * <<消耗液体>> ~消耗液体~, 消耗一种液体.
 
@@ -464,7 +464,7 @@
    :DESCRIPTION: 基础存储
    :END:
 
-   [[Abstract][Abstract]] 修饰类继承 [[#内容][内容]] -- 这里定义方块存储的资源.英文:BlockStorage
+   [[Abstract][Abstract]] 修饰类继承 [[内容][内容]] -- 这里定义方块存储的资源.英文:BlockStorage
 
    | 接口          | 种类      | 默认值 | 备注 |
    |----------------+-----------+---------|
@@ -478,7 +478,7 @@
    | itemCapacity   | int       |      10 | 物品储量 |
    | liquidCapacity | float     |      10 | 液体储量 |
    | item           | float     |      10 | |
-   | consumes       | [[#消耗器][消耗器]] |         |
+   | consumes       | [[消耗器][消耗器]] |         |
 
 ** 环境
    :PROPERTIES:
@@ -487,7 +487,7 @@
    环境方块只能在地图编辑器里面加入地图,它们也是决定游戏怎么玩的关键方块.这一些方块不会出现在地图上面除非你画一个地图来生成它们.
 
 *** 地板
-    继承 [[#方块][方块]] -- 环境里面的地板.需要贴图，可以在编辑器中看到。英文:Floor
+    继承 [[方块][方块]] -- 环境里面的地板.需要贴图，可以在编辑器中看到。英文:Floor
 
     | 接口             | 种类         | 默认值 | 备注      |
     |-------------------+--------------+---------+------------|
@@ -498,38 +498,38 @@
     | dragMultiplier    | float        |       0 | 地板减速倍率. |
     | damageTaken       | float        |       0 | 每 1/60秒受到的伤害. |
     | drownTime         | float        |       0 | 单位站在上面多久会淹死. |
-    | walkEffect        | [[#特效][特效]]       |  ripple | 单位在这个 [[#地板][地板]].上行走的特效 |
-    | drownUpdateEffect | [[#特效][特效]]       |  bubble | 单位在这个 [[#地板][地板]].上溺水的特效. |
-    | status            | [[#状态][状态]] |    none | 单位行走在上面时给予的状态. |
+    | walkEffect        | [[特效][特效]]       |  ripple | 单位在这个 [[地板][地板]].上行走的特效 |
+    | drownUpdateEffect | [[特效][特效]]       |  bubble | 单位在这个 [[地板][地板]].上溺水的特效. |
+    | status            | [[状态][状态]] |    none | 单位行走在上面时给予的状态. |
     | statusDuration    | float        |      60 | 状态持续时间. |
-    | liquidDrop        | [[#液体][液体]]       |         | 产出液体种类，用泵获取. |
-    | itemDrop          | [[#物品][物品]]         |         | 产出物品种类，用钻头采集. |
+    | liquidDrop        | [[液体][液体]]       |         | 产出液体种类，用泵获取. |
+    | itemDrop          | [[物品][物品]]         |         | 产出物品种类，用钻头采集. |
     | isLiquid          | boolean      |         | 这个方块是否会淹死单位. |
     | playerUnmineable  | boolean      |   false | 玩家是否不能直接挖此地板的矿物. |
-    | blendGroup        | [[#方块][方块]]        |    this | 这个地板不会拓展渲染到什么方块上. |
-    | updateEffect      | [[#特效][特效]]       |    none | 地板更新时的特效. |
-    | attributes        | [[#属性][属性]]   |         | 地板对各种机器的效率倍数. |
+    | blendGroup        | [[方块][方块]]        |    this | 这个地板不会拓展渲染到什么方块上. |
+    | updateEffect      | [[特效][特效]]       |    none | 地板更新时的特效. |
+    | attributes        | [[属性][属性]]   |         | 地板对各种机器的效率倍数. |
 
     多种贴图命名规则:
     - ~<name><1..>~
 
 *** 覆盖地板
 
-    继承 [[#地板][地板]] -- 一种地板渲染在其他地板上一层.英文:OverlayFloor
+    继承 [[地板][地板]] -- 一种地板渲染在其他地板上一层.英文:OverlayFloor
 
     例子:
     * ~tendrils~
 
 *** 双层覆盖地板
 
-    继承 [[#覆盖地板][覆盖地板]]，英文:DoubleOverlayFloor
+    继承 [[覆盖地板][覆盖地板]]，英文:DoubleOverlayFloor
 
     例子:
     * ~pebbles~
 
 *** 矿物
 
-    继承 [[#覆盖地板][覆盖地板]] -- 获取特定的物品所产生的矿物.英文:OreBlock
+    继承 [[覆盖地板][覆盖地板]] -- 获取特定的物品所产生的矿物.英文:OreBlock
 
     | 接口    | 默认值 |
     |----------+---------|
@@ -538,7 +538,7 @@
 
 *** 岩石
 
-    继承 [[#方块][方块]]，英文:Rock
+    继承 [[方块][方块]]，英文:Rock
 
     | 接口    | 类型 |
     |----------+------|
@@ -553,7 +553,7 @@
 
 *** 静止墙
 
-    继承 [[#岩石][岩石]] -不可破坏的墙，英文:StaticWall
+    继承 [[岩石][岩石]] -不可破坏的墙，英文:StaticWall
 
     默认值:
     | 接口         | 默认值 |
@@ -569,7 +569,7 @@
 
 *** 静止树
 
-    继承 [[#静止墙][静止墙]]，英文:StaticTree
+    继承 [[静止墙][静止墙]]，英文:StaticTree
 
     比如:
     * ~spore-pine~
@@ -579,7 +579,7 @@
 
 *** 树
 
-    继承 [[#方块][方块]]，英文:TreeBlock
+    继承 [[方块][方块]]，英文:TreeBlock
 
     默认值:
     | 接口    | 默认值 |
@@ -592,16 +592,16 @@
    :DESCRIPTION: 加工物品的方块
    :END:
 *** 普通加工厂
-    继承 [[#方块][方块]]，英文:GenericCratfer
+    继承 [[方块][方块]]，英文:GenericCratfer
 
     | 接口              | 类型        | 默认值 | 备注 |
     |--------------------+-------------+--------+--|
     |                    |             |     <r> |
-    | outputItem         | [[#物品组][物品组]]   |         | 输出物品 |
-    | outputLiquid       | [[#液体组][液体组]] |         | 输出液体 |
+    | outputItem         | [[物品组][物品组]]   |         | 输出物品 |
+    | outputLiquid       | [[液体组][液体组]] |         | 输出液体 |
     | craftTime          | float       |      80 | 加工时间 |
-    | craftEffect        | [[#特效][特效]]      |    none | 工作特效 |
-    | updateEffect       | [[#特效][特效]]      |    none | 更新特效 |
+    | craftEffect        | [[特效][特效]]      |    none | 工作特效 |
+    | updateEffect       | [[特效][特效]]      |    none | 更新特效 |
     | updateEffectChance | float       |    0.04 | 触发更新特效概率 |
 
     默认值:
@@ -616,31 +616,31 @@
     | idleSoundVolume |    0.03 |
 
 *** 普通冶炼炉
-    继承 [[#普通加工厂][普通加工厂]] -- 一个有工作贴图的普通加工厂.英文:GenericSmelter
+    继承 [[普通加工厂][普通加工厂]] -- 一个有工作贴图的普通加工厂.英文:GenericSmelter
 
     | 接口      | 类型  | 默认值 | 备注 |
     |------------+-------+-------+-----|
     |            |       | |     <r> |
-    | flameColor | [[#颜色][颜色]] |  ffc999 | 火焰颜色 |
+    | flameColor | [[颜色][颜色]] |  ffc999 | 火焰颜色 |
 
     额外贴图:
     * ~-top~
 
 *** 分离机
-    继承 [[#方块][方块]]
+    继承 [[方块][方块]]
 
     分离机是一个输入液体并以物品组中和数量为概率随机输出物品的机器.英文:Separator
 
     | 接口            | 类型      | 默认值 | 备注      |
     |------------------+-----------+---------+------------|
     |                  |           |         | <10>       |
-    | results          | [[#物品组][物品组]] |         | *[必须]*输出物品及概率 |
+    | results          | [[物品组][物品组]] |         | *[必须]*输出物品及概率 |
     | craftTime        | float     |         |            |
     | spinnerRadius    | float     |     2.5 |  转子范围          |
     | spinnerLength    | float     |       1 |   转子长         |
     | spinnerThickness | float     |       1 |    转子宽        |
     | spinnerSpeed     | float     |       2 |   转子速度         |
-    | color            | [[#颜色][颜色]]     |  858585 | 工作颜色           |
+    | color            | [[颜色][颜色]]     |  858585 | 工作颜色           |
     | liquidRegion     | int       |         |    液体区域        |
 
     默认值:
@@ -659,7 +659,7 @@
    :DESCRIPTION: 禁忌的东西
    :END:
 *** 能量黑洞
-    继承 [[#能量方块][能量方块]]，英文:PowerVoid
+    继承 [[能量方块][能量方块]]，英文:PowerVoid
 
     默认值:
 
@@ -669,7 +669,7 @@
     | consumesPower | MAX_VALUE |
 
 *** 无限能源
-    继承 [[#能量节点][能量节点]]，英文:PowerSource
+    继承 [[能量节点][能量节点]]，英文:PowerSource
 
     默认值:
 
@@ -681,7 +681,7 @@
     | consumesPower |   false |
 
 *** 物品源
-    继承 [[#方块][方块]]，英文:ItemSource
+    继承 [[方块][方块]]，英文:ItemSource
 
     默认值:
 
@@ -695,7 +695,7 @@
     | configurable |           true |
 
 *** 物品黑洞
-    继承 [[#方块][方块]]，英文:ItemVoid
+    继承 [[方块][方块]]，英文:ItemVoid
 
     默认值:
 
@@ -706,7 +706,7 @@
     | soild  |    true |
 
 *** 液体源
-    继承 [[#方块][方块]]，英文:LiquidSource
+    继承 [[方块][方块]]，英文:LiquidSource
 
     默认值:
 
@@ -722,7 +722,7 @@
 
 ** 逻辑
 *** 消息块
-    继承 [[#方块][方块]]，英文：MessageBlock
+    继承 [[方块][方块]]，英文：MessageBlock
 
     | 接口         | 类型 | 默认值 | 备注 |
     |---------------+------+----+----|
@@ -743,7 +743,7 @@
    :DESCRIPTION: 保护你的东西的方块
    :END:
 *** 墙
-    继承 [[#方块][方块]]，英文：Wall
+    继承 [[方块][方块]]，英文：Wall
 
     | 接口    | 类型 | 默认值 |
     |----------+------+---------|
@@ -761,7 +761,7 @@
     | buildCostMultiplier |       5 |
 
 *** 反射墙
-    继承 [[#墙][墙]] -- 可以反射低伤害子弹的墙.英文：DeflectorWall
+    继承 [[墙][墙]] -- 可以反射低伤害子弹的墙.英文：DeflectorWall
 
     | 接口            | 类型  | 默认值 | 备注 |
     |------------------+-------+---+------|
@@ -770,7 +770,7 @@
     | maxDamageDeflect | float |      10 | 最大反射伤害 |
 
 *** 闪电墙
-    继承 [[#墙][墙]] -- 一种被攻击产生闪电的墙.英文：SurgeWall
+    继承 [[墙][墙]] -- 一种被攻击产生闪电的墙.英文：SurgeWall
 
     | 接口           | 类型  | 默认值 | 备注 |
     |-----------------+-------+----+-----|
@@ -780,7 +780,7 @@
     | lightningLength | int   |      17 | 闪电长度 |
 
 *** 门
-    继承 [[#墙][墙]]，英文:Wall
+    继承 [[墙][墙]]，英文:Wall
 
     | 接口   | 类型   |   default | 备注 |
     |---------+--------+-----------+-|
@@ -800,13 +800,13 @@
     * ~<name>-open~
 
 *** 修理投影
-    继承 [[#方块][方块]]，英文：MendProjector
+    继承 [[方块][方块]]，英文：MendProjector
 
     | 接口           | 类型  | 默认值 | 备注 |
     |-----------------+-------+---------+-|
     |                 |       |     <r> | |
-    | color           | [[#颜色][颜色]] |  84f491 | 颜色 |
-    | phase           | [[#颜色][颜色]] |  ffd59e | 加速颜色 |
+    | color           | [[颜色][颜色]] |  84f491 | 颜色 |
+    | phase           | [[颜色][颜色]] |  ffd59e | 加速颜色 |
     | reload          | float |     250 | 修复间隔 |
     | range           | float |      60 | 修复距离 |
     | healPercent     | float |      12 | 修复百分比 |
@@ -818,13 +818,13 @@
     * ~<name>-top~
 
 *** 超频投影
-    继承 [[#方块][方块]]，英文：OverdriveProjector
+    继承 [[方块][方块]]，英文：OverdriveProjector
 
     | 接口           | 类型  | 默认值 | 备注 |
     |-----------------+-------+---------+-|
     |                 |       |     <r> | |
-    | color           | [[#颜色][颜色]] |  feb380 | 颜色 | 
-    | phase           | [[#颜色][颜色]] |  ffd59e | 加速颜色 |
+    | color           | [[颜色][颜色]] |  feb380 | 颜色 | 
+    | phase           | [[颜色][颜色]] |  ffd59e | 加速颜色 |
     | reload          | float |      60 | 重载间隔 |
     | range           | float |      80 | 范围 |
     | speedBoost      | float |     1.5 | 速度加成 |
@@ -847,7 +847,7 @@
 
 *** 力墙投影
 
-    继承 [[#方块][方块]]，英文：ForceProjector
+    继承 [[方块][方块]]，英文：ForceProjector
 
     | 接口              | 类型  | 默认值 | 备注 |
     |--------------------+-------+---------+-|
@@ -869,9 +869,9 @@
     | canOverdrive | false       |
     | hasLiquids   | true        |
     | hasItems     | true        |
-    | consumes     | [[#冷液体][冷液体]] |
+    | consumes     | [[冷液体][冷液体]] |
 
-    <<冷液体>>[[#冷液体][冷液体]]:
+    <<冷液体>>[[冷液体][冷液体]]:
     * 温度小于0.5
     * 可燃性小于0.1
     * booster：true
@@ -882,7 +882,7 @@
     * ~<name>-top~
 
 *** 地雷
-    继承 [[#方块][方块]]，英文：ShockMine
+    继承 [[方块][方块]]，英文：ShockMine
 
     | 接口      | 类型  | 默认值 | 备注 |
     |------------+-------+---------+-|
@@ -909,16 +909,16 @@
 
 *** 炮塔
 
-    [[Abstract][Abstract]] 修饰类继承 [[#方块][方块]] -- 所有炮塔的父类 [[炮塔s]], 有所有炮塔的一般参数.
+    [[Abstract][Abstract]] 修饰类继承 [[方块][方块]] -- 所有炮塔的父类 [[炮塔s]], 有所有炮塔的一般参数.
 
     | 接口         | 类型    |    默认值 | 备注      |
     |---------------+---------+------------+------------|
     |               |         |            | <10>       |
-    | heatColor     | [[#颜色][颜色]]   | turretHeat |      发热颜色      |
-    | shootEffect   | [[#特效][特效]]  |       none |      射击特效      |
-    | smoke特效   | [[#特效][特效]]  |       none |           冒烟特效 |
-    | ammoUseEffect | [[#特效][特效]]  |       none |        用子弹特效    |
-    | shootSound    | [[#音效][音效]]   |      shoot |          射击声音  |
+    | heatColor     | [[颜色][颜色]]   | turretHeat |      发热颜色      |
+    | shootEffect   | [[特效][特效]]  |       none |      射击特效      |
+    | smoke特效   | [[特效][特效]]  |       none |           冒烟特效 |
+    | ammoUseEffect | [[特效][特效]]  |       none |        用子弹特效    |
+    | shootSound    | [[音效][音效]]   |      shoot |          射击声音  |
     | ammoPerShot   | int     |          1 |      射击一次用子弹      |
     | ammoEjectBack | float   |          1 |        自动返还    |
     | range         | float   |         50 |       范围     |
@@ -953,13 +953,13 @@
 
 *** 冷却炮塔
 
-    继承 [[#炮塔][炮塔]] -- 这是一个用 [[液体]] 加速的炮塔的类.英文：CoolTurret
+    继承 [[炮塔][炮塔]] -- 这是一个用 [[液体]] 加速的炮塔的类.英文：CoolTurret
 
     | 接口             | 类型   | 默认值 | 备注      |
     |-------------------+--------+---------+------------|
     |                   |        |         | <10>       |
     | coolantMultiplier | float  | 5       | 冷却百分比. |
-    | coolEffect        | [[#特效][特效]] | shoot   |     冷却特效       |
+    | coolEffect        | [[特效][特效]] | shoot   |     冷却特效       |
 
     备注:
     * 不接受会燃烧的液体
@@ -967,7 +967,7 @@
 
 *** 物品炮塔
 
-    继承 [[#冷却炮塔][冷却炮塔]] -- 用物品作子弹的炮塔. 用 ~ammo~ 接口加上 [[子弹类]] 来实现.英文：ItemTurret
+    继承 [[冷却炮塔][冷却炮塔]] -- 用物品作子弹的炮塔. 用 ~ammo~ 接口加上 [[子弹类]] 来实现.英文：ItemTurret
 
     #+BEGIN_SRC json
     {
@@ -986,7 +986,7 @@
     | 接口   | 类型                 | 默认值 | 备注 |
     |---------+----------------------+----------+-|
     | maxAmmo | int                  |      30 | 弹仓 |
-    | ammo    | { [[#物品][物品]]: [[#子弹类][子弹类]] } |         | 使用子弹 |
+    | ammo    | { [[物品][物品]]: [[子弹类][子弹类]] } |         | 使用子弹 |
 
     默认值:
 
@@ -995,7 +995,7 @@
     | hasItems | true    |
 
 *** 双管炮
-    继承 [[#物品炮塔][物品炮塔]] -- 有两个炮口的炮.英文：DoubleTurret
+    继承 [[物品炮塔][物品炮塔]] -- 有两个炮口的炮.英文：DoubleTurret
 
     | 接口     | 类型  | 默认值 | 备注
     |-----------+-------+------+---|
@@ -1007,24 +1007,24 @@
     | shots |       2 |
 
 *** 火炮塔
-    继承 [[#物品炮塔][物品炮塔]] -- 火炮塔有特殊的命中计算.英文：ArtilleryTurret
+    继承 [[物品炮塔][物品炮塔]] -- 火炮塔有特殊的命中计算.英文：ArtilleryTurret
 
     | 接口     | 默认值 |
     |-----------+---------|
     | targetAir | false   |
 
 *** 破片炮塔
-    继承 [[#物品炮塔][物品炮塔]] -- 射速很快的炮塔.英文：BurstTurret
+    继承 [[物品炮塔][物品炮塔]] -- 射速很快的炮塔.英文：BurstTurret
 
     | 接口        | 类型  | 默认值 | 备注 |
     |--------------+-------+--------+-|
     | burstSpacing | float |       5 | 爆裂半径 |
 *** 能量炮塔
-    继承 [[#冷却炮塔][冷却炮塔]] -- 用电射击的炮.英文：PowerTurret
+    继承 [[冷却炮塔][冷却炮塔]] -- 用电射击的炮.英文：PowerTurret
 
     | 接口     | 类型       | 默认值 | 备注 |
     |-----------+------------+--------+-|
-    | shootType | [[#子弹类][子弹类]] |         | |
+    | shootType | [[子弹类][子弹类]] |         | |
     | powerUse  | float      |       1 | 耗能 |
 
     默认值:
@@ -1046,7 +1046,7 @@
     | chargeBeginEffect | [[特效]] |    none | 开始充能特效 |
 
 *** 激光炮
-    继承 [[#能量炮塔][能量炮塔]]，英文：LaserTurret
+    继承 [[能量炮塔][能量炮塔]]，英文：LaserTurret
 
     | 接口           | 类型  | 默认值 | 备注      |
     |-----------------+-------+---------+------------|
@@ -1081,7 +1081,7 @@
    :DESCRIPTION: 让物品动的方块
    :END:
 *** 传送带
-    继承 [[#方块][方块]]，英文：Conveyor
+    继承 [[方块][方块]]，英文：Conveyor
 
     | 接口 | 类型  | 默认值 | 备注 |
     |-------+-------+-----+---|
@@ -1109,7 +1109,7 @@
     继承 [[Conveyor][Conveyor]]  -不接受两边来物从传送带，英文：ArmoredConveyor
 
 *** 连接器
-    继承 [[#方块][方块]]，英文：Junction
+    继承 [[方块][方块]]，英文：Junction
 
     | 接口    | 类型     | 默认值 | 备注      |
     |----------+----------+---------+------------|
@@ -1127,7 +1127,7 @@
     | unloadable      | false          |
 
 *** 物品桥
-    继承 [[#方块][方块]]，英文：ItemBridge
+    继承 [[方块][方块]]，英文：ItemBridge
 
     | 接口         | 类型  | 默认值 | 备注 |
     |---------------+-------+------+---|
@@ -1155,7 +1155,7 @@
     * ~<name>-arrow~ 例子: [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/blocks/distribution/bridge-conveyor-arrow.png][bridge-conveyor-arrow]]
 
 *** 延展物品桥
-    继承 [[#物品桥][物品桥]]，英文：ExtendingItemBridge
+    继承 [[物品桥][物品桥]]，英文：ExtendingItemBridge
 
     默认值:
     | 接口    | 默认值 |
@@ -1163,7 +1163,7 @@
     | hasItems | true    |
 
 *** 储物物品桥
-    继承 [[#延展物品桥][延展物品桥]]，英文：BufferedItemBridge
+    继承 [[延展物品桥][延展物品桥]]，英文：BufferedItemBridge
 
     | 接口          | 类型  | 默认值 | 备注 |
     |----------------+-------+----+-----|
@@ -1178,7 +1178,7 @@
 
 *** 分类器
 
-    继承 [[#方块][方块]]，英文：Sorter
+    继承 [[方块][方块]]，英文：Sorter
 
     | 接口  | 类型    | 默认值 | 备注        |
     |--------+---------+---------+--------------|
@@ -1196,7 +1196,7 @@
     | unloadable      | false          |
 
 *** 溢流门
-    继承 [[#方块][方块]]，英文：OverflowGate
+    继承 [[方块][方块]]，英文：OverflowGate
 
     | 接口 | 类型  | 默认值 | 
     |-------+-------+---------|
@@ -1213,7 +1213,7 @@
     | unloadable | false          |
 
 *** 路由器
-    继承 [[#方块][方块]]，英文：Router
+    继承 [[方块][方块]]，英文：Router
 
     | 接口 | 类型  | 默认值 | 
     |-------+-------+---------|
@@ -1230,7 +1230,7 @@
     | unloadable | false          |
 	| itemCapacity | 1            |
 *** 质量驱动器
-    继承 [[#方块][方块]] -- 用 ~driverBolt~ 来传输物品.英文：MassDriver
+    继承 [[方块][方块]] -- 用 ~driverBolt~ 来传输物品.英文：MassDriver
 
     | 接口         | 类型   |        默认值 | 备注 |
     |---------------+--------+---------------+-|
@@ -1240,9 +1240,9 @@
     | minDistribute | int    |             10 | 最小物品量 |
     | knockback     | float  |              4 | 后坐力 |
     | reloadTime    | float  |            100 | 重载时间 |
-    | shootEffect   | [[#特效][特效]] |      shootBig2 | 射击特效 |
-    | smokeEffect   | [[#特效][特效]] | shootBigSmoke2 | 冒烟特效 |
-    | recieveEffect | [[#特效][特效]] |        mineBig | 到达特效 |
+    | shootEffect   | [[特效][特效]] |      shootBig2 | 射击特效 |
+    | smokeEffect   | [[特效][特效]] | shootBigSmoke2 | 冒烟特效 |
+    | recieveEffect | [[特效][特效]] |        mineBig | 到达特效 |
     | shake         | float  |              3 | 摇晃 |
 
     备注:
@@ -1267,7 +1267,7 @@
    :DESCRIPTION: 和液体做事的方块
    :END:
 *** 液体方块
-    继承 [[#方块][方块]] -- 用于有液体的方块. 比其他方块有更多参数, 和更多贴图.
+    继承 [[方块][方块]] -- 用于有液体的方块. 比其他方块有更多参数, 和更多贴图.
 
     默认值:
 
@@ -1285,7 +1285,7 @@
    * ~<name>-bottom~
 
 *** 泵
-    继承 [[#液体方块][液体方块]]，英文：Pump
+    继承 [[液体方块][液体方块]]，英文：Pump
 
     | 接口      | 类型  | 默认值 | 备注 |
     |------------+-------+--------+-|
@@ -1299,7 +1299,7 @@
     | floating | true    |
 
 *** 导管
-    继承 [[#液体方块][液体方块]]，英文：Conduit
+    继承 [[液体方块][液体方块]]，英文：Conduit
 
     默认值:
 
@@ -1313,16 +1313,16 @@
     * ~<name>-top-<i>~
 
 *** 液体路由器
-    继承 [[#液体方块][液体方块]]，英文：LiquidRouter
+    继承 [[液体方块][液体方块]]，英文：LiquidRouter
 
 *** 液罐
-    继承 [[#液体路由器][液体路由器]]，英文：LiquidTank
+    继承 [[液体路由器][液体路由器]]，英文：LiquidTank
 
 *** 液体连接点
-    继承 [[#液体方块][液体方块]]，英文：LiquidJunction
+    继承 [[液体方块][液体方块]]，英文：LiquidJunction
 
 *** 液体桥
-    继承 [[#物品桥][物品桥]]，英文：LiquidBridge
+    继承 [[物品桥][物品桥]]，英文：LiquidBridge
 
     | 接口         | 默认值 |
     |---------------+---------|
@@ -1332,7 +1332,7 @@
     | group         | liquids |
 
 *** 拓展液体桥
-    继承 [[#物品桥][物品桥]]，英文：LiquidExtendingBridge
+    继承 [[物品桥][物品桥]]，英文：LiquidExtendingBridge
 
     | 接口         | 默认值 |
     |---------------+---------|
@@ -1345,7 +1345,7 @@
    :DESCRIPTION: 和能量做事的方块
    :END:
 *** 能量方块
-    [[Abstract][Abstract]] 修饰类继承 [[#方块][方块]]
+    [[Abstract][Abstract]] 修饰类继承 [[方块][方块]]
 
     默认值:
 
@@ -1357,7 +1357,7 @@
     | group    | power   |
 
 *** 节点
-    继承 [[#能量方块][能量方块]]，英文：PowerNode
+    继承 [[能量方块][能量方块]]，英文：PowerNode
 
     | 接口      | 类型  | 默认值 | 备注 |
     |------------+-------+--------+-|
@@ -1375,7 +1375,7 @@
     | outputsPower  | false   |
 
 *** 能量运输器
-    继承 [[#能量方块][能量方块]]，英文：PowerDistributor
+    继承 [[能量方块][能量方块]]，英文：PowerDistributor
 
     默认值:
     | 接口         | 默认值 |
@@ -1384,7 +1384,7 @@
     | outputsPower  | true    |
 
 *** 电池
-    继承 [[#能量运输器][能量运输器]] -- 就是一个普通方块.英文：Battery
+    继承 [[能量运输器][能量运输器]] -- 就是一个普通方块.英文：Battery
 
     默认值:
 
@@ -1397,7 +1397,7 @@
     :PROPERTIES:
     :DESCRIPTION: 基础发电机
     :END:
-    继承 [[#能量运输器][能量运输器]]，英文：PowerGenerator
+    继承 [[能量运输器][能量运输器]]，英文：PowerGenerator
 
     发电机会用 [[消耗器]] 产生能量.
 
@@ -1412,15 +1412,15 @@
     | baseExplosiveness | 5       |
 
 **** 地热发电机
-    继承 [[#发电机][发电机]] -- 用热 [[属性]] 的地板发电. 输出公式是 ~powerProduction * heat~, 和 ~heat~ 必须大于 ~0.01~.英文：ThermalGenerator
+    继承 [[发电机][发电机]] -- 用热 [[属性]] 的地板发电. 输出公式是 ~powerProduction * heat~, 和 ~heat~ 必须大于 ~0.01~.英文：ThermalGenerator
 
     | 接口          | 类型   | 默认值 | 备注      |
     |----------------+--------+---------+------------|
     |                |        |         | <10>       |
-    | generateEffect | [[#特效][特效]] | none    |   发电特效         |
+    | generateEffect | [[特效][特效]] | none    |   发电特效         |
 
 **** 物品液体发电机
-    继承 [[#发电机][发电机]] -- 消耗物品液体的基础发电机类.液体会比物品优先消耗.英文：ItemLiquidGenerator
+    继承 [[发电机][发电机]] -- 消耗物品液体的基础发电机类.液体会比物品优先消耗.英文：ItemLiquidGenerator
 
    | 接口               | 类型    | 默认值       | 备注      |
    |---------------------+---------+---------------+------------|
@@ -1429,9 +1429,9 @@
    | itemDuration        | float   | 70            | 一个物品发电时间. |
    | minLiquidEfficiency | float   | 0.2           | 液体最小效率           |
    | maxLiquidGenerate   | float   | 0.4           | 一帧消耗流体. |
-   | generateEffect      | [[#特效][特效]]  | generatespark |      发电特效      |
-   | explodeEffect       | [[#特效][特效]]  | generatespark |    爆炸特效        |
-   | heatColor           | [[#颜色][颜色]]   | ff9b59        |     热的颜色       |
+   | generateEffect      | [[特效][特效]]  | generatespark |      发电特效      |
+   | explodeEffect       | [[特效][特效]]  | generatespark |    爆炸特效        |
+   | heatColor           | [[颜色][颜色]]   | ff9b59        |     热的颜色       |
    | randomlyExplode     | boolean | true          |     随机爆炸       |
    | default            | boolean | false         |      默认值      |
 
@@ -1444,11 +1444,11 @@
    * ~<name>-liquid~
 
 **** 物品发电机
-    继承 [[#物品液体发电机][物品液体发电机]] -- 从物体中发电.英文：SingleTypeGenerator
+    继承 [[物品液体发电机][物品液体发电机]] -- 从物体中发电.英文：SingleTypeGenerator
 **** 火力发电机
-    继承 [[#物品液体发电机][物品液体发电机]] -- 通过可燃物发电.英文：BurnerGenerator
+    继承 [[物品液体发电机][物品液体发电机]] -- 通过可燃物发电.英文：BurnerGenerator
 **** 衰变发电机
-    继承 [[#物品液体发电机][物品液体发电机]] -- 通过辐射性发电.英文：DecayGenerator
+    继承 [[物品液体发电机][物品液体发电机]] -- 通过辐射性发电.英文：DecayGenerator
 
     默认值:
     | 接口      | 默认值 |
@@ -1457,19 +1457,19 @@
     | hasLiquids | false   |
 
 *** 太阳能发电机
-    继承 [[#发电机][发电机]] -- 一个一直满效率的发电机.英文：SolarGenerator
+    继承 [[发电机][发电机]] -- 一个一直满效率的发电机.英文：SolarGenerator
 
     备注:
     * 相比于其他发电机，被怪打优先度最低.
 
 **** 核电站
-    继承 [[#发电机][发电机]] -- 通过物品除了发电，无冷却爆炸.英文：NuclearReactor
+    继承 [[发电机][发电机]] -- 通过物品除了发电，无冷却爆炸.英文：NuclearReactor
 
     | 接口           | 类型  |  默认值 | 备注      |
     |-----------------+-------+----------+------------|
     |                 |       |          | <10>       |
-    | coolColor       | [[#颜色][颜色]] | ffffff00 |  冷却液颜色          |
-    | hotColor        | [[#颜色][颜色]] | ff9575a3 |     过热颜色       |
+    | coolColor       | [[颜色][颜色]] | ffffff00 |  冷却液颜色          |
+    | hotColor        | [[颜色][颜色]] | ff9575a3 |     过热颜色       |
     | itemDuration    | float |      120 | 一个物品发电时间 |
     | heating         | float |     0.01 | 每帧乘容量百分比产热 |
     | smokeThreshold  | float |      0.3 | 开始冒烟温度 |
@@ -1492,7 +1492,7 @@
     * ~<name>-lights~ 亮光部分
 
 **** 冲击反应堆
-    继承 [[#发电机][发电机]] -- 需要能量和时间启动的发电机.英文：ImpactReactor
+    继承 [[发电机][发电机]] -- 需要能量和时间启动的发电机.英文：ImpactReactor
 
     | 接口           | 类型  | 默认值 | 备注      |
     |-----------------+-------+---------+------------|
@@ -1502,8 +1502,8 @@
     | itemDuration    | float |      60 | 一个物品发电时间           |
     | explosionRadius | int   |      50 |  爆炸范围          |
     | explosionDamage | int   |    2000 |  爆炸伤害          |
-    | plasma1         | [[#颜色][颜色]] |  ffd06b |   等离子体1颜色         |
-    | plasma2         | [[#颜色][颜色]] |  ff361b |   等离子体2颜色         |
+    | plasma1         | [[颜色][颜色]] |  ffd06b |   等离子体1颜色         |
+    | plasma2         | [[颜色][颜色]] |  ff361b |   等离子体2颜色         |
 
     默认值:
     | 接口          | 默认值 |
@@ -1523,7 +1523,7 @@
    :DESCRIPTION: 从自然获取资源的工厂
    :END:
 *** 钻头
-    继承 [[#方块][方块]] -- 一组能从 [[矿物]] 获取物品的方块.英文：Drill
+    继承 [[方块][方块]] -- 一组能从 [[矿物]] 获取物品的方块.英文：Drill
 
     | 接口                | 类型    | 默认值        | 备注      |
     |----------------------+---------+----------------+------------|
@@ -1533,12 +1533,12 @@
     | liquidBoostIntensity | float   | 1.6            | 液体加速倍率. |
     | warmupSpeed          | float   | 0.02           | 预热速度. |
     | drawMineItem         | boolean | false          | 是否显示正在挖什么. |
-    | drillEffect          | [[#特效][特效]]  | mine           | 工作特效. |
+    | drillEffect          | [[特效][特效]]  | mine           | 工作特效. |
     | rotateSpeed          | float   | 2              | 转动速度. |
-    | updateEffect         | [[#特效][特效]]  | pulverizeSmall | 随机特效. |
+    | updateEffect         | [[特效][特效]]  | pulverizeSmall | 随机特效. |
     | updateEffectChance   | float   | 0.02           | 随机特效概率. |
     | drawRim              | boolean | false          |   是否画悬臂         |
-    | heatColor            | [[#颜色][颜色]]   | ff5512         |    加热颜色        |
+    | heatColor            | [[颜色][颜色]]   | ff5512         |    加热颜色        |
 
     默认值:
     | 接口           | 默认值 |
@@ -1559,15 +1559,15 @@
     * ~<name>-top~
 
 *** 固体泵
-    继承 [[#泵][泵]] -- 一个用能量在固体地面抽液体的机器，只能放在固体上面.英文：SolidPump
+    继承 [[泵][泵]] -- 一个用能量在固体地面抽液体的机器，只能放在固体上面.英文：SolidPump
 
     | 接口              | 类型      | 默认值 | 备注 |
     |--------------------+-----------+-------+--|
-    | result             | [[#液体][液体]]    | water   | 产物 |
-    | updateEffect       | [[#特效][特效]]    | none    | 随机特效 |
+    | result             | [[液体][液体]]    | water   | 产物 |
+    | updateEffect       | [[特效][特效]]    | none    | 随机特效 |
     | updateEffectChance | float     | 0.02    | 随机特效概率 |
     | rotateSpeed        | float     | 1       | 转动速度 |
-    | attribute          | [[#属性][属性]] |         | 加速需求属性 |
+    | attribute          | [[属性][属性]] |         | 加速需求属性 |
 
     默认值:
     | 接口    | 默认值 |
@@ -1578,7 +1578,7 @@
     * ~<name>-liquid~
 
 *** 培养机
-    继承 [[#普通加工厂][普通加工厂]]，英文：Cultivator
+    继承 [[普通加工厂][普通加工厂]]，英文：Cultivator
 
     | 接口      | 类型  | 默认值 | 备注 |
     |------------+-------+------+---|
@@ -1594,7 +1594,7 @@
     * ~<name>-top~
 
 *** 石油钻
-    继承 [[#固体泵][固体泵]]，英文：Fracker
+    继承 [[固体泵][固体泵]]，英文：Fracker
 
     | 接口       | 默认值 | 备注 |
     |-------------+--------+-|
@@ -1610,13 +1610,13 @@
     * ~<name>-rotater~
     * ~<name>-top~
 *** 焚化炉
-    继承 [[#方块][方块]]，英文：Incinerator
+    继承 [[方块][方块]]，英文：Incinerator
 
     | 接口      | 类型   |  默认值 | 备注 |
     |------------+--------+---+-------|
     |            |        |     | <r> |
-    | effect     | [[#特效][特效]] | fuelburn | 特效 |
-    | flameColor | [[#颜色][颜色]]  |   ffad9d | 火焰颜色 |
+    | effect     | [[特效][特效]] | fuelburn | 特效 |
+    | flameColor | [[颜色][颜色]]  |   ffad9d | 火焰颜色 |
 
     默认值:
 
@@ -1635,7 +1635,7 @@
     :PROPERTIES:
     :DESCRIPTION: 修单位的方块
     :END:
-    继承 [[#方块][方块]] -- 用激光修复附近单位.英文：RepairPoint
+    继承 [[方块][方块]] -- 用激光修复附近单位.英文：RepairPoint
 
     | 接口        | 类型  | 默认值 | 备注 |
     |--------------+-------+--------+-|
@@ -1660,14 +1660,14 @@
     :PROPERTIES:
     :DESCRIPTION: 生产单位的工厂
     :END:
-    继承 [[#方块][方块]]，英文：UnitFactory
+    继承 [[方块][方块]]，英文：UnitFactory
 
     | 接口          | 类型     | 默认值 | 备注 |
     |----------------+----------+--------+-|
     | produceTime    | float    |    1000 | 制造时间 |
     | launchVelocity | float    |       0 | 出厂速度 |
     | maxSpawn       | int      |       4 | 最大容纳量 |
-    | unitType       | [[#单位类][单位类]] |    none | 制作单位 |
+    | unitType       | [[单位类][单位类]] |    none | 制作单位 |
 
     默认值:
 
@@ -1686,13 +1686,13 @@
     :PROPERTIES:
     :DESCRIPTION: 命令单位的方块
     :END:
-    继承 [[#方块][方块]]，英文：CommandCenter
+    继承 [[方块][方块]]，英文：CommandCenter
 
     | 接口       | 类型   | 默认值     | 备注 |
     |-------------+--------+--------+-----|
-    | topColor    | [[#颜色][颜色]]  | command     | 顶部颜色 |
-    | bottomColor | [[#颜色][颜色]]  | 5e5e5e      | 底部颜色 |
-    | effect      | [[#特效][特效]] | commandSend | 特效 |
+    | topColor    | [[颜色][颜色]]  | command     | 顶部颜色 |
+    | bottomColor | [[颜色][颜色]]  | 5e5e5e      | 底部颜色 |
+    | effect      | [[特效][特效]] | commandSend | 特效 |
 
     默认值:
 
@@ -1707,11 +1707,11 @@
     :PROPERTIES:
     :DESCRIPTION: 
     :END:
-    继承 [[#方块][方块]] -- 生存玩家机甲的板子.英文：MechPad
+    继承 [[方块][方块]] -- 生存玩家机甲的板子.英文：MechPad
 
     | 接口     | 类型  | 默认值 | 备注 |
     |-----------+-------+--------+-|
-    | mech      | [[#玩家机甲][玩家机甲]]  | none    | 玩家机甲种类 |
+    | mech      | [[玩家机甲][玩家机甲]]  | none    | 玩家机甲种类 |
     | buildTime | float | 60 * 5  | 制作时间 |
 
     默认值:
@@ -1765,7 +1765,7 @@
     :PROPERTIES:
     :DESCRIPTION: 存储物品的方块
     :END:
-    继承 [[#存储方块][存储方块]]，英文：Vault
+    继承 [[存储方块][存储方块]]，英文：Vault
 
     默认值:
 
@@ -1780,8 +1780,8 @@
     :DESCRIPTION: 从存储方块中卸载物品
     :END:
 
-    继承 [[#方块][方块]]
-    一个方块可以从 [[存储方块]], 比如 [[仓库]], [[核心]] 或 [[#工厂][工厂]] 中拿物品.英文：Unloader
+    继承 [[方块][方块]]
+    一个方块可以从 [[存储方块]], 比如 [[仓库]], [[核心]] 或 [[工厂][工厂]] 中拿物品.英文：Unloader
 
     | 接口 | 类型  | 默认值 | 备注 |
     |-------+-------+--------+-|
@@ -1805,7 +1805,7 @@
     :PROPERTIES:
     :DESCRIPTION: 不经过核心发射物品
     :END:
-    继承 [[#存储方块][存储方块]]，英文：LaunchPad
+    继承 [[存储方块][存储方块]]，英文：LaunchPad
 
     一个可以发射物品的方块.
 
@@ -1823,7 +1823,7 @@
 
 ** 属性
 
-   属于一个抽象物品的一个组 [[#属性][属性]]. 在 ~地板~ 中使用来给地板一个特殊属性, 比如 /热量/ 和 /孢子度/ 来给某些机器提效, 比如泵和培养机.
+   属于一个抽象物品的一个组 [[属性][属性]]. 在 ~地板~ 中使用来给地板一个特殊属性, 比如 /热量/ 和 /孢子度/ 来给某些机器提效, 比如泵和培养机.
 
    ~属性组~ 有4个属性:
 
@@ -1840,7 +1840,7 @@
     }
     #+END_SRC
 
-    你可以把这个放 [[#地板][地板]] 类的文件里面，比如:
+    你可以把这个放 [[地板][地板]] 类的文件里面，比如:
 
     #+BEGIN_SRC json
     {
@@ -1885,13 +1885,13 @@
 
 ** 物品
 
-   继承 [[#内容][内容]] -- 只是一个可以上传送带，分类器和物品容器的东西的东西，经常用于工厂中。
+   继承 [[内容][内容]] -- 只是一个可以上传送带，分类器和物品容器的东西的东西，经常用于工厂中。
 
    | 接口          | 类型     | 默认值 | 备注      |
    |----------------+----------+---------+------------|
    |                |          |         | <10>       |
-   | color          | [[#颜色][颜色]]    |         | 分类器显示色 |
-   | type           | [[#物品][物品]] |         | ~resource~ 或是 ~material~ ; resource不能进核心，反之 |
+   | color          | [[颜色][颜色]]    |         | 分类器显示色 |
+   | type           | [[物品][物品]] |         | ~resource~ 或是 ~material~ ; resource不能进核心，反之 |
    | explosiveness  | float    | ~0~     | 爆炸性. |
    | flammability   | float    | ~0~     | 可燃性，大于 0.3 就可以用于燃烧发电机. |
    | radioactivity  | float    |         | 辐射性，0=是没有, 1=切尔诺贝利的辐射性 |
@@ -1905,7 +1905,7 @@
    | 接口  | 类型 | 默认值 | 备注 |
    |--------+------+--------+-|
    | amount | int  |       1 | 数量 |
-   | item   | [[#物品][物品]] |         | 物品名字 |
+   | item   | [[物品][物品]] |         | 物品名字 |
 
    例子:
 
@@ -1923,22 +1923,22 @@
    | 接口         | 类型         | 默认值 | 备注      |
    |---------------+--------------+---------+------------|
    |               |              |     <r> | <10>       |
-   | color         | [[#颜色][颜色]]        |         | *[必须]* 液体颜色 |
+   | color         | [[颜色][颜色]]        |         | *[必须]* 液体颜色 |
    | barColor      | [[颜色]]        |         | /[非必须]/ UI中颜色. |
    | flammability  | float        |         | 可燃性，从0 到 1; 0 是完全不可燃, 向上增长会被热源点燃. |
    | temperature   | float        |     0.5 | 温度，0.5 是室温, 0 是很冷, 1 是像融化了一样热 |
    | heatCapacity  | float        |     0.5 | 比热容，用于冷却; 水是 0.4 |
    | viscosity     | float        |     0.5 | 粘度; 水是 0.5, 石油是 1. |
    | explosiveness | float        |         | 爆炸性; 0 什么都没有, 1 是核弹 |
-   | effect        | [[#状态][状态]] |    none | 接触此液体获得的状态. |
+   | effect        | [[状态][状态]] |    none | 接触此液体获得的状态. |
 
 ** 液体组
 
-    这个类被方块使用,用于消耗液体,像 [[#物品组][物品组]] 一样，但是里面只能包含一种液体.
+    这个类被方块使用,用于消耗液体,像 [[物品组][物品组]] 一样，但是里面只能包含一种液体.
 
     | 接口  | 类型   | 备注 |
     |--------+------+--|
-    | liquid | [[#液体][液体]] | 液体种类 |
+    | liquid | [[液体][液体]] | 液体种类 |
     | amount | float  | 数量 |
 
     例子:
@@ -1960,8 +1960,8 @@
    | name           | string     |         |  武器名          |
    | minPlayerDist  | float      |      20 | 鼠标指针离单位最低距离. |
    | sequenceNum    | int        |       0 |  射击多次装弹减慢程度          |
-   | bullet         | [[#子弹类][子弹类]] |         | 射的子弹类型 |
-   | ejectEffect    | [[#特效][特效]]     |    none | 射击特效 |
+   | bullet         | [[子弹类][子弹类]] |         | 射的子弹类型 |
+   | ejectEffect    | [[特效][特效]]     |    none | 射击特效 |
    | reload         | float      |         | 重新装弹时间 |
    | shots          | int        |       1 | 一发打多少子弹 |
    | spacing        | float      |      12 | 一次打出多个子弹时，子弹间角 |
@@ -1975,14 +1975,14 @@
    | lengthRand     | float      |       0 | 子弹出现离武器口距离 |
    | shotDelay      | float      |       0 | 射击延迟 |
    | ignoreRotation | boolean    |   false | 是否在射击时忽略转动. |
-   | shootSound     | [[#音效][音效]]      |     pew |     射击音效       |
+   | shootSound     | [[音效][音效]]      |     pew |     射击音效       |
 ** 单位类
 
    继承 [[内容]]
 
    | 接口           | 类型     | 默认值 | 备注
    |-----------------+----------+-----+----|
-   | type            | [[#基础单位][基础单位]] |         | 单位类型 |
+   | type            | [[基础单位][基础单位]] |         | 单位类型 |
    | health          | float    |      60 | 血量 |
    | hitsize         | float    |       7 | 碰撞箱大小 |
    | hitsizeTile     | float    |       4 | 相对地板碰撞箱大小，地面单位用 |
@@ -2002,7 +2002,7 @@
    | itemCapacity    | int      |      30 | 物品容量 |
    | buildPower      | float    |     0.3 | 建筑力 |
    | minePower       | float    |     0.7 | 挖矿力 |
-   | weapon          | [[#武器][武器]]   |         | 武器 |
+   | weapon          | [[武器][武器]]   |         | 武器 |
    | weaponOffsetY   | float    |         | 武器离单位中心距离 |
    | engineOffset    | float    |         |  引擎离单位中心距离 |
    | engineSize      | float    |         | 引擎大小 |
@@ -2028,7 +2028,7 @@
    | mineSpeed          | float   |       1 | 挖矿速度 |
    | drillPower         | int     |      -1 | 挖矿力 |
    | buildPower         | float   |       1 | 建筑力 |
-   | engineColor        | [[#颜色][颜色]]   | boostTo | 引擎颜色 |
+   | engineColor        | [[颜色][颜色]]   | boostTo | 引擎颜色 |
    | itemCapacity       | int     |      30 | 物品容量 |
    | turnCursor         | boolean |    true | 射击是否转向鼠标指向 |
    | canHeal            | boolean |   false | 可治疗 |
@@ -2037,7 +2037,7 @@
    | weaponOffsetY      | float   |       5 | 武器偏置距离 |
    | engineOffset       | float   |       5 | 引擎偏置距离 |
    | engineSize         | float   |     2.5 | 引擎大小 |
-   | weapon             | [[#武器][武器]]  |    null | 武器 |
+   | weapon             | [[武器][武器]]  |    null | 武器 |
 
 ** 内容菜单类型
 
@@ -2076,7 +2076,7 @@
    | alwaysUnlocked       | boolean       | false       | 地图是否一直解锁 |
    | launchPeriod         | int           | 10          | 核心发射间隔波次. |
    | loadout              | [[蓝图]]     | basicShard  | 初始核心. |
-   | resources            | [ String ]    |             | 一个 [[#物品][物品]] 名字的组. |
+   | resources            | [ String ]    |             | 一个 [[物品][物品]] 名字的组. |
    | requirements         | [ [[元素]] ] |             | 一组开启地图的条件. |
    | configureObjective   | [[元素]]     | ZoneWave 15 |  可自定义发射物品波次          |
    | defaultStartingItems | [[物品组]]     |             |  默认初始物品          |
@@ -2109,7 +2109,7 @@
 
 ** 状态
 
-   /不要和 [[#特效][特效]] 搞混/,状态会给一个实体额外属性.现在 *你不可以添加自定义的状态*. -- 状态有时会充当效果的两个条件. 比如一个 ~wet~ 的单位获得了 ~shocked~ 此时它会掉20血.
+   /不要和 [[特效][特效]] 搞混/,状态会给一个实体额外属性.现在 *你不可以添加自定义的状态*. -- 状态有时会充当效果的两个条件. 比如一个 ~wet~ 的单位获得了 ~shocked~ 此时它会掉20血.
 
    | 接口            | 类型   | 默认值 |   备注         |
    |------------------+--------+---------+------------|
@@ -2117,9 +2117,9 @@
    | damageMultiplier | float  |       1 |   输出伤害倍率         |
    | armorMultiplier  | float  |       1 |   护甲倍率         |
    | speedMultiplier  | float  |       1 |   速度倍率         |
-   | color            | [[#颜色][颜色]]  |   white |  颜色          |
+   | color            | [[颜色][颜色]]  |   white |  颜色          |
    | damage           | float  |         | 一帧掉血，或回血. |
-   | effect           | [[#特效][特效]] |    none | 在单位上出现，状态特效 (一帧0.15%几率触发). |
+   | effect           | [[特效][特效]] |    none | 在单位上出现，状态特效 (一帧0.15%几率触发). |
 
    * 备注: 状态消耗状态时间.
 
@@ -2229,7 +2229,7 @@
   :END:
 ** 子弹类
 
-   [[Abstract][Abstract]] 修饰类继承 [[#内容][内容]] -- 子弹类可以是元素或者是文字组,用文字组就是调用内建子弹,用元素就是创建自定义子弹.子弹类里面有两种主要子弹: [[基础子弹]] 和其他特殊子弹.
+   [[Abstract][Abstract]] 修饰类继承 [[内容][内容]] -- 子弹类可以是元素或者是文字组,用文字组就是调用内建子弹,用元素就是创建自定义子弹.子弹类里面有两种主要子弹: [[基础子弹]] 和其他特殊子弹.
 
    | 接口              | 类型         | 默认值 | 备注      |
    |--------------------+--------------+---------+------------|
@@ -2241,10 +2241,10 @@
    | drawSize           | float        |      40 |  渲染大小          |
    | drag               | float        |       0 | 每帧减速 |
    | pierce             | boolean      |         | 是否穿透 |
-   | hitEffect          | [[#特效][特效]]       |         | 击中特效 |
-   | despawnEffect      | [[#特效][特效]]       |         | 超时特效 |
-   | shootEffect        | [[#特效][特效]]       |         | 射击特效 |
-   | smokeEffect        | [[#特效][特效]]       |         | 射击烟雾特效 |
+   | hitEffect          | [[特效][特效]]       |         | 击中特效 |
+   | despawnEffect      | [[特效][特效]]       |         | 超时特效 |
+   | shootEffect        | [[特效][特效]]       |         | 射击特效 |
+   | smokeEffect        | [[特效][特效]]       |         | 射击烟雾特效 |
    | hitSound           | [[音效]]        |         | 子弹击中音效 |
    | inaccuracy         | float        |       0 | 额外精准度 |
    | ammoMultiplier     | float        |       2 | 一个物品/液体可以当多少子弹用 |
@@ -2253,7 +2253,7 @@
    | splashDamage       | float        |       0 | 范围伤害           |
    | knockback          | float        |         | 被击中单位减速. |
    | hitTiles           | boolean      |    true | 这个子弹是否打方块. |
-   | status             | [[#状态][状态]] |    none | 击中给予状态. |
+   | status             | [[状态][状态]] |    none | 击中给予状态. |
    | statusDuration     | float        |     600 | 状态持续时间. |
    | collidesTiles      | boolean      |    true | 是否与方块碰撞. |
    | collidesTeam       | boolean      |   false | 是否与同队的单位碰撞. |
@@ -2263,7 +2263,7 @@
    | fragBullets        | int          |       9 | 破片弹数           |
    | fragVelocityMin    | float        |     0.2 | 破片弹最小初速度           |
    | fragVelocityMax    | float        |       1 | 破片弹最大初速度           |
-   | fragBullet         | [[#子弹类][子弹类]]   |    null |  破片弹          |
+   | fragBullet         | [[子弹类][子弹类]]   |    null |  破片弹          |
    | splashDamageRadius | float        |      -1 | 范围伤害范围.负数来取消范围伤害 |
    | incendAmount       | int          |       0 | 火焰数量           |
    | incendSpread       | float        |       8 | 火焰蔓延速度           |
@@ -2298,8 +2298,8 @@
     | 接口        | 类型   |          默认值 | 备注           |
     |--------------+--------+------------------+------------|
     |              |        |              <r> | <10>       |
-    | backColor    | [[#颜色][颜色]]  | bulletYellowBack | ~<name>-back~ 贴图的颜色. |
-    | frontColor   | [[#颜色][颜色]]  |     bulletYellow | ~<name>~ 贴图的颜色. |
+    | backColor    | [[颜色][颜色]]  | bulletYellowBack | ~<name>-back~ 贴图的颜色. |
+    | frontColor   | [[颜色][颜色]]  |     bulletYellow | ~<name>~ 贴图的颜色. |
     | bulletSprite | String |           bullet | 子弹贴图. |
     | bulletWidth  | float  |                5 | 子弹宽           |
     | bulletHeight | float  |                7 |  子弹长          |
@@ -2327,7 +2327,7 @@
 	 
      | 接口       | 类型   | 默认值        | 备注 |
      |-------------+--------+---------------+-|
-     | trailEffect | [[#特效][特效]] | artilleryTrail | 尾迹特效 |
+     | trailEffect | [[特效][特效]] | artilleryTrail | 尾迹特效 |
 
      默认值:
 
@@ -2371,7 +2371,7 @@
 
      | 接口      | 类型  |           默认值 | 备注 |
      |------------+-------+-----------------+--|
-     | trailColor | [[#颜色][颜色]] | missileYellowBack | 尾迹颜色 |
+     | trailColor | [[颜色][颜色]] | missileYellowBack | 尾迹颜色 |
      | weaveScale | float |                 0 | weaveScale大于0启用，转动半径 |
      | weaveMag   | float |                -1 | 变向力 |
 
