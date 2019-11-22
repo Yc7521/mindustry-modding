@@ -142,12 +142,12 @@
    }
    #+END_SRC
 
-** Tech Tree
+** 科技树
    :PROPERTIES:
-   :DESCRIPTION: putting blocks into the tech tree
+   :DESCRIPTION: 将方块加入科技树
    :END:
 
-   Much like ~type~ there exist another magical field known as ~research~ which can go at the root of any block object to put it in the techtree.
+   像 ~type~ 一样的类，是 ~research~ 类，这个类也是根类.
 
    #+BEGIN_SRC json
    {
@@ -155,9 +155,9 @@
    }
    #+END_SRC
 
-   This would put your block after ~duo~ in the techtree, and to put it after your own mods block you would write your ~<block-name>~, a mod name prefix is only required if you're using the content from another mod.
+   这个方块的研究会放在 ~duo~ 这个方块后面, 如果你想把某方块研究放在自己mod里面的一个方块后面，就写 ~<block-name>~, 跨mod调用需要在调用的方块前加那一个mod名字做前缀.
 
-   Research cost will be ~30 + requirements * 6~, where ~requirements~ is the build cost of your block. /(in otherwords you can't set ~requirements~ and ~research cost~ individually)/
+   研究消耗公式是 ~30 + requirements * 6~, ~requirements~ 是建筑耗材. /(换句话来说你不能在 ~requirements~ 中更改 ~research cost~ )/
 
 ** 贴图
    :PROPERTIES:
@@ -271,7 +271,7 @@
    block.example-mod-silver-wall.description = Стена из серебра.
    #+END_SRC
 
-   If you've read the first few sections of this guide如果你读了上面的几个部分, you'll spot it right away你就会知道这个怎么写:
+   如果你读了上面的几个部分,你就会知道这个怎么写:
    * ~<content type>.<mod name>-<content name>.name~
    * ~<content type>.<mod name>-<content name>.description~
 
@@ -321,21 +321,21 @@
 
 ** Hjson
    :PROPERTIES:
-   :DESCRIPTION: content parser syntax
+   :DESCRIPTION: 内容物解析语法
    :END:
 
-   *[new v99]* /currently partially implimented, where only ~content/~ uses Hjson./
+   *[v99 新特性]* /currently partially implimented, ~content/~ 中使用Hjson./
 
-   As of now, Mindustry doesn't actually use Json, /(but any valid JSON should work)/ it uses a variant of Json called [[https://hjson.org/][Hjson]].
+   现在Mindustry不是用的JSON格式, /(但是JSON格式依旧可以被解析)/ 它解析一个JSON的分支 [[https://hjson.org/][Hjson]].
 
    #+BEGIN_SRC fundamental
    {
-       # single line comment
+       # 备注
 
-       // single line comment
+       // 备注
 
-       /* multiline
-          comment */
+       /* 备
+          注 */
 
        key1: single line string
 
@@ -365,9 +365,9 @@
     * ~ticks~ /有时叫 ~帧数~,/ 是 60/1 秒;
     * ~range~ 和其他距离都是 1/10 格;
     * 计算子弹范围需要用 ~lifetime~ 和 ~speed~ ，公式是 ~lifetime * speed = range~;
-    * <<Abstract>> what is ~abstract~? all you need to know about abstract types, is this is a Java specific term, which means you cannot instantiate/initialize this specific type by itself. If you do so you'll probably get an /"initialization exception"/ of some kind;
-    * what is a ~NullPointerException~? This is an error message that indicates a field is null and shouldn't be null, meaning one of the required fields may be missing;
-    * <<bleeding-edge>> what is ~bleeding-edge~? This is the developer version of Mindustry, specifically it's refering to the Github master branch. Changes on bleeding-edge usually make it into Mindustry in the next release.
+    * <<Abstract>> 什么是 ~abstract~?关于此类你要知道的,只有这是Java一个修饰符,代表这个类不能直接被加载.如果你强行加载会出现 /"initialization exception"/ 诸如此类的错误;
+    * 什么是 ~NullPointerException~?这是一个有一些类中的必须接口没有设置的信息;
+    * <<bleeding-edge>> 什么是 ~bleeding-edge~? 这个是开发版的用Github上面的master分支构建.其中的新特性会在下一个正式版本中使用.
 
 * 世界
   :PROPERTIES:
@@ -378,9 +378,9 @@
    :DESCRIPTION: 方块的基础类
    :end:
 
-  继承 [[方块存储][方块存储]] -- 所有的物品和方块的基础类，英文:Block
+  继承 [[方块存储][方块存储]]，英文:Block
   
-  Block is the base type of all blocks in the game. All blocks have at least one sprite, which is picked relative to the blocks name.
+  所有的物品和方块的基础类.所有方块至少要有一个贴图,通过识别方块名字加载.
 
   | 接口               | 种类            |      默认值 | 解释      |
   |---------------------+-----------------+--------------+------------|
@@ -406,7 +406,7 @@
   | priority            | TargetPriority  |         base | 当方块看到敌人时瞄准的优先配置. |
   | configurable        | boolean         |              | 这个方块是否能被打开GUI配置. |
   | consumesTap         | boolean         |              | 点击这个方块是否触发事件. |
-  | drawLiquidLight     | boolean         |         true | *[new v99 (268)]* Whether to draw the glow of the liquid for this block, if it has one. |
+  | drawLiquidLight     | boolean         |         true | *[新特性 v99 (268)]* 在其中的液体是否发光. |
   | posConfig           | boolean         |              | 配置这个方块是否需要点击. |
   | targetable          | boolean         |         true | 单位是否会攻击这个方块. |
   | canOverdrive        | boolean         |         true | 这个方块是否能超频. |
@@ -428,8 +428,8 @@
   | layer               | [[渲染层][渲染层]]           |         null | 渲染在哪一层. |
   | layer2              | [[渲染层][渲染层]]           |         null | 额外渲染在哪一层. |
 
-   Sprites:
-   * ~<name>~ the main sprite for the block.
+   贴图:
+   * ~<name>~ 方块的主贴图.
 
 ** 消耗器
    :PROPERTIES:
@@ -471,7 +471,7 @@
 
     [[Abstract][Abstract]] 修饰类,英文:Consume
 	
-    Type for blocks which may store a buffer of items or liquid.
+    这个类用来定义消耗的方法.
 
     | 接口    | 类型    | 默认值 | notes      |
     |----------+---------+---------+------------|
@@ -498,7 +498,7 @@
 	备注:
     * ~timePeriod~ 例子: 消耗液体 10/s 和 10 秒的间隔时间会显示成 "100 秒", 如果没有时间无效化它会显示 "10液体/秒".这个用于普通加工厂.
 
-   * <<能量消耗>> ~能量消耗~, consume or buffer power.
+   * <<能量消耗>> ~能量消耗~, 消耗或存储能量.
 
     | 接口    | 种类    | 默认值 | 备注      |
     |----------+---------+---------+------------|
@@ -540,12 +540,12 @@
 
 *** 地板
     :PROPERTIES:
-    :DESCRIPTION: environmental floors
+    :DESCRIPTION: 环境中的地板
     :END:
 
     继承 [[方块][方块]],英文:Floor
 
-    Type used for floors themselves or extended to make ores and other things.
+    用于矿物等类的父类的地板类.
 	
     | 接口             | 种类         | 默认值 | 备注      |
     |-------------------+--------------+---------+------------|
@@ -568,12 +568,12 @@
     | updateEffect      | [[特效][特效]]       |    none | 地板更新时的特效. |
     | attributes        | [[属性][属性]]   |         | 地板对各种机器的效率倍数. |
 
-    Notes:
-    * this type requires a sprite to be visible from the map editor.
+    备注:
+    * 这个类需要一个贴图显示在地图编辑器中.
 
     Sprites:
-    * ~<name><1..>~ for variant sprites of the floor;
-    * ~<name>-edge~ optional edge sprite.
+    * ~<name><1..>~ 贴图及变种;
+    * ~<name>-edge~ 可选的延展贴图.
 
 *** 覆盖地板
     :PROPERTIES:
@@ -587,7 +587,7 @@
 
 *** 双层覆盖地板
     :PROPERTIES:
-    :DESCRIPTION: type of floor that is overlaid on top of OverlayFloor
+    :DESCRIPTION: 覆盖在覆盖地板上面的地板
     :END:
 
     继承 [[覆盖地板][覆盖地板]]，英文:DoubleOverlayFloor
@@ -701,11 +701,12 @@
 
 *** 分离机
     :PROPERTIES:
-    :DESCRIPTION: turn a liquid into many solids
+    :DESCRIPTION: 将液体变成许多固体
     :END:
+	
     继承 [[方块][方块]]
 
-    分离机是一个输入液体并以物品组中和数量为概率随机输出物品的机器,using the amount of items in the stack as probability. Separator can't accept items as input, as it will output all the items you put in it, regardless of what you put in ~results~英文:Separator
+    分离机是一个输入液体并以物品组中和数量为概率随机输出物品的机器,用每个物品的数量来计算概率.分离机不接受物品作为原料, 它会把所有物品输出,不管你是否把它加入 ~results~英文:Separator
 
     | 接口            | 类型      | 默认值 | 备注      |
     |------------------+-----------+---------+------------|
@@ -988,7 +989,7 @@
 
     [[Abstract][Abstract]] 修饰类继承 [[方块][方块]]
 	
-	This is the base type for all turrets.
+	所有炮塔的基础类.
 
     | 接口         | 类型    |    默认值 | 备注      |
     |---------------+---------+------------+------------|
@@ -1046,12 +1047,12 @@
 
 *** 物品炮塔
     :PROPERTIES:
-    :DESCRIPTION: use item as ammo
+    :DESCRIPTION: 用物品做子弹
     :END:
 
     继承 [[冷却炮塔][冷却炮塔]].英文：ItemTurret
 
-	This type is a turret that uses items as ammo. The key to the ~ammo~ field should be the name of an [[Item]], while the value may be any [[Built-in Bullets]] or a [[BulletType]] itself.
+	这个炮塔类用物品做子弹. ~ammo~ 的数据必须是 [[物品]], 具体值可以是 [[内建子弹]] 或自定义的 [[子弹类]].
 	
     #+BEGIN_SRC fundamental
     {
@@ -1077,7 +1078,7 @@
     | 接口   | 类型                 | 默认值 | 备注 |
     |---------+----------------------+----------+-|
     | maxAmmo | int                  |      30 | 弹仓 |
-    | ammo    | { 字符串: [[子弹类][子弹类]] } |         | String is the name of an [[Item]], which will be used to select the type of bullet which will be shot. |
+    | ammo    | { 字符串: [[子弹类][子弹类]] } |         | 字符串是 [[物品]] 的名字, 用来决定消耗的物品. |
 
     默认值:
 
@@ -1087,14 +1088,14 @@
 
 *** LiquidTurret
     :PROPERTIES:
-    :DESCRIPTION: use liquid as ammo
+    :DESCRIPTION: 用液体做子弹
     :END:
 
-    Extends [[Turret]]
+    继承 [[炮塔]]
 
-    This type is just a turret that uses liquid as ammo. The key to ~ammo~ must be the name of a [[Liquid]], while the value may either be the name of any [[Built-in Bullets]] or a [[BulletType]] itself.
+    这个炮塔类用液体做子弹. ~ammo~ 的数据必须是 [[液体]], 具体值可以是 [[内建子弹]] 或自定义的 [[子弹类]].
 
-    For example you could do something like this:
+    这里是一个例子:
 
     #+BEGIN_SRC fundamental
     {
@@ -1115,12 +1116,12 @@
     #+END_SRC
 
 
-    | fields | type                   | notes                                     |
+    | 接口 | 类型                   | 备注                                     |
     |--------+------------------------+-------------------------------------------|
-    | ammo   | { String: [[BulletType]] } | object with [[Liquid]] names to bullet types. |
+    | ammo   | { 字符串: [[子弹类]] } | 字符串是 [[液体]]. |
 
-    Defaults:
-    | fields      | default |
+    默认值:
+    | 接口      | 默认值 |
     |-------------+---------|
     | hasLiquids  | true    |
     | activeSound | spray   |
@@ -1422,9 +1423,9 @@
 *** 新导管
     继承 [[液体方块][液体方块]]，英文：Conduit
 
-    | field          | type | default | notes             |
+    | 接口          | 类型 | 默认值 | 备注             |
     |----------------+------+---------+-------------------|
-    | leakResistance |      |         | *[new v99 (268)]* |
+    | leakResistance |      |         | *[新特性 v99 (268)]*泄露抵抗度 |
 
     默认值:
 
@@ -1434,29 +1435,29 @@
     | solid    | false   |
     | floating | true    |
 
-    Sprites:
+    贴图:
     * ~<name>-top-<0..6>~
 
-*** NEW ArmoredConduit
-    *[new type v99 (268)]* -- Extends [[Conduit]]
+*** 装甲导管
+    *[新特性 v99 (268)]* -- 继承 [[导管]]，英文:ArmoredConduit
 
-    Defaults:
-    | field          | default |
+    默认值:
+    | 接口          | 默认值 |
     |----------------+---------|
     | leakResistance | 10      |
 
-    Sprites:
+    贴图:
     * ~<name>-cap~
 
-*** NEW LiquidOverflowGate
-    *[new type v99 (268)]* -- Extends [[LiquidBlock]]
+*** 液体溢流门
+    *[新特性 v99 (268)]* -- 继承 [[液体方块]]，英文:LiquidOverflowGate
 
-    Defaults:
-    | field  | default |
+    默认值:
+    | 接口  | 默认值 |
     |--------+---------|
     | rotate | true    |
 
-    Sprites:
+    贴图:
     * ~<name>-top~
 	
 *** 液体路由器
@@ -1586,7 +1587,7 @@
    * 物品效率默认 0.0
    * 液体效率默认 0.0
 
-   /(this type doesn't produce power)/
+   /(这类不产生能量)/
 
    额外贴图:
    * ~<name>-top~ 当 ~hasItems~ 是 ~true~ 时
@@ -1680,24 +1681,25 @@
     | solid     | true    |
     | insulated | true    |
 
-    Sprites:
+    贴图:
     - ~<name>-arrow~
-*** NEW LightBlock
-    *[new type v99 (268)]* -- Extends [[Block]]
+	
+*** 灯
+    *[新特性 v99 (268)]* -- 继承 [[方块]]，英文：LightBlock
 
-    | field      | type  | default |
-    |------------+-------+---------|
-    | brightness | float |     0.9 |
-    | radius     | float |     200 |
+    | 接口      | 类型  | 默认值 | 备注 |
+    |------------+-------+--------+-|
+    | brightness | float |     0.9 | 亮度 |
+    | radius     | float |     200 | 范围 |
 
-    Defaults:
-    | field        | default |
+    默认值:
+    | 接口        | 默认值 |
     |--------------+---------|
     | hasPower     | true    |
     | update       | true    |
     | configurable | true    |
 
-    Sprites:
+    贴图:
     * ~<name>-top~
 
 ** 生产工厂
@@ -2048,7 +2050,7 @@
    * ~debugOnly~ debug模式显示
    * ~sandboxOnly~ 沙盒模式显示
    * ~campaignOnly~ 战役模式显示
-   * ~lightingOnly~ *[new v99 (268)]*
+   * ~lightingOnly~ 黑夜模式显示*[新特性 v99 (268)]*
    
 ** 方块组别
 
@@ -2083,26 +2085,26 @@
    | alwaysUnlocked | boolean  | ~false~ | 是否始终解锁. |
    
    <<ItemType>> *ItemTypes:*
-   * ~resource~ can go in the core;
-   * ~material~ can't go in the core.
+   * ~resource~ 可以进入核心;
+   * ~material~ 不能进入核心.
 
 ** 物品组
    :PROPERTIES:
-   :DESCRIPTION: amount of item types
+   :DESCRIPTION: 所需物品的数量
    :END:
    
-   This type is used when you need to describe an amount of items to the game for what ever reason.
+   这个类用来定义消耗的物品及数量.
 
-   *[new [[968f3ace3]]]:* An ~ItemStack~ can be a string with the following format ~"item/amount"~.
+   *[新特性 [[968f3ace3]]]:* 一个 ~ItemStack~ 可以用这个格式 ~"item/amount"~.
    
-   An ~ItemStack~ can be an object with the following fields:
+   一个 ~ItemStack~ 要包括以下接口:
    
    | 接口  | 类型 | 默认值 | 备注 |
    |--------+------+--------+-|
    | amount | int  |       1 | 数量 |
    | item   | [[物品][物品]] |         | 物品名字 |
 
-   Often you'll see ~[ ItemStack ]~, which stands for an array of ~ItemStack~, for example:
+   你经常看到 ~[ ItemStack ]~, 这个代表 ~ItemStack~ 的组, 比如:
 
    #+BEGIN_SRC json
    [
@@ -2115,14 +2117,14 @@
 
    继承 [[内容][内容]]
    
-   Type which defines the properties of a liquid. Like [[Item]] this will go into it's own subdirectory ~content/liquids/liquid-name.json~, and from it's stem name you can reuse it from your other mod content.
+   定义液体的东西. 像 [[物品]] 一样，这个内容物有自己的子文件夹 ~content/liquids/liquid-name.json~, 这个液体名字可以在其他内容物重复使用.
 
    | 接口         | 类型         | 默认值 | 备注      |
    |---------------+--------------+---------+------------|
    |               |              |     <r> | <10>       |
    | color         | [[颜色][颜色]]        |         | *[必须]* 液体颜色 |
    | barColor      | [[颜色][颜色]]        |         | /[非必须]/ UI中颜色. |
-   | lightColor    | [[Color]]        |         | *[new v99 (268)]* Color used to draw lights. Note that the alpha channel is used to dictate brightness. |
+   | lightColor    | [[颜色][颜色]]        |         | *[new v99 (268)]* 发光颜色.改变光度不在这里. |
    | flammability  | float        |         | 可燃性，从0 到 1; 0 是完全不可燃, 向上增长会被热源点燃. |
    | temperature   | float        |     0.5 | 温度，0.5 是室温, 0 是很冷, 1 是像融化了一样热 |
    | heatCapacity  | float        |     0.5 | 比热容，用于冷却; 水是 0.4 |
@@ -2130,19 +2132,19 @@
    | explosiveness | float        |         | 爆炸性; 0 什么都没有, 1 是核弹 |
    | effect        | [[状态][状态]] |    none | 接触此液体获得的状态. |
 
-   Sprites:
-   * ~<name>~, the sprite used when displaying the liquid from a menu.
+   贴图:
+   * ~<name>~, 在核心数据库中的显示贴图.
 
 ** 液体组
    :PROPERTIES:
-   :DESCRIPTION: amount of liquid types
+   :DESCRIPTION: 所需液体的数量
    :END:
 
-   This type is used when you need to describe an amount of liquid to the game for what ever reason.
+   这个类用来定义消耗的液体及数量.
 
-   *[new [[968f3ace3]]]:* A ~LiquidStack~ can be a string with the following format ~"liquid/amount"~.
+   *[新特性 [[968f3ace3]]]:* 一个 ~LiquidStack~ 可以用这个格式 ~"liquid/amount"~.
 
-    A ~LiquidStack~ can be an object with the following fields:
+    一个 ~LiquidStack~ 要有一下接口:
 	
     | 接口  | 类型   | 备注 |
     |--------+------+--|
@@ -2165,7 +2167,7 @@
    | 接口          | 类型       | 默认值 | 备注      |
    |----------------+------------+---------+------------|
    |                |            |         | <10>       |
-   | name           | string     |         |  武器名,used to fetch the sprite of the weapon          |
+   | name           | string     |         |  武器名,用于查找武器贴图      |
    | minPlayerDist  | float      |      20 | 鼠标指针离单位最低距离. |
    | sequenceNum    | int        |       0 |  射击多次装弹减慢程度          |
    | bullet         | [[子弹类][子弹类]] |         | 射的子弹类型 |
@@ -2185,8 +2187,9 @@
    | ignoreRotation | boolean    |   false | 是否在射击时忽略转动. |
    | shootSound     | [[音效][音效]]      |     pew |     射击音效       |
    
-   Sprite:
-   * ~<name>~ or ~<name>-equip~
+   贴图:
+   * ~<name>~ 或 ~<name>-equip~
+   
 ** 单位类
 
    继承 [[内容][内容]]
@@ -2220,7 +2223,7 @@
    | toMine          | [[物品][物品]] | copper,lead   | 挖的东西 |
    | deathSound      | [[音效][音效]] | bang | 死亡音效 |
    
-   Sprites:
+   贴图:
    * ~<name>~
    * ~<name>-leg~
    * ~<name>-base~
@@ -2447,13 +2450,13 @@
 
    [[Abstract][Abstract]] 修饰类继承 [[内容][内容]]
 
-   BulletType can either be an object ~{}~ or a ~"string"~, where a string would be reusing [[Built-in Bullets]] and an object would be making a custom one.
+   子弹类可以是一个元素 ~{}~ 或一个 ~"字符串"~, 字符串就是调用 [[内建子弹]] 元素就是自定义子弹.
    
-   There are two major categories of bullet types:
-   * [[BasicBulletType]] and,
-   * other special bullets.
+   这里有两个主要的子弹类:
+   * [[基础子弹类]] 和,
+   * 其他特殊的子弹类.
 
-   Here's an example of a custom bullet:
+   这里是一个自定义子弹类的例子:
 
    #+BEGIN_SRC json
    {
