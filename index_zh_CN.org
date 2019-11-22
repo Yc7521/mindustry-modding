@@ -1,19 +1,19 @@
 #+TITLE: Mindustry 模组开发文档
 :PREAMBLE:
-#+AUTHOR: Simon Woodbury-Forget
+#+AUTHOR: Simon Woodbury-Forget Translater:PlasGensokyo
 #+EMAIL: simonwoodburyforget@gmail.com
 #+DATE: 2019-10-31
-#+TRANSLATOR: Plas_Gensokyo
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
 
 #+LANGUAGE: zh_CN
 #+TEXINFO_DEFFN: t
-#+OPTIONS: H:4 num:3 toc:2
+#+OPTIONS: H:4 num:4 toc:2
 
 #+TEXINFO_FILENAME: index
 
-#+TODO: TODO UNTESTED | DONE
+#+TODO: TODO UNTESTED | NEW DONE
 
-#+TEXINFO_HEADER: Modding documentation for Mindustry v99 (133)
+#+TEXINFO_HEADER: Modding documentation for Mindustry v100 (40)
 
 提出PR和issue建议请去作者 Github: https://github.com/SimonWoodburyForget/mindustry-modding
 
@@ -55,11 +55,14 @@
    * Steam: =steam/steamapps/common/Mindustry/mods/=
    * Windows: =%appdata%/Mindustry/mods/=
 
+   *Note;* 你的文件名必须全小写而且不能有空格:
+   * 正确: ~my-custom-block.json~
+   * 不正确: ~My Custom Block.json~
+   
 ** ~mod.json~
    :PROPERTIES:
    :DESCRIPTION: 模组配置文件
    :END:
-
 
    在mod的根目录，你必须要有 ~mod.json~ 这个文件来定义你的mod的基础数据。
 
@@ -89,7 +92,7 @@
    * ~content/blocks/~ 用来放 [[方块][方块]], 比如炮塔和地板;
    * ~content/mechs/~ 用来放 [[玩家机甲][玩家机甲]], 比如 ~tau~ 和 ~glaive~;
    * ~content/liquids/~ 用来放 [[液体][液体]], 比如 ~water~ 和 ~slag~;
-   * ~content/units/~ 用来放飞行或地面 [[单位][单位]], 比如 ~reaper~ 和 ~dagger~;
+   * ~content/units/~ 用来放飞行或地面 [[单位类][单位类]], 比如 ~reaper~ 和 ~dagger~;
    * ~content/zones/~ 用来放 [[区域][区域]], 战役地图的配置文件.
 
    这个非常重要，这种结构是游戏本体加载mod所读取和结构。里面的各个文件名也很重要，比如在 ~content/blocks/<name>.json~ 目录的 ~name~ 将被当作数据节读取
@@ -138,6 +141,23 @@
        }
    }
    #+END_SRC
+
+** Tech Tree
+   :PROPERTIES:
+   :DESCRIPTION: putting blocks into the tech tree
+   :END:
+
+   Much like ~type~ there exist another magical field known as ~research~ which can go at the root of any block object to put it in the techtree.
+
+   #+BEGIN_SRC json
+   {
+       "research": "duo"
+   }
+   #+END_SRC
+
+   This would put your block after ~duo~ in the techtree, and to put it after your own mods block you would write your ~<block-name>~, a mod name prefix is only required if you're using the content from another mod.
+
+   Research cost will be ~30 + requirements * 6~, where ~requirements~ is the build cost of your block. /(in otherwords you can't set ~requirements~ and ~research cost~ individually)/
 
 ** 贴图
    :PROPERTIES:
@@ -299,20 +319,42 @@
    * Chinese CN ~bundle_zh_CN.properties~
    * Chinese TW ~bundle_zh_TW.properties~
 
+** Hjson
+   :PROPERTIES:
+   :DESCRIPTION: content parser syntax
+   :END:
+
+   *[new v99]* /currently partially implimented, where only ~content/~ uses Hjson./
+
+   As of now, Mindustry doesn't actually use Json, /(but any valid JSON should work)/ it uses a variant of Json called [[https://hjson.org/][Hjson]].
+
+   #+BEGIN_SRC fundamental
+   {
+       # single line comment
+
+       // single line comment
+
+       /* multiline
+          comment */
+
+       key1: single line string
+
+       key2: '''
+             multiline
+             string
+             '''
+
+       key3: [ value 1
+               value 2
+               value 3 ]
+   }
+   #+END_SRC
+
 ** 蓝图
 
-   需要 ~Schematic~ 接口的类，不能替换原版发射图 /(详情请看 [[区域]] 部分)/ 一个base64文字串,或者一个以 ~.msch~ 结尾的文件放在 ~schematics/~ 子目录里.
+   需要 ~Schematic~ 接口的类，不能替换原版发射图 /(详情请看 [[区域][区域]] 部分)/ 一个base64文字串,或者一个以 ~.msch~ 结尾的文件放在 ~schematics/~ 子目录里.
 
    /现在,蓝图只能用于自定义发射图./
-
-** Mindustry JSON 格式
-
-   Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以下是和原版 JSON 格式的不同:
-   * ~//~ 双斜杠可以用于注释;
-   * ~//~ 双斜杠不能用于表示文字串;
-   * ~"~ 和 ~"~ 不是文字串所必须的;
-   * ~,~ 逗号在物品组 ~[]~ 和元素组中 ~{}~ 不是必须的;
-   * ~[ 值, ]~ 逗号可以包括在组里面.
 
 ** FAQ
     :PROPERTIES:
@@ -323,19 +365,22 @@
     * ~ticks~ /有时叫 ~帧数~,/ 是 60/1 秒;
     * ~range~ 和其他距离都是 1/10 格;
     * 计算子弹范围需要用 ~lifetime~ 和 ~speed~ ，公式是 ~lifetime * speed = range~;
-    * <<Abstract>> /Abstract/: 你需要知道关于abstract的东西只有这是一个Java的定义,这个定义下的物体不能被自身加载. 如果你强上会出现 /"initialization exception"/ 类似这种的错误.
-    * research cost is ~30 + requirements * 6~
+    * <<Abstract>> what is ~abstract~? all you need to know about abstract types, is this is a Java specific term, which means you cannot instantiate/initialize this specific type by itself. If you do so you'll probably get an /"initialization exception"/ of some kind;
+    * what is a ~NullPointerException~? This is an error message that indicates a field is null and shouldn't be null, meaning one of the required fields may be missing;
+    * <<bleeding-edge>> what is ~bleeding-edge~? This is the developer version of Mindustry, specifically it's refering to the Github master branch. Changes on bleeding-edge usually make it into Mindustry in the next release.
 
 * 世界
   :PROPERTIES:
   :DESCRIPTION: 所有物品都在这里
   :END:
-** 方块
+** 新方块
    :PROPERTIES:
    :DESCRIPTION: 方块的基础类
    :end:
 
   继承 [[方块存储][方块存储]] -- 所有的物品和方块的基础类，英文:Block
+  
+  Block is the base type of all blocks in the game. All blocks have at least one sprite, which is picked relative to the blocks name.
 
   | 接口               | 种类            |      默认值 | 解释      |
   |---------------------+-----------------+--------------+------------|
@@ -361,6 +406,7 @@
   | priority            | TargetPriority  |         base | 当方块看到敌人时瞄准的优先配置. |
   | configurable        | boolean         |              | 这个方块是否能被打开GUI配置. |
   | consumesTap         | boolean         |              | 点击这个方块是否触发事件. |
+  | drawLiquidLight     | boolean         |         true | *[new v99 (268)]* Whether to draw the glow of the liquid for this block, if it has one. |
   | posConfig           | boolean         |              | 配置这个方块是否需要点击. |
   | targetable          | boolean         |         true | 单位是否会攻击这个方块. |
   | canOverdrive        | boolean         |         true | 这个方块是否能超频. |
@@ -373,7 +419,7 @@
   | idleSound           | [[音效][音效]]           |         none | 方块空闲时音效. |
   | idleSoundVolume     | float           |          0.5 | 空闲音效音量. |
   | requirements        | [[物品组][物品组]]       |              | 建筑方块的消耗，会影响到研究消耗，公式在下面. |
-  | category            | [[种类组][种类组]]        | distribution | 建造菜单上面的种类. |
+  | category            | [[内容菜单类型][内容菜单类型]]        | distribution | 建造菜单上面的种类. |
   | buildCost           | float           |              | 建造时间，在这里写没有用 |
   | buildVisibility     | [[建筑菜单可见性][建筑菜单可见性]] |       hidden | 这个物品在建筑菜单是否可见. |
   | buildCostMultiplier | float           |            1 | 方块建筑时间倍率. |
@@ -381,6 +427,9 @@
   | alwaysUnlocked      | boolean         |        false |            |
   | layer               | [[渲染层][渲染层]]           |         null | 渲染在哪一层. |
   | layer2              | [[渲染层][渲染层]]           |         null | 额外渲染在哪一层. |
+
+   Sprites:
+   * ~<name>~ the main sprite for the block.
 
 ** 消耗器
    :PROPERTIES:
@@ -393,15 +442,15 @@
    |---------------+-----------------------+------------|
    |               |                       | <10>       |
    | item          | String                |  =items= 的简略表达 |
-   | items         | [[消耗物品]]          |            |
-   | liquid        | [[消耗液体]]         |            |
-   | power         | float or [[能量消耗]] |            |
+   | items         | [[消耗物品][消耗物品]]          |            |
+   | liquid        | [[消耗液体][消耗液体]]         |            |
+   | power         | float or [[能量消耗][能量消耗]] |            |
    | powerBuffered | float                 | 电池参数 |
 
    备注:
    * 你不能同时拥有 ~power~ 和 ~powerBuffered~
 
-   消耗物品例子 [[消耗物品][消耗物品]] 和 [[消耗液体]]:
+   消耗物品例子 [[消耗物品][消耗物品]] 和 [[消耗液体][消耗液体]]:
    #+BEGIN_SRC json
    {
        "items": {
@@ -420,7 +469,9 @@
    #+END_SRC
 *** 消耗
 
-    [[Abstract][Abstract]] 修饰类, 定义了资源被消耗的种类和效果.英文:Consume
+    [[Abstract][Abstract]] 修饰类,英文:Consume
+	
+    Type for blocks which may store a buffer of items or liquid.
 
     | 接口    | 类型    | 默认值 | notes      |
     |----------+---------+---------+------------|
@@ -440,7 +491,7 @@
      | 接口      | 类型   | 默认值 | 备注      |
      |------------+--------+---------+------------|
      |            |        |         | <10>       |
-     | liquid     | String |         | 消耗的 [[液体]] 名 |
+     | liquid     | String |         | 消耗的 [[液体][液体]] 名 |
      | amount     | float  |         | 一帧消耗量 |
 	 | timePeriod | float  | 60      | 下面 |
     
@@ -474,10 +525,11 @@
    | hasPower       | boolean   |         | 是否存储能量 |
    | outputsLiquid  | boolean   |   false | 是否输出液体 |
    | consumesPower  | boolean   |    true | 是否消耗能量 |
-   | outputsPower   | bolean    |   false | 是否输出能量 |
+   | outputsPower   | boolean   |   false | 是否输出能量 |
    | itemCapacity   | int       |      10 | 物品储量 |
    | liquidCapacity | float     |      10 | 液体储量 |
    | item           | float     |      10 | |
+   | liquidPressure | float     |       1 |
    | consumes       | [[消耗器][消耗器]] |         |
 
 ** 环境
@@ -487,8 +539,14 @@
    环境方块只能在地图编辑器里面加入地图,它们也是决定游戏怎么玩的关键方块.这一些方块不会出现在地图上面除非你画一个地图来生成它们.
 
 *** 地板
-    继承 [[方块][方块]] -- 环境里面的地板.需要贴图，可以在编辑器中看到。英文:Floor
+    :PROPERTIES:
+    :DESCRIPTION: environmental floors
+    :END:
 
+    继承 [[方块][方块]],英文:Floor
+
+    Type used for floors themselves or extended to make ores and other things.
+	
     | 接口             | 种类         | 默认值 | 备注      |
     |-------------------+--------------+---------+------------|
     |                   |              |     <r> | <10>       |
@@ -510,17 +568,27 @@
     | updateEffect      | [[特效][特效]]       |    none | 地板更新时的特效. |
     | attributes        | [[属性][属性]]   |         | 地板对各种机器的效率倍数. |
 
-    多种贴图命名规则:
-    - ~<name><1..>~
+    Notes:
+    * this type requires a sprite to be visible from the map editor.
+
+    Sprites:
+    * ~<name><1..>~ for variant sprites of the floor;
+    * ~<name>-edge~ optional edge sprite.
 
 *** 覆盖地板
+    :PROPERTIES:
+    :DESCRIPTION: 一种地板渲染在其他地板上一层
+    :END:
 
-    继承 [[地板][地板]] -- 一种地板渲染在其他地板上一层.英文:OverlayFloor
+    继承 [[地板][地板]],英文:OverlayFloor
 
     例子:
     * ~tendrils~
 
 *** 双层覆盖地板
+    :PROPERTIES:
+    :DESCRIPTION: type of floor that is overlaid on top of OverlayFloor
+    :END:
 
     继承 [[覆盖地板][覆盖地板]]，英文:DoubleOverlayFloor
 
@@ -528,8 +596,11 @@
     * ~pebbles~
 
 *** 矿物
+    :PROPERTIES:
+    :DESCRIPTION:获取特定的物品所产生的矿物.
+	:END:
 
-    继承 [[覆盖地板][覆盖地板]] -- 获取特定的物品所产生的矿物.英文:OreBlock
+    继承 [[覆盖地板][覆盖地板]],英文:OreBlock
 
     | 接口    | 默认值 |
     |----------+---------|
@@ -564,7 +635,7 @@
     | solid         |    true |
     | variants      |       2 |
 
-    非必须贴图:
+    贴图:
     * ~<name>-large.png~ 可以使用2x2的材质.
 
 *** 静止树
@@ -616,20 +687,25 @@
     | idleSoundVolume |    0.03 |
 
 *** 普通冶炼炉
-    继承 [[普通加工厂][普通加工厂]] -- 一个有工作贴图的普通加工厂.英文:GenericSmelter
+    继承 [[普通加工厂][普通加工厂]],英文:GenericSmelter
 
+	一个有工作贴图的普通加工厂.
+	
     | 接口      | 类型  | 默认值 | 备注 |
     |------------+-------+-------+-----|
     |            |       | |     <r> |
     | flameColor | [[颜色][颜色]] |  ffc999 | 火焰颜色 |
 
     额外贴图:
-    * ~-top~
+    * ~<name>-top~
 
 *** 分离机
+    :PROPERTIES:
+    :DESCRIPTION: turn a liquid into many solids
+    :END:
     继承 [[方块][方块]]
 
-    分离机是一个输入液体并以物品组中和数量为概率随机输出物品的机器.英文:Separator
+    分离机是一个输入液体并以物品组中和数量为概率随机输出物品的机器,using the amount of items in the stack as probability. Separator can't accept items as input, as it will output all the items you put in it, regardless of what you put in ~results~英文:Separator
 
     | 接口            | 类型      | 默认值 | 备注      |
     |------------------+-----------+---------+------------|
@@ -653,7 +729,8 @@
     | hasLiquids |    true |
 
     额外贴图:
-    * ~-liquid~
+    * ~<name>-liquid~
+	
 ** 沙盒
    :PROPERTIES:
    :DESCRIPTION: 禁忌的东西
@@ -669,7 +746,7 @@
     | consumesPower | MAX_VALUE |
 
 *** 无限能源
-    继承 [[能量节点][能量节点]]，英文:PowerSource
+    继承 [[节点][节点]]，英文:PowerSource
 
     默认值:
 
@@ -785,8 +862,8 @@
     | 接口   | 类型   |   default | 备注 |
     |---------+--------+-----------+-|
     |         |        |       <r> | |
-    | openfx  | [[Effect][Effect]] |  dooropen | 开门特效 |
-    | closefx | [[Effect][Effect]] | doorclose | 关门特效 |
+    | openfx  | [[特效][特效]] |  dooropen | 开门特效 |
+    | closefx | [[特效][特效]] | doorclose | 关门特效 |
 
     默认值:
 
@@ -905,18 +982,20 @@
    :PROPERTIES:
    :DESCRIPTION: 射东西的方块
    :END:
-   这一节是关于炮塔. 所以炮塔的子弹都是 [[子弹类]], 这代表 [[液体炮塔]] 可以使用 [[导弹]] 和 [[物品炮塔]] 可以使用 [[液体子弹]].
+   这一节是关于炮塔. 所以炮塔的子弹都是 [[子弹类][子弹类]], 这代表 [[液体炮塔][液体炮塔]] 可以使用 [[导弹][导弹]] 和 [[物品炮塔][物品炮塔]] 可以使用 [[液体子弹][液体子弹]].
 
 *** 炮塔
 
-    [[Abstract][Abstract]] 修饰类继承 [[方块][方块]] -- 所有炮塔的父类 [[炮塔s]], 有所有炮塔的一般参数.
+    [[Abstract][Abstract]] 修饰类继承 [[方块][方块]]
+	
+	This is the base type for all turrets.
 
     | 接口         | 类型    |    默认值 | 备注      |
     |---------------+---------+------------+------------|
     |               |         |            | <10>       |
     | heatColor     | [[颜色][颜色]]   | turretHeat |      发热颜色      |
     | shootEffect   | [[特效][特效]]  |       none |      射击特效      |
-    | smoke特效   | [[特效][特效]]  |       none |           冒烟特效 |
+    | smokeEffect   | [[特效][特效]]  |       none |           冒烟特效 |
     | ammoUseEffect | [[特效][特效]]  |       none |        用子弹特效    |
     | shootSound    | [[音效][音效]]   |      shoot |          射击声音  |
     | ammoPerShot   | int     |          1 |      射击一次用子弹      |
@@ -953,7 +1032,7 @@
 
 *** 冷却炮塔
 
-    继承 [[炮塔][炮塔]] -- 这是一个用 [[液体]] 加速的炮塔的类.英文：CoolTurret
+    继承 [[炮塔][炮塔]] -- 这是一个用 [[液体][液体]] 加速的炮塔的类.英文：CoolTurret
 
     | 接口             | 类型   | 默认值 | 备注      |
     |-------------------+--------+---------+------------|
@@ -966,27 +1045,39 @@
     * 不接受热的液体
 
 *** 物品炮塔
+    :PROPERTIES:
+    :DESCRIPTION: use item as ammo
+    :END:
 
-    继承 [[冷却炮塔][冷却炮塔]] -- 用物品作子弹的炮塔. 用 ~ammo~ 接口加上 [[子弹类]] 来实现.英文：ItemTurret
+    继承 [[冷却炮塔][冷却炮塔]].英文：ItemTurret
 
-    #+BEGIN_SRC json
+	This type is a turret that uses items as ammo. The key to the ~ammo~ field should be the name of an [[Item]], while the value may be any [[Built-in Bullets]] or a [[BulletType]] itself.
+	
+    #+BEGIN_SRC fundamental
     {
-        "ammo": {
-            "copper": "standardCopper",
-            "metaglass": {
-                "type": "MissileBulletType",
-                "damage": 2
+        type: ItemTurret
+        ammo: {
+            copper: standardCopper
+
+            metaglass: {
+                type: MissileBulletType
+                damage: 2
+            }
+
+            surge-alloy: {
+                type: LiquidBulletType
+                damage: 3
             }
         }
     }
     #+END_SRC
 
-    以上是用 ~copper~ 射出 ~standardCopper~ (内建子弹) 和用 ~metaglass~ 射击一个自定义子弹类型.
+    以上是用 ~copper~ 射出 ~standardCopper~ (内建子弹) 和用 ~metaglass~ 射击一个 ~MissileBulletType~ 子弹类型.
 
     | 接口   | 类型                 | 默认值 | 备注 |
     |---------+----------------------+----------+-|
     | maxAmmo | int                  |      30 | 弹仓 |
-    | ammo    | { [[物品][物品]]: [[子弹类][子弹类]] } |         | 使用子弹 |
+    | ammo    | { 字符串: [[子弹类][子弹类]] } |         | String is the name of an [[Item]], which will be used to select the type of bullet which will be shot. |
 
     默认值:
 
@@ -994,8 +1085,50 @@
     |----------+---------|
     | hasItems | true    |
 
+*** LiquidTurret
+    :PROPERTIES:
+    :DESCRIPTION: use liquid as ammo
+    :END:
+
+    Extends [[Turret]]
+
+    This type is just a turret that uses liquid as ammo. The key to ~ammo~ must be the name of a [[Liquid]], while the value may either be the name of any [[Built-in Bullets]] or a [[BulletType]] itself.
+
+    For example you could do something like this:
+
+    #+BEGIN_SRC fundamental
+    {
+        type: LiquidTurret
+        ammo: {
+            water: {
+                type: MissileBulletType
+                damage: 9000
+            }
+
+            slag: {
+                type: LiquidBulletType
+                damage: 0
+            }
+        }
+    }
+
+    #+END_SRC
+
+
+    | fields | type                   | notes                                     |
+    |--------+------------------------+-------------------------------------------|
+    | ammo   | { String: [[BulletType]] } | object with [[Liquid]] names to bullet types. |
+
+    Defaults:
+    | fields      | default |
+    |-------------+---------|
+    | hasLiquids  | true    |
+    | activeSound | spray   |
+
 *** 双管炮
-    继承 [[物品炮塔][物品炮塔]] -- 有两个炮口的炮.英文：DoubleTurret
+    继承 [[物品炮塔][物品炮塔]],英文：DoubleTurret
+	
+	有两个炮口的炮.
 
     | 接口     | 类型  | 默认值 | 备注
     |-----------+-------+------+---|
@@ -1024,7 +1157,7 @@
 
     | 接口     | 类型       | 默认值 | 备注 |
     |-----------+------------+--------+-|
-    | shootType | [[子弹类][子弹类]] |         | |
+    | shootType | [[子弹类][子弹类]] |         | 必须 |
     | powerUse  | float      |       1 | 耗能 |
 
     默认值:
@@ -1035,15 +1168,15 @@
 
 *** 充能炮塔
 
-    继承 [[能量炮塔]]，英文：ChargeTurret
+    继承 [[能量炮塔][能量炮塔]]，英文：ChargeTurret
 
     | 接口             | 类型   | 默认值 | 备注 |
     |-------------------+--------+---+------|
     | chargeTime        | float  |      30 | 充能时间 |
     | chargeEffects     | int    |       5 | 充能特效时间 |
     | chargeMaxDelay    | float  |      10 | 充能延迟 |
-    | chargeEffect      | [[特效]] |    none | 充能特效 |
-    | chargeBeginEffect | [[特效]] |    none | 开始充能特效 |
+    | chargeEffect      | [[特效][特效]] |    none | 充能特效 |
+    | chargeBeginEffect | [[特效][特效]] |    none | 开始充能特效 |
 
 *** 激光炮
     继承 [[能量炮塔][能量炮塔]]，英文：LaserTurret
@@ -1064,18 +1197,6 @@
     * 液体温度大于等于 ~0.5~
     * 液体可燃性大于 ~0.1~
 
-*** 液体炮塔
-    继承 [[炮塔]]
-
-    | 接口 | 类型                 | 备注 |
-    |--------+--------------------+--|
-    | ammo   | { String: [[子弹类]] } | 一个 [[液体]] 作为消耗物 |
-
-    默认值:
-    | 接口      | 默认值 |
-    |-------------+---------|
-    | hasLiquids  | true    |
-    | activeSound | spray   |
 ** 运输
    :PROPERTIES:
    :DESCRIPTION: 让物品动的方块
@@ -1106,7 +1227,7 @@
     * ~-<0..4>-<0..3>~ 例子: [[https://github.com/Anuken/Mindustry/tree/master/core/assets-raw/sprites/blocks/distribution/conveyors][Conveyors-sprites]]
 
 *** 装甲传送带
-    继承 [[Conveyor][Conveyor]]  -不接受两边来物从传送带，英文：ArmoredConveyor
+    继承 [[传送带][传送带]]  -不接受两边来物从传送带，英文：ArmoredConveyor
 
 *** 连接器
     继承 [[方块][方块]]，英文：Junction
@@ -1298,8 +1419,12 @@
     | group    | liquids |
     | floating | true    |
 
-*** 导管
+*** 新导管
     继承 [[液体方块][液体方块]]，英文：Conduit
+
+    | field          | type | default | notes             |
+    |----------------+------+---------+-------------------|
+    | leakResistance |      |         | *[new v99 (268)]* |
 
     默认值:
 
@@ -1309,9 +1434,31 @@
     | solid    | false   |
     | floating | true    |
 
-    额外贴图 /( ~i~ 可以被替换成 0-6)/:
-    * ~<name>-top-<i>~
+    Sprites:
+    * ~<name>-top-<0..6>~
 
+*** NEW ArmoredConduit
+    *[new type v99 (268)]* -- Extends [[Conduit]]
+
+    Defaults:
+    | field          | default |
+    |----------------+---------|
+    | leakResistance | 10      |
+
+    Sprites:
+    * ~<name>-cap~
+
+*** NEW LiquidOverflowGate
+    *[new type v99 (268)]* -- Extends [[LiquidBlock]]
+
+    Defaults:
+    | field  | default |
+    |--------+---------|
+    | rotate | true    |
+
+    Sprites:
+    * ~<name>-top~
+	
 *** 液体路由器
     继承 [[液体方块][液体方块]]，英文：LiquidRouter
 
@@ -1399,7 +1546,7 @@
     :END:
     继承 [[能量运输器][能量运输器]]，英文：PowerGenerator
 
-    发电机会用 [[消耗器]] 产生能量.
+    发电机会用 [[消耗器][消耗器]] 产生能量.
 
     | 接口           | 类型  | 备注      |
     |-----------------+-------+------------|
@@ -1412,7 +1559,7 @@
     | baseExplosiveness | 5       |
 
 **** 地热发电机
-    继承 [[发电机][发电机]] -- 用热 [[属性]] 的地板发电. 输出公式是 ~powerProduction * heat~, 和 ~heat~ 必须大于 ~0.01~.英文：ThermalGenerator
+    继承 [[发电机][发电机]] -- 用热 [[属性][属性]] 的地板发电. 输出公式是 ~powerProduction * heat~, 和 ~heat~ 必须大于 ~0.01~.英文：ThermalGenerator
 
     | 接口          | 类型   | 默认值 | 备注      |
     |----------------+--------+---------+------------|
@@ -1420,7 +1567,7 @@
     | generateEffect | [[特效][特效]] | none    |   发电特效         |
 
 **** 物品液体发电机
-    继承 [[发电机][发电机]] -- 消耗物品液体的基础发电机类.液体会比物品优先消耗.英文：ItemLiquidGenerator
+    继承 [[发电机][发电机]] -- 基础发电机.英文：ItemLiquidGenerator
 
    | 接口               | 类型    | 默认值       | 备注      |
    |---------------------+---------+---------------+------------|
@@ -1438,6 +1585,8 @@
    备注:
    * 物品效率默认 0.0
    * 液体效率默认 0.0
+
+   /(this type doesn't produce power)/
 
    额外贴图:
    * ~<name>-top~ 当 ~hasItems~ 是 ~true~ 时
@@ -1462,12 +1611,13 @@
     备注:
     * 相比于其他发电机，被怪打优先度最低.
 
-**** 核电站
+**** 新核电站
     继承 [[发电机][发电机]] -- 通过物品除了发电，无冷却爆炸.英文：NuclearReactor
 
     | 接口           | 类型  |  默认值 | 备注      |
     |-----------------+-------+----------+------------|
     |                 |       |          | <10>       |
+    | lightColor      | [[Color]] |   7f19ea | *[new v99 (268)]* |
     | coolColor       | [[颜色][颜色]] | ffffff00 |  冷却液颜色          |
     | hotColor        | [[颜色][颜色]] | ff9575a3 |     过热颜色       |
     | itemDuration    | float |      120 | 一个物品发电时间 |
@@ -1518,12 +1668,44 @@
     额外贴图:
     * ~<name>-bottom~ 底部
     * ~<name>-plasma-<i>~ 等离子体贴图,  ~i~ 是 ~0~ 到 ~plasmas - 1~.
+	
+*** PowerDiode
+    Extends [[Block]]
+
+    Defaults:
+    | field     | default |
+    |-----------+---------|
+    | rotate    | true    |
+    | update    | true    |
+    | solid     | true    |
+    | insulated | true    |
+
+    Sprites:
+    - ~<name>-arrow~
+*** NEW LightBlock
+    *[new type v99 (268)]* -- Extends [[Block]]
+
+    | field      | type  | default |
+    |------------+-------+---------|
+    | brightness | float |     0.9 |
+    | radius     | float |     200 |
+
+    Defaults:
+    | field        | default |
+    |--------------+---------|
+    | hasPower     | true    |
+    | update       | true    |
+    | configurable | true    |
+
+    Sprites:
+    * ~<name>-top~
+
 ** 生产工厂
    :PROPERTIES:
    :DESCRIPTION: 从自然获取资源的工厂
    :END:
 *** 钻头
-    继承 [[方块][方块]] -- 一组能从 [[矿物]] 获取物品的方块.英文：Drill
+    继承 [[方块][方块]] -- 一组能从 [[矿物][矿物]] 获取物品的方块.英文：Drill
 
     | 接口                | 类型    | 默认值        | 备注      |
     |----------------------+---------+----------------+------------|
@@ -1733,7 +1915,7 @@
     :DESCRIPTION: 所有存储方块的父类
     :END:
 
-    [[Abstract][Abstract]] 修饰类继承 [[方块]]，英文：StorageBlock
+    [[Abstract][Abstract]] 修饰类继承 [[方块][方块]]，英文：StorageBlock
 
     默认值:
     | 接口    | 默认值 |
@@ -1744,7 +1926,7 @@
     :PROPERTIES:
     :DESCRIPTION: 核心方块
     :END:
-    继承 [[StorageBlock]]，英文：CoreBlock
+    继承 [[存储方块][存储方块]]，英文：CoreBlock
 
     | 接口 | 类型 | 默认值 | 备注 |
     |-------+------+--------+-|
@@ -1781,7 +1963,7 @@
     :END:
 
     继承 [[方块][方块]]
-    一个方块可以从 [[存储方块]], 比如 [[仓库]], [[核心]] 或 [[工厂][工厂]] 中拿物品.英文：Unloader
+    一个方块可以从 [[存储方块][存储方块]], 比如 [[仓库][仓库]], [[核心][核心]] 或 [[工厂][工厂]] 中拿物品.英文：Unloader
 
     | 接口 | 类型  | 默认值 | 备注 |
     |-------+-------+--------+-|
@@ -1858,7 +2040,7 @@
    * ~spores~ 孢子度
    * ~water~ 含水度
    * ~oil~ 含油度
-** 建筑菜单可见性
+** 新建筑菜单可见性
 
    有以下选项:
    * ~hidden~ 隐藏
@@ -1866,6 +2048,8 @@
    * ~debugOnly~ debug模式显示
    * ~sandboxOnly~ 沙盒模式显示
    * ~campaignOnly~ 战役模式显示
+   * ~lightingOnly~ *[new v99 (268)]*
+   
 ** 方块组别
 
    各个内建组别:
@@ -1876,7 +2060,6 @@
    * ~power~
    * ~liquids~
    * ~drills~
-
 
 * 种类
   :PROPERTIES:
@@ -1898,16 +2081,28 @@
    | hardness       | int      | ~0~     | 挖掘等级 |
    | cost           | float    | ~1~     | 用于计算建筑物建筑时间; 1 cost = 增加建筑世界一帧 |
    | alwaysUnlocked | boolean  | ~false~ | 是否始终解锁. |
+   
+   <<ItemType>> *ItemTypes:*
+   * ~resource~ can go in the core;
+   * ~material~ can't go in the core.
+
 ** 物品组
+   :PROPERTIES:
+   :DESCRIPTION: amount of item types
+   :END:
+   
+   This type is used when you need to describe an amount of items to the game for what ever reason.
 
-   告诉工厂输入/输出的物品的类.一个物品组应该包含以下元素:
-
+   *[new [[968f3ace3]]]:* An ~ItemStack~ can be a string with the following format ~"item/amount"~.
+   
+   An ~ItemStack~ can be an object with the following fields:
+   
    | 接口  | 类型 | 默认值 | 备注 |
    |--------+------+--------+-|
    | amount | int  |       1 | 数量 |
    | item   | [[物品][物品]] |         | 物品名字 |
 
-   例子:
+   Often you'll see ~[ ItemStack ]~, which stands for an array of ~ItemStack~, for example:
 
    #+BEGIN_SRC json
    [
@@ -1916,15 +2111,18 @@
    ]
    #+END_SRC
 
-** 液体
+** 新液体
 
-   继承 [[内容]] -- 定义液体的东西.
+   继承 [[内容][内容]]
+   
+   Type which defines the properties of a liquid. Like [[Item]] this will go into it's own subdirectory ~content/liquids/liquid-name.json~, and from it's stem name you can reuse it from your other mod content.
 
    | 接口         | 类型         | 默认值 | 备注      |
    |---------------+--------------+---------+------------|
    |               |              |     <r> | <10>       |
    | color         | [[颜色][颜色]]        |         | *[必须]* 液体颜色 |
-   | barColor      | [[颜色]]        |         | /[非必须]/ UI中颜色. |
+   | barColor      | [[颜色][颜色]]        |         | /[非必须]/ UI中颜色. |
+   | lightColor    | [[Color]]        |         | *[new v99 (268)]* Color used to draw lights. Note that the alpha channel is used to dictate brightness. |
    | flammability  | float        |         | 可燃性，从0 到 1; 0 是完全不可燃, 向上增长会被热源点燃. |
    | temperature   | float        |     0.5 | 温度，0.5 是室温, 0 是很冷, 1 是像融化了一样热 |
    | heatCapacity  | float        |     0.5 | 比热容，用于冷却; 水是 0.4 |
@@ -1932,10 +2130,20 @@
    | explosiveness | float        |         | 爆炸性; 0 什么都没有, 1 是核弹 |
    | effect        | [[状态][状态]] |    none | 接触此液体获得的状态. |
 
+   Sprites:
+   * ~<name>~, the sprite used when displaying the liquid from a menu.
+
 ** 液体组
+   :PROPERTIES:
+   :DESCRIPTION: amount of liquid types
+   :END:
 
-    这个类被方块使用,用于消耗液体,像 [[物品组][物品组]] 一样，但是里面只能包含一种液体.
+   This type is used when you need to describe an amount of liquid to the game for what ever reason.
 
+   *[new [[968f3ace3]]]:* A ~LiquidStack~ can be a string with the following format ~"liquid/amount"~.
+
+    A ~LiquidStack~ can be an object with the following fields:
+	
     | 接口  | 类型   | 备注 |
     |--------+------+--|
     | liquid | [[液体][液体]] | 液体种类 |
@@ -1957,7 +2165,7 @@
    | 接口          | 类型       | 默认值 | 备注      |
    |----------------+------------+---------+------------|
    |                |            |         | <10>       |
-   | name           | string     |         |  武器名          |
+   | name           | string     |         |  武器名,used to fetch the sprite of the weapon          |
    | minPlayerDist  | float      |      20 | 鼠标指针离单位最低距离. |
    | sequenceNum    | int        |       0 |  射击多次装弹减慢程度          |
    | bullet         | [[子弹类][子弹类]] |         | 射的子弹类型 |
@@ -1976,9 +2184,12 @@
    | shotDelay      | float      |       0 | 射击延迟 |
    | ignoreRotation | boolean    |   false | 是否在射击时忽略转动. |
    | shootSound     | [[音效][音效]]      |     pew |     射击音效       |
+   
+   Sprite:
+   * ~<name>~ or ~<name>-equip~
 ** 单位类
 
-   继承 [[内容]]
+   继承 [[内容][内容]]
 
    | 接口           | 类型     | 默认值 | 备注
    |-----------------+----------+-----+----|
@@ -2006,12 +2217,17 @@
    | weaponOffsetY   | float    |         | 武器离单位中心距离 |
    | engineOffset    | float    |         |  引擎离单位中心距离 |
    | engineSize      | float    |         | 引擎大小 |
-   | toMine          | [[物品]] | copper,lead   | 挖的东西 |
-   | deathSound      | [[音效]] | bang | 死亡音效 |
+   | toMine          | [[物品][物品]] | copper,lead   | 挖的东西 |
+   | deathSound      | [[音效][音效]] | bang | 死亡音效 |
+   
+   Sprites:
+   * ~<name>~
+   * ~<name>-leg~
+   * ~<name>-base~
 
 ** 玩家机甲
 
-   继承 [[内容]] -- 玩家机甲是玩家控制的实体.
+   继承 [[内容][内容]] -- 玩家机甲是玩家控制的实体.
 
    | 接口              | 类型    | 默认值 | 备注 |
    |--------------------+---------+--------+-|
@@ -2058,7 +2274,7 @@
    :DESCRIPTION: 用来添加战役
    :END:
 
-   继承 [[内容]] 
+   继承 [[内容][内容]] 
 
    一个 ~区域~ 是一个可以创建战役地图 /(地图名要和区域JSON名相同)/ 的类. /(区域不是地图)/
 
@@ -2069,17 +2285,17 @@
    | 接口                | 类型          | 默认值     | 备注      |
    |----------------------+---------------+-------------+------------|
    |                      |               |             | <10>       |
-   | baseLaunchCost       | [[物品组]]     |             |    基础发射消耗资源        |
-   | launchCost           | [[物品组]]     |             |    发射消耗资源        |
-   | startingItems        | [[物品组]]     |             | 初始物品. |
+   | baseLaunchCost       | [[物品组][物品组]]     |             |    基础发射消耗资源        |
+   | launchCost           | [[物品组][物品组]]     |             |    发射消耗资源        |
+   | startingItems        | [[物品组][物品组]]     |             | 初始物品. |
    | conditionWave        | int           | MAX_VALUE   |  总波数          |
    | alwaysUnlocked       | boolean       | false       | 地图是否一直解锁 |
    | launchPeriod         | int           | 10          | 核心发射间隔波次. |
-   | loadout              | [[蓝图]]     | basicShard  | 初始核心. |
+   | loadout              | [[蓝图][蓝图]]     | basicShard  | 初始核心. |
    | resources            | [ String ]    |             | 一个 [[物品][物品]] 名字的组. |
-   | requirements         | [ [[元素]] ] |             | 一组开启地图的条件. |
-   | configureObjective   | [[元素]]     | ZoneWave 15 |  可自定义发射物品波次          |
-   | defaultStartingItems | [[物品组]]     |             |  默认初始物品          |
+   | requirements         | [ [[元素][元素]] ] |             | 一组开启地图的条件. |
+   | configureObjective   | [[元素][元素]]     | ZoneWave 15 |  可自定义发射物品波次          |
+   | defaultStartingItems | [[物品组][物品组]]     |             |  默认初始物品          |
 
 
    额外贴图:
@@ -2229,8 +2445,47 @@
   :END:
 ** 子弹类
 
-   [[Abstract][Abstract]] 修饰类继承 [[内容][内容]] -- 子弹类可以是元素或者是文字组,用文字组就是调用内建子弹,用元素就是创建自定义子弹.子弹类里面有两种主要子弹: [[基础子弹]] 和其他特殊子弹.
+   [[Abstract][Abstract]] 修饰类继承 [[内容][内容]]
 
+   BulletType can either be an object ~{}~ or a ~"string"~, where a string would be reusing [[Built-in Bullets]] and an object would be making a custom one.
+   
+   There are two major categories of bullet types:
+   * [[BasicBulletType]] and,
+   * other special bullets.
+
+   Here's an example of a custom bullet:
+
+   #+BEGIN_SRC json
+   {
+       "type": "MissileBulletType",
+       "lifetime": 1000,
+       "speed": 2,
+       "splashDamageRadius": 2,
+       "splashDamage": 9,
+       "frontColor": "ffff00",
+       "backColor": "00ffff",
+       "homingPower": 1,
+       "homingRange": 20,
+       "fragBullets": 3,
+       "fragBullet": {
+           "type": "LiquidBulletType"
+           "liquid": "oil",
+           "lifetime": 2,
+           "speed": 1,
+           "fragBullets": 2,
+           "fragBullet": {
+               "type": "LiquidBulletType"
+               "liquid": "slag",
+               "lifetime": 1,
+               "speed": 2,
+               "damage": 1,
+           }
+       }
+   }
+   #+END_SRC
+
+   [[file:img/green-cyan-oil-slag-missiles.png]]
+   
    | 接口              | 类型         | 默认值 | 备注      |
    |--------------------+--------------+---------+------------|
    |                    |              |         | <10>       |
@@ -2245,7 +2500,7 @@
    | despawnEffect      | [[特效][特效]]       |         | 超时特效 |
    | shootEffect        | [[特效][特效]]       |         | 射击特效 |
    | smokeEffect        | [[特效][特效]]       |         | 射击烟雾特效 |
-   | hitSound           | [[音效]]        |         | 子弹击中音效 |
+   | hitSound           | [[音效][音效]]        |         | 子弹击中音效 |
    | inaccuracy         | float        |       0 | 额外精准度 |
    | ammoMultiplier     | float        |       2 | 一个物品/液体可以当多少子弹用 |
    | reloadMultiplier   | float        |       1 | 装弹速度倍率 |
@@ -2278,18 +2533,14 @@
     :PROPERTIES:
     :DESCRIPTION: 普通的子弹
     :END:
-    继承 [[子弹类]]，英文：BasicBulletType
+    继承 [[子弹类][子弹类]]，英文：BasicBulletType
 
     这个类主要是给子弹上贴图. 用 ~bulletSprite~ 参数可以改变子弹贴图. 贴图中的可见像素会被 ~backColor~ 和 ~frontColor~ 原图保留地着色. 举个例子，如果你有一个贴图叫 ~router.png~ 和一个叫 ~router-back.png~ 的贴图在 ~测试 Mod~ 里面, 你可以这样写 ~bulletSprite~ 参数:
 
     #+BEGIN_SRC json
     {
-        "ammo": {
-            "copper": {
-                "type": "BasicBulletType",
-                "bulletSprite": "test-mod-router"
-            }
-        }
+        "type": "BasicBulletType",
+        "bulletSprite": "test-mod-router"
     }
     #+END_SRC
 
@@ -2321,7 +2572,7 @@
      :PROPERTIES:
      :DESCRIPTION: 下雨一般的特效
      :END:
-     继承 [[基础子弹]]，英文：ArtilleryBulletType
+     继承 [[基础子弹][基础子弹]]，英文：ArtilleryBulletType
 
      用一个特殊的公式计算这个子弹的速度，轨迹和目标.
 	 
@@ -2344,7 +2595,7 @@
      :PROPERTIES:
      :DESCRIPTION: 融合在一起
      :END:
-     继承 [[基础子弹]]，英文：FlakBulletType
+     继承 [[基础子弹][基础子弹]]，英文：FlakBulletType
 
      炸敌人的子弹.
 
@@ -2367,7 +2618,7 @@
      :PROPERTIES:
      :DESCRIPTION: 特效和尾迹
      :END:
-     继承 [[基础子弹]]，英文：MissileBulletType
+     继承 [[基础子弹][基础子弹]]，英文：MissileBulletType
 
      | 接口      | 类型  |           默认值 | 备注 |
      |------------+-------+-----------------+--|
@@ -2385,7 +2636,7 @@
      :DESCRIPTION: 主要重写了很多东西
      :END:
 
-     继承 [[基础子弹]]，英文：BombBulletType
+     继承 [[基础子弹][基础子弹]]，英文：BombBulletType
 
      默认值:
 
@@ -2402,7 +2653,7 @@
 
 *** 治疗子弹
 
-    继承 [[子弹类]] -- 可以治疗同队方块和单位的子弹.英文：HealBulletType
+    继承 [[子弹类][子弹类]] -- 可以治疗同队方块和单位的子弹.英文：HealBulletType
 
     | 接口       | 类型  | 默认值 | 备注 |
     |-------------+-------+--------+-|
@@ -2420,12 +2671,12 @@
 
 *** 液体子弹
 
-    继承 [[子弹类]]，英文：LiquidBulletType
+    继承 [[子弹类][子弹类]]，英文：LiquidBulletType
 
     | 接口  | 类型   | 默认值 | 备注      |
     |--------+--------+---------+------------|
     |        |        |         | <10>       |
-    | liquid | String | null    | *[必须]* [[液体]]的名字 |
+    | liquid | String | null    | *[必须]* [[液体][液体]]的名字 |
 
     默认值:
 
@@ -2442,7 +2693,7 @@
 
 *** 质驱子弹
 
-    继承 [[子弹类]]，英文：MassDriverBolt
+    继承 [[子弹类][子弹类]]，英文：MassDriverBolt
 
     默认值:
 
@@ -2519,29 +2770,46 @@
   :DESCRIPTION: 设置游戏元素的类
   :END:
   
-  元素是某个参数的特征,有几个类引用它,用于 [[区域]] 地图设置中的元素设定. 
+  元素是某个参数的特征,有几个类引用它,用于 [[区域][区域]] 地图设置中的元素设定. 
 
   使用元素的类:
   * ~ZoneWave~ -- 当选定 ~区域~ 打到指定 ~波次~ 触发
     | 接口 | 类型   | 备注                |
     |-------+--------+----------------------|
-    | zone  | String | 目标 [[区域]] 名字     |
+    | zone  | String | 目标 [[区域][区域]] 名字     |
     | wave  | int    | 目标波次 |
 
   * ~Launched~ -- 当核心从指定 ~区域~ 发射来触发
     | 接口 | 类型   | 备注            |
     |-------+--------+------------------|
-    | zone  | String | 目标 [[区域]] 名字 |
+    | zone  | String | 目标 [[区域][区域]] 名字 |
 	
   * ~Unlock~ -- 当指定 ~方块~ 解锁时触发
     | 接口 | 类型   | 备注             |
     |-------+--------+-------------------|
-    | block | String | 目标 [[方块]] 名字 |
+    | block | String | 目标 [[方块][区域]] 名字 |
 
 * 其他
   :PROPERTIES:
   :DESCRIPTION: ...
   :END:
+
+** Change Log
+   :PROPERTIES:
+   :DESCRIPTION: log of changes
+   :END:
+   This is a log of changes done on the Mindustry Master branch. Each section is separated by tags, for example [[v100]] and then subsectioned into commit hash, for example [[968f3ace3]], with a date stamp of when said log was added, not of the commit itself. These changes typically make it into the game at the next official release.
+
+*** v100
+**** 968f3ace3
+     :PROPERTIES:
+     :DESCRIPTION: better mod parsing
+     :END:
+     [2019-11-21 Thu]
+     * ~"liquid/amount"~ can now be used as a string to do the same thing as ~{ "liquid": "xxxx", "amount": xx }~ where a field type is [[LiquidStack]];
+     * ~"item/amount"~ can now be used as a string to do the same thing as ~{ "item": "xxxx", "amount": xx }~ where a field type is [[ItemStack]];
+     * ~mod.json~ now supports hjson;
+     * ~mod.js~ can be used instead of ~mod.json~.
 
 ** Mindustry源码结构
 
