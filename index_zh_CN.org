@@ -373,7 +373,7 @@
   :PROPERTIES:
   :DESCRIPTION: 所有物品都在这里
   :END:
-** 新方块
+** 方块
    :PROPERTIES:
    :DESCRIPTION: 方块的基础类
    :end:
@@ -1086,14 +1086,14 @@
     |----------+---------|
     | hasItems | true    |
 
-*** LiquidTurret
+*** 液体炮塔
     :PROPERTIES:
     :DESCRIPTION: 用液体做子弹
     :END:
 
     继承 [[炮塔]]
 
-    这个炮塔类用液体做子弹. ~ammo~ 的数据必须是 [[液体]], 具体值可以是 [[内建子弹]] 或自定义的 [[子弹类]].
+    这个炮塔类用液体做子弹. ~ammo~ 的数据必须是 [[液体]], 具体值可以是 [[内建子弹]] 或自定义的 [[子弹类]].英文：LiquidTurret
 
     这里是一个例子:
 
@@ -1420,7 +1420,7 @@
     | group    | liquids |
     | floating | true    |
 
-*** 新导管
+*** 导管
     继承 [[液体方块][液体方块]]，英文：Conduit
 
     | 接口          | 类型 | 默认值 | 备注             |
@@ -1618,7 +1618,7 @@
     | 接口           | 类型  |  默认值 | 备注      |
     |-----------------+-------+----------+------------|
     |                 |       |          | <10>       |
-    | lightColor      | [[Color]] |   7f19ea | *[new v99 (268)]* |
+    | lightColor      | [[颜色][颜色]] |   7f19ea | *[new v99 (268)]* |
     | coolColor       | [[颜色][颜色]] | ffffff00 |  冷却液颜色          |
     | hotColor        | [[颜色][颜色]] | ff9575a3 |     过热颜色       |
     | itemDuration    | float |      120 | 一个物品发电时间 |
@@ -1670,11 +1670,11 @@
     * ~<name>-bottom~ 底部
     * ~<name>-plasma-<i>~ 等离子体贴图,  ~i~ 是 ~0~ 到 ~plasmas - 1~.
 	
-*** PowerDiode
-    Extends [[Block]]
+*** 二极管
+    继承 [[方块]]
 
-    Defaults:
-    | field     | default |
+    默认值:
+    | 接口     | 默认值 |
     |-----------+---------|
     | rotate    | true    |
     | update    | true    |
@@ -2042,7 +2042,7 @@
    * ~spores~ 孢子度
    * ~water~ 含水度
    * ~oil~ 含油度
-** 新建筑菜单可见性
+** 建筑菜单可见性
 
    有以下选项:
    * ~hidden~ 隐藏
@@ -2113,7 +2113,7 @@
    ]
    #+END_SRC
 
-** 新液体
+** 液体
 
    继承 [[内容][内容]]
    
@@ -2453,7 +2453,7 @@
    子弹类可以是一个元素 ~{}~ 或一个 ~"字符串"~, 字符串就是调用 [[内建子弹]] 元素就是自定义子弹.
    
    这里有两个主要的子弹类:
-   * [[基础子弹类]] 和,
+   * [[基础子弹][基础子弹]] 和,
    * 其他特殊的子弹类.
 
    这里是一个自定义子弹类的例子:
@@ -2797,22 +2797,22 @@
   :DESCRIPTION: ...
   :END:
 
-** Change Log
+** 更新日志
    :PROPERTIES:
-   :DESCRIPTION: log of changes
+   :DESCRIPTION: 日志
    :END:
-   This is a log of changes done on the Mindustry Master branch. Each section is separated by tags, for example [[v100]] and then subsectioned into commit hash, for example [[968f3ace3]], with a date stamp of when said log was added, not of the commit itself. These changes typically make it into the game at the next official release.
+   这个是Mindustry的主分支的更新日志.每个大版本用标签分开,比如 [[v100]] 大版本一下用hash值区分, 比如 [[968f3ace3]], 日志都带有世界. 这一些变更会在下一个大版本应用.
 
 *** v100
 **** 968f3ace3
      :PROPERTIES:
-     :DESCRIPTION: better mod parsing
+     :DESCRIPTION: 更好的mod解析
      :END:
      [2019-11-21 Thu]
-     * ~"liquid/amount"~ can now be used as a string to do the same thing as ~{ "liquid": "xxxx", "amount": xx }~ where a field type is [[LiquidStack]];
-     * ~"item/amount"~ can now be used as a string to do the same thing as ~{ "item": "xxxx", "amount": xx }~ where a field type is [[ItemStack]];
-     * ~mod.json~ now supports hjson;
-     * ~mod.js~ can be used instead of ~mod.json~.
+     * ~"liquid/amount"~ 可以和 ~{ "liquid": "xxxx", "amount": xx }~ 在 [[液体组][液体组]] 中干同样的事;
+     * ~"item/amount"~ 可以和 ~{ "item": "xxxx", "amount": xx }~ 在 [[物品组][物品组]] 中干同样的事;
+     * ~mod.json~ 支持hjson;
+     * ~mod.js~ 可以取代 ~mod.json~.
 
 ** Mindustry源码结构
 
