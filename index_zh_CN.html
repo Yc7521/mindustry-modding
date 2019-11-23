@@ -3,12 +3,12 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN" xml:lang="zh_CN">
 <head>
-<!-- 2019-11-09 周六 21:40 -->
+<!-- 2019-11-23 周六 19:01 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mindustry 模组开发文档</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="Simon Woodbury-Forget" />
+<meta name="author" content="Simon Woodbury-Forget Translater:PlasGensokyo" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -180,6 +193,12 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -231,79 +250,85 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">Mindustry 模组开发文档</h1>
 <div id="table-of-contents">
-<h2>Table of Contents</h2>
+<h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org39b0a5f">1. 概览</a>
+<li><a href="#org16e75fa">1. 概览</a>
 <ul>
-<li><a href="#orge4ddc78">1.1. 文件结构</a></li>
-<li><a href="#orgb49a12d">1.2. <code>mod.json</code></a></li>
-<li><a href="#org5941e16">1.3. 内容</a></li>
-<li><a href="#orgd0d0829">1.4. 种类</a></li>
-<li><a href="#orgf323bae">1.5. 贴图</a></li>
-<li><a href="#orgbdaa2bc">1.6. 音效</a></li>
-<li><a href="#org7242686">1.7. 前置</a></li>
-<li><a href="#orgb2a33ea">1.8. 语言包</a></li>
-<li><a href="#org6f9a276">1.9. 蓝图</a></li>
-<li><a href="#orgba23e63">1.10. Mindustry JSON 格式</a></li>
-<li><a href="#org22fc109">1.11. FAQ</a></li>
+<li><a href="#org6c50b57">1.1. 文件结构</a></li>
+<li><a href="#orga3e4f8b">1.2. <code>mod.json</code></a></li>
+<li><a href="#orgac9551c">1.3. 内容</a></li>
+<li><a href="#org7527877">1.4. 种类</a></li>
+<li><a href="#org753ea40">1.5. 科技树</a></li>
+<li><a href="#orge6ac27b">1.6. 贴图</a></li>
+<li><a href="#orgd8e4040">1.7. 音效</a></li>
+<li><a href="#org963fa9d">1.8. 前置</a></li>
+<li><a href="#orgbe0da2a">1.9. 语言包</a></li>
+<li><a href="#orgd54be38">1.10. Hjson</a></li>
+<li><a href="#org6c69d8c">1.11. 蓝图</a></li>
+<li><a href="#org1024cbe">1.12. FAQ</a></li>
 </ul>
 </li>
-<li><a href="#org74132c1">2. 世界</a>
+<li><a href="#orgdcb33fb">2. 世界</a>
 <ul>
-<li><a href="#org4c9282a">2.1. 方块</a></li>
-<li><a href="#org6245272">2.2. 消耗器</a></li>
-<li><a href="#org894dcd1">2.3. 方块存储</a></li>
-<li><a href="#org00ddb52">2.4. 环境</a></li>
-<li><a href="#org620f931">2.5. 工厂</a></li>
-<li><a href="#org9678449">2.6. 沙盒</a></li>
-<li><a href="#org74a7ea7">2.7. 逻辑</a></li>
-<li><a href="#orge65e1a5">2.8. 防御</a></li>
-<li><a href="#org1c58f75">2.9. 炮塔s</a></li>
-<li><a href="#org93e55a9">2.10. 运输</a></li>
-<li><a href="#org7b1d843">2.11. 液体方块M</a></li>
-<li><a href="#org0f60240">2.12. 能量</a></li>
-<li><a href="#org502f3b3">2.13. 生产工厂</a></li>
-<li><a href="#org3dc17fc">2.14. 单位方块</a></li>
-<li><a href="#orgb4b0e84">2.15. 存储</a></li>
-<li><a href="#org2adfe54">2.16. 属性</a></li>
-<li><a href="#orge633664">2.17. 属性</a></li>
-<li><a href="#orgdc81409">2.18. 建筑菜单可见性</a></li>
-<li><a href="#org6326c6c">2.19. 方块组别</a></li>
+<li><a href="#org5fe8376">2.1. 方块</a></li>
+<li><a href="#orgabac4f3">2.2. 消耗器</a></li>
+<li><a href="#org28b5144">2.3. 方块存储</a></li>
+<li><a href="#orgaa64818">2.4. 环境</a></li>
+<li><a href="#orga9e9265">2.5. 工厂</a></li>
+<li><a href="#orgc9a2c42">2.6. 沙盒</a></li>
+<li><a href="#orgbe901c5">2.7. 逻辑</a></li>
+<li><a href="#org4474a14">2.8. 防御</a></li>
+<li><a href="#org9f0ff7e">2.9. 炮塔s</a></li>
+<li><a href="#org599e5b6">2.10. 运输</a></li>
+<li><a href="#org9607930">2.11. 液体方块M</a></li>
+<li><a href="#orgfd018ee">2.12. 能量</a></li>
+<li><a href="#org4514402">2.13. 生产工厂</a></li>
+<li><a href="#orgd0deb17">2.14. 单位方块</a></li>
+<li><a href="#org867276f">2.15. 存储</a></li>
+<li><a href="#orgc41b9a9">2.16. 属性</a></li>
+<li><a href="#org7d3f334">2.17. 属性</a></li>
+<li><a href="#org1f6e3b7">2.18. 建筑菜单可见性</a></li>
+<li><a href="#org81a0777">2.19. 方块组别</a></li>
 </ul>
 </li>
-<li><a href="#org227a691">3. 种类</a>
+<li><a href="#org4cf6807">3. 种类</a>
 <ul>
-<li><a href="#orgc06d431">3.1. 物品</a></li>
-<li><a href="#orgf2c22ab">3.2. 物品组</a></li>
-<li><a href="#org5d04fb9">3.3. 液体</a></li>
-<li><a href="#orged19fd6">3.4. 液体组</a></li>
-<li><a href="#orga217614">3.5. 武器</a></li>
-<li><a href="#org11ea7d0">3.6. 单位类</a></li>
-<li><a href="#org40c2a64">3.7. 玩家机甲</a></li>
-<li><a href="#org3649683">3.8. 内容菜单类型</a></li>
-<li><a href="#org16bba8d">3.9. 区域</a></li>
-<li><a href="#org6da07bf">3.10. 状态</a></li>
+<li><a href="#org6e96131">3.1. 物品</a></li>
+<li><a href="#org70d1070">3.2. 物品组</a></li>
+<li><a href="#org6ae5397">3.3. 液体</a></li>
+<li><a href="#org2fb50b2">3.4. 液体组</a></li>
+<li><a href="#orgad3a765">3.5. 武器</a></li>
+<li><a href="#orgadbaa88">3.6. 单位类</a></li>
+<li><a href="#org3462781">3.7. 玩家机甲</a></li>
+<li><a href="#org31def12">3.8. 内容菜单类型</a></li>
+<li><a href="#org979f0b1">3.9. 区域</a></li>
+<li><a href="#org93b3d17">3.10. 状态</a></li>
 </ul>
 </li>
-<li><a href="#org8f840ab">4. 图像</a>
+<li><a href="#orgc14b5f7">4. 图像</a>
 <ul>
-<li><a href="#orgbb81589">4.1. 渲染层</a></li>
-<li><a href="#orge909bb4">4.2. 颜色</a></li>
+<li><a href="#org5e3d926">4.1. 渲染层</a></li>
+<li><a href="#orgee77d4f">4.2. 颜色</a></li>
 </ul>
 </li>
-<li><a href="#org4632197">5. 实体</a>
+<li><a href="#orgc319ded">5. 实体</a>
 <ul>
-<li><a href="#orga391e48">5.1. 子弹类</a></li>
-<li><a href="#org097ab11">5.2. 基础单位</a></li>
-<li><a href="#org6d01988">5.3. 特效</a></li>
-<li><a href="#org22c669c">5.4. 瞄准优先度</a></li>
+<li><a href="#orgae0d191">5.1. 子弹类</a></li>
+<li><a href="#org6c6805d">5.2. 基础单位</a></li>
+<li><a href="#org93a7f89">5.3. 特效</a></li>
+<li><a href="#orgad1b8ab">5.4. 瞄准优先度</a></li>
 </ul>
 </li>
-<li><a href="#org5b94cea">6. 元素</a></li>
-<li><a href="#orgfb10648">7. 其他</a>
+<li><a href="#org086f7d1">6. 元素</a></li>
+<li><a href="#org705f6b2">7. 其他</a>
 <ul>
-<li><a href="#orgc346259">7.1. Mindustry源码结构</a></li>
+<li><a href="#org675565a">7.1. Mindustry源码结构</a></li>
+<li><a href="#org675565a">7.1. Mindustry源码结构</a></li>
+<li><a href="#org675565a">7.1. Mindustry源码结构</a></li>
+<li><a href="#org675565a">7.1. Mindustry源码结构</a></li>
+<li><a href="#org675565a">7.1. Mindustry源码结构</a></li>
+<li><a href="#org675565a">7.1. Mindustry源码结构</a></li>
 </ul>
 </li>
 </ul>
@@ -313,8 +338,8 @@ for the JavaScript code in this tag.
 提出PR和issue建议请去作者 Github: <a href="https://github.com/SimonWoodburyForget/mindustry-modding">https://github.com/SimonWoodburyForget/mindustry-modding</a>
 </p>
 
-<div id="outline-container-org39b0a5f" class="outline-2">
-<h2 id="org39b0a5f"><span class="section-number-2">1</span> 概览</h2>
+<div id="outline-container-org16e75fa" class="outline-2">
+<h2 id="org16e75fa"><span class="section-number-2">1</span> 概览</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Mindustry的mod是一些内容物的整合，你可以用内置的种类，改变其中的数据来加载你的物品，也可以重写原版的内容
@@ -329,24 +354,24 @@ Mindustry的mod是一些内容物的整合，你可以用内置的种类，改�
 </p>
 </div>
 
-<div id="outline-container-orge4ddc78" class="outline-3">
-<h3 id="orge4ddc78"><span class="section-number-3">1.1</span> 文件结构</h3>
+<div id="outline-container-org6c50b57" class="outline-3">
+<h3 id="org6c50b57"><span class="section-number-3">1.1</span> 文件结构</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 你的mod文件结构必须类似于如下结构:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-fundamental">mod&#21517;
-&#9500;&#9472;&#9472; bundles
-&#9500;&#9472;&#9472; schematics
-&#9500;&#9472;&#9472; content
-&#9474;   &#9500;&#9472;&#9472; blocks
-&#9474;   &#9492;&#9472;&#9472; items
-&#9500;&#9472;&#9472; mod.json
-&#9500;&#9472;&#9472; sounds
-&#9500;&#9472;&#9472; maps
-&#9492;&#9472;&#9472; sprites
+<pre class="src src-fundamental">mod名
+├── bundles
+├── schematics
+├── content
+│   ├── blocks
+│   └── items
+├── mod.json
+├── sounds
+├── maps
+└── sprites
 </pre>
 </div>
 
@@ -358,11 +383,19 @@ Mindustry的mod是一些内容物的整合，你可以用内置的种类，改�
 <li>Steam: <code>steam/steamapps/common/Mindustry/mods/</code></li>
 <li>Windows: <code>%appdata%/Mindustry/mods/</code></li>
 </ul>
+
+<p>
+<b>Note;</b> 你的文件名必须全小写而且不能有空格:
+</p>
+<ul class="org-ul">
+<li>正确: <code>my-custom-block.json</code></li>
+<li>不正确: <code>My Custom Block.json</code></li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-orgb49a12d" class="outline-3">
-<h3 id="orgb49a12d"><span class="section-number-3">1.2</span> <code>mod.json</code></h3>
+<div id="outline-container-orga3e4f8b" class="outline-3">
+<h3 id="orga3e4f8b"><span class="section-number-3">1.2</span> <code>mod.json</code></h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 在mod的根目录，你必须要有 <code>mod.json</code> 这个文件来定义你的mod的基础数据。
@@ -385,25 +418,29 @@ Mindustry的mod是一些内容物的整合，你可以用内置的种类，改�
 <ul class="org-ul">
 <li><code>name</code> 会用来引用你的mod，慎重地去命名来避免和其他mod的名字重复</li>
 <li><code>description</code> 是mod加载界面会显示的文本，尽量的写简洁扼要一点。</li>
-<li><code>dependencies</code> 是非必须的;如果你想知道更多，去看<a href="#org7242686">前置</a> 部分.</li>
+<li><code>dependencies</code> 是非必须的;如果你想知道更多，去看<a href="#org963fa9d">前置</a> 部分.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org5941e16" class="outline-3">
-<h3 id="org5941e16"><span class="section-number-3">1.3</span> 内容</h3>
+<div id="outline-container-orgac9551c" class="outline-3">
+<h3 id="orgac9551c"><span class="section-number-3">1.3</span> 内容</h3>
 <div class="outline-text-3" id="text-1-3">
+<p>
+<b>[新特性 2d4270406]</b> <i>现支持 <code>.hjson</code> 后缀</i>
+</p>
+
 <p>
 在你的mod的根目录你会有一个 <code>content/</code> 目录，这里是所有json文件存储的地方，各种type会有不一样的子文件夹，在这个文件夹里面有如下子文件夹:
 </p>
 
 <ul class="org-ul">
-<li><code>content/items/</code> 用来放 <a href="#orgc06d431">物品</a>, 比如 <code>copper</code> 和 <code>surge-alloy</code>;</li>
-<li><code>content/blocks/</code> 用来放 <a href="#org4c9282a">方块</a>, 比如炮塔和地板;</li>
-<li><code>content/mechs/</code> 用来放 <a href="#org40c2a64">玩家机甲</a>, 比如 <code>tau</code> 和 <code>glaive</code>;</li>
-<li><code>content/liquids/</code> 用来放 <a href="#org5d04fb9">液体</a>, 比如 <code>water</code> 和 <code>slag</code>;</li>
-<li><code>content/units/</code> 用来放飞行或地面 <a href="#org11ea7d0">单位</a>, 比如 <code>reaper</code> 和 <code>dagger</code>;</li>
-<li><code>content/zones/</code> 用来放 <a href="#org16bba8d">区域</a>, 战役地图的配置文件.</li>
+<li><code>content/items/</code> 用来放 <a href="#org6e96131">物品</a>, 比如 <code>copper</code> 和 <code>surge-alloy</code>;</li>
+<li><code>content/blocks/</code> 用来放 <a href="#org5fe8376">方块</a>, 比如炮塔和地板;</li>
+<li><code>content/mechs/</code> 用来放 <a href="#org3462781">玩家机甲</a>, 比如 <code>tau</code> 和 <code>glaive</code>;</li>
+<li><code>content/liquids/</code> 用来放 <a href="#org6ae5397">液体</a>, 比如 <code>water</code> 和 <code>slag</code>;</li>
+<li><code>content/units/</code> 用来放飞行或地面 <a href="#orgadbaa88">单位类</a>, 比如 <code>reaper</code> 和 <code>dagger</code>;</li>
+<li><code>content/zones/</code> 用来放 <a href="#org979f0b1">区域</a>, 战役地图的配置文件.</li>
 </ul>
 
 <p>
@@ -467,8 +504,8 @@ Mindustry的mod是一些内容物的整合，你可以用内置的种类，改�
 </div>
 </div>
 
-<div id="outline-container-orgd0d0829" class="outline-3">
-<h3 id="orgd0d0829"><span class="section-number-3">1.4</span> 种类</h3>
+<div id="outline-container-org7527877" class="outline-3">
+<h3 id="org7527877"><span class="section-number-3">1.4</span> 种类</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 种类有很多接口,其中最重要的是 <code>种类</code>;这是一个内容分析器分析的关键节点,用来决定这个内容物的种类. <i>一个 <code>Router</code> 不能是 <code>Turret</code> 类</i>, 因为它们完全不一样.
@@ -505,9 +542,33 @@ Mindustry的mod是一些内容物的整合，你可以用内置的种类，改�
 </div>
 </div>
 
-<div id="outline-container-orgf323bae" class="outline-3">
-<h3 id="orgf323bae"><span class="section-number-3">1.5</span> 贴图</h3>
+<div id="outline-container-org753ea40" class="outline-3">
+<h3 id="org753ea40"><span class="section-number-3">1.5</span> 科技树</h3>
 <div class="outline-text-3" id="text-1-5">
+<p>
+像 <code>type</code> 一样的类，是 <code>research</code> 类，这个类也是根类.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-json">{
+    "research": "duo"
+}
+</pre>
+</div>
+
+<p>
+这个方块的研究会放在 <code>duo</code> 这个方块后面, 如果你想把某方块研究放在自己mod里面的一个方块后面，就写 <code>&lt;block-name&gt;</code>, 跨mod调用需要在调用的方块前加那一个mod名字做前缀.
+</p>
+
+<p>
+研究消耗公式是 <code>30 + requirements * 6</code>, <code>requirements</code> 是建筑耗材. <i>(换句话来说你不能在 <code>requirements</code> 中更改 <code>research cost</code> )</i>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge6ac27b" class="outline-3">
+<h3 id="orge6ac27b"><span class="section-number-3">1.6</span> 贴图</h3>
+<div class="outline-text-3" id="text-1-6">
 <p>
 制作贴图所需的软件, 是一个支持透明编辑的软件 <i>(比如: PS).</i> 方块的贴图大小是 <code>32 * 大小</code>, 所以一个 <code>2x2</code> 的方块将会需要 <code>64x64</code> 的贴图.贴图必须是 <code>.png</code> 格式，要32位深度.
 </p>
@@ -537,9 +598,9 @@ Mindustry的mod是一些内容物的整合，你可以用内置的种类，改�
 </div>
 </div>
 
-<div id="outline-container-orgbdaa2bc" class="outline-3">
-<h3 id="orgbdaa2bc"><span class="section-number-3">1.6</span> 音效</h3>
-<div class="outline-text-3" id="text-1-6">
+<div id="outline-container-orgd8e4040" class="outline-3">
+<h3 id="orgd8e4040"><span class="section-number-3">1.7</span> 音效</h3>
+<div class="outline-text-3" id="text-1-7">
 <p>
 自定义的音效文件可以放在 <code>sounds/</code> 文件夹中来添加. 只要在音效文件夹里，就没有问题.各个音效需要两种格式:
 </p>
@@ -603,9 +664,9 @@ Mindustry的mod是一些内容物的整合，你可以用内置的种类，改�
 </div>
 </div>
 
-<div id="outline-container-org7242686" class="outline-3">
-<h3 id="org7242686"><span class="section-number-3">1.7</span> 前置</h3>
-<div class="outline-text-3" id="text-1-7">
+<div id="outline-container-org963fa9d" class="outline-3">
+<h3 id="org963fa9d"><span class="section-number-3">1.8</span> 前置</h3>
+<div class="outline-text-3" id="text-1-8">
 <p>
 你可以添加依赖mod在 <code>mod.json</code> 里面:
 </p>
@@ -636,9 +697,9 @@ Mindustry的mod是一些内容物的整合，你可以用内置的种类，改�
 </div>
 </div>
 
-<div id="outline-container-orgb2a33ea" class="outline-3">
-<h3 id="orgb2a33ea"><span class="section-number-3">1.8</span> 语言包</h3>
-<div class="outline-text-3" id="text-1-8">
+<div id="outline-container-orgbe0da2a" class="outline-3">
+<h3 id="orgbe0da2a"><span class="section-number-3">1.9</span> 语言包</h3>
+<div class="outline-text-3" id="text-1-9">
 <p>
 一个mod非必须的部分.语言包主要用来翻译你的内容物,但是这不是你不使用英文的理由.语言包手一个放在 <code>bundles/</code> 文件夹里面的文件,它必须像这样命名 <code>bundle_ru.properties</code> (俄语).
 </p>
@@ -648,13 +709,13 @@ Mindustry的mod是一些内容物的整合，你可以用内置的种类，改�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-fundamental">block.example-mod-silver-wall.name = &#1057;&#1077;&#1088;&#1077;&#1073;&#1088;&#1103;&#1085;&#1072;&#1103; &#1057;&#1090;&#1077;&#1085;&#1072;
-block.example-mod-silver-wall.description = &#1057;&#1090;&#1077;&#1085;&#1072; &#1080;&#1079; &#1089;&#1077;&#1088;&#1077;&#1073;&#1088;&#1072;.
+<pre class="src src-fundamental">block.example-mod-silver-wall.name = Серебряная Стена
+block.example-mod-silver-wall.description = Стена из серебра.
 </pre>
 </div>
 
 <p>
-If you've read the first few sections of this guide如果你读了上面的几个部分, you'll spot it right away你就会知道这个怎么写:
+如果你读了上面的几个部分,你就会知道这个怎么写:
 </p>
 <ul class="org-ul">
 <li><code>&lt;content type&gt;.&lt;mod name&gt;-&lt;content name&gt;.name</code></li>
@@ -719,11 +780,47 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org6f9a276" class="outline-3">
-<h3 id="org6f9a276"><span class="section-number-3">1.9</span> 蓝图</h3>
-<div class="outline-text-3" id="text-1-9">
+<div id="outline-container-orgd54be38" class="outline-3">
+<h3 id="orgd54be38"><span class="section-number-3">1.10</span> Hjson</h3>
+<div class="outline-text-3" id="text-1-10">
 <p>
-需要 <code>Schematic</code> 接口的类，不能替换原版发射图 <i>(详情请看 <a href="#org16bba8d">3.9</a> 部分)</i> 一个base64文字串,或者一个以 <code>.msch</code> 结尾的文件放在 <code>schematics/</code> 子目录里.
+<b>[v99 新特性]</b> <i>currently partially implimented, <code>content/</code> 中使用Hjson.</i>
+</p>
+
+<p>
+现在Mindustry不是用的JSON格式, <i>(但是JSON格式依旧可以被解析)</i> 它解析一个JSON的分支 <a href="https://hjson.org/">Hjson</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fundamental">{
+    # 备注
+
+    // 备注
+
+    /* 备
+       注 */
+
+    key1: single line string
+
+    key2: '''
+	  multiline
+	  string
+	  '''
+
+    key3: [ value 1
+	    value 2
+	    value 3 ]
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6c69d8c" class="outline-3">
+<h3 id="org6c69d8c"><span class="section-number-3">1.11</span> 蓝图</h3>
+<div class="outline-text-3" id="text-1-11">
+<p>
+需要 <code>Schematic</code> 接口的类，不能替换原版发射图 <i>(详情请看 <a href="#org979f0b1">区域</a> 部分)</i> 一个base64文字串,或者一个以 <code>.msch</code> 结尾的文件放在 <code>schematics/</code> 子目录里.
 </p>
 
 <p>
@@ -732,46 +829,35 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgba23e63" class="outline-3">
-<h3 id="orgba23e63"><span class="section-number-3">1.10</span> Mindustry JSON 格式</h3>
-<div class="outline-text-3" id="text-1-10">
-<p>
-Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以下是和原版 JSON 格式的不同:
-</p>
-<ul class="org-ul">
-<li><code>//</code> 双斜杠可以用于注释;</li>
-<li><code>//</code> 双斜杠不能用于表示文字串;</li>
-<li><code>"</code> 和 <code>"</code> 不是文字串所必须的;</li>
-<li><code>,</code> 逗号在物品组 <code>[]</code> 和元素组中 <code>{}</code> 不是必须的;</li>
-<li><code>[ 值, ]</code> 逗号可以包括在组里面.</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org22fc109" class="outline-3">
-<h3 id="org22fc109"><span class="section-number-3">1.11</span> FAQ</h3>
-<div class="outline-text-3" id="text-1-11">
+<div id="outline-container-org1024cbe" class="outline-3">
+<h3 id="org1024cbe"><span class="section-number-3">1.12</span> FAQ</h3>
+<div class="outline-text-3" id="text-1-12">
 <ul class="org-ul">
 <li><code>time</code> 在游戏中用 <code>ticks</code> 计算;</li>
 <li><code>ticks</code> <i>有时叫 <code>帧数</code>,</i> 是 60/1 秒;</li>
 <li><code>range</code> 和其他距离都是 1/10 格;</li>
 <li>计算子弹范围需要用 <code>lifetime</code> 和 <code>speed</code> ，公式是 <code>lifetime * speed = range</code>;</li>
-<li><a id="org64df026"></a> <i>Abstract</i>: 你需要知道关于abstract的东西只有这是一个Java的定义,这个定义下的物体不能被自身加载. 如果你强上会出现 <i>"initialization exception"</i> 类似这种的错误.</li>
-<li>research cost is <code>30 + requirements * 6</code></li>
+<li><a id="orgd471347"></a> 什么是 <code>abstract</code>?关于此类你要知道的,只有这是Java一个修饰符,代表这个类不能直接被加载.如果你强行加载会出现 <i>"initialization exception"</i> 诸如此类的错误;</li>
+<li>什么是 <code>NullPointerException</code>?这是一个有一些类中的必须接口没有设置的信息;</li>
+<li><a id="org1fa3c60"></a> 什么是 <code>bleeding-edge</code>? 这个是开发版的用Github上面的master分支构建.其中的新特性会在下一个正式版本中使用.</li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org74132c1" class="outline-2">
-<h2 id="org74132c1"><span class="section-number-2">2</span> 世界</h2>
+<div id="outline-container-orgdcb33fb" class="outline-2">
+<h2 id="orgdcb33fb"><span class="section-number-2">2</span> 世界</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org4c9282a" class="outline-3">
-<h3 id="org4c9282a"><span class="section-number-3">2.1</span> 方块</h3>
+<div id="outline-container-org5fe8376" class="outline-3">
+<h3 id="org5fe8376"><span class="section-number-3">2.1</span> 方块</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
-继承 <a href="#org894dcd1">方块存储</a> &#x2013; 所有的物品和方块的基础类，英文:Block
+继承 <a href="#org28b5144">方块存储</a>，英文:Block
+</p>
+
+<p>
+所有的物品和方块的基础类.所有方块至少要有一个贴图,通过识别方块名字加载.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -848,7 +934,7 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 <td class="org-left">placeableOn</td>
 <td class="org-left">boolean</td>
 <td class="org-right">true</td>
-<td class="org-left">这个 <a href="#orgabcd0a8">地板</a> 是否能被放上方块.</td>
+<td class="org-left">这个 <a href="#orga2f25b0">地板</a> 是否能被放上方块.</td>
 </tr>
 
 <tr>
@@ -904,7 +990,7 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 <td class="org-left">fillesTile</td>
 <td class="org-left">true</td>
 <td class="org-right">&#xa0;</td>
-<td class="org-left">特殊的接口; 如果是false, <a href="#orgabcd0a8">地板</a> 将会在这个方块上面渲染.</td>
+<td class="org-left">特殊的接口; 如果是false, <a href="#orga2f25b0">地板</a> 将会在这个方块上面渲染.</td>
 </tr>
 
 <tr>
@@ -916,7 +1002,7 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 
 <tr>
 <td class="org-left">group</td>
-<td class="org-left"><a href="#org6326c6c">方块组别</a></td>
+<td class="org-left"><a href="#org81a0777">方块组别</a></td>
 <td class="org-right">none</td>
 <td class="org-left">除非 <code>canReplace</code> 被重写, 同一组别的方块可以呼吸替换.</td>
 </tr>
@@ -943,6 +1029,13 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 </tr>
 
 <tr>
+<td class="org-left">drawLiquidLight</td>
+<td class="org-left">boolean</td>
+<td class="org-right">true</td>
+<td class="org-left"><b>[新特性 v99 (268)]</b> 在其中的液体是否发光.</td>
+</tr>
+
+<tr>
 <td class="org-left">posConfig</td>
 <td class="org-left">boolean</td>
 <td class="org-right">&#xa0;</td>
@@ -965,7 +1058,7 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 
 <tr>
 <td class="org-left">outlineColor</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">404049</td>
 <td class="org-left">图标描边颜色.</td>
 </tr>
@@ -986,14 +1079,14 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 
 <tr>
 <td class="org-left">breakSound</td>
-<td class="org-left"><a href="#orgbdaa2bc">音效</a></td>
+<td class="org-left"><a href="#orgd8e4040">音效</a></td>
 <td class="org-right">boom</td>
 <td class="org-left">破坏方块时播放的音效.</td>
 </tr>
 
 <tr>
 <td class="org-left">activeSound</td>
-<td class="org-left"><a href="#orgbdaa2bc">音效</a></td>
+<td class="org-left"><a href="#orgd8e4040">音效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">方块工作时的音效，会循环播放</td>
 </tr>
@@ -1007,7 +1100,7 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 
 <tr>
 <td class="org-left">idleSound</td>
-<td class="org-left"><a href="#orgbdaa2bc">音效</a></td>
+<td class="org-left"><a href="#orgd8e4040">音效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">方块空闲时音效.</td>
 </tr>
@@ -1021,14 +1114,14 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 
 <tr>
 <td class="org-left">requirements</td>
-<td class="org-left"><a href="#orgf2c22ab">物品组</a></td>
+<td class="org-left"><a href="#org70d1070">物品组</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">建筑方块的消耗，会影响到研究消耗，公式在下面.</td>
 </tr>
 
 <tr>
 <td class="org-left">category</td>
-<td class="org-left"><a href="#org3649683">种类组</a></td>
+<td class="org-left"><a href="#org31def12">内容菜单类型</a></td>
 <td class="org-right">distribution</td>
 <td class="org-left">建造菜单上面的种类.</td>
 </tr>
@@ -1042,7 +1135,7 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 
 <tr>
 <td class="org-left">buildVisibility</td>
-<td class="org-left"><a href="#orgdc81409">建筑菜单可见性</a></td>
+<td class="org-left"><a href="#org1f6e3b7">建筑菜单可见性</a></td>
 <td class="org-right">hidden</td>
 <td class="org-left">这个物品在建筑菜单是否可见.</td>
 </tr>
@@ -1070,24 +1163,31 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 
 <tr>
 <td class="org-left">layer</td>
-<td class="org-left"><a href="#orgbb81589">渲染层</a></td>
+<td class="org-left"><a href="#org5e3d926">渲染层</a></td>
 <td class="org-right">null</td>
 <td class="org-left">渲染在哪一层.</td>
 </tr>
 
 <tr>
 <td class="org-left">layer2</td>
-<td class="org-left"><a href="#orgbb81589">渲染层</a></td>
+<td class="org-left"><a href="#org5e3d926">渲染层</a></td>
 <td class="org-right">null</td>
 <td class="org-left">额外渲染在哪一层.</td>
 </tr>
 </tbody>
 </table>
+
+<p>
+贴图:
+</p>
+<ul class="org-ul">
+<li><code>&lt;name&gt;</code> 方块的主贴图.</li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-org6245272" class="outline-3">
-<h3 id="org6245272"><span class="section-number-3">2.2</span> 消耗器</h3>
+<div id="outline-container-orgabac4f3" class="outline-3">
+<h3 id="orgabac4f3"><span class="section-number-3">2.2</span> 消耗器</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 :DESCRIPTION:消耗液体，物体和能量的基础类，英文:Consume
@@ -1123,19 +1223,19 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 
 <tr>
 <td class="org-left">items</td>
-<td class="org-left"><a href="#orgcd4d146">1</a></td>
+<td class="org-left"><a href="#org1699738">消耗物品</a></td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left">liquid</td>
-<td class="org-left"><a href="#org22321bd">2</a></td>
+<td class="org-left"><a href="#orgebe43ac">消耗液体</a></td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left">power</td>
-<td class="org-left">float or <a href="#orgaa1b276">3</a></td>
+<td class="org-left">float or <a href="#org88b14f9">能量消耗</a></td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
@@ -1155,7 +1255,7 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 </ul>
 
 <p>
-消耗物品例子 <a href="#orgcd4d146">消耗物品</a> 和 <a href="#org22321bd">2</a>:
+消耗物品例子 <a href="#org1699738">消耗物品</a> 和 <a href="#orgebe43ac">消耗液体</a>:
 </p>
 <div class="org-src-container">
 <pre class="src src-json">{
@@ -1175,11 +1275,15 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 </pre>
 </div>
 </div>
-<div id="outline-container-org58c7ffa" class="outline-4">
-<h4 id="org58c7ffa"><span class="section-number-4">2.2.1</span> 消耗</h4>
+<div id="outline-container-org3b3228f" class="outline-4">
+<h4 id="org3b3228f"><span class="section-number-4">2.2.1</span> 消耗</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
-<a href="#org64df026">Abstract</a> 修饰类, 定义了资源被消耗的种类和效果.英文:Consume
+<a href="#orgd471347">Abstract</a> 修饰类,英文:Consume
+</p>
+
+<p>
+这个类用来定义消耗的方法.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1228,7 +1332,7 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 
 <ul class="org-ul">
 <li><p>
-<a id="orgcd4d146"></a> <code>消耗物品</code>, 消耗物品组.
+<a id="org1699738"></a> <code>消耗物品</code>, 消耗物品组.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1248,13 +1352,13 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 <tbody>
 <tr>
 <td class="org-left">items</td>
-<td class="org-left"><a href="#orgf2c22ab">物品组</a></td>
+<td class="org-left"><a href="#org70d1070">物品组</a></td>
 </tr>
 </tbody>
 </table></li>
 
 <li><p>
-<a id="org22321bd"></a> <code>消耗液体</code>, 消耗一种液体.
+<a id="orgebe43ac"></a> <code>消耗液体</code>, 消耗一种液体.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1282,7 +1386,7 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 <td class="org-left">liquid</td>
 <td class="org-left">String</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">消耗的 <a href="#org5d04fb9">3.3</a> 名</td>
+<td class="org-left">消耗的 <a href="#org6ae5397">液体</a> 名</td>
 </tr>
 
 <tr>
@@ -1309,7 +1413,7 @@ Mindustry 不是真正在用 JSON, 只是合乎语法的 JSON 可以工作, 以�
 </ul></li>
 
 <li><p>
-<a id="orgaa1b276"></a> <code>能量消耗</code>, consume or buffer power.
+<a id="org88b14f9"></a> <code>能量消耗</code>, 消耗或存储能量.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1367,11 +1471,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org894dcd1" class="outline-3">
-<h3 id="org894dcd1"><span class="section-number-3">2.3</span> 方块存储</h3>
+<div id="outline-container-org28b5144" class="outline-3">
+<h3 id="org28b5144"><span class="section-number-3">2.3</span> 方块存储</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
-<a href="#org64df026">Abstract</a> 修饰类继承 <a href="#org5941e16">内容</a> &#x2013; 这里定义方块存储的资源.英文:BlockStorage
+<a href="#orgd471347">Abstract</a> 修饰类继承 <a href="#orgac9551c">内容</a> &#x2013; 这里定义方块存储的资源.英文:BlockStorage
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1432,7 +1536,7 @@ Notes:
 
 <tr>
 <td class="org-left">outputsPower</td>
-<td class="org-left">bolean</td>
+<td class="org-left">boolean</td>
 <td class="org-right">false</td>
 <td class="org-left">是否输出能量</td>
 </tr>
@@ -1459,8 +1563,14 @@ Notes:
 </tr>
 
 <tr>
+<td class="org-left">liquidPressure</td>
+<td class="org-left">float</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
 <td class="org-left">consumes</td>
-<td class="org-left"><a href="#org6245272">消耗器</a></td>
+<td class="org-left"><a href="#orgabac4f3">消耗器</a></td>
 <td class="org-right">&#xa0;</td>
 </tr>
 </tbody>
@@ -1468,19 +1578,23 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org00ddb52" class="outline-3">
-<h3 id="org00ddb52"><span class="section-number-3">2.4</span> 环境</h3>
+<div id="outline-container-orgaa64818" class="outline-3">
+<h3 id="orgaa64818"><span class="section-number-3">2.4</span> 环境</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 环境方块只能在地图编辑器里面加入地图,它们也是决定游戏怎么玩的关键方块.这一些方块不会出现在地图上面除非你画一个地图来生成它们.
 </p>
 </div>
 
-<div id="outline-container-orgabcd0a8" class="outline-4">
-<h4 id="orgabcd0a8"><span class="section-number-4">2.4.1</span> 地板</h4>
+<div id="outline-container-orga2f25b0" class="outline-4">
+<h4 id="orga2f25b0"><span class="section-number-4">2.4.1</span> 地板</h4>
 <div class="outline-text-4" id="text-2-4-1">
 <p>
-继承 <a href="#org4c9282a">方块</a> &#x2013; 环境里面的地板.需要贴图，可以在编辑器中看到。英文:Floor
+继承 <a href="#org5fe8376">方块</a>,英文:Floor
+</p>
+
+<p>
+用于矿物等类的父类的地板类.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1548,21 +1662,21 @@ Notes:
 
 <tr>
 <td class="org-left">walkEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">ripple</td>
-<td class="org-left">单位在这个 <a href="#orgabcd0a8">地板</a>.上行走的特效</td>
+<td class="org-left">单位在这个 <a href="#orga2f25b0">地板</a>.上行走的特效</td>
 </tr>
 
 <tr>
 <td class="org-left">drownUpdateEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">bubble</td>
-<td class="org-left">单位在这个 <a href="#orgabcd0a8">地板</a>.上溺水的特效.</td>
+<td class="org-left">单位在这个 <a href="#orga2f25b0">地板</a>.上溺水的特效.</td>
 </tr>
 
 <tr>
 <td class="org-left">status</td>
-<td class="org-left"><a href="#org6da07bf">状态</a></td>
+<td class="org-left"><a href="#org93b3d17">状态</a></td>
 <td class="org-right">none</td>
 <td class="org-left">单位行走在上面时给予的状态.</td>
 </tr>
@@ -1576,14 +1690,14 @@ Notes:
 
 <tr>
 <td class="org-left">liquidDrop</td>
-<td class="org-left"><a href="#org5d04fb9">液体</a></td>
+<td class="org-left"><a href="#org6ae5397">液体</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">产出液体种类，用泵获取.</td>
 </tr>
 
 <tr>
 <td class="org-left">itemDrop</td>
-<td class="org-left"><a href="#orgc06d431">物品</a></td>
+<td class="org-left"><a href="#org6e96131">物品</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">产出物品种类，用钻头采集.</td>
 </tr>
@@ -1604,21 +1718,21 @@ Notes:
 
 <tr>
 <td class="org-left">blendGroup</td>
-<td class="org-left"><a href="#org4c9282a">方块</a></td>
+<td class="org-left"><a href="#org5fe8376">方块</a></td>
 <td class="org-right">this</td>
 <td class="org-left">这个地板不会拓展渲染到什么方块上.</td>
 </tr>
 
 <tr>
 <td class="org-left">updateEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">地板更新时的特效.</td>
 </tr>
 
 <tr>
 <td class="org-left">attributes</td>
-<td class="org-left"><a href="#org2adfe54">属性</a></td>
+<td class="org-left"><a href="#orgc41b9a9">属性</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">地板对各种机器的效率倍数.</td>
 </tr>
@@ -1626,19 +1740,27 @@ Notes:
 </table>
 
 <p>
-多种贴图命名规则:
+备注:
 </p>
 <ul class="org-ul">
-<li><code>&lt;name&gt;&lt;1..&gt;</code></li>
+<li>这个类需要一个贴图显示在地图编辑器中.</li>
+</ul>
+
+<p>
+Sprites:
+</p>
+<ul class="org-ul">
+<li><code>&lt;name&gt;&lt;1..&gt;</code> 贴图及变种;</li>
+<li><code>&lt;name&gt;-edge</code> 可选的延展贴图.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org673dfcb" class="outline-4">
-<h4 id="org673dfcb"><span class="section-number-4">2.4.2</span> 覆盖地板</h4>
+<div id="outline-container-orgd920d82" class="outline-4">
+<h4 id="orgd920d82"><span class="section-number-4">2.4.2</span> 覆盖地板</h4>
 <div class="outline-text-4" id="text-2-4-2">
 <p>
-继承 <a href="#orgabcd0a8">地板</a> &#x2013; 一种地板渲染在其他地板上一层.英文:OverlayFloor
+继承 <a href="#orga2f25b0">地板</a>,英文:OverlayFloor
 </p>
 
 <p>
@@ -1650,11 +1772,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org2a122b7" class="outline-4">
-<h4 id="org2a122b7"><span class="section-number-4">2.4.3</span> 双层覆盖地板</h4>
+<div id="outline-container-org7ae6d4e" class="outline-4">
+<h4 id="org7ae6d4e"><span class="section-number-4">2.4.3</span> 双层覆盖地板</h4>
 <div class="outline-text-4" id="text-2-4-3">
 <p>
-继承 <a href="#org673dfcb">覆盖地板</a>，英文:DoubleOverlayFloor
+继承 <a href="#orgd920d82">覆盖地板</a>，英文:DoubleOverlayFloor
 </p>
 
 <p>
@@ -1666,11 +1788,15 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgee1bca8" class="outline-4">
-<h4 id="orgee1bca8"><span class="section-number-4">2.4.4</span> 矿物</h4>
+<div id="outline-container-org19573ef" class="outline-4">
+<h4 id="org19573ef"><span class="section-number-4">2.4.4</span> 矿物</h4>
 <div class="outline-text-4" id="text-2-4-4">
 <p>
-继承 <a href="#org673dfcb">覆盖地板</a> &#x2013; 获取特定的物品所产生的矿物.英文:OreBlock
+:DESCRIPTION:获取特定的物品所产生的矿物.
+</p>
+
+<p>
+继承 <a href="#orgd920d82">覆盖地板</a>,英文:OreBlock
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1697,11 +1823,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgf0c60d1" class="outline-4">
-<h4 id="orgf0c60d1"><span class="section-number-4">2.4.5</span> 岩石</h4>
+<div id="outline-container-org13652ff" class="outline-4">
+<h4 id="org13652ff"><span class="section-number-4">2.4.5</span> 岩石</h4>
 <div class="outline-text-4" id="text-2-4-5">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文:Rock
+继承 <a href="#org5fe8376">方块</a>，英文:Rock
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1758,11 +1884,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org79d8dbc" class="outline-4">
-<h4 id="org79d8dbc"><span class="section-number-4">2.4.6</span> 静止墙</h4>
+<div id="outline-container-orge28c80b" class="outline-4">
+<h4 id="orge28c80b"><span class="section-number-4">2.4.6</span> 静止墙</h4>
 <div class="outline-text-4" id="text-2-4-6">
 <p>
-继承 <a href="#orgf0c60d1">岩石</a> -不可破坏的墙，英文:StaticWall
+继承 <a href="#org13652ff">岩石</a> -不可破坏的墙，英文:StaticWall
 </p>
 
 <p>
@@ -1806,7 +1932,7 @@ Notes:
 </table>
 
 <p>
-非必须贴图:
+贴图:
 </p>
 <ul class="org-ul">
 <li><code>&lt;name&gt;-large.png</code> 可以使用2x2的材质.</li>
@@ -1814,11 +1940,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org0df7057" class="outline-4">
-<h4 id="org0df7057"><span class="section-number-4">2.4.7</span> 静止树</h4>
+<div id="outline-container-orgbf19959" class="outline-4">
+<h4 id="orgbf19959"><span class="section-number-4">2.4.7</span> 静止树</h4>
 <div class="outline-text-4" id="text-2-4-7">
 <p>
-继承 <a href="#org79d8dbc">静止墙</a>，英文:StaticTree
+继承 <a href="#orge28c80b">静止墙</a>，英文:StaticTree
 </p>
 
 <p>
@@ -1833,11 +1959,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org71db017" class="outline-4">
-<h4 id="org71db017"><span class="section-number-4">2.4.8</span> 树</h4>
+<div id="outline-container-orgfc808c4" class="outline-4">
+<h4 id="orgfc808c4"><span class="section-number-4">2.4.8</span> 树</h4>
 <div class="outline-text-4" id="text-2-4-8">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文:TreeBlock
+继承 <a href="#org5fe8376">方块</a>，英文:TreeBlock
 </p>
 
 <p>
@@ -1877,15 +2003,15 @@ Notes:
 </div>
 </div>
 </div>
-<div id="outline-container-org620f931" class="outline-3">
-<h3 id="org620f931"><span class="section-number-3">2.5</span> 工厂</h3>
+<div id="outline-container-orga9e9265" class="outline-3">
+<h3 id="orga9e9265"><span class="section-number-3">2.5</span> 工厂</h3>
 <div class="outline-text-3" id="text-2-5">
 </div>
-<div id="outline-container-org02290b5" class="outline-4">
-<h4 id="org02290b5"><span class="section-number-4">2.5.1</span> 普通加工厂</h4>
+<div id="outline-container-orge178802" class="outline-4">
+<h4 id="orge178802"><span class="section-number-4">2.5.1</span> 普通加工厂</h4>
 <div class="outline-text-4" id="text-2-5-1">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文:GenericCratfer
+继承 <a href="#org5fe8376">方块</a>，英文:GenericCratfer
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1911,14 +2037,14 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">outputItem</td>
-<td class="org-left"><a href="#orgf2c22ab">物品组</a></td>
+<td class="org-left"><a href="#org70d1070">物品组</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">输出物品</td>
 </tr>
 
 <tr>
 <td class="org-left">outputLiquid</td>
-<td class="org-left"><a href="#orged19fd6">液体组</a></td>
+<td class="org-left"><a href="#org2fb50b2">液体组</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">输出液体</td>
 </tr>
@@ -1932,14 +2058,14 @@ Notes:
 
 <tr>
 <td class="org-left">craftEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">工作特效</td>
 </tr>
 
 <tr>
 <td class="org-left">updateEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">更新特效</td>
 </tr>
@@ -2005,11 +2131,15 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgc56c0e1" class="outline-4">
-<h4 id="orgc56c0e1"><span class="section-number-4">2.5.2</span> 普通冶炼炉</h4>
+<div id="outline-container-orgbab9ae7" class="outline-4">
+<h4 id="orgbab9ae7"><span class="section-number-4">2.5.2</span> 普通冶炼炉</h4>
 <div class="outline-text-4" id="text-2-5-2">
 <p>
-继承 <a href="#org02290b5">普通加工厂</a> &#x2013; 一个有工作贴图的普通加工厂.英文:GenericSmelter
+继承 <a href="#orge178802">普通加工厂</a>,英文:GenericSmelter
+</p>
+
+<p>
+一个有工作贴图的普通加工厂.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2035,7 +2165,7 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">flameColor</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-left">ffc999</td>
 <td class="org-right">火焰颜色</td>
 </tr>
@@ -2046,20 +2176,20 @@ Notes:
 额外贴图:
 </p>
 <ul class="org-ul">
-<li><code>-top</code></li>
+<li><code>&lt;name&gt;-top</code></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org6c83b30" class="outline-4">
-<h4 id="org6c83b30"><span class="section-number-4">2.5.3</span> 分离机</h4>
+<div id="outline-container-org12d5f95" class="outline-4">
+<h4 id="org12d5f95"><span class="section-number-4">2.5.3</span> 分离机</h4>
 <div class="outline-text-4" id="text-2-5-3">
 <p>
-继承 <a href="#org4c9282a">方块</a>
+继承 <a href="#org5fe8376">方块</a>
 </p>
 
 <p>
-分离机是一个输入液体并以物品组中和数量为概率随机输出物品的机器.英文:Separator
+分离机是一个输入液体并以物品组中和数量为概率随机输出物品的机器,用每个物品的数量来计算概率.分离机不接受物品作为原料, 它会把所有物品输出,不管你是否把它加入 ~results~英文:Separator
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2085,7 +2215,7 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">results</td>
-<td class="org-left"><a href="#orgf2c22ab">物品组</a></td>
+<td class="org-left"><a href="#org70d1070">物品组</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">*[必须]*输出物品及概率</td>
 </tr>
@@ -2127,7 +2257,7 @@ Notes:
 
 <tr>
 <td class="org-left">color</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">858585</td>
 <td class="org-left">工作颜色</td>
 </tr>
@@ -2185,20 +2315,21 @@ Notes:
 额外贴图:
 </p>
 <ul class="org-ul">
-<li><code>-liquid</code></li>
+<li><code>&lt;name&gt;-liquid</code></li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-org9678449" class="outline-3">
-<h3 id="org9678449"><span class="section-number-3">2.6</span> 沙盒</h3>
+
+<div id="outline-container-orgc9a2c42" class="outline-3">
+<h3 id="orgc9a2c42"><span class="section-number-3">2.6</span> 沙盒</h3>
 <div class="outline-text-3" id="text-2-6">
 </div>
-<div id="outline-container-org1505a88" class="outline-4">
-<h4 id="org1505a88"><span class="section-number-4">2.6.1</span> 能量黑洞</h4>
+<div id="outline-container-org559be45" class="outline-4">
+<h4 id="org559be45"><span class="section-number-4">2.6.1</span> 能量黑洞</h4>
 <div class="outline-text-4" id="text-2-6-1">
 <p>
-继承 <a href="#org2165b9c">能量方块</a>，英文:PowerVoid
+继承 <a href="#orgbd494bf">能量方块</a>，英文:PowerVoid
 </p>
 
 <p>
@@ -2229,11 +2360,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org47afce9" class="outline-4">
-<h4 id="org47afce9"><span class="section-number-4">2.6.2</span> 无限能源</h4>
+<div id="outline-container-org6d170d6" class="outline-4">
+<h4 id="org6d170d6"><span class="section-number-4">2.6.2</span> 无限能源</h4>
 <div class="outline-text-4" id="text-2-6-2">
 <p>
-继承 <a href="#org3278bd5">能量节点</a>，英文:PowerSource
+继承 <a href="#org56e55bf">节点</a>，英文:PowerSource
 </p>
 
 <p>
@@ -2274,11 +2405,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgf4f500c" class="outline-4">
-<h4 id="orgf4f500c"><span class="section-number-4">2.6.3</span> 物品源</h4>
+<div id="outline-container-orgaae4a97" class="outline-4">
+<h4 id="orgaae4a97"><span class="section-number-4">2.6.3</span> 物品源</h4>
 <div class="outline-text-4" id="text-2-6-3">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文:ItemSource
+继承 <a href="#org5fe8376">方块</a>，英文:ItemSource
 </p>
 
 <p>
@@ -2329,11 +2460,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org6845e1a" class="outline-4">
-<h4 id="org6845e1a"><span class="section-number-4">2.6.4</span> 物品黑洞</h4>
+<div id="outline-container-org2a1139c" class="outline-4">
+<h4 id="org2a1139c"><span class="section-number-4">2.6.4</span> 物品黑洞</h4>
 <div class="outline-text-4" id="text-2-6-4">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文:ItemVoid
+继承 <a href="#org5fe8376">方块</a>，英文:ItemVoid
 </p>
 
 <p>
@@ -2369,11 +2500,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org263ca49" class="outline-4">
-<h4 id="org263ca49"><span class="section-number-4">2.6.5</span> 液体源</h4>
+<div id="outline-container-org2b43d17" class="outline-4">
+<h4 id="org2b43d17"><span class="section-number-4">2.6.5</span> 液体源</h4>
 <div class="outline-text-4" id="text-2-6-5">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文:LiquidSource
+继承 <a href="#org5fe8376">方块</a>，英文:LiquidSource
 </p>
 
 <p>
@@ -2430,15 +2561,15 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org74a7ea7" class="outline-3">
-<h3 id="org74a7ea7"><span class="section-number-3">2.7</span> 逻辑</h3>
+<div id="outline-container-orgbe901c5" class="outline-3">
+<h3 id="orgbe901c5"><span class="section-number-3">2.7</span> 逻辑</h3>
 <div class="outline-text-3" id="text-2-7">
 </div>
-<div id="outline-container-org2770514" class="outline-4">
-<h4 id="org2770514"><span class="section-number-4">2.7.1</span> 消息块</h4>
+<div id="outline-container-orgf13fafa" class="outline-4">
+<h4 id="orgf13fafa"><span class="section-number-4">2.7.1</span> 消息块</h4>
 <div class="outline-text-4" id="text-2-7-1">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：MessageBlock
+继承 <a href="#org5fe8376">方块</a>，英文：MessageBlock
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2516,15 +2647,15 @@ Notes:
 </div>
 </div>
 </div>
-<div id="outline-container-orge65e1a5" class="outline-3">
-<h3 id="orge65e1a5"><span class="section-number-3">2.8</span> 防御</h3>
+<div id="outline-container-org4474a14" class="outline-3">
+<h3 id="org4474a14"><span class="section-number-3">2.8</span> 防御</h3>
 <div class="outline-text-3" id="text-2-8">
 </div>
-<div id="outline-container-org6a6e0fb" class="outline-4">
-<h4 id="org6a6e0fb"><span class="section-number-4">2.8.1</span> 墙</h4>
+<div id="outline-container-org1862cd7" class="outline-4">
+<h4 id="org1862cd7"><span class="section-number-4">2.8.1</span> 墙</h4>
 <div class="outline-text-4" id="text-2-8-1">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：Wall
+继承 <a href="#org5fe8376">方块</a>，英文：Wall
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2596,11 +2727,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgd3b83e0" class="outline-4">
-<h4 id="orgd3b83e0"><span class="section-number-4">2.8.2</span> 反射墙</h4>
+<div id="outline-container-org57fb17b" class="outline-4">
+<h4 id="org57fb17b"><span class="section-number-4">2.8.2</span> 反射墙</h4>
 <div class="outline-text-4" id="text-2-8-2">
 <p>
-继承 <a href="#org6a6e0fb">墙</a> &#x2013; 可以反射低伤害子弹的墙.英文：DeflectorWall
+继承 <a href="#org1862cd7">墙</a> &#x2013; 可以反射低伤害子弹的墙.英文：DeflectorWall
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2642,11 +2773,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org1959a66" class="outline-4">
-<h4 id="org1959a66"><span class="section-number-4">2.8.3</span> 闪电墙</h4>
+<div id="outline-container-orgf9f41be" class="outline-4">
+<h4 id="orgf9f41be"><span class="section-number-4">2.8.3</span> 闪电墙</h4>
 <div class="outline-text-4" id="text-2-8-3">
 <p>
-继承 <a href="#org6a6e0fb">墙</a> &#x2013; 一种被攻击产生闪电的墙.英文：SurgeWall
+继承 <a href="#org1862cd7">墙</a> &#x2013; 一种被攻击产生闪电的墙.英文：SurgeWall
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2695,11 +2826,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orga5c5659" class="outline-4">
-<h4 id="orga5c5659"><span class="section-number-4">2.8.4</span> 门</h4>
+<div id="outline-container-org38ac77c" class="outline-4">
+<h4 id="org38ac77c"><span class="section-number-4">2.8.4</span> 门</h4>
 <div class="outline-text-4" id="text-2-8-4">
 <p>
-继承 <a href="#org6a6e0fb">墙</a>，英文:Wall
+继承 <a href="#org1862cd7">墙</a>，英文:Wall
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2725,14 +2856,14 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">openfx</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">dooropen</td>
 <td class="org-left">开门特效</td>
 </tr>
 
 <tr>
 <td class="org-left">closefx</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">doorclose</td>
 <td class="org-left">关门特效</td>
 </tr>
@@ -2784,11 +2915,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgf9f3ee3" class="outline-4">
-<h4 id="orgf9f3ee3"><span class="section-number-4">2.8.5</span> 修理投影</h4>
+<div id="outline-container-orgbc826b0" class="outline-4">
+<h4 id="orgbc826b0"><span class="section-number-4">2.8.5</span> 修理投影</h4>
 <div class="outline-text-4" id="text-2-8-5">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：MendProjector
+继承 <a href="#org5fe8376">方块</a>，英文：MendProjector
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2814,14 +2945,14 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">color</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">84f491</td>
 <td class="org-left">颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">phase</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">ffd59e</td>
 <td class="org-left">加速颜色</td>
 </tr>
@@ -2879,11 +3010,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgb991786" class="outline-4">
-<h4 id="orgb991786"><span class="section-number-4">2.8.6</span> 超频投影</h4>
+<div id="outline-container-orgd58f5d3" class="outline-4">
+<h4 id="orgd58f5d3"><span class="section-number-4">2.8.6</span> 超频投影</h4>
 <div class="outline-text-4" id="text-2-8-6">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：OverdriveProjector
+继承 <a href="#org5fe8376">方块</a>，英文：OverdriveProjector
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2909,14 +3040,14 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">color</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">feb380</td>
 <td class="org-left">颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">phase</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">ffd59e</td>
 <td class="org-left">加速颜色</td>
 </tr>
@@ -3020,11 +3151,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org48d66bc" class="outline-4">
-<h4 id="org48d66bc"><span class="section-number-4">2.8.7</span> 力墙投影</h4>
+<div id="outline-container-org9cf0568" class="outline-4">
+<h4 id="org9cf0568"><span class="section-number-4">2.8.7</span> 力墙投影</h4>
 <div class="outline-text-4" id="text-2-8-7">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：ForceProjector
+继承 <a href="#org5fe8376">方块</a>，英文：ForceProjector
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3156,13 +3287,13 @@ Notes:
 
 <tr>
 <td class="org-left">consumes</td>
-<td class="org-left"><a href="#org3a45e39">冷液体</a></td>
+<td class="org-left"><a href="#orgcdcae91">冷液体</a></td>
 </tr>
 </tbody>
 </table>
 
 <p>
-<a id="org3a45e39"></a><a href="#org3a45e39">冷液体</a>:
+<a id="orgcdcae91"></a><a href="#orgcdcae91">冷液体</a>:
 </p>
 <ul class="org-ul">
 <li>温度小于0.5</li>
@@ -3181,11 +3312,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org1cc3ac4" class="outline-4">
-<h4 id="org1cc3ac4"><span class="section-number-4">2.8.8</span> 地雷</h4>
+<div id="outline-container-org32984ab" class="outline-4">
+<h4 id="org32984ab"><span class="section-number-4">2.8.8</span> 地雷</h4>
 <div class="outline-text-4" id="text-2-8-8">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：ShockMine
+继承 <a href="#org5fe8376">方块</a>，英文：ShockMine
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3293,19 +3424,23 @@ Notes:
 </div>
 </div>
 </div>
-<div id="outline-container-org1c58f75" class="outline-3">
-<h3 id="org1c58f75"><span class="section-number-3">2.9</span> 炮塔s</h3>
+<div id="outline-container-org9f0ff7e" class="outline-3">
+<h3 id="org9f0ff7e"><span class="section-number-3">2.9</span> 炮塔s</h3>
 <div class="outline-text-3" id="text-2-9">
 <p>
-这一节是关于炮塔. 所以炮塔的子弹都是 <a href="#orga391e48">5.1</a>, 这代表 <a href="#orgf0ea8a7">2.9.10</a> 可以使用 <a href="#orge426e54">导弹</a> 和 <a href="#org44f580a">2.9.3</a> 可以使用 <a href="#org6a2126e">5.1.3</a>.
+这一节是关于炮塔. 所以炮塔的子弹都是 <a href="#orgae0d191">子弹类</a>, 这代表 <a href="#org9e87864">液体炮塔</a> 可以使用 <a href="#orgbcf300f">导弹</a> 和 <a href="#org329179f">物品炮塔</a> 可以使用 <a href="#org17a9dd3">液体子弹</a>.
 </p>
 </div>
 
-<div id="outline-container-org44eb172" class="outline-4">
-<h4 id="org44eb172"><span class="section-number-4">2.9.1</span> 炮塔</h4>
+<div id="outline-container-orgff444a5" class="outline-4">
+<h4 id="orgff444a5"><span class="section-number-4">2.9.1</span> 炮塔</h4>
 <div class="outline-text-4" id="text-2-9-1">
 <p>
-<a href="#org64df026">Abstract</a> 修饰类继承 <a href="#org4c9282a">方块</a> &#x2013; 所有炮塔的父类 <a href="#org1c58f75">2.9</a>, 有所有炮塔的一般参数.
+<a href="#orgd471347">Abstract</a> 修饰类继承 <a href="#org5fe8376">方块</a>
+</p>
+
+<p>
+所有炮塔的基础类.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3331,35 +3466,35 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">heatColor</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">turretHeat</td>
 <td class="org-left">发热颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">shootEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">射击特效</td>
 </tr>
 
 <tr>
-<td class="org-left">smoke特效</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left">smokeEffect</td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">冒烟特效</td>
 </tr>
 
 <tr>
 <td class="org-left">ammoUseEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">用子弹特效</td>
 </tr>
 
 <tr>
 <td class="org-left">shootSound</td>
-<td class="org-left"><a href="#orgbdaa2bc">音效</a></td>
+<td class="org-left"><a href="#orgd8e4040">音效</a></td>
 <td class="org-right">shoot</td>
 <td class="org-left">射击声音</td>
 </tr>
@@ -3539,11 +3674,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgeb28e14" class="outline-4">
-<h4 id="orgeb28e14"><span class="section-number-4">2.9.2</span> 冷却炮塔</h4>
+<div id="outline-container-orgefbed83" class="outline-4">
+<h4 id="orgefbed83"><span class="section-number-4">2.9.2</span> 冷却炮塔</h4>
 <div class="outline-text-4" id="text-2-9-2">
 <p>
-继承 <a href="#org44eb172">炮塔</a> &#x2013; 这是一个用 <a href="#org5d04fb9">3.3</a> 加速的炮塔的类.英文：CoolTurret
+继承 <a href="#orgff444a5">炮塔</a> &#x2013; 这是一个用 <a href="#org6ae5397">液体</a> 加速的炮塔的类.英文：CoolTurret
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3576,7 +3711,7 @@ Notes:
 
 <tr>
 <td class="org-left">coolEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-left">shoot</td>
 <td class="org-left">冷却特效</td>
 </tr>
@@ -3593,20 +3728,31 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org44f580a" class="outline-4">
-<h4 id="org44f580a"><span class="section-number-4">2.9.3</span> 物品炮塔</h4>
+<div id="outline-container-org329179f" class="outline-4">
+<h4 id="org329179f"><span class="section-number-4">2.9.3</span> 物品炮塔</h4>
 <div class="outline-text-4" id="text-2-9-3">
 <p>
-继承 <a href="#orgeb28e14">冷却炮塔</a> &#x2013; 用物品作子弹的炮塔. 用 <code>ammo</code> 接口加上 <a href="#orga391e48">5.1</a> 来实现.英文：ItemTurret
+继承 <a href="#orgefbed83">冷却炮塔</a>.英文：ItemTurret
+</p>
+
+<p>
+这个炮塔类用物品做子弹. <code>ammo</code> 的数据必须是 <a href="#org6e96131">3.1</a>, 具体值可以是 <a href="#org9008c2b">5.1.5</a> 或自定义的 <a href="#orgae0d191">5.1</a>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-json">{
-    "ammo": {
-	"copper": "standardCopper",
-	"metaglass": {
-	    "type": "MissileBulletType",
-	    "damage": 2
+<pre class="src src-fundamental">{
+    type: ItemTurret
+    ammo: {
+	copper: standardCopper
+
+	metaglass: {
+	    type: MissileBulletType
+	    damage: 2
+	}
+
+	surge-alloy: {
+	    type: LiquidBulletType
+	    damage: 3
 	}
     }
 }
@@ -3614,7 +3760,7 @@ Notes:
 </div>
 
 <p>
-以上是用 <code>copper</code> 射出 <code>standardCopper</code> (内建子弹) 和用 <code>metaglass</code> 射击一个自定义子弹类型.
+以上是用 <code>copper</code> 射出 <code>standardCopper</code> (内建子弹) 和用 <code>metaglass</code> 射击一个 <code>MissileBulletType</code> 子弹类型.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3647,9 +3793,9 @@ Notes:
 
 <tr>
 <td class="org-left">ammo</td>
-<td class="org-left">{ <a href="#orgc06d431">物品</a>: <a href="#orga391e48">子弹类</a> }</td>
+<td class="org-left">{ 字符串: <a href="#orgae0d191">子弹类</a> }</td>
 <td class="org-right">&#xa0;</td>
-<td class="org-left">使用子弹</td>
+<td class="org-left">字符串是 <a href="#org6e96131">3.1</a> 的名字, 用来决定消耗的物品.</td>
 </tr>
 </tbody>
 </table>
@@ -3682,11 +3828,108 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgb182d22" class="outline-4">
-<h4 id="orgb182d22"><span class="section-number-4">2.9.4</span> 双管炮</h4>
+<div id="outline-container-org9e87864" class="outline-4">
+<h4 id="org9e87864"><span class="section-number-4">2.9.4</span> 液体炮塔</h4>
 <div class="outline-text-4" id="text-2-9-4">
 <p>
-继承 <a href="#org44f580a">物品炮塔</a> &#x2013; 有两个炮口的炮.英文：DoubleTurret
+继承 <a href="#orgff444a5">2.9.1</a>
+</p>
+
+<p>
+这个炮塔类用液体做子弹. <code>ammo</code> 的数据必须是 <a href="#org6ae5397">3.3</a>, 具体值可以是 <a href="#org9008c2b">5.1.5</a> 或自定义的 <a href="#orgae0d191">5.1</a>.英文：LiquidTurret
+</p>
+
+<p>
+这里是一个例子:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-fundamental">{
+    type: LiquidTurret
+    ammo: {
+	water: {
+	    type: MissileBulletType
+	    damage: 9000
+	}
+
+	slag: {
+	    type: LiquidBulletType
+	    damage: 0
+	}
+    }
+}
+
+</pre>
+</div>
+
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">接口</th>
+<th scope="col" class="org-left">类型</th>
+<th scope="col" class="org-left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">ammo</td>
+<td class="org-left">{ 字符串: <a href="#orgae0d191">5.1</a> }</td>
+<td class="org-left">字符串是 <a href="#org6ae5397">3.3</a>.</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+默认值:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">接口</th>
+<th scope="col" class="org-left">默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">hasLiquids</td>
+<td class="org-left">true</td>
+</tr>
+
+<tr>
+<td class="org-left">activeSound</td>
+<td class="org-left">spray</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgaa176ed" class="outline-4">
+<h4 id="orgaa176ed"><span class="section-number-4">2.9.5</span> 双管炮</h4>
+<div class="outline-text-4" id="text-2-9-5">
+<p>
+继承 <a href="#org329179f">物品炮塔</a>,英文：DoubleTurret
+</p>
+
+<p>
+有两个炮口的炮.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3746,11 +3989,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org758cf88" class="outline-4">
-<h4 id="org758cf88"><span class="section-number-4">2.9.5</span> 火炮塔</h4>
-<div class="outline-text-4" id="text-2-9-5">
+<div id="outline-container-orge6220d0" class="outline-4">
+<h4 id="orge6220d0"><span class="section-number-4">2.9.6</span> 火炮塔</h4>
+<div class="outline-text-4" id="text-2-9-6">
 <p>
-继承 <a href="#org44f580a">物品炮塔</a> &#x2013; 火炮塔有特殊的命中计算.英文：ArtilleryTurret
+继承 <a href="#org329179f">物品炮塔</a> &#x2013; 火炮塔有特殊的命中计算.英文：ArtilleryTurret
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3777,11 +4020,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgfc0c428" class="outline-4">
-<h4 id="orgfc0c428"><span class="section-number-4">2.9.6</span> 破片炮塔</h4>
-<div class="outline-text-4" id="text-2-9-6">
+<div id="outline-container-org4cb7a0c" class="outline-4">
+<h4 id="org4cb7a0c"><span class="section-number-4">2.9.7</span> 破片炮塔</h4>
+<div class="outline-text-4" id="text-2-9-7">
 <p>
-继承 <a href="#org44f580a">物品炮塔</a> &#x2013; 射速很快的炮塔.英文：BurstTurret
+继承 <a href="#org329179f">物品炮塔</a> &#x2013; 射速很快的炮塔.英文：BurstTurret
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3815,11 +4058,11 @@ Notes:
 </table>
 </div>
 </div>
-<div id="outline-container-org5d0cb4a" class="outline-4">
-<h4 id="org5d0cb4a"><span class="section-number-4">2.9.7</span> 能量炮塔</h4>
-<div class="outline-text-4" id="text-2-9-7">
+<div id="outline-container-org5dfe8c4" class="outline-4">
+<h4 id="org5dfe8c4"><span class="section-number-4">2.9.8</span> 能量炮塔</h4>
+<div class="outline-text-4" id="text-2-9-8">
 <p>
-继承 <a href="#orgeb28e14">冷却炮塔</a> &#x2013; 用电射击的炮.英文：PowerTurret
+继承 <a href="#orgefbed83">冷却炮塔</a> &#x2013; 用电射击的炮.英文：PowerTurret
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3845,9 +4088,9 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">shootType</td>
-<td class="org-left"><a href="#orga391e48">子弹类</a></td>
+<td class="org-left"><a href="#orgae0d191">子弹类</a></td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
+<td class="org-left">必须</td>
 </tr>
 
 <tr>
@@ -3887,11 +4130,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org95b7b69" class="outline-4">
-<h4 id="org95b7b69"><span class="section-number-4">2.9.8</span> 充能炮塔</h4>
-<div class="outline-text-4" id="text-2-9-8">
+<div id="outline-container-orge8a267b" class="outline-4">
+<h4 id="orge8a267b"><span class="section-number-4">2.9.9</span> 充能炮塔</h4>
+<div class="outline-text-4" id="text-2-9-9">
 <p>
-继承 <a href="#org5d0cb4a">2.9.7</a>，英文：ChargeTurret
+继承 <a href="#org5dfe8c4">能量炮塔</a>，英文：ChargeTurret
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3938,14 +4181,14 @@ Notes:
 
 <tr>
 <td class="org-left">chargeEffect</td>
-<td class="org-left"><a href="#org6d01988">5.3</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">充能特效</td>
 </tr>
 
 <tr>
 <td class="org-left">chargeBeginEffect</td>
-<td class="org-left"><a href="#org6d01988">5.3</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">开始充能特效</td>
 </tr>
@@ -3954,11 +4197,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org44330b7" class="outline-4">
-<h4 id="org44330b7"><span class="section-number-4">2.9.9</span> 激光炮</h4>
-<div class="outline-text-4" id="text-2-9-9">
+<div id="outline-container-org313c304" class="outline-4">
+<h4 id="org313c304"><span class="section-number-4">2.9.10</span> 激光炮</h4>
+<div class="outline-text-4" id="text-2-9-10">
 <p>
-继承 <a href="#org5d0cb4a">能量炮塔</a>，英文：LaserTurret
+继承 <a href="#org5dfe8c4">能量炮塔</a>，英文：LaserTurret
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4037,81 +4280,17 @@ Notes:
 </ul>
 </div>
 </div>
-
-<div id="outline-container-orgf0ea8a7" class="outline-4">
-<h4 id="orgf0ea8a7"><span class="section-number-4">2.9.10</span> 液体炮塔</h4>
-<div class="outline-text-4" id="text-2-9-10">
-<p>
-继承 <a href="#org44eb172">2.9.1</a>
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">接口</th>
-<th scope="col" class="org-left">类型</th>
-<th scope="col" class="org-left">备注</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">ammo</td>
-<td class="org-left">{ String: <a href="#orga391e48">5.1</a> }</td>
-<td class="org-left">一个 <a href="#org5d04fb9">3.3</a> 作为消耗物</td>
-</tr>
-</tbody>
-</table>
-
-<p>
-默认值:
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">接口</th>
-<th scope="col" class="org-left">默认值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">hasLiquids</td>
-<td class="org-left">true</td>
-</tr>
-
-<tr>
-<td class="org-left">activeSound</td>
-<td class="org-left">spray</td>
-</tr>
-</tbody>
-</table>
 </div>
-</div>
-</div>
-<div id="outline-container-org93e55a9" class="outline-3">
-<h3 id="org93e55a9"><span class="section-number-3">2.10</span> 运输</h3>
+
+<div id="outline-container-org599e5b6" class="outline-3">
+<h3 id="org599e5b6"><span class="section-number-3">2.10</span> 运输</h3>
 <div class="outline-text-3" id="text-2-10">
 </div>
-<div id="outline-container-org68c38db" class="outline-4">
-<h4 id="org68c38db"><span class="section-number-4">2.10.1</span> 传送带</h4>
+<div id="outline-container-orgb4a0e31" class="outline-4">
+<h4 id="orgb4a0e31"><span class="section-number-4">2.10.1</span> 传送带</h4>
 <div class="outline-text-4" id="text-2-10-1">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：Conveyor
+继承 <a href="#org5fe8376">方块</a>，英文：Conveyor
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4219,20 +4398,20 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org997dcb5" class="outline-4">
-<h4 id="org997dcb5"><span class="section-number-4">2.10.2</span> 装甲传送带</h4>
+<div id="outline-container-org3a9ded5" class="outline-4">
+<h4 id="org3a9ded5"><span class="section-number-4">2.10.2</span> 装甲传送带</h4>
 <div class="outline-text-4" id="text-2-10-2">
 <p>
-继承 <a href="#org68c38db">传送带</a>  -不接受两边来物从传送带，英文：ArmoredConveyor
+继承 <a href="#orgb4a0e31">传送带</a>  -不接受两边来物从传送带，英文：ArmoredConveyor
 </p>
 </div>
 </div>
 
-<div id="outline-container-org965feae" class="outline-4">
-<h4 id="org965feae"><span class="section-number-4">2.10.3</span> 连接器</h4>
+<div id="outline-container-orga21c573" class="outline-4">
+<h4 id="orga21c573"><span class="section-number-4">2.10.3</span> 连接器</h4>
 <div class="outline-text-4" id="text-2-10-3">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：Junction
+继承 <a href="#org5fe8376">方块</a>，英文：Junction
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4319,11 +4498,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org3dc4061" class="outline-4">
-<h4 id="org3dc4061"><span class="section-number-4">2.10.4</span> 物品桥</h4>
+<div id="outline-container-orgcea6f17" class="outline-4">
+<h4 id="orgcea6f17"><span class="section-number-4">2.10.4</span> 物品桥</h4>
 <div class="outline-text-4" id="text-2-10-4">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：ItemBridge
+继承 <a href="#org5fe8376">方块</a>，英文：ItemBridge
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4449,11 +4628,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org4cbc39c" class="outline-4">
-<h4 id="org4cbc39c"><span class="section-number-4">2.10.5</span> 延展物品桥</h4>
+<div id="outline-container-orgfa36bec" class="outline-4">
+<h4 id="orgfa36bec"><span class="section-number-4">2.10.5</span> 延展物品桥</h4>
 <div class="outline-text-4" id="text-2-10-5">
 <p>
-继承 <a href="#org3dc4061">物品桥</a>，英文：ExtendingItemBridge
+继承 <a href="#orgcea6f17">物品桥</a>，英文：ExtendingItemBridge
 </p>
 
 <p>
@@ -4483,11 +4662,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org2ec66de" class="outline-4">
-<h4 id="org2ec66de"><span class="section-number-4">2.10.6</span> 储物物品桥</h4>
+<div id="outline-container-org8207c04" class="outline-4">
+<h4 id="org8207c04"><span class="section-number-4">2.10.6</span> 储物物品桥</h4>
 <div class="outline-text-4" id="text-2-10-6">
 <p>
-继承 <a href="#org4cbc39c">延展物品桥</a>，英文：BufferedItemBridge
+继承 <a href="#orgfa36bec">延展物品桥</a>，英文：BufferedItemBridge
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4559,11 +4738,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orge94f671" class="outline-4">
-<h4 id="orge94f671"><span class="section-number-4">2.10.7</span> 分类器</h4>
+<div id="outline-container-org8739ae7" class="outline-4">
+<h4 id="org8739ae7"><span class="section-number-4">2.10.7</span> 分类器</h4>
 <div class="outline-text-4" id="text-2-10-7">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：Sorter
+继承 <a href="#org5fe8376">方块</a>，英文：Sorter
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4649,11 +4828,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgb63599b" class="outline-4">
-<h4 id="orgb63599b"><span class="section-number-4">2.10.8</span> 溢流门</h4>
+<div id="outline-container-org9004d12" class="outline-4">
+<h4 id="org9004d12"><span class="section-number-4">2.10.8</span> 溢流门</h4>
 <div class="outline-text-4" id="text-2-10-8">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：OverflowGate
+继承 <a href="#org5fe8376">方块</a>，英文：OverflowGate
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4730,11 +4909,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orga32015b" class="outline-4">
-<h4 id="orga32015b"><span class="section-number-4">2.10.9</span> 路由器</h4>
+<div id="outline-container-org473a9d4" class="outline-4">
+<h4 id="org473a9d4"><span class="section-number-4">2.10.9</span> 路由器</h4>
 <div class="outline-text-4" id="text-2-10-9">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：Router
+继承 <a href="#org5fe8376">方块</a>，英文：Router
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4815,11 +4994,11 @@ Notes:
 </table>
 </div>
 </div>
-<div id="outline-container-orgca1dd5a" class="outline-4">
-<h4 id="orgca1dd5a"><span class="section-number-4">2.10.10</span> 质量驱动器</h4>
+<div id="outline-container-org9195365" class="outline-4">
+<h4 id="org9195365"><span class="section-number-4">2.10.10</span> 质量驱动器</h4>
 <div class="outline-text-4" id="text-2-10-10">
 <p>
-继承 <a href="#org4c9282a">方块</a> &#x2013; 用 <code>driverBolt</code> 来传输物品.英文：MassDriver
+继承 <a href="#org5fe8376">方块</a> &#x2013; 用 <code>driverBolt</code> 来传输物品.英文：MassDriver
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4887,21 +5066,21 @@ Notes:
 
 <tr>
 <td class="org-left">shootEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">shootBig2</td>
 <td class="org-left">射击特效</td>
 </tr>
 
 <tr>
 <td class="org-left">smokeEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">shootBigSmoke2</td>
 <td class="org-left">冒烟特效</td>
 </tr>
 
 <tr>
 <td class="org-left">recieveEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">mineBig</td>
 <td class="org-left">到达特效</td>
 </tr>
@@ -4991,15 +5170,15 @@ Notes:
 </div>
 </div>
 </div>
-<div id="outline-container-org7b1d843" class="outline-3">
-<h3 id="org7b1d843"><span class="section-number-3">2.11</span> 液体方块M</h3>
+<div id="outline-container-org9607930" class="outline-3">
+<h3 id="org9607930"><span class="section-number-3">2.11</span> 液体方块M</h3>
 <div class="outline-text-3" id="text-2-11">
 </div>
-<div id="outline-container-org467458e" class="outline-4">
-<h4 id="org467458e"><span class="section-number-4">2.11.1</span> 液体方块</h4>
+<div id="outline-container-org3a75bad" class="outline-4">
+<h4 id="org3a75bad"><span class="section-number-4">2.11.1</span> 液体方块</h4>
 <div class="outline-text-4" id="text-2-11-1">
 <p>
-继承 <a href="#org4c9282a">方块</a> &#x2013; 用于有液体的方块. 比其他方块有更多参数, 和更多贴图.
+继承 <a href="#org5fe8376">方块</a> &#x2013; 用于有液体的方块. 比其他方块有更多参数, 和更多贴图.
 </p>
 
 <p>
@@ -5059,11 +5238,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org97d9b45" class="outline-4">
-<h4 id="org97d9b45"><span class="section-number-4">2.11.2</span> 泵</h4>
+<div id="outline-container-org746e229" class="outline-4">
+<h4 id="org746e229"><span class="section-number-4">2.11.2</span> 泵</h4>
 <div class="outline-text-4" id="text-2-11-2">
 <p>
-继承 <a href="#org467458e">液体方块</a>，英文：Pump
+继承 <a href="#org3a75bad">液体方块</a>，英文：Pump
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5133,12 +5312,42 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org0c0fc91" class="outline-4">
-<h4 id="org0c0fc91"><span class="section-number-4">2.11.3</span> 导管</h4>
+<div id="outline-container-org994473d" class="outline-4">
+<h4 id="org994473d"><span class="section-number-4">2.11.3</span> 导管</h4>
 <div class="outline-text-4" id="text-2-11-3">
 <p>
-继承 <a href="#org467458e">液体方块</a>，英文：Conduit
+继承 <a href="#org3a75bad">液体方块</a>，英文：Conduit
 </p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">接口</th>
+<th scope="col" class="org-left">类型</th>
+<th scope="col" class="org-left">默认值</th>
+<th scope="col" class="org-left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">leakResistance</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">*[新特性 v99 (268)]*泄露抵抗度</td>
+</tr>
+</tbody>
+</table>
 
 <p>
 默认值:
@@ -5177,92 +5386,174 @@ Notes:
 </table>
 
 <p>
-额外贴图 <i>( <code>i</code> 可以被替换成 0-6)</i>:
+贴图:
 </p>
 <ul class="org-ul">
-<li><code>&lt;name&gt;-top-&lt;i&gt;</code></li>
+<li><code>&lt;name&gt;-top-&lt;0..6&gt;</code></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge9ccaec" class="outline-4">
-<h4 id="orge9ccaec"><span class="section-number-4">2.11.4</span> 液体路由器</h4>
+<div id="outline-container-orgfef7a20" class="outline-4">
+<h4 id="orgfef7a20"><span class="section-number-4">2.11.4</span> 装甲导管</h4>
 <div class="outline-text-4" id="text-2-11-4">
 <p>
-继承 <a href="#org467458e">液体方块</a>，英文：LiquidRouter
+<b>[新特性 v99 (268)]</b> &#x2013; 继承 <a href="#org994473d">2.11.3</a>，英文:ArmoredConduit
 </p>
+
+<p>
+默认值:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">接口</th>
+<th scope="col" class="org-right">默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">leakResistance</td>
+<td class="org-right">10</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+贴图:
+</p>
+<ul class="org-ul">
+<li><code>&lt;name&gt;-cap</code></li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-org2551865" class="outline-4">
-<h4 id="org2551865"><span class="section-number-4">2.11.5</span> 液罐</h4>
+<div id="outline-container-orgcbf9e11" class="outline-4">
+<h4 id="orgcbf9e11"><span class="section-number-4">2.11.5</span> 液体溢流门</h4>
 <div class="outline-text-4" id="text-2-11-5">
 <p>
-继承 <a href="#orge9ccaec">液体路由器</a>，英文：LiquidTank
+<b>[新特性 v99 (268)]</b> &#x2013; 继承 <a href="#org3a75bad">2.11.1</a>，英文:LiquidOverflowGate
 </p>
+
+<p>
+默认值:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">接口</th>
+<th scope="col" class="org-left">默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">rotate</td>
+<td class="org-left">true</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+贴图:
+</p>
+<ul class="org-ul">
+<li><code>&lt;name&gt;-top</code></li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-orgd780ea0" class="outline-4">
-<h4 id="orgd780ea0"><span class="section-number-4">2.11.6</span> 液体连接点</h4>
+<div id="outline-container-org6aa5a8c" class="outline-4">
+<h4 id="org6aa5a8c"><span class="section-number-4">2.11.6</span> 液体路由器</h4>
 <div class="outline-text-4" id="text-2-11-6">
 <p>
-继承 <a href="#org467458e">液体方块</a>，英文：LiquidJunction
+继承 <a href="#org3a75bad">液体方块</a>，英文：LiquidRouter
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5331d66" class="outline-4">
-<h4 id="org5331d66"><span class="section-number-4">2.11.7</span> 液体桥</h4>
+<div id="outline-container-org5c4df0d" class="outline-4">
+<h4 id="org5c4df0d"><span class="section-number-4">2.11.7</span> 液罐</h4>
 <div class="outline-text-4" id="text-2-11-7">
 <p>
-继承 <a href="#org3dc4061">物品桥</a>，英文：LiquidBridge
+继承 <a href="#org6aa5a8c">液体路由器</a>，英文：LiquidTank
 </p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">接口</th>
-<th scope="col" class="org-left">默认值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">hasItems</td>
-<td class="org-left">false</td>
-</tr>
-
-<tr>
-<td class="org-left">hasLiquids</td>
-<td class="org-left">true</td>
-</tr>
-
-<tr>
-<td class="org-left">outputsLiquid</td>
-<td class="org-left">true</td>
-</tr>
-
-<tr>
-<td class="org-left">group</td>
-<td class="org-left">liquids</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 
-<div id="outline-container-org6993409" class="outline-4">
-<h4 id="org6993409"><span class="section-number-4">2.11.8</span> 拓展液体桥</h4>
+<div id="outline-container-org78ad053" class="outline-4">
+<h4 id="org78ad053"><span class="section-number-4">2.11.8</span> 液体连接点</h4>
 <div class="outline-text-4" id="text-2-11-8">
 <p>
-继承 <a href="#org3dc4061">物品桥</a>，英文：LiquidExtendingBridge
+继承 <a href="#org3a75bad">液体方块</a>，英文：LiquidJunction
+</p>
+</div>
+</div>
+
+<div id="outline-container-org33f332d" class="outline-4">
+<h4 id="org33f332d"><span class="section-number-4">2.11.9</span> 液体桥</h4>
+<div class="outline-text-4" id="text-2-11-9">
+<p>
+继承 <a href="#orgcea6f17">物品桥</a>，英文：LiquidBridge
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">接口</th>
+<th scope="col" class="org-left">默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">hasItems</td>
+<td class="org-left">false</td>
+</tr>
+
+<tr>
+<td class="org-left">hasLiquids</td>
+<td class="org-left">true</td>
+</tr>
+
+<tr>
+<td class="org-left">outputsLiquid</td>
+<td class="org-left">true</td>
+</tr>
+
+<tr>
+<td class="org-left">group</td>
+<td class="org-left">liquids</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org0fb5c78" class="outline-4">
+<h4 id="org0fb5c78"><span class="section-number-4">2.11.10</span> 拓展液体桥</h4>
+<div class="outline-text-4" id="text-2-11-10">
+<p>
+继承 <a href="#orgcea6f17">物品桥</a>，英文：LiquidExtendingBridge
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5304,15 +5595,15 @@ Notes:
 </div>
 </div>
 </div>
-<div id="outline-container-org0f60240" class="outline-3">
-<h3 id="org0f60240"><span class="section-number-3">2.12</span> 能量</h3>
+<div id="outline-container-orgfd018ee" class="outline-3">
+<h3 id="orgfd018ee"><span class="section-number-3">2.12</span> 能量</h3>
 <div class="outline-text-3" id="text-2-12">
 </div>
-<div id="outline-container-org2165b9c" class="outline-4">
-<h4 id="org2165b9c"><span class="section-number-4">2.12.1</span> 能量方块</h4>
+<div id="outline-container-orgbd494bf" class="outline-4">
+<h4 id="orgbd494bf"><span class="section-number-4">2.12.1</span> 能量方块</h4>
 <div class="outline-text-4" id="text-2-12-1">
 <p>
-<a href="#org64df026">Abstract</a> 修饰类继承 <a href="#org4c9282a">方块</a>
+<a href="#orgd471347">Abstract</a> 修饰类继承 <a href="#org5fe8376">方块</a>
 </p>
 
 <p>
@@ -5358,11 +5649,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org3278bd5" class="outline-4">
-<h4 id="org3278bd5"><span class="section-number-4">2.12.2</span> 节点</h4>
+<div id="outline-container-org56e55bf" class="outline-4">
+<h4 id="org56e55bf"><span class="section-number-4">2.12.2</span> 节点</h4>
 <div class="outline-text-4" id="text-2-12-2">
 <p>
-继承 <a href="#org2165b9c">能量方块</a>，英文：PowerNode
+继承 <a href="#orgbd494bf">能量方块</a>，英文：PowerNode
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5450,11 +5741,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org30af6e4" class="outline-4">
-<h4 id="org30af6e4"><span class="section-number-4">2.12.3</span> 能量运输器</h4>
+<div id="outline-container-org6144b66" class="outline-4">
+<h4 id="org6144b66"><span class="section-number-4">2.12.3</span> 能量运输器</h4>
 <div class="outline-text-4" id="text-2-12-3">
 <p>
-继承 <a href="#org2165b9c">能量方块</a>，英文：PowerDistributor
+继承 <a href="#orgbd494bf">能量方块</a>，英文：PowerDistributor
 </p>
 
 <p>
@@ -5489,11 +5780,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orge0b4736" class="outline-4">
-<h4 id="orge0b4736"><span class="section-number-4">2.12.4</span> 电池</h4>
+<div id="outline-container-org8661299" class="outline-4">
+<h4 id="org8661299"><span class="section-number-4">2.12.4</span> 电池</h4>
 <div class="outline-text-4" id="text-2-12-4">
 <p>
-继承 <a href="#org30af6e4">能量运输器</a> &#x2013; 就是一个普通方块.英文：Battery
+继承 <a href="#org6144b66">能量运输器</a> &#x2013; 就是一个普通方块.英文：Battery
 </p>
 
 <p>
@@ -5529,15 +5820,15 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgb6e9024" class="outline-4">
-<h4 id="orgb6e9024"><span class="section-number-4">2.12.5</span> 发电机</h4>
+<div id="outline-container-org16161bf" class="outline-4">
+<h4 id="org16161bf"><span class="section-number-4">2.12.5</span> 发电机</h4>
 <div class="outline-text-4" id="text-2-12-5">
 <p>
-继承 <a href="#org30af6e4">能量运输器</a>，英文：PowerGenerator
+继承 <a href="#org6144b66">能量运输器</a>，英文：PowerGenerator
 </p>
 
 <p>
-发电机会用 <a href="#org6245272">2.2</a> 产生能量.
+发电机会用 <a href="#orgabac4f3">消耗器</a> 产生能量.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5592,11 +5883,11 @@ Notes:
 </table>
 </div>
 
-<div id="outline-container-orgfab3038" class="outline-5">
-<h5 id="orgfab3038">地热发电机</h5>
-<div class="outline-text-5" id="text-orgfab3038">
+<div id="outline-container-orgba5387c" class="outline-5">
+<h5 id="orgba5387c"><span class="section-number-5">2.12.5.1</span> 地热发电机</h5>
+<div class="outline-text-5" id="text-2-12-5-1">
 <p>
-继承 <a href="#orgb6e9024">发电机</a> &#x2013; 用热 <a href="#org2adfe54">2.16</a> 的地板发电. 输出公式是 <code>powerProduction * heat</code>, 和 <code>heat</code> 必须大于 <code>0.01</code>.英文：ThermalGenerator
+继承 <a href="#org16161bf">发电机</a> &#x2013; 用热 <a href="#orgc41b9a9">属性</a> 的地板发电. 输出公式是 <code>powerProduction * heat</code>, 和 <code>heat</code> 必须大于 <code>0.01</code>.英文：ThermalGenerator
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5622,7 +5913,7 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">generateEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-left">none</td>
 <td class="org-left">发电特效</td>
 </tr>
@@ -5631,11 +5922,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org17a86c7" class="outline-5">
-<h5 id="org17a86c7">物品液体发电机</h5>
-<div class="outline-text-5" id="text-org17a86c7">
+<div id="outline-container-org48f702a" class="outline-5">
+<h5 id="org48f702a"><span class="section-number-5">2.12.5.2</span> 物品液体发电机</h5>
+<div class="outline-text-5" id="text-2-12-5-2">
 <p>
-继承 <a href="#orgb6e9024">发电机</a> &#x2013; 消耗物品液体的基础发电机类.液体会比物品优先消耗.英文：ItemLiquidGenerator
+继承 <a href="#org16161bf">发电机</a> &#x2013; 基础发电机.英文：ItemLiquidGenerator
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5689,21 +5980,21 @@ Notes:
 
 <tr>
 <td class="org-left">generateEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-left">generatespark</td>
 <td class="org-left">发电特效</td>
 </tr>
 
 <tr>
 <td class="org-left">explodeEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-left">generatespark</td>
 <td class="org-left">爆炸特效</td>
 </tr>
 
 <tr>
 <td class="org-left">heatColor</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-left">ff9b59</td>
 <td class="org-left">热的颜色</td>
 </tr>
@@ -5733,6 +6024,10 @@ Notes:
 </ul>
 
 <p>
+<i>(这类不产生能量)</i>
+</p>
+
+<p>
 额外贴图:
 </p>
 <ul class="org-ul">
@@ -5742,27 +6037,27 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org0efe7b7" class="outline-5">
-<h5 id="org0efe7b7">物品发电机</h5>
-<div class="outline-text-5" id="text-org0efe7b7">
+<div id="outline-container-orgcd102e0" class="outline-5">
+<h5 id="orgcd102e0"><span class="section-number-5">2.12.5.3</span> 物品发电机</h5>
+<div class="outline-text-5" id="text-2-12-5-3">
 <p>
-继承 <a href="#org17a86c7">物品液体发电机</a> &#x2013; 从物体中发电.英文：SingleTypeGenerator
+继承 <a href="#org48f702a">物品液体发电机</a> &#x2013; 从物体中发电.英文：SingleTypeGenerator
 </p>
 </div>
 </div>
-<div id="outline-container-org73bc750" class="outline-5">
-<h5 id="org73bc750">火力发电机</h5>
-<div class="outline-text-5" id="text-org73bc750">
+<div id="outline-container-orgdd9b68f" class="outline-5">
+<h5 id="orgdd9b68f"><span class="section-number-5">2.12.5.4</span> 火力发电机</h5>
+<div class="outline-text-5" id="text-2-12-5-4">
 <p>
-继承 <a href="#org17a86c7">物品液体发电机</a> &#x2013; 通过可燃物发电.英文：BurnerGenerator
+继承 <a href="#org48f702a">物品液体发电机</a> &#x2013; 通过可燃物发电.英文：BurnerGenerator
 </p>
 </div>
 </div>
-<div id="outline-container-org9329a25" class="outline-5">
-<h5 id="org9329a25">衰变发电机</h5>
-<div class="outline-text-5" id="text-org9329a25">
+<div id="outline-container-orgc187bf8" class="outline-5">
+<h5 id="orgc187bf8"><span class="section-number-5">2.12.5.5</span> 衰变发电机</h5>
+<div class="outline-text-5" id="text-2-12-5-5">
 <p>
-继承 <a href="#org17a86c7">物品液体发电机</a> &#x2013; 通过辐射性发电.英文：DecayGenerator
+继承 <a href="#org48f702a">物品液体发电机</a> &#x2013; 通过辐射性发电.英文：DecayGenerator
 </p>
 
 <p>
@@ -5798,11 +6093,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org0505a5f" class="outline-4">
-<h4 id="org0505a5f"><span class="section-number-4">2.12.6</span> 太阳能发电机</h4>
+<div id="outline-container-orgd0c34e5" class="outline-4">
+<h4 id="orgd0c34e5"><span class="section-number-4">2.12.6</span> 太阳能发电机</h4>
 <div class="outline-text-4" id="text-2-12-6">
 <p>
-继承 <a href="#orgb6e9024">发电机</a> &#x2013; 一个一直满效率的发电机.英文：SolarGenerator
+继承 <a href="#org16161bf">发电机</a> &#x2013; 一个一直满效率的发电机.英文：SolarGenerator
 </p>
 
 <p>
@@ -5813,11 +6108,11 @@ Notes:
 </ul>
 </div>
 
-<div id="outline-container-org52e3180" class="outline-5">
-<h5 id="org52e3180">核电站</h5>
-<div class="outline-text-5" id="text-org52e3180">
+<div id="outline-container-orgca56ed0" class="outline-5">
+<h5 id="orgca56ed0"><span class="section-number-5">2.12.6.1</span> 新核电站</h5>
+<div class="outline-text-5" id="text-2-12-6-1">
 <p>
-继承 <a href="#orgb6e9024">发电机</a> &#x2013; 通过物品除了发电，无冷却爆炸.英文：NuclearReactor
+继承 <a href="#org16161bf">发电机</a> &#x2013; 通过物品除了发电，无冷却爆炸.英文：NuclearReactor
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5842,15 +6137,22 @@ Notes:
 </thead>
 <tbody>
 <tr>
+<td class="org-left">lightColor</td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
+<td class="org-right">7f19ea</td>
+<td class="org-left"><b>[new v99 (268)]</b></td>
+</tr>
+
+<tr>
 <td class="org-left">coolColor</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">ffffff00</td>
 <td class="org-left">冷却液颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">hotColor</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">ff9575a3</td>
 <td class="org-left">过热颜色</td>
 </tr>
@@ -5957,11 +6259,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org80a1c6c" class="outline-5">
-<h5 id="org80a1c6c">冲击反应堆</h5>
-<div class="outline-text-5" id="text-org80a1c6c">
+<div id="outline-container-orgff03306" class="outline-5">
+<h5 id="orgff03306"><span class="section-number-5">2.12.6.2</span> 冲击反应堆</h5>
+<div class="outline-text-5" id="text-2-12-6-2">
 <p>
-继承 <a href="#orgb6e9024">发电机</a> &#x2013; 需要能量和时间启动的发电机.英文：ImpactReactor
+继承 <a href="#org16161bf">发电机</a> &#x2013; 需要能量和时间启动的发电机.英文：ImpactReactor
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6022,14 +6324,14 @@ Notes:
 
 <tr>
 <td class="org-left">plasma1</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">ffd06b</td>
 <td class="org-left">等离子体1颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">plasma2</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">ff361b</td>
 <td class="org-left">等离子体2颜色</td>
 </tr>
@@ -6096,16 +6398,161 @@ Notes:
 </div>
 </div>
 </div>
+
+<div id="outline-container-orge3c77a5" class="outline-4">
+<h4 id="orge3c77a5"><span class="section-number-4">2.12.7</span> 二极管</h4>
+<div class="outline-text-4" id="text-2-12-7">
+<p>
+继承 <a href="#org5fe8376">2.1</a>
+</p>
+
+<p>
+默认值:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">接口</th>
+<th scope="col" class="org-left">默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">rotate</td>
+<td class="org-left">true</td>
+</tr>
+
+<tr>
+<td class="org-left">update</td>
+<td class="org-left">true</td>
+</tr>
+
+<tr>
+<td class="org-left">solid</td>
+<td class="org-left">true</td>
+</tr>
+
+<tr>
+<td class="org-left">insulated</td>
+<td class="org-left">true</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+贴图:
+</p>
+<ul class="org-ul">
+<li><code>&lt;name&gt;-arrow</code></li>
+</ul>
 </div>
-<div id="outline-container-org502f3b3" class="outline-3">
-<h3 id="org502f3b3"><span class="section-number-3">2.13</span> 生产工厂</h3>
+</div>
+
+<div id="outline-container-orge6b0316" class="outline-4">
+<h4 id="orge6b0316"><span class="section-number-4">2.12.8</span> 灯</h4>
+<div class="outline-text-4" id="text-2-12-8">
+<p>
+<b>[新特性 v99 (268)]</b> &#x2013; 继承 <a href="#org5fe8376">2.1</a>，英文：LightBlock
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">接口</th>
+<th scope="col" class="org-left">类型</th>
+<th scope="col" class="org-right">默认值</th>
+<th scope="col" class="org-left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">brightness</td>
+<td class="org-left">float</td>
+<td class="org-right">0.9</td>
+<td class="org-left">亮度</td>
+</tr>
+
+<tr>
+<td class="org-left">radius</td>
+<td class="org-left">float</td>
+<td class="org-right">200</td>
+<td class="org-left">范围</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+默认值:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">接口</th>
+<th scope="col" class="org-left">默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">hasPower</td>
+<td class="org-left">true</td>
+</tr>
+
+<tr>
+<td class="org-left">update</td>
+<td class="org-left">true</td>
+</tr>
+
+<tr>
+<td class="org-left">configurable</td>
+<td class="org-left">true</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+贴图:
+</p>
+<ul class="org-ul">
+<li><code>&lt;name&gt;-top</code></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4514402" class="outline-3">
+<h3 id="org4514402"><span class="section-number-3">2.13</span> 生产工厂</h3>
 <div class="outline-text-3" id="text-2-13">
 </div>
-<div id="outline-container-orga53711c" class="outline-4">
-<h4 id="orga53711c"><span class="section-number-4">2.13.1</span> 钻头</h4>
+<div id="outline-container-org54603b3" class="outline-4">
+<h4 id="org54603b3"><span class="section-number-4">2.13.1</span> 钻头</h4>
 <div class="outline-text-4" id="text-2-13-1">
 <p>
-继承 <a href="#org4c9282a">方块</a> &#x2013; 一组能从 <a href="#orgee1bca8">2.4.4</a> 获取物品的方块.英文：Drill
+继承 <a href="#org5fe8376">方块</a> &#x2013; 一组能从 <a href="#org19573ef">矿物</a> 获取物品的方块.英文：Drill
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6166,7 +6613,7 @@ Notes:
 
 <tr>
 <td class="org-left">drillEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-left">mine</td>
 <td class="org-left">工作特效.</td>
 </tr>
@@ -6180,7 +6627,7 @@ Notes:
 
 <tr>
 <td class="org-left">updateEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-left">pulverizeSmall</td>
 <td class="org-left">随机特效.</td>
 </tr>
@@ -6201,7 +6648,7 @@ Notes:
 
 <tr>
 <td class="org-left">heatColor</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-left">ff5512</td>
 <td class="org-left">加热颜色</td>
 </tr>
@@ -6284,11 +6731,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org4d64b6d" class="outline-4">
-<h4 id="org4d64b6d"><span class="section-number-4">2.13.2</span> 固体泵</h4>
+<div id="outline-container-orgb094f20" class="outline-4">
+<h4 id="orgb094f20"><span class="section-number-4">2.13.2</span> 固体泵</h4>
 <div class="outline-text-4" id="text-2-13-2">
 <p>
-继承 <a href="#org97d9b45">泵</a> &#x2013; 一个用能量在固体地面抽液体的机器，只能放在固体上面.英文：SolidPump
+继承 <a href="#org746e229">泵</a> &#x2013; 一个用能量在固体地面抽液体的机器，只能放在固体上面.英文：SolidPump
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6314,14 +6761,14 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">result</td>
-<td class="org-left"><a href="#org5d04fb9">液体</a></td>
+<td class="org-left"><a href="#org6ae5397">液体</a></td>
 <td class="org-right">water</td>
 <td class="org-left">产物</td>
 </tr>
 
 <tr>
 <td class="org-left">updateEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">随机特效</td>
 </tr>
@@ -6342,7 +6789,7 @@ Notes:
 
 <tr>
 <td class="org-left">attribute</td>
-<td class="org-left"><a href="#org2adfe54">属性</a></td>
+<td class="org-left"><a href="#orgc41b9a9">属性</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">加速需求属性</td>
 </tr>
@@ -6383,11 +6830,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgc1e6244" class="outline-4">
-<h4 id="orgc1e6244"><span class="section-number-4">2.13.3</span> 培养机</h4>
+<div id="outline-container-org859dc93" class="outline-4">
+<h4 id="org859dc93"><span class="section-number-4">2.13.3</span> 培养机</h4>
 <div class="outline-text-4" id="text-2-13-3">
 <p>
-继承 <a href="#org02290b5">普通加工厂</a>，英文：Cultivator
+继承 <a href="#orge178802">普通加工厂</a>，英文：Cultivator
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6455,11 +6902,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org502a6cd" class="outline-4">
-<h4 id="org502a6cd"><span class="section-number-4">2.13.4</span> 石油钻</h4>
+<div id="outline-container-org9b620fe" class="outline-4">
+<h4 id="org9b620fe"><span class="section-number-4">2.13.4</span> 石油钻</h4>
 <div class="outline-text-4" id="text-2-13-4">
 <p>
-继承 <a href="#org4d64b6d">固体泵</a>，英文：Fracker
+继承 <a href="#orgb094f20">固体泵</a>，英文：Fracker
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6523,11 +6970,11 @@ Notes:
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc8d946e" class="outline-4">
-<h4 id="orgc8d946e"><span class="section-number-4">2.13.5</span> 焚化炉</h4>
+<div id="outline-container-orgcf1b106" class="outline-4">
+<h4 id="orgcf1b106"><span class="section-number-4">2.13.5</span> 焚化炉</h4>
 <div class="outline-text-4" id="text-2-13-5">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：Incinerator
+继承 <a href="#org5fe8376">方块</a>，英文：Incinerator
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6553,14 +7000,14 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">effect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-left">fuelburn</td>
 <td class="org-right">特效</td>
 </tr>
 
 <tr>
 <td class="org-left">flameColor</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-left">ffad9d</td>
 <td class="org-right">火焰颜色</td>
 </tr>
@@ -6610,15 +7057,15 @@ Notes:
 </div>
 </div>
 </div>
-<div id="outline-container-org3dc17fc" class="outline-3">
-<h3 id="org3dc17fc"><span class="section-number-3">2.14</span> 单位方块</h3>
+<div id="outline-container-orgd0deb17" class="outline-3">
+<h3 id="orgd0deb17"><span class="section-number-3">2.14</span> 单位方块</h3>
 <div class="outline-text-3" id="text-2-14">
 </div>
-<div id="outline-container-orgcb30567" class="outline-4">
-<h4 id="orgcb30567"><span class="section-number-4">2.14.1</span> 修复点</h4>
+<div id="outline-container-org115db60" class="outline-4">
+<h4 id="org115db60"><span class="section-number-4">2.14.1</span> 修复点</h4>
 <div class="outline-text-4" id="text-2-14-1">
 <p>
-继承 <a href="#org4c9282a">方块</a> &#x2013; 用激光修复附近单位.英文：RepairPoint
+继承 <a href="#org5fe8376">方块</a> &#x2013; 用激光修复附近单位.英文：RepairPoint
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6724,11 +7171,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org026434b" class="outline-4">
-<h4 id="org026434b"><span class="section-number-4">2.14.2</span> 单位工厂</h4>
+<div id="outline-container-org396ea01" class="outline-4">
+<h4 id="org396ea01"><span class="section-number-4">2.14.2</span> 单位工厂</h4>
 <div class="outline-text-4" id="text-2-14-2">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：UnitFactory
+继承 <a href="#org5fe8376">方块</a>，英文：UnitFactory
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6775,7 +7222,7 @@ Notes:
 
 <tr>
 <td class="org-left">unitType</td>
-<td class="org-left"><a href="#org11ea7d0">单位类</a></td>
+<td class="org-left"><a href="#orgadbaa88">单位类</a></td>
 <td class="org-right">none</td>
 <td class="org-left">制作单位</td>
 </tr>
@@ -6837,11 +7284,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgf43f853" class="outline-4">
-<h4 id="orgf43f853"><span class="section-number-4">2.14.3</span> 指挥中心</h4>
+<div id="outline-container-org71288c3" class="outline-4">
+<h4 id="org71288c3"><span class="section-number-4">2.14.3</span> 指挥中心</h4>
 <div class="outline-text-4" id="text-2-14-3">
 <p>
-继承 <a href="#org4c9282a">方块</a>，英文：CommandCenter
+继承 <a href="#org5fe8376">方块</a>，英文：CommandCenter
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6867,21 +7314,21 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">topColor</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-left">command</td>
 <td class="org-left">顶部颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">bottomColor</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-left">5e5e5e</td>
 <td class="org-left">底部颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">effect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-left">commandSend</td>
 <td class="org-left">特效</td>
 </tr>
@@ -6931,11 +7378,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org9302fa4" class="outline-4">
-<h4 id="org9302fa4"><span class="section-number-4">2.14.4</span> 玩家机甲板</h4>
+<div id="outline-container-org17b0670" class="outline-4">
+<h4 id="org17b0670"><span class="section-number-4">2.14.4</span> 玩家机甲板</h4>
 <div class="outline-text-4" id="text-2-14-4">
 <p>
-继承 <a href="#org4c9282a">方块</a> &#x2013; 生存玩家机甲的板子.英文：MechPad
+继承 <a href="#org5fe8376">方块</a> &#x2013; 生存玩家机甲的板子.英文：MechPad
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6961,7 +7408,7 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">mech</td>
-<td class="org-left"><a href="#org40c2a64">玩家机甲</a></td>
+<td class="org-left"><a href="#org3462781">玩家机甲</a></td>
 <td class="org-left">none</td>
 <td class="org-left">玩家机甲种类</td>
 </tr>
@@ -7024,15 +7471,15 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgb4b0e84" class="outline-3">
-<h3 id="orgb4b0e84"><span class="section-number-3">2.15</span> 存储</h3>
+<div id="outline-container-org867276f" class="outline-3">
+<h3 id="org867276f"><span class="section-number-3">2.15</span> 存储</h3>
 <div class="outline-text-3" id="text-2-15">
 </div>
-<div id="outline-container-orga3a9f4d" class="outline-4">
-<h4 id="orga3a9f4d"><span class="section-number-4">2.15.1</span> 存储方块</h4>
+<div id="outline-container-org69ab704" class="outline-4">
+<h4 id="org69ab704"><span class="section-number-4">2.15.1</span> 存储方块</h4>
 <div class="outline-text-4" id="text-2-15-1">
 <p>
-<a href="#org64df026">Abstract</a> 修饰类继承 <a href="#org4c9282a">2.1</a>，英文：StorageBlock
+<a href="#orgd471347">Abstract</a> 修饰类继承 <a href="#org5fe8376">方块</a>，英文：StorageBlock
 </p>
 
 <p>
@@ -7062,11 +7509,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org058abd5" class="outline-4">
-<h4 id="org058abd5"><span class="section-number-4">2.15.2</span> 核心</h4>
+<div id="outline-container-org50e5b17" class="outline-4">
+<h4 id="org50e5b17"><span class="section-number-4">2.15.2</span> 核心</h4>
 <div class="outline-text-4" id="text-2-15-2">
 <p>
-继承 <a href="#orga3a9f4d">存储方块</a>，英文：CoreBlock
+继承 <a href="#org69ab704">存储方块</a>，英文：CoreBlock
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7152,11 +7599,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org28ae07c" class="outline-4">
-<h4 id="org28ae07c"><span class="section-number-4">2.15.3</span> 仓库</h4>
+<div id="outline-container-orge101863" class="outline-4">
+<h4 id="orge101863"><span class="section-number-4">2.15.3</span> 仓库</h4>
 <div class="outline-text-4" id="text-2-15-3">
 <p>
-继承 <a href="#orga3a9f4d">存储方块</a>，英文：Vault
+继承 <a href="#org69ab704">存储方块</a>，英文：Vault
 </p>
 
 <p>
@@ -7197,12 +7644,12 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org98dee47" class="outline-4">
-<h4 id="org98dee47"><span class="section-number-4">2.15.4</span> 卸载器</h4>
+<div id="outline-container-org8d64170" class="outline-4">
+<h4 id="org8d64170"><span class="section-number-4">2.15.4</span> 卸载器</h4>
 <div class="outline-text-4" id="text-2-15-4">
 <p>
-继承 <a href="#org4c9282a">方块</a>
-一个方块可以从 <a href="#orga3a9f4d">2.15.1</a>, 比如 <a href="#org28ae07c">2.15.3</a>, <a href="#org058abd5">2.15.2</a> 或 <a href="#org620f931">工厂</a> 中拿物品.英文：Unloader
+继承 <a href="#org5fe8376">方块</a>
+一个方块可以从 <a href="#org69ab704">存储方块</a>, 比如 <a href="#orge101863">仓库</a>, <a href="#org50e5b17">核心</a> 或 <a href="#orga9e9265">工厂</a> 中拿物品.英文：Unloader
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7291,11 +7738,11 @@ Notes:
 </div>
 
 
-<div id="outline-container-org11bf393" class="outline-4">
-<h4 id="org11bf393"><span class="section-number-4">2.15.5</span> 发射器</h4>
+<div id="outline-container-org70af5c8" class="outline-4">
+<h4 id="org70af5c8"><span class="section-number-4">2.15.5</span> 发射器</h4>
 <div class="outline-text-4" id="text-2-15-5">
 <p>
-继承 <a href="#orga3a9f4d">存储方块</a>，英文：LaunchPad
+继承 <a href="#org69ab704">存储方块</a>，英文：LaunchPad
 </p>
 
 <p>
@@ -7371,11 +7818,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org2adfe54" class="outline-3">
-<h3 id="org2adfe54"><span class="section-number-3">2.16</span> 属性</h3>
+<div id="outline-container-orgc41b9a9" class="outline-3">
+<h3 id="orgc41b9a9"><span class="section-number-3">2.16</span> 属性</h3>
 <div class="outline-text-3" id="text-2-16">
 <p>
-属于一个抽象物品的一个组 <a href="#org2adfe54">属性</a>. 在 <code>地板</code> 中使用来给地板一个特殊属性, 比如 <i>热量</i> 和 <i>孢子度</i> 来给某些机器提效, 比如泵和培养机.
+属于一个抽象物品的一个组 <a href="#orgc41b9a9">属性</a>. 在 <code>地板</code> 中使用来给地板一个特殊属性, 比如 <i>热量</i> 和 <i>孢子度</i> 来给某些机器提效, 比如泵和培养机.
 </p>
 
 <p>
@@ -7402,7 +7849,7 @@ Notes:
 </div>
 
 <p>
-你可以把这个放 <a href="#orgabcd0a8">地板</a> 类的文件里面，比如:
+你可以把这个放 <a href="#orga2f25b0">地板</a> 类的文件里面，比如:
 </p>
 
 <div class="org-src-container">
@@ -7417,8 +7864,8 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orge633664" class="outline-3">
-<h3 id="orge633664"><span class="section-number-3">2.17</span> 属性</h3>
+<div id="outline-container-org7d3f334" class="outline-3">
+<h3 id="org7d3f334"><span class="section-number-3">2.17</span> 属性</h3>
 <div class="outline-text-3" id="text-2-17">
 <p>
 不能添加新属性. 这里是内建属性:
@@ -7432,8 +7879,8 @@ Notes:
 </ul>
 </div>
 </div>
-<div id="outline-container-orgdc81409" class="outline-3">
-<h3 id="orgdc81409"><span class="section-number-3">2.18</span> 建筑菜单可见性</h3>
+<div id="outline-container-org1f6e3b7" class="outline-3">
+<h3 id="org1f6e3b7"><span class="section-number-3">2.18</span> 建筑菜单可见性</h3>
 <div class="outline-text-3" id="text-2-18">
 <p>
 有以下选项:
@@ -7444,11 +7891,13 @@ Notes:
 <li><code>debugOnly</code> debug模式显示</li>
 <li><code>sandboxOnly</code> 沙盒模式显示</li>
 <li><code>campaignOnly</code> 战役模式显示</li>
+<li><code>lightingOnly</code> 黑夜模式显示*[新特性 v99 (268)]*</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org6326c6c" class="outline-3">
-<h3 id="org6326c6c"><span class="section-number-3">2.19</span> 方块组别</h3>
+
+<div id="outline-container-org81a0777" class="outline-3">
+<h3 id="org81a0777"><span class="section-number-3">2.19</span> 方块组别</h3>
 <div class="outline-text-3" id="text-2-19">
 <p>
 各个内建组别:
@@ -7466,17 +7915,16 @@ Notes:
 </div>
 </div>
 
-
-<div id="outline-container-org227a691" class="outline-2">
-<h2 id="org227a691"><span class="section-number-2">3</span> 种类</h2>
+<div id="outline-container-org4cf6807" class="outline-2">
+<h2 id="org4cf6807"><span class="section-number-2">3</span> 种类</h2>
 <div class="outline-text-2" id="text-3">
 </div>
 
-<div id="outline-container-orgc06d431" class="outline-3">
-<h3 id="orgc06d431"><span class="section-number-3">3.1</span> 物品</h3>
+<div id="outline-container-org6e96131" class="outline-3">
+<h3 id="org6e96131"><span class="section-number-3">3.1</span> 物品</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
-继承 <a href="#org5941e16">内容</a> &#x2013; 只是一个可以上传送带，分类器和物品容器的东西的东西，经常用于工厂中。
+继承 <a href="#orgac9551c">内容</a> &#x2013; 只是一个可以上传送带，分类器和物品容器的东西的东西，经常用于工厂中。
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7502,14 +7950,14 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">color</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">分类器显示色</td>
 </tr>
 
 <tr>
 <td class="org-left">type</td>
-<td class="org-left"><a href="#orgc06d431">物品</a></td>
+<td class="org-left"><a href="#org6e96131">物品</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left"><code>resource</code> 或是 <code>material</code> ; resource不能进核心，反之</td>
 </tr>
@@ -7557,13 +8005,30 @@ Notes:
 </tr>
 </tbody>
 </table>
+
+<p>
+<a id="org45d1504"></a> <b>ItemTypes:</b>
+</p>
+<ul class="org-ul">
+<li><code>resource</code> 可以进入核心;</li>
+<li><code>material</code> 不能进入核心.</li>
+</ul>
 </div>
 </div>
-<div id="outline-container-orgf2c22ab" class="outline-3">
-<h3 id="orgf2c22ab"><span class="section-number-3">3.2</span> 物品组</h3>
+
+<div id="outline-container-org70d1070" class="outline-3">
+<h3 id="org70d1070"><span class="section-number-3">3.2</span> 物品组</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
-告诉工厂输入/输出的物品的类.一个物品组应该包含以下元素:
+这个类用来定义消耗的物品及数量.
+</p>
+
+<p>
+<b>[新特性 968f3ace3]:</b> 一个 <code>ItemStack</code> 可以用这个格式 <code>"item/amount"</code>.
+</p>
+
+<p>
+一个 <code>ItemStack</code> 要包括以下接口:
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7596,7 +8061,7 @@ Notes:
 
 <tr>
 <td class="org-left">item</td>
-<td class="org-left"><a href="#orgc06d431">物品</a></td>
+<td class="org-left"><a href="#org6e96131">物品</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">物品名字</td>
 </tr>
@@ -7604,7 +8069,7 @@ Notes:
 </table>
 
 <p>
-例子:
+你经常看到 <code>[ ItemStack ]</code>, 这个代表 <code>ItemStack</code> 的组, 比如:
 </p>
 
 <div class="org-src-container">
@@ -7617,11 +8082,15 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org5d04fb9" class="outline-3">
-<h3 id="org5d04fb9"><span class="section-number-3">3.3</span> 液体</h3>
+<div id="outline-container-org6ae5397" class="outline-3">
+<h3 id="org6ae5397"><span class="section-number-3">3.3</span> 液体</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
-继承 <a href="#org5941e16">1.3</a> &#x2013; 定义液体的东西.
+继承 <a href="#orgac9551c">内容</a>
+</p>
+
+<p>
+定义液体的东西. 像 <a href="#org6e96131">3.1</a> 一样，这个内容物有自己的子文件夹 <code>content/liquids/liquid-name.json</code>, 这个液体名字可以在其他内容物重复使用.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7647,16 +8116,23 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">color</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left"><b>[必须]</b> 液体颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">barColor</td>
-<td class="org-left"><a href="#orge909bb4">4.2</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left"><i>[非必须]</i> UI中颜色.</td>
+</tr>
+
+<tr>
+<td class="org-left">lightColor</td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
+<td class="org-right">&#xa0;</td>
+<td class="org-left"><b>[new v99 (268)]</b> 发光颜色.改变光度不在这里.</td>
 </tr>
 
 <tr>
@@ -7696,20 +8172,35 @@ Notes:
 
 <tr>
 <td class="org-left">effect</td>
-<td class="org-left"><a href="#org6da07bf">状态</a></td>
+<td class="org-left"><a href="#org93b3d17">状态</a></td>
 <td class="org-right">none</td>
 <td class="org-left">接触此液体获得的状态.</td>
 </tr>
 </tbody>
 </table>
+
+<p>
+贴图:
+</p>
+<ul class="org-ul">
+<li><code>&lt;name&gt;</code>, 在核心数据库中的显示贴图.</li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-orged19fd6" class="outline-3">
-<h3 id="orged19fd6"><span class="section-number-3">3.4</span> 液体组</h3>
+<div id="outline-container-org2fb50b2" class="outline-3">
+<h3 id="org2fb50b2"><span class="section-number-3">3.4</span> 液体组</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
-这个类被方块使用,用于消耗液体,像 <a href="#orgf2c22ab">物品组</a> 一样，但是里面只能包含一种液体.
+这个类用来定义消耗的液体及数量.
+</p>
+
+<p>
+<b>[新特性 968f3ace3]:</b> 一个 <code>LiquidStack</code> 可以用这个格式 <code>"liquid/amount"</code>.
+</p>
+
+<p>
+一个 <code>LiquidStack</code> 要有一下接口:
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7732,7 +8223,7 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">liquid</td>
-<td class="org-left"><a href="#org5d04fb9">液体</a></td>
+<td class="org-left"><a href="#org6ae5397">液体</a></td>
 <td class="org-left">液体种类</td>
 </tr>
 
@@ -7758,8 +8249,8 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orga217614" class="outline-3">
-<h3 id="orga217614"><span class="section-number-3">3.5</span> 武器</h3>
+<div id="outline-container-orgad3a765" class="outline-3">
+<h3 id="orgad3a765"><span class="section-number-3">3.5</span> 武器</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 武器被单位使用,无论是飞行单位还是地面单位,或是玩家机甲.这个是它们射子弹的工具.
@@ -7790,7 +8281,7 @@ Notes:
 <td class="org-left">name</td>
 <td class="org-left">string</td>
 <td class="org-right">&#xa0;</td>
-<td class="org-left">武器名</td>
+<td class="org-left">武器名,用于查找武器贴图</td>
 </tr>
 
 <tr>
@@ -7809,14 +8300,14 @@ Notes:
 
 <tr>
 <td class="org-left">bullet</td>
-<td class="org-left"><a href="#orga391e48">子弹类</a></td>
+<td class="org-left"><a href="#orgae0d191">子弹类</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">射的子弹类型</td>
 </tr>
 
 <tr>
 <td class="org-left">ejectEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">射击特效</td>
 </tr>
@@ -7914,19 +8405,27 @@ Notes:
 
 <tr>
 <td class="org-left">shootSound</td>
-<td class="org-left"><a href="#orgbdaa2bc">音效</a></td>
+<td class="org-left"><a href="#orgd8e4040">音效</a></td>
 <td class="org-right">pew</td>
 <td class="org-left">射击音效</td>
 </tr>
 </tbody>
 </table>
+
+<p>
+贴图:
+</p>
+<ul class="org-ul">
+<li><code>&lt;name&gt;</code> 或 <code>&lt;name&gt;-equip</code></li>
+</ul>
 </div>
 </div>
-<div id="outline-container-org11ea7d0" class="outline-3">
-<h3 id="org11ea7d0"><span class="section-number-3">3.6</span> 单位类</h3>
+
+<div id="outline-container-orgadbaa88" class="outline-3">
+<h3 id="orgadbaa88"><span class="section-number-3">3.6</span> 单位类</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
-继承 <a href="#org5941e16">1.3</a>
+继承 <a href="#orgac9551c">内容</a>
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7952,7 +8451,7 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">type</td>
-<td class="org-left"><a href="#org097ab11">基础单位</a></td>
+<td class="org-left"><a href="#org6c6805d">基础单位</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">单位类型</td>
 </tr>
@@ -8092,7 +8591,7 @@ Notes:
 
 <tr>
 <td class="org-left">weapon</td>
-<td class="org-left"><a href="#orga217614">武器</a></td>
+<td class="org-left"><a href="#orgad3a765">武器</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">武器</td>
 </tr>
@@ -8120,27 +8619,36 @@ Notes:
 
 <tr>
 <td class="org-left">toMine</td>
-<td class="org-left"><a href="#orgc06d431">3.1</a></td>
+<td class="org-left"><a href="#org6e96131">物品</a></td>
 <td class="org-right">copper,lead</td>
 <td class="org-left">挖的东西</td>
 </tr>
 
 <tr>
 <td class="org-left">deathSound</td>
-<td class="org-left"><a href="#orgbdaa2bc">1.6</a></td>
+<td class="org-left"><a href="#orgd8e4040">音效</a></td>
 <td class="org-right">bang</td>
 <td class="org-left">死亡音效</td>
 </tr>
 </tbody>
 </table>
+
+<p>
+贴图:
+</p>
+<ul class="org-ul">
+<li><code>&lt;name&gt;</code></li>
+<li><code>&lt;name&gt;-leg</code></li>
+<li><code>&lt;name&gt;-base</code></li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-org40c2a64" class="outline-3">
-<h3 id="org40c2a64"><span class="section-number-3">3.7</span> 玩家机甲</h3>
+<div id="outline-container-org3462781" class="outline-3">
+<h3 id="org3462781"><span class="section-number-3">3.7</span> 玩家机甲</h3>
 <div class="outline-text-3" id="text-3-7">
 <p>
-继承 <a href="#org5941e16">1.3</a> &#x2013; 玩家机甲是玩家控制的实体.
+继承 <a href="#orgac9551c">内容</a> &#x2013; 玩家机甲是玩家控制的实体.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -8257,7 +8765,7 @@ Notes:
 
 <tr>
 <td class="org-left">engineColor</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">boostTo</td>
 <td class="org-left">引擎颜色</td>
 </tr>
@@ -8320,7 +8828,7 @@ Notes:
 
 <tr>
 <td class="org-left">weapon</td>
-<td class="org-left"><a href="#orga217614">武器</a></td>
+<td class="org-left"><a href="#orgad3a765">武器</a></td>
 <td class="org-right">null</td>
 <td class="org-left">武器</td>
 </tr>
@@ -8329,8 +8837,8 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org3649683" class="outline-3">
-<h3 id="org3649683"><span class="section-number-3">3.8</span> 内容菜单类型</h3>
+<div id="outline-container-org31def12" class="outline-3">
+<h3 id="org31def12"><span class="section-number-3">3.8</span> 内容菜单类型</h3>
 <div class="outline-text-3" id="text-3-8">
 <p>
 建筑菜单中的内容类型:
@@ -8350,11 +8858,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org16bba8d" class="outline-3">
-<h3 id="org16bba8d"><span class="section-number-3">3.9</span> 区域</h3>
+<div id="outline-container-org979f0b1" class="outline-3">
+<h3 id="org979f0b1"><span class="section-number-3">3.9</span> 区域</h3>
 <div class="outline-text-3" id="text-3-9">
 <p>
-继承 <a href="#org5941e16">1.3</a> 
+继承 <a href="#orgac9551c">内容</a> 
 </p>
 
 <p>
@@ -8392,21 +8900,21 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">baseLaunchCost</td>
-<td class="org-left"><a href="#orgf2c22ab">3.2</a></td>
+<td class="org-left"><a href="#org70d1070">物品组</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">基础发射消耗资源</td>
 </tr>
 
 <tr>
 <td class="org-left">launchCost</td>
-<td class="org-left"><a href="#orgf2c22ab">3.2</a></td>
+<td class="org-left"><a href="#org70d1070">物品组</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">发射消耗资源</td>
 </tr>
 
 <tr>
 <td class="org-left">startingItems</td>
-<td class="org-left"><a href="#orgf2c22ab">3.2</a></td>
+<td class="org-left"><a href="#org70d1070">物品组</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">初始物品.</td>
 </tr>
@@ -8434,7 +8942,7 @@ Notes:
 
 <tr>
 <td class="org-left">loadout</td>
-<td class="org-left"><a href="#org6f9a276">1.9</a></td>
+<td class="org-left"><a href="#org6c69d8c">蓝图</a></td>
 <td class="org-left">basicShard</td>
 <td class="org-left">初始核心.</td>
 </tr>
@@ -8443,26 +8951,26 @@ Notes:
 <td class="org-left">resources</td>
 <td class="org-left">[ String ]</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">一个 <a href="#orgc06d431">物品</a> 名字的组.</td>
+<td class="org-left">一个 <a href="#org6e96131">物品</a> 名字的组.</td>
 </tr>
 
 <tr>
 <td class="org-left">requirements</td>
-<td class="org-left">[ <a href="#org5b94cea">6</a> ]</td>
+<td class="org-left">[ <a href="#org086f7d1">元素</a> ]</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">一组开启地图的条件.</td>
 </tr>
 
 <tr>
 <td class="org-left">configureObjective</td>
-<td class="org-left"><a href="#org5b94cea">6</a></td>
+<td class="org-left"><a href="#org086f7d1">元素</a></td>
 <td class="org-left">ZoneWave 15</td>
 <td class="org-left">可自定义发射物品波次</td>
 </tr>
 
 <tr>
 <td class="org-left">defaultStartingItems</td>
-<td class="org-left"><a href="#orgf2c22ab">3.2</a></td>
+<td class="org-left"><a href="#org70d1070">物品组</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">默认初始物品</td>
 </tr>
@@ -8509,11 +9017,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org6da07bf" class="outline-3">
-<h3 id="org6da07bf"><span class="section-number-3">3.10</span> 状态</h3>
+<div id="outline-container-org93b3d17" class="outline-3">
+<h3 id="org93b3d17"><span class="section-number-3">3.10</span> 状态</h3>
 <div class="outline-text-3" id="text-3-10">
 <p>
-<i>不要和 <a href="#org6d01988">特效</a> 搞混</i>,状态会给一个实体额外属性.现在 <b>你不可以添加自定义的状态</b>. &#x2013; 状态有时会充当效果的两个条件. 比如一个 <code>wet</code> 的单位获得了 <code>shocked</code> 此时它会掉20血.
+<i>不要和 <a href="#org93a7f89">特效</a> 搞混</i>,状态会给一个实体额外属性.现在 <b>你不可以添加自定义的状态</b>. &#x2013; 状态有时会充当效果的两个条件. 比如一个 <code>wet</code> 的单位获得了 <code>shocked</code> 此时它会掉20血.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -8560,7 +9068,7 @@ Notes:
 
 <tr>
 <td class="org-left">color</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-left">white</td>
 <td class="org-left">颜色</td>
 </tr>
@@ -8574,7 +9082,7 @@ Notes:
 
 <tr>
 <td class="org-left">effect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-left">none</td>
 <td class="org-left">在单位上出现，状态特效 (一帧0.15%几率触发).</td>
 </tr>
@@ -8913,12 +9421,12 @@ Notes:
 </div>
 
 
-<div id="outline-container-org8f840ab" class="outline-2">
-<h2 id="org8f840ab"><span class="section-number-2">4</span> 图像</h2>
+<div id="outline-container-orgc14b5f7" class="outline-2">
+<h2 id="orgc14b5f7"><span class="section-number-2">4</span> 图像</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-orgbb81589" class="outline-3">
-<h3 id="orgbb81589"><span class="section-number-3">4.1</span> 渲染层</h3>
+<div id="outline-container-org5e3d926" class="outline-3">
+<h3 id="org5e3d926"><span class="section-number-3">4.1</span> 渲染层</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 渲染层是一个类,会让渲染器在如下层数渲染方块:
@@ -8933,8 +9441,8 @@ Notes:
 </ul>
 </div>
 </div>
-<div id="outline-container-orge909bb4" class="outline-3">
-<h3 id="orge909bb4"><span class="section-number-3">4.2</span> 颜色</h3>
+<div id="outline-container-orgee77d4f" class="outline-3">
+<h3 id="orgee77d4f"><span class="section-number-3">4.2</span> 颜色</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 颜色是十六进制的文字串, <code>&lt;rr&gt;&lt;gg&gt;&lt;bb&gt;</code> 比如:
@@ -8953,16 +9461,68 @@ Notes:
 </div>
 
 
-<div id="outline-container-org4632197" class="outline-2">
-<h2 id="org4632197"><span class="section-number-2">5</span> 实体</h2>
+<div id="outline-container-orgc319ded" class="outline-2">
+<h2 id="orgc319ded"><span class="section-number-2">5</span> 实体</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-orga391e48" class="outline-3">
-<h3 id="orga391e48"><span class="section-number-3">5.1</span> 子弹类</h3>
+<div id="outline-container-orgae0d191" class="outline-3">
+<h3 id="orgae0d191"><span class="section-number-3">5.1</span> 子弹类</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
-<a href="#org64df026">Abstract</a> 修饰类继承 <a href="#org5941e16">内容</a> &#x2013; 子弹类可以是元素或者是文字组,用文字组就是调用内建子弹,用元素就是创建自定义子弹.子弹类里面有两种主要子弹: <a href="#org9a8b5ff">5.1.1</a> 和其他特殊子弹.
+<a href="#orgd471347">Abstract</a> 修饰类继承 <a href="#orgac9551c">内容</a>
 </p>
+
+<p>
+子弹类可以是一个元素 <code>{}</code> 或一个 <code>"字符串"</code>, 字符串就是调用 <a href="#org9008c2b">5.1.5</a> 元素就是自定义子弹.
+</p>
+
+<p>
+这里有两个主要的子弹类:
+</p>
+<ul class="org-ul">
+<li><a href="#org47d7a49">基础子弹</a> 和,</li>
+<li>其他特殊的子弹类.</li>
+</ul>
+
+<p>
+这里是一个自定义子弹类的例子:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-json">{
+    "type": "MissileBulletType",
+    "lifetime": 1000,
+    "speed": 2,
+    "splashDamageRadius": 2,
+    "splashDamage": 9,
+    "frontColor": "ffff00",
+    "backColor": "00ffff",
+    "homingPower": 1,
+    "homingRange": 20,
+    "fragBullets": 3,
+    "fragBullet": {
+	"type": "LiquidBulletType"
+	"liquid": "oil",
+	"lifetime": 2,
+	"speed": 1,
+	"fragBullets": 2,
+	"fragBullet": {
+	    "type": "LiquidBulletType"
+	    "liquid": "slag",
+	    "lifetime": 1,
+	    "speed": 2,
+	    "damage": 1,
+	}
+    }
+}
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="img/green-cyan-oil-slag-missiles.png" alt="green-cyan-oil-slag-missiles.png" />
+</p>
+</div>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -9036,35 +9596,35 @@ Notes:
 
 <tr>
 <td class="org-left">hitEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">击中特效</td>
 </tr>
 
 <tr>
 <td class="org-left">despawnEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">超时特效</td>
 </tr>
 
 <tr>
 <td class="org-left">shootEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">射击特效</td>
 </tr>
 
 <tr>
 <td class="org-left">smokeEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">射击烟雾特效</td>
 </tr>
 
 <tr>
 <td class="org-left">hitSound</td>
-<td class="org-left"><a href="#orgbdaa2bc">1.6</a></td>
+<td class="org-left"><a href="#orgd8e4040">音效</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">子弹击中音效</td>
 </tr>
@@ -9120,7 +9680,7 @@ Notes:
 
 <tr>
 <td class="org-left">status</td>
-<td class="org-left"><a href="#org6da07bf">状态</a></td>
+<td class="org-left"><a href="#org93b3d17">状态</a></td>
 <td class="org-right">none</td>
 <td class="org-left">击中给予状态.</td>
 </tr>
@@ -9190,7 +9750,7 @@ Notes:
 
 <tr>
 <td class="org-left">fragBullet</td>
-<td class="org-left"><a href="#orga391e48">子弹类</a></td>
+<td class="org-left"><a href="#orgae0d191">子弹类</a></td>
 <td class="org-right">null</td>
 <td class="org-left">破片弹</td>
 </tr>
@@ -9261,11 +9821,11 @@ Notes:
 </table>
 </div>
 
-<div id="outline-container-org9a8b5ff" class="outline-4">
-<h4 id="org9a8b5ff"><span class="section-number-4">5.1.1</span> 基础子弹</h4>
+<div id="outline-container-org47d7a49" class="outline-4">
+<h4 id="org47d7a49"><span class="section-number-4">5.1.1</span> 基础子弹</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <p>
-继承 <a href="#orga391e48">5.1</a>，英文：BasicBulletType
+继承 <a href="#orgae0d191">子弹类</a>，英文：BasicBulletType
 </p>
 
 <p>
@@ -9274,12 +9834,8 @@ Notes:
 
 <div class="org-src-container">
 <pre class="src src-json">{
-    "ammo": {
-	"copper": {
-	    "type": "BasicBulletType",
-	    "bulletSprite": "test-mod-router"
-	}
-    }
+    "type": "BasicBulletType",
+    "bulletSprite": "test-mod-router"
 }
 </pre>
 </div>
@@ -9313,14 +9869,14 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">backColor</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">bulletYellowBack</td>
 <td class="org-left"><code>&lt;name&gt;-back</code> 贴图的颜色.</td>
 </tr>
 
 <tr>
 <td class="org-left">frontColor</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">bulletYellow</td>
 <td class="org-left"><code>&lt;name&gt;</code> 贴图的颜色.</td>
 </tr>
@@ -9376,11 +9932,11 @@ Notes:
 </ul>
 </div>
 
-<div id="outline-container-orgf66209d" class="outline-5">
-<h5 id="orgf66209d">炮塔弹</h5>
-<div class="outline-text-5" id="text-orgf66209d">
+<div id="outline-container-orga0344eb" class="outline-5">
+<h5 id="orga0344eb"><span class="section-number-5">5.1.1.1</span> 炮塔弹</h5>
+<div class="outline-text-5" id="text-5-1-1-1">
 <p>
-继承 <a href="#org9a8b5ff">5.1.1</a>，英文：ArtilleryBulletType
+继承 <a href="#org47d7a49">基础子弹</a>，英文：ArtilleryBulletType
 </p>
 
 <p>
@@ -9410,7 +9966,7 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">trailEffect</td>
-<td class="org-left"><a href="#org6d01988">特效</a></td>
+<td class="org-left"><a href="#org93a7f89">特效</a></td>
 <td class="org-left">artilleryTrail</td>
 <td class="org-left">尾迹特效</td>
 </tr>
@@ -9470,11 +10026,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org7c3e515" class="outline-5">
-<h5 id="org7c3e515">破片弹</h5>
-<div class="outline-text-5" id="text-org7c3e515">
+<div id="outline-container-orgd1becff" class="outline-5">
+<h5 id="orgd1becff"><span class="section-number-5">5.1.1.2</span> 破片弹</h5>
+<div class="outline-text-5" id="text-5-1-1-2">
 <p>
-继承 <a href="#org9a8b5ff">5.1.1</a>，英文：FlakBulletType
+继承 <a href="#org47d7a49">基础子弹</a>，英文：FlakBulletType
 </p>
 
 <p>
@@ -9559,11 +10115,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orge426e54" class="outline-5">
-<h5 id="orge426e54">导弹</h5>
-<div class="outline-text-5" id="text-orge426e54">
+<div id="outline-container-orgbcf300f" class="outline-5">
+<h5 id="orgbcf300f"><span class="section-number-5">5.1.1.3</span> 导弹</h5>
+<div class="outline-text-5" id="text-5-1-1-3">
 <p>
-继承 <a href="#org9a8b5ff">5.1.1</a>，英文：MissileBulletType
+继承 <a href="#org47d7a49">基础子弹</a>，英文：MissileBulletType
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -9589,7 +10145,7 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">trailColor</td>
-<td class="org-left"><a href="#orge909bb4">颜色</a></td>
+<td class="org-left"><a href="#orgee77d4f">颜色</a></td>
 <td class="org-right">missileYellowBack</td>
 <td class="org-left">尾迹颜色</td>
 </tr>
@@ -9637,11 +10193,11 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-orgf891950" class="outline-5">
-<h5 id="orgf891950">炸弹</h5>
-<div class="outline-text-5" id="text-orgf891950">
+<div id="outline-container-org5acfbb6" class="outline-5">
+<h5 id="org5acfbb6"><span class="section-number-5">5.1.1.4</span> 炸弹</h5>
+<div class="outline-text-5" id="text-5-1-1-4">
 <p>
-继承 <a href="#org9a8b5ff">5.1.1</a>，英文：BombBulletType
+继承 <a href="#org47d7a49">基础子弹</a>，英文：BombBulletType
 </p>
 
 <p>
@@ -9708,11 +10264,11 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-org464d59c" class="outline-4">
-<h4 id="org464d59c"><span class="section-number-4">5.1.2</span> 治疗子弹</h4>
+<div id="outline-container-org930b2cf" class="outline-4">
+<h4 id="org930b2cf"><span class="section-number-4">5.1.2</span> 治疗子弹</h4>
 <div class="outline-text-4" id="text-5-1-2">
 <p>
-继承 <a href="#orga391e48">5.1</a> &#x2013; 可以治疗同队方块和单位的子弹.英文：HealBulletType
+继承 <a href="#orgae0d191">子弹类</a> &#x2013; 可以治疗同队方块和单位的子弹.英文：HealBulletType
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -9793,11 +10349,11 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-org6a2126e" class="outline-4">
-<h4 id="org6a2126e"><span class="section-number-4">5.1.3</span> 液体子弹</h4>
+<div id="outline-container-org17a9dd3" class="outline-4">
+<h4 id="org17a9dd3"><span class="section-number-4">5.1.3</span> 液体子弹</h4>
 <div class="outline-text-4" id="text-5-1-3">
 <p>
-继承 <a href="#orga391e48">5.1</a>，英文：LiquidBulletType
+继承 <a href="#orgae0d191">子弹类</a>，英文：LiquidBulletType
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -9825,7 +10381,7 @@ Defaults:
 <td class="org-left">liquid</td>
 <td class="org-left">String</td>
 <td class="org-left">null</td>
-<td class="org-left"><b>[必须]</b> <a href="#org5d04fb9">3.3</a>的名字</td>
+<td class="org-left"><b>[必须]</b> <a href="#org6ae5397">液体</a>的名字</td>
 </tr>
 </tbody>
 </table>
@@ -9893,11 +10449,11 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-org40f793d" class="outline-4">
-<h4 id="org40f793d"><span class="section-number-4">5.1.4</span> 质驱子弹</h4>
+<div id="outline-container-org9c78ded" class="outline-4">
+<h4 id="org9c78ded"><span class="section-number-4">5.1.4</span> 质驱子弹</h4>
 <div class="outline-text-4" id="text-5-1-4">
 <p>
-继承 <a href="#orga391e48">5.1</a>，英文：MassDriverBolt
+继承 <a href="#orgae0d191">子弹类</a>，英文：MassDriverBolt
 </p>
 
 <p>
@@ -9948,8 +10504,8 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-org90a9d1e" class="outline-4">
-<h4 id="org90a9d1e"><span class="section-number-4">5.1.5</span> 内建子弹</h4>
+<div id="outline-container-org9008c2b" class="outline-4">
+<h4 id="org9008c2b"><span class="section-number-4">5.1.5</span> 内建子弹</h4>
 <div class="outline-text-4" id="text-5-1-5">
 <ul class="org-ul">
 <li>炮塔弹:
@@ -9989,8 +10545,8 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-org097ab11" class="outline-3">
-<h3 id="org097ab11"><span class="section-number-3">5.2</span> 基础单位</h3>
+<div id="outline-container-org6c6805d" class="outline-3">
+<h3 id="org6c6805d"><span class="section-number-3">5.2</span> 基础单位</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 以下是基础单位类:
@@ -10012,8 +10568,8 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-org6d01988" class="outline-3">
-<h3 id="org6d01988"><span class="section-number-3">5.3</span> 特效</h3>
+<div id="outline-container-org93a7f89" class="outline-3">
+<h3 id="org93a7f89"><span class="section-number-3">5.3</span> 特效</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 你需要输入 <code>文字串</code>. 你不能创建新特效. 这里是内建特效:
@@ -10042,8 +10598,8 @@ Defaults:
 </ul>
 </div>
 </div>
-<div id="outline-container-org22c669c" class="outline-3">
-<h3 id="org22c669c"><span class="section-number-3">5.4</span> 瞄准优先度</h3>
+<div id="outline-container-orgad1b8ab" class="outline-3">
+<h3 id="orgad1b8ab"><span class="section-number-3">5.4</span> 瞄准优先度</h3>
 <div class="outline-text-3" id="text-5-4">
 <ul class="org-ul">
 <li><code>base</code></li>
@@ -10054,11 +10610,11 @@ Defaults:
 </div>
 
 
-<div id="outline-container-org5b94cea" class="outline-2">
-<h2 id="org5b94cea"><span class="section-number-2">6</span> 元素</h2>
+<div id="outline-container-org086f7d1" class="outline-2">
+<h2 id="org086f7d1"><span class="section-number-2">6</span> 元素</h2>
 <div class="outline-text-2" id="text-6">
 <p>
-元素是某个参数的特征,有几个类引用它,用于 <a href="#org16bba8d">3.9</a> 地图设置中的元素设定. 
+元素是某个参数的特征,有几个类引用它,用于 <a href="#org979f0b1">区域</a> 地图设置中的元素设定. 
 </p>
 
 <p>
@@ -10089,7 +10645,7 @@ Defaults:
 <tr>
 <td class="org-left">zone</td>
 <td class="org-left">String</td>
-<td class="org-left">目标 <a href="#org16bba8d">3.9</a> 名字</td>
+<td class="org-left">目标 <a href="#org979f0b1">区域</a> 名字</td>
 </tr>
 
 <tr>
@@ -10124,7 +10680,7 @@ Defaults:
 <tr>
 <td class="org-left">zone</td>
 <td class="org-left">String</td>
-<td class="org-left">目标 <a href="#org16bba8d">3.9</a> 名字</td>
+<td class="org-left">目标 <a href="#org979f0b1">区域</a> 名字</td>
 </tr>
 </tbody>
 </table></li>
@@ -10153,7 +10709,7 @@ Defaults:
 <tr>
 <td class="org-left">block</td>
 <td class="org-left">String</td>
-<td class="org-left">目标 <a href="#org4c9282a">2.1</a> 名字</td>
+<td class="org-left">目标 <a href="#org5fe8376">区域</a> 名字</td>
 </tr>
 </tbody>
 </table></li>
@@ -10161,498 +10717,498 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-orgfb10648" class="outline-2">
-<h2 id="orgfb10648"><span class="section-number-2">7</span> 其他</h2>
+<div id="outline-container-org705f6b2" class="outline-2">
+<h2 id="org705f6b2"><span class="section-number-2">7</span> 其他</h2>
 <div class="outline-text-2" id="text-7">
 </div>
 
-<div id="outline-container-orgc346259" class="outline-3">
-<h3 id="orgc346259"><span class="section-number-3">7.1</span> Mindustry源码结构</h3>
+<div id="outline-container-org675565a" class="outline-3">
+<h3 id="org675565a"><span class="section-number-3">7.1</span> Mindustry源码结构</h3>
 <div class="outline-text-3" id="text-7-1">
 <div class="org-src-container">
 <pre class="src src-fundamental">core/src/io/anuke/mindustry/
-&#9500;&#9472;&#9472; ai
-&#9474;   &#9500;&#9472;&#9472; BlockIndexer.java
-&#9474;   &#9500;&#9472;&#9472; Pathfinder.java
-&#9474;   &#9492;&#9472;&#9472; WaveSpawner.java
-&#9500;&#9472;&#9472; ClientLauncher.java
-&#9500;&#9472;&#9472; content
-&#9474;   &#9500;&#9472;&#9472; Blocks.java
-&#9474;   &#9500;&#9472;&#9472; Bullets.java
-&#9474;   &#9500;&#9472;&#9472; Fx.java
-&#9474;   &#9500;&#9472;&#9472; Items.java
-&#9474;   &#9500;&#9472;&#9472; Liquids.java
-&#9474;   &#9500;&#9472;&#9472; Loadouts.java
-&#9474;   &#9500;&#9472;&#9472; Mechs.java
-&#9474;   &#9500;&#9472;&#9472; StatusEffects.java
-&#9474;   &#9500;&#9472;&#9472; TechTree.java
-&#9474;   &#9500;&#9472;&#9472; TypeIDs.java
-&#9474;   &#9500;&#9472;&#9472; UnitTypes.java
-&#9474;   &#9492;&#9472;&#9472; Zones.java
-&#9500;&#9472;&#9472; core
-&#9474;   &#9500;&#9472;&#9472; ContentLoader.java
-&#9474;   &#9500;&#9472;&#9472; Control.java
-&#9474;   &#9500;&#9472;&#9472; FileTree.java
-&#9474;   &#9500;&#9472;&#9472; GameState.java
-&#9474;   &#9500;&#9472;&#9472; Logic.java
-&#9474;   &#9500;&#9472;&#9472; NetClient.java
-&#9474;   &#9500;&#9472;&#9472; NetServer.java
-&#9474;   &#9500;&#9472;&#9472; Platform.java
-&#9474;   &#9500;&#9472;&#9472; Renderer.java
-&#9474;   &#9500;&#9472;&#9472; UI.java
-&#9474;   &#9500;&#9472;&#9472; Version.java
-&#9474;   &#9492;&#9472;&#9472; World.java
-&#9500;&#9472;&#9472; ctype
-&#9474;   &#9500;&#9472;&#9472; Content.java
-&#9474;   &#9500;&#9472;&#9472; ContentList.java
-&#9474;   &#9500;&#9472;&#9472; MappableContent.java
-&#9474;   &#9492;&#9472;&#9472; UnlockableContent.java
-&#9500;&#9472;&#9472; editor
-&#9474;   &#9500;&#9472;&#9472; DrawOperation.java
-&#9474;   &#9500;&#9472;&#9472; EditorTile.java
-&#9474;   &#9500;&#9472;&#9472; EditorTool.java
-&#9474;   &#9500;&#9472;&#9472; MapEditorDialog.java
-&#9474;   &#9500;&#9472;&#9472; MapEditor.java
-&#9474;   &#9500;&#9472;&#9472; MapGenerateDialog.java
-&#9474;   &#9500;&#9472;&#9472; MapInfoDialog.java
-&#9474;   &#9500;&#9472;&#9472; MapLoadDialog.java
-&#9474;   &#9500;&#9472;&#9472; MapRenderer.java
-&#9474;   &#9500;&#9472;&#9472; MapResizeDialog.java
-&#9474;   &#9500;&#9472;&#9472; MapSaveDialog.java
-&#9474;   &#9500;&#9472;&#9472; MapView.java
-&#9474;   &#9500;&#9472;&#9472; OperationStack.java
-&#9474;   &#9492;&#9472;&#9472; WaveInfoDialog.java
-&#9500;&#9472;&#9472; entities
-&#9474;   &#9500;&#9472;&#9472; bullet
-&#9474;   &#9474;   &#9500;&#9472;&#9472; ArtilleryBulletType.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; BasicBulletType.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; BombBulletType.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; BulletType.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; FlakBulletType.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; HealBulletType.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; LiquidBulletType.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; MassDriverBolt.java
-&#9474;   &#9474;   &#9492;&#9472;&#9472; MissileBulletType.java
-&#9474;   &#9500;&#9472;&#9472; Damage.java
-&#9474;   &#9500;&#9472;&#9472; effect
-&#9474;   &#9474;   &#9500;&#9472;&#9472; Decal.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; Fire.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; GroundEffectEntity.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; ItemTransfer.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; Lightning.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; Puddle.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; RubbleDecal.java
-&#9474;   &#9474;   &#9492;&#9472;&#9472; ScorchDecal.java
-&#9474;   &#9500;&#9472;&#9472; Effects.java
-&#9474;   &#9500;&#9472;&#9472; Entities.java
-&#9474;   &#9500;&#9472;&#9472; EntityCollisions.java
-&#9474;   &#9500;&#9472;&#9472; EntityGroup.java
-&#9474;   &#9500;&#9472;&#9472; Predict.java
-&#9474;   &#9500;&#9472;&#9472; TargetPriority.java
-&#9474;   &#9500;&#9472;&#9472; traits
-&#9474;   &#9474;   &#9500;&#9472;&#9472; AbsorbTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; BelowLiquidTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; BuilderMinerTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; BuilderTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; DamageTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; DrawTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; Entity.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; HealthTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; KillerTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; MinerTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; MoveTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; Saveable.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; SaveTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; ScaleTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; ShooterTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; SolidTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; SpawnerTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; SyncTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; TargetTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; TeamTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; TimeTrait.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; TypeTrait.java
-&#9474;   &#9474;   &#9492;&#9472;&#9472; VelocityTrait.java
-&#9474;   &#9500;&#9472;&#9472; type
-&#9474;   &#9474;   &#9500;&#9472;&#9472; base
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; BaseDrone.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; BuilderDrone.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; Crawler.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; Dagger.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; Draug.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; Eruptor.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; FlyingUnit.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; Fortress.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; Ghoul.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; GroundUnit.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; MinerDrone.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; Phantom.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; RepairDrone.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; Revenant.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; Spirit.java
-&#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; Titan.java
-&#9474;   &#9474;   &#9474;   &#9492;&#9472;&#9472; Wraith.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; BaseEntity.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; BaseUnit.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; Bullet.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; DestructibleEntity.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; EffectEntity.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; Player.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; SolidEntity.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; TileEntity.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; TimedEntity.java
-&#9474;   &#9474;   &#9492;&#9472;&#9472; Unit.java
-&#9474;   &#9500;&#9472;&#9472; units
-&#9474;   &#9474;   &#9500;&#9472;&#9472; StateMachine.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; Statuses.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; UnitCommand.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; UnitDrops.java
-&#9474;   &#9474;   &#9492;&#9472;&#9472; UnitState.java
-&#9474;   &#9492;&#9472;&#9472; Units.java
-&#9500;&#9472;&#9472; game
-&#9474;   &#9500;&#9472;&#9472; DefaultWaves.java
-&#9474;   &#9500;&#9472;&#9472; Difficulty.java
-&#9474;   &#9500;&#9472;&#9472; EventType.java
-&#9474;   &#9500;&#9472;&#9472; Gamemode.java
-&#9474;   &#9500;&#9472;&#9472; GlobalData.java
-&#9474;   &#9500;&#9472;&#9472; LoopControl.java
-&#9474;   &#9500;&#9472;&#9472; MusicControl.java
-&#9474;   &#9500;&#9472;&#9472; Objective.java
-&#9474;   &#9500;&#9472;&#9472; Objectives.java
-&#9474;   &#9500;&#9472;&#9472; Rules.java
-&#9474;   &#9500;&#9472;&#9472; Saves.java
-&#9474;   &#9500;&#9472;&#9472; Schematic.java
-&#9474;   &#9500;&#9472;&#9472; Schematics.java
-&#9474;   &#9500;&#9472;&#9472; SoundLoop.java
-&#9474;   &#9500;&#9472;&#9472; SpawnGroup.java
-&#9474;   &#9500;&#9472;&#9472; Stats.java
-&#9474;   &#9500;&#9472;&#9472; Team.java
-&#9474;   &#9500;&#9472;&#9472; Teams.java
-&#9474;   &#9492;&#9472;&#9472; Tutorial.java
-&#9500;&#9472;&#9472; graphics
-&#9474;   &#9500;&#9472;&#9472; BlockRenderer.java
-&#9474;   &#9500;&#9472;&#9472; Bloom.java
-&#9474;   &#9500;&#9472;&#9472; CacheLayer.java
-&#9474;   &#9500;&#9472;&#9472; Drawf.java
-&#9474;   &#9500;&#9472;&#9472; FloorRenderer.java
-&#9474;   &#9500;&#9472;&#9472; IndexedRenderer.java
-&#9474;   &#9500;&#9472;&#9472; Layer.java
-&#9474;   &#9500;&#9472;&#9472; MenuRenderer.java
-&#9474;   &#9500;&#9472;&#9472; MinimapRenderer.java
-&#9474;   &#9500;&#9472;&#9472; OverlayRenderer.java
-&#9474;   &#9500;&#9472;&#9472; Pal.java
-&#9474;   &#9500;&#9472;&#9472; Pixelator.java
-&#9474;   &#9492;&#9472;&#9472; Shaders.java
-&#9500;&#9472;&#9472; input
-&#9474;   &#9500;&#9472;&#9472; Binding.java
-&#9474;   &#9500;&#9472;&#9472; DesktopInput.java
-&#9474;   &#9500;&#9472;&#9472; InputHandler.java
-&#9474;   &#9500;&#9472;&#9472; MobileInput.java
-&#9474;   &#9500;&#9472;&#9472; PlaceMode.java
-&#9474;   &#9492;&#9472;&#9472; PlaceUtils.java
-&#9500;&#9472;&#9472; io
-&#9474;   &#9500;&#9472;&#9472; JsonIO.java
-&#9474;   &#9500;&#9472;&#9472; LegacyMapIO.java
-&#9474;   &#9500;&#9472;&#9472; MapIO.java
-&#9474;   &#9500;&#9472;&#9472; SaveFileReader.java
-&#9474;   &#9500;&#9472;&#9472; SaveIO.java
-&#9474;   &#9500;&#9472;&#9472; SaveMeta.java
-&#9474;   &#9500;&#9472;&#9472; SavePreviewLoader.java
-&#9474;   &#9500;&#9472;&#9472; SaveVersion.java
-&#9474;   &#9500;&#9472;&#9472; TypeIO.java
-&#9474;   &#9492;&#9472;&#9472; versions
-&#9474;       &#9500;&#9472;&#9472; LegacyTypeTable.java
-&#9474;       &#9500;&#9472;&#9472; Save1.java
-&#9474;       &#9500;&#9472;&#9472; Save2.java
-&#9474;       &#9492;&#9472;&#9472; Save3.java
-&#9500;&#9472;&#9472; maps
-&#9474;   &#9500;&#9472;&#9472; filters
-&#9474;   &#9474;   &#9500;&#9472;&#9472; BlendFilter.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; ClearFilter.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; DistortFilter.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; FilterOption.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; GenerateFilter.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; MedianFilter.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; MirrorFilter.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; NoiseFilter.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; OreFilter.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; OreMedianFilter.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; RiverNoiseFilter.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; ScatterFilter.java
-&#9474;   &#9474;   &#9492;&#9472;&#9472; TerrainFilter.java
-&#9474;   &#9500;&#9472;&#9472; generators
-&#9474;   &#9474;   &#9500;&#9472;&#9472; BasicGenerator.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; Generator.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; MapGenerator.java
-&#9474;   &#9474;   &#9492;&#9472;&#9472; RandomGenerator.java
-&#9474;   &#9500;&#9472;&#9472; MapException.java
-&#9474;   &#9500;&#9472;&#9472; Map.java
-&#9474;   &#9500;&#9472;&#9472; MapPreviewLoader.java
-&#9474;   &#9500;&#9472;&#9472; Maps.java
-&#9474;   &#9492;&#9472;&#9472; zonegen
-&#9474;       &#9500;&#9472;&#9472; DesertWastesGenerator.java
-&#9474;       &#9492;&#9472;&#9472; OvergrowthGenerator.java
-&#9500;&#9472;&#9472; mod
-&#9474;   &#9500;&#9472;&#9472; ContentParser.java
-&#9474;   &#9500;&#9472;&#9472; ModCrashHandler.java
-&#9474;   &#9500;&#9472;&#9472; Mod.java
-&#9474;   &#9500;&#9472;&#9472; ModLoadingSound.java
-&#9474;   &#9492;&#9472;&#9472; Mods.java
-&#9500;&#9472;&#9472; net
-&#9474;   &#9500;&#9472;&#9472; Administration.java
-&#9474;   &#9500;&#9472;&#9472; ArcNetImpl.java
-&#9474;   &#9500;&#9472;&#9472; CrashSender.java
-&#9474;   &#9500;&#9472;&#9472; Host.java
-&#9474;   &#9500;&#9472;&#9472; Interpolator.java
-&#9474;   &#9500;&#9472;&#9472; NetConnection.java
-&#9474;   &#9500;&#9472;&#9472; Net.java
-&#9474;   &#9500;&#9472;&#9472; NetworkIO.java
-&#9474;   &#9500;&#9472;&#9472; Packet.java
-&#9474;   &#9500;&#9472;&#9472; Packets.java
-&#9474;   &#9500;&#9472;&#9472; Registrator.java
-&#9474;   &#9500;&#9472;&#9472; Streamable.java
-&#9474;   &#9492;&#9472;&#9472; ValidateException.java
-&#9500;&#9472;&#9472; plugin
-&#9474;   &#9492;&#9472;&#9472; Plugin.java
-&#9500;&#9472;&#9472; type
-&#9474;   &#9500;&#9472;&#9472; Category.java
-&#9474;   &#9500;&#9472;&#9472; ContentType.java
-&#9474;   &#9500;&#9472;&#9472; Item.java
-&#9474;   &#9500;&#9472;&#9472; ItemStack.java
-&#9474;   &#9500;&#9472;&#9472; ItemType.java
-&#9474;   &#9500;&#9472;&#9472; Liquid.java
-&#9474;   &#9500;&#9472;&#9472; LiquidStack.java
-&#9474;   &#9500;&#9472;&#9472; Loadout.java
-&#9474;   &#9500;&#9472;&#9472; Mech.java
-&#9474;   &#9500;&#9472;&#9472; Publishable.java
-&#9474;   &#9500;&#9472;&#9472; StatusEffect.java
-&#9474;   &#9500;&#9472;&#9472; TypeID.java
-&#9474;   &#9500;&#9472;&#9472; UnitType.java
-&#9474;   &#9500;&#9472;&#9472; Weapon.java
-&#9474;   &#9500;&#9472;&#9472; WeatherEvent.java
-&#9474;   &#9492;&#9472;&#9472; Zone.java
-&#9500;&#9472;&#9472; ui
-&#9474;   &#9500;&#9472;&#9472; Bar.java
-&#9474;   &#9500;&#9472;&#9472; BorderImage.java
-&#9474;   &#9500;&#9472;&#9472; Cicon.java
-&#9474;   &#9500;&#9472;&#9472; ContentDisplay.java
-&#9474;   &#9500;&#9472;&#9472; dialogs
-&#9474;   &#9474;   &#9500;&#9472;&#9472; AboutDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; AdminsDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; BansDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; ColorPickDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; ContentInfoDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; ControlsDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; CustomGameDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; CustomRulesDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; DatabaseDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; DeployDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; DiscordDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; FileChooser.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; FloatingDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; GameOverDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; HostDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; JoinDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; LanguageDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; LoadDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; LoadoutDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; MapPlayDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; MapsDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; MinimapDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; ModsDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; PausedDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; SaveDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; SchematicsDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; SettingsMenuDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; TechTreeDialog.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; TraceDialog.java
-&#9474;   &#9474;   &#9492;&#9472;&#9472; ZoneInfoDialog.java
-&#9474;   &#9500;&#9472;&#9472; Fonts.java
-&#9474;   &#9500;&#9472;&#9472; fragments
-&#9474;   &#9474;   &#9500;&#9472;&#9472; BlockConfigFragment.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; BlockInventoryFragment.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; ChatFragment.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; FadeInFragment.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; Fragment.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; HudFragment.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; LoadingFragment.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; MenuFragment.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; OverlayFragment.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; PlacementFragment.java
-&#9474;   &#9474;   &#9492;&#9472;&#9472; PlayerListFragment.java
-&#9474;   &#9500;&#9472;&#9472; GridImage.java
-&#9474;   &#9500;&#9472;&#9472; IconSize.java
-&#9474;   &#9500;&#9472;&#9472; IntFormat.java
-&#9474;   &#9500;&#9472;&#9472; ItemDisplay.java
-&#9474;   &#9500;&#9472;&#9472; ItemImage.java
-&#9474;   &#9500;&#9472;&#9472; ItemsDisplay.java
-&#9474;   &#9500;&#9472;&#9472; layout
-&#9474;   &#9474;   &#9500;&#9472;&#9472; BranchTreeLayout.java
-&#9474;   &#9474;   &#9500;&#9472;&#9472; RadialTreeLayout.java
-&#9474;   &#9474;   &#9492;&#9472;&#9472; TreeLayout.java
-&#9474;   &#9500;&#9472;&#9472; Links.java
-&#9474;   &#9500;&#9472;&#9472; LiquidDisplay.java
-&#9474;   &#9500;&#9472;&#9472; Minimap.java
-&#9474;   &#9500;&#9472;&#9472; MobileButton.java
-&#9474;   &#9500;&#9472;&#9472; MultiReqImage.java
-&#9474;   &#9500;&#9472;&#9472; ReqImage.java
-&#9474;   &#9492;&#9472;&#9472; Styles.java
-&#9500;&#9472;&#9472; Vars.java
-&#9492;&#9472;&#9472; world
-    &#9500;&#9472;&#9472; Block.java
-    &#9500;&#9472;&#9472; blocks
-    &#9474;   &#9500;&#9472;&#9472; Attributes.java
-    &#9474;   &#9500;&#9472;&#9472; Autotiler.java
-    &#9474;   &#9500;&#9472;&#9472; BlockPart.java
-    &#9474;   &#9500;&#9472;&#9472; BuildBlock.java
-    &#9474;   &#9500;&#9472;&#9472; defense
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; DeflectorWall.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; Door.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; ForceProjector.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; MendProjector.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; OverdriveProjector.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; ShockMine.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; SurgeWall.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; turrets
-    &#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; ArtilleryTurret.java
-    &#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; BurstTurret.java
-    &#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; ChargeTurret.java
-    &#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; CooledTurret.java
-    &#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; DoubleTurret.java
-    &#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; ItemTurret.java
-    &#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; LaserTurret.java
-    &#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; LiquidTurret.java
-    &#9474;   &#9474;   &#9474;   &#9500;&#9472;&#9472; PowerTurret.java
-    &#9474;   &#9474;   &#9474;   &#9492;&#9472;&#9472; Turret.java
-    &#9474;   &#9474;   &#9492;&#9472;&#9472; Wall.java
-    &#9474;   &#9500;&#9472;&#9472; distribution
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; ArmoredConveyor.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; BufferedItemBridge.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; Conduit.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; Conveyor.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; ExtendingItemBridge.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; ItemBridge.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; Junction.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; LiquidBridge.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; LiquidExtendingBridge.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; LiquidJunction.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; LiquidRouter.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; LiquidTank.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; MassDriver.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; OverflowGate.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; Router.java
-    &#9474;   &#9474;   &#9492;&#9472;&#9472; Sorter.java
-    &#9474;   &#9500;&#9472;&#9472; DoubleOverlayFloor.java
-    &#9474;   &#9500;&#9472;&#9472; Floor.java
-    &#9474;   &#9500;&#9472;&#9472; ItemSelection.java
-    &#9474;   &#9500;&#9472;&#9472; LiquidBlock.java
-    &#9474;   &#9500;&#9472;&#9472; logic
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; LogicBlock.java
-    &#9474;   &#9474;   &#9492;&#9472;&#9472; MessageBlock.java
-    &#9474;   &#9500;&#9472;&#9472; OreBlock.java
-    &#9474;   &#9500;&#9472;&#9472; OverlayFloor.java
-    &#9474;   &#9500;&#9472;&#9472; power
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; Battery.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; BurnerGenerator.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; ConditionalConsumePower.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; DecayGenerator.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; ImpactReactor.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; ItemLiquidGenerator.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; NuclearReactor.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; PowerDistributor.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; PowerGenerator.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; PowerGraph.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; PowerNode.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; SingleTypeGenerator.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; SolarGenerator.java
-    &#9474;   &#9474;   &#9492;&#9472;&#9472; ThermalGenerator.java
-    &#9474;   &#9500;&#9472;&#9472; PowerBlock.java
-    &#9474;   &#9500;&#9472;&#9472; production
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; Cultivator.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; Drill.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; Fracker.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; GenericCrafter.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; GenericSmelter.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; Incinerator.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; LiquidConverter.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; Pump.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; Separator.java
-    &#9474;   &#9474;   &#9492;&#9472;&#9472; SolidPump.java
-    &#9474;   &#9500;&#9472;&#9472; RespawnBlock.java
-    &#9474;   &#9500;&#9472;&#9472; Rock.java
-    &#9474;   &#9500;&#9472;&#9472; sandbox
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; ItemSource.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; ItemVoid.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; LiquidSource.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; PowerSource.java
-    &#9474;   &#9474;   &#9492;&#9472;&#9472; PowerVoid.java
-    &#9474;   &#9500;&#9472;&#9472; StaticWall.java
-    &#9474;   &#9500;&#9472;&#9472; storage
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; CoreBlock.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; LaunchPad.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; StorageBlock.java
-    &#9474;   &#9474;   &#9500;&#9472;&#9472; Unloader.java
-    &#9474;   &#9474;   &#9492;&#9472;&#9472; Vault.java
-    &#9474;   &#9500;&#9472;&#9472; TreeBlock.java
-    &#9474;   &#9492;&#9472;&#9472; units
-    &#9474;       &#9500;&#9472;&#9472; CommandCenter.java
-    &#9474;       &#9500;&#9472;&#9472; MechPad.java
-    &#9474;       &#9500;&#9472;&#9472; RallyPoint.java
-    &#9474;       &#9500;&#9472;&#9472; RepairPoint.java
-    &#9474;       &#9492;&#9472;&#9472; UnitFactory.java
-    &#9500;&#9472;&#9472; BlockStorage.java
-    &#9500;&#9472;&#9472; Build.java
-    &#9500;&#9472;&#9472; CachedTile.java
-    &#9500;&#9472;&#9472; consumers
-    &#9474;   &#9500;&#9472;&#9472; ConsumeItemFilter.java
-    &#9474;   &#9500;&#9472;&#9472; ConsumeItems.java
-    &#9474;   &#9500;&#9472;&#9472; Consume.java
-    &#9474;   &#9500;&#9472;&#9472; ConsumeLiquidBase.java
-    &#9474;   &#9500;&#9472;&#9472; ConsumeLiquidFilter.java
-    &#9474;   &#9500;&#9472;&#9472; ConsumeLiquid.java
-    &#9474;   &#9500;&#9472;&#9472; ConsumePower.java
-    &#9474;   &#9500;&#9472;&#9472; Consumers.java
-    &#9474;   &#9492;&#9472;&#9472; ConsumeType.java
-    &#9500;&#9472;&#9472; DirectionalItemBuffer.java
-    &#9500;&#9472;&#9472; Edges.java
-    &#9500;&#9472;&#9472; ItemBuffer.java
-    &#9500;&#9472;&#9472; LegacyColorMapper.java
-    &#9500;&#9472;&#9472; meta
-    &#9474;   &#9500;&#9472;&#9472; Attribute.java
-    &#9474;   &#9500;&#9472;&#9472; BlockBars.java
-    &#9474;   &#9500;&#9472;&#9472; BlockFlag.java
-    &#9474;   &#9500;&#9472;&#9472; BlockGroup.java
-    &#9474;   &#9500;&#9472;&#9472; BlockStat.java
-    &#9474;   &#9500;&#9472;&#9472; BlockStats.java
-    &#9474;   &#9500;&#9472;&#9472; BuildVisibility.java
-    &#9474;   &#9500;&#9472;&#9472; PowerType.java
-    &#9474;   &#9500;&#9472;&#9472; Producers.java
-    &#9474;   &#9500;&#9472;&#9472; StatCategory.java
-    &#9474;   &#9500;&#9472;&#9472; StatUnit.java
-    &#9474;   &#9500;&#9472;&#9472; StatValue.java
-    &#9474;   &#9492;&#9472;&#9472; values
-    &#9474;       &#9500;&#9472;&#9472; AmmoListValue.java
-    &#9474;       &#9500;&#9472;&#9472; BooleanValue.java
-    &#9474;       &#9500;&#9472;&#9472; BoosterListValue.java
-    &#9474;       &#9500;&#9472;&#9472; ItemFilterValue.java
-    &#9474;       &#9500;&#9472;&#9472; ItemListValue.java
-    &#9474;       &#9500;&#9472;&#9472; LiquidFilterValue.java
-    &#9474;       &#9500;&#9472;&#9472; LiquidValue.java
-    &#9474;       &#9500;&#9472;&#9472; NumberValue.java
-    &#9474;       &#9492;&#9472;&#9472; StringValue.java
-    &#9500;&#9472;&#9472; modules
-    &#9474;   &#9500;&#9472;&#9472; BlockModule.java
-    &#9474;   &#9500;&#9472;&#9472; ConsumeModule.java
-    &#9474;   &#9500;&#9472;&#9472; ItemModule.java
-    &#9474;   &#9500;&#9472;&#9472; LiquidModule.java
-    &#9474;   &#9492;&#9472;&#9472; PowerModule.java
-    &#9500;&#9472;&#9472; Pos.java
-    &#9500;&#9472;&#9472; producers
-    &#9474;   &#9500;&#9472;&#9472; ProduceItem.java
-    &#9474;   &#9492;&#9472;&#9472; Produce.java
-    &#9500;&#9472;&#9472; StaticTree.java
-    &#9500;&#9472;&#9472; Tile.java
-    &#9492;&#9472;&#9472; WorldContext.java
+├── ai
+│   ├── BlockIndexer.java
+│   ├── Pathfinder.java
+│   └── WaveSpawner.java
+├── ClientLauncher.java
+├── content
+│   ├── Blocks.java
+│   ├── Bullets.java
+│   ├── Fx.java
+│   ├── Items.java
+│   ├── Liquids.java
+│   ├── Loadouts.java
+│   ├── Mechs.java
+│   ├── StatusEffects.java
+│   ├── TechTree.java
+│   ├── TypeIDs.java
+│   ├── UnitTypes.java
+│   └── Zones.java
+├── core
+│   ├── ContentLoader.java
+│   ├── Control.java
+│   ├── FileTree.java
+│   ├── GameState.java
+│   ├── Logic.java
+│   ├── NetClient.java
+│   ├── NetServer.java
+│   ├── Platform.java
+│   ├── Renderer.java
+│   ├── UI.java
+│   ├── Version.java
+│   └── World.java
+├── ctype
+│   ├── Content.java
+│   ├── ContentList.java
+│   ├── MappableContent.java
+│   └── UnlockableContent.java
+├── editor
+│   ├── DrawOperation.java
+│   ├── EditorTile.java
+│   ├── EditorTool.java
+│   ├── MapEditorDialog.java
+│   ├── MapEditor.java
+│   ├── MapGenerateDialog.java
+│   ├── MapInfoDialog.java
+│   ├── MapLoadDialog.java
+│   ├── MapRenderer.java
+│   ├── MapResizeDialog.java
+│   ├── MapSaveDialog.java
+│   ├── MapView.java
+│   ├── OperationStack.java
+│   └── WaveInfoDialog.java
+├── entities
+│   ├── bullet
+│   │   ├── ArtilleryBulletType.java
+│   │   ├── BasicBulletType.java
+│   │   ├── BombBulletType.java
+│   │   ├── BulletType.java
+│   │   ├── FlakBulletType.java
+│   │   ├── HealBulletType.java
+│   │   ├── LiquidBulletType.java
+│   │   ├── MassDriverBolt.java
+│   │   └── MissileBulletType.java
+│   ├── Damage.java
+│   ├── effect
+│   │   ├── Decal.java
+│   │   ├── Fire.java
+│   │   ├── GroundEffectEntity.java
+│   │   ├── ItemTransfer.java
+│   │   ├── Lightning.java
+│   │   ├── Puddle.java
+│   │   ├── RubbleDecal.java
+│   │   └── ScorchDecal.java
+│   ├── Effects.java
+│   ├── Entities.java
+│   ├── EntityCollisions.java
+│   ├── EntityGroup.java
+│   ├── Predict.java
+│   ├── TargetPriority.java
+│   ├── traits
+│   │   ├── AbsorbTrait.java
+│   │   ├── BelowLiquidTrait.java
+│   │   ├── BuilderMinerTrait.java
+│   │   ├── BuilderTrait.java
+│   │   ├── DamageTrait.java
+│   │   ├── DrawTrait.java
+│   │   ├── Entity.java
+│   │   ├── HealthTrait.java
+│   │   ├── KillerTrait.java
+│   │   ├── MinerTrait.java
+│   │   ├── MoveTrait.java
+│   │   ├── Saveable.java
+│   │   ├── SaveTrait.java
+│   │   ├── ScaleTrait.java
+│   │   ├── ShooterTrait.java
+│   │   ├── SolidTrait.java
+│   │   ├── SpawnerTrait.java
+│   │   ├── SyncTrait.java
+│   │   ├── TargetTrait.java
+│   │   ├── TeamTrait.java
+│   │   ├── TimeTrait.java
+│   │   ├── TypeTrait.java
+│   │   └── VelocityTrait.java
+│   ├── type
+│   │   ├── base
+│   │   │   ├── BaseDrone.java
+│   │   │   ├── BuilderDrone.java
+│   │   │   ├── Crawler.java
+│   │   │   ├── Dagger.java
+│   │   │   ├── Draug.java
+│   │   │   ├── Eruptor.java
+│   │   │   ├── FlyingUnit.java
+│   │   │   ├── Fortress.java
+│   │   │   ├── Ghoul.java
+│   │   │   ├── GroundUnit.java
+│   │   │   ├── MinerDrone.java
+│   │   │   ├── Phantom.java
+│   │   │   ├── RepairDrone.java
+│   │   │   ├── Revenant.java
+│   │   │   ├── Spirit.java
+│   │   │   ├── Titan.java
+│   │   │   └── Wraith.java
+│   │   ├── BaseEntity.java
+│   │   ├── BaseUnit.java
+│   │   ├── Bullet.java
+│   │   ├── DestructibleEntity.java
+│   │   ├── EffectEntity.java
+│   │   ├── Player.java
+│   │   ├── SolidEntity.java
+│   │   ├── TileEntity.java
+│   │   ├── TimedEntity.java
+│   │   └── Unit.java
+│   ├── units
+│   │   ├── StateMachine.java
+│   │   ├── Statuses.java
+│   │   ├── UnitCommand.java
+│   │   ├── UnitDrops.java
+│   │   └── UnitState.java
+│   └── Units.java
+├── game
+│   ├── DefaultWaves.java
+│   ├── Difficulty.java
+│   ├── EventType.java
+│   ├── Gamemode.java
+│   ├── GlobalData.java
+│   ├── LoopControl.java
+│   ├── MusicControl.java
+│   ├── Objective.java
+│   ├── Objectives.java
+│   ├── Rules.java
+│   ├── Saves.java
+│   ├── Schematic.java
+│   ├── Schematics.java
+│   ├── SoundLoop.java
+│   ├── SpawnGroup.java
+│   ├── Stats.java
+│   ├── Team.java
+│   ├── Teams.java
+│   └── Tutorial.java
+├── graphics
+│   ├── BlockRenderer.java
+│   ├── Bloom.java
+│   ├── CacheLayer.java
+│   ├── Drawf.java
+│   ├── FloorRenderer.java
+│   ├── IndexedRenderer.java
+│   ├── Layer.java
+│   ├── MenuRenderer.java
+│   ├── MinimapRenderer.java
+│   ├── OverlayRenderer.java
+│   ├── Pal.java
+│   ├── Pixelator.java
+│   └── Shaders.java
+├── input
+│   ├── Binding.java
+│   ├── DesktopInput.java
+│   ├── InputHandler.java
+│   ├── MobileInput.java
+│   ├── PlaceMode.java
+│   └── PlaceUtils.java
+├── io
+│   ├── JsonIO.java
+│   ├── LegacyMapIO.java
+│   ├── MapIO.java
+│   ├── SaveFileReader.java
+│   ├── SaveIO.java
+│   ├── SaveMeta.java
+│   ├── SavePreviewLoader.java
+│   ├── SaveVersion.java
+│   ├── TypeIO.java
+│   └── versions
+│       ├── LegacyTypeTable.java
+│       ├── Save1.java
+│       ├── Save2.java
+│       └── Save3.java
+├── maps
+│   ├── filters
+│   │   ├── BlendFilter.java
+│   │   ├── ClearFilter.java
+│   │   ├── DistortFilter.java
+│   │   ├── FilterOption.java
+│   │   ├── GenerateFilter.java
+│   │   ├── MedianFilter.java
+│   │   ├── MirrorFilter.java
+│   │   ├── NoiseFilter.java
+│   │   ├── OreFilter.java
+│   │   ├── OreMedianFilter.java
+│   │   ├── RiverNoiseFilter.java
+│   │   ├── ScatterFilter.java
+│   │   └── TerrainFilter.java
+│   ├── generators
+│   │   ├── BasicGenerator.java
+│   │   ├── Generator.java
+│   │   ├── MapGenerator.java
+│   │   └── RandomGenerator.java
+│   ├── MapException.java
+│   ├── Map.java
+│   ├── MapPreviewLoader.java
+│   ├── Maps.java
+│   └── zonegen
+│       ├── DesertWastesGenerator.java
+│       └── OvergrowthGenerator.java
+├── mod
+│   ├── ContentParser.java
+│   ├── ModCrashHandler.java
+│   ├── Mod.java
+│   ├── ModLoadingSound.java
+│   └── Mods.java
+├── net
+│   ├── Administration.java
+│   ├── ArcNetImpl.java
+│   ├── CrashSender.java
+│   ├── Host.java
+│   ├── Interpolator.java
+│   ├── NetConnection.java
+│   ├── Net.java
+│   ├── NetworkIO.java
+│   ├── Packet.java
+│   ├── Packets.java
+│   ├── Registrator.java
+│   ├── Streamable.java
+│   └── ValidateException.java
+├── plugin
+│   └── Plugin.java
+├── type
+│   ├── Category.java
+│   ├── ContentType.java
+│   ├── Item.java
+│   ├── ItemStack.java
+│   ├── ItemType.java
+│   ├── Liquid.java
+│   ├── LiquidStack.java
+│   ├── Loadout.java
+│   ├── Mech.java
+│   ├── Publishable.java
+│   ├── StatusEffect.java
+│   ├── TypeID.java
+│   ├── UnitType.java
+│   ├── Weapon.java
+│   ├── WeatherEvent.java
+│   └── Zone.java
+├── ui
+│   ├── Bar.java
+│   ├── BorderImage.java
+│   ├── Cicon.java
+│   ├── ContentDisplay.java
+│   ├── dialogs
+│   │   ├── AboutDialog.java
+│   │   ├── AdminsDialog.java
+│   │   ├── BansDialog.java
+│   │   ├── ColorPickDialog.java
+│   │   ├── ContentInfoDialog.java
+│   │   ├── ControlsDialog.java
+│   │   ├── CustomGameDialog.java
+│   │   ├── CustomRulesDialog.java
+│   │   ├── DatabaseDialog.java
+│   │   ├── DeployDialog.java
+│   │   ├── DiscordDialog.java
+│   │   ├── FileChooser.java
+│   │   ├── FloatingDialog.java
+│   │   ├── GameOverDialog.java
+│   │   ├── HostDialog.java
+│   │   ├── JoinDialog.java
+│   │   ├── LanguageDialog.java
+│   │   ├── LoadDialog.java
+│   │   ├── LoadoutDialog.java
+│   │   ├── MapPlayDialog.java
+│   │   ├── MapsDialog.java
+│   │   ├── MinimapDialog.java
+│   │   ├── ModsDialog.java
+│   │   ├── PausedDialog.java
+│   │   ├── SaveDialog.java
+│   │   ├── SchematicsDialog.java
+│   │   ├── SettingsMenuDialog.java
+│   │   ├── TechTreeDialog.java
+│   │   ├── TraceDialog.java
+│   │   └── ZoneInfoDialog.java
+│   ├── Fonts.java
+│   ├── fragments
+│   │   ├── BlockConfigFragment.java
+│   │   ├── BlockInventoryFragment.java
+│   │   ├── ChatFragment.java
+│   │   ├── FadeInFragment.java
+│   │   ├── Fragment.java
+│   │   ├── HudFragment.java
+│   │   ├── LoadingFragment.java
+│   │   ├── MenuFragment.java
+│   │   ├── OverlayFragment.java
+│   │   ├── PlacementFragment.java
+│   │   └── PlayerListFragment.java
+│   ├── GridImage.java
+│   ├── IconSize.java
+│   ├── IntFormat.java
+│   ├── ItemDisplay.java
+│   ├── ItemImage.java
+│   ├── ItemsDisplay.java
+│   ├── layout
+│   │   ├── BranchTreeLayout.java
+│   │   ├── RadialTreeLayout.java
+│   │   └── TreeLayout.java
+│   ├── Links.java
+│   ├── LiquidDisplay.java
+│   ├── Minimap.java
+│   ├── MobileButton.java
+│   ├── MultiReqImage.java
+│   ├── ReqImage.java
+│   └── Styles.java
+├── Vars.java
+└── world
+    ├── Block.java
+    ├── blocks
+    │   ├── Attributes.java
+    │   ├── Autotiler.java
+    │   ├── BlockPart.java
+    │   ├── BuildBlock.java
+    │   ├── defense
+    │   │   ├── DeflectorWall.java
+    │   │   ├── Door.java
+    │   │   ├── ForceProjector.java
+    │   │   ├── MendProjector.java
+    │   │   ├── OverdriveProjector.java
+    │   │   ├── ShockMine.java
+    │   │   ├── SurgeWall.java
+    │   │   ├── turrets
+    │   │   │   ├── ArtilleryTurret.java
+    │   │   │   ├── BurstTurret.java
+    │   │   │   ├── ChargeTurret.java
+    │   │   │   ├── CooledTurret.java
+    │   │   │   ├── DoubleTurret.java
+    │   │   │   ├── ItemTurret.java
+    │   │   │   ├── LaserTurret.java
+    │   │   │   ├── LiquidTurret.java
+    │   │   │   ├── PowerTurret.java
+    │   │   │   └── Turret.java
+    │   │   └── Wall.java
+    │   ├── distribution
+    │   │   ├── ArmoredConveyor.java
+    │   │   ├── BufferedItemBridge.java
+    │   │   ├── Conduit.java
+    │   │   ├── Conveyor.java
+    │   │   ├── ExtendingItemBridge.java
+    │   │   ├── ItemBridge.java
+    │   │   ├── Junction.java
+    │   │   ├── LiquidBridge.java
+    │   │   ├── LiquidExtendingBridge.java
+    │   │   ├── LiquidJunction.java
+    │   │   ├── LiquidRouter.java
+    │   │   ├── LiquidTank.java
+    │   │   ├── MassDriver.java
+    │   │   ├── OverflowGate.java
+    │   │   ├── Router.java
+    │   │   └── Sorter.java
+    │   ├── DoubleOverlayFloor.java
+    │   ├── Floor.java
+    │   ├── ItemSelection.java
+    │   ├── LiquidBlock.java
+    │   ├── logic
+    │   │   ├── LogicBlock.java
+    │   │   └── MessageBlock.java
+    │   ├── OreBlock.java
+    │   ├── OverlayFloor.java
+    │   ├── power
+    │   │   ├── Battery.java
+    │   │   ├── BurnerGenerator.java
+    │   │   ├── ConditionalConsumePower.java
+    │   │   ├── DecayGenerator.java
+    │   │   ├── ImpactReactor.java
+    │   │   ├── ItemLiquidGenerator.java
+    │   │   ├── NuclearReactor.java
+    │   │   ├── PowerDistributor.java
+    │   │   ├── PowerGenerator.java
+    │   │   ├── PowerGraph.java
+    │   │   ├── PowerNode.java
+    │   │   ├── SingleTypeGenerator.java
+    │   │   ├── SolarGenerator.java
+    │   │   └── ThermalGenerator.java
+    │   ├── PowerBlock.java
+    │   ├── production
+    │   │   ├── Cultivator.java
+    │   │   ├── Drill.java
+    │   │   ├── Fracker.java
+    │   │   ├── GenericCrafter.java
+    │   │   ├── GenericSmelter.java
+    │   │   ├── Incinerator.java
+    │   │   ├── LiquidConverter.java
+    │   │   ├── Pump.java
+    │   │   ├── Separator.java
+    │   │   └── SolidPump.java
+    │   ├── RespawnBlock.java
+    │   ├── Rock.java
+    │   ├── sandbox
+    │   │   ├── ItemSource.java
+    │   │   ├── ItemVoid.java
+    │   │   ├── LiquidSource.java
+    │   │   ├── PowerSource.java
+    │   │   └── PowerVoid.java
+    │   ├── StaticWall.java
+    │   ├── storage
+    │   │   ├── CoreBlock.java
+    │   │   ├── LaunchPad.java
+    │   │   ├── StorageBlock.java
+    │   │   ├── Unloader.java
+    │   │   └── Vault.java
+    │   ├── TreeBlock.java
+    │   └── units
+    │       ├── CommandCenter.java
+    │       ├── MechPad.java
+    │       ├── RallyPoint.java
+    │       ├── RepairPoint.java
+    │       └── UnitFactory.java
+    ├── BlockStorage.java
+    ├── Build.java
+    ├── CachedTile.java
+    ├── consumers
+    │   ├── ConsumeItemFilter.java
+    │   ├── ConsumeItems.java
+    │   ├── Consume.java
+    │   ├── ConsumeLiquidBase.java
+    │   ├── ConsumeLiquidFilter.java
+    │   ├── ConsumeLiquid.java
+    │   ├── ConsumePower.java
+    │   ├── Consumers.java
+    │   └── ConsumeType.java
+    ├── DirectionalItemBuffer.java
+    ├── Edges.java
+    ├── ItemBuffer.java
+    ├── LegacyColorMapper.java
+    ├── meta
+    │   ├── Attribute.java
+    │   ├── BlockBars.java
+    │   ├── BlockFlag.java
+    │   ├── BlockGroup.java
+    │   ├── BlockStat.java
+    │   ├── BlockStats.java
+    │   ├── BuildVisibility.java
+    │   ├── PowerType.java
+    │   ├── Producers.java
+    │   ├── StatCategory.java
+    │   ├── StatUnit.java
+    │   ├── StatValue.java
+    │   └── values
+    │       ├── AmmoListValue.java
+    │       ├── BooleanValue.java
+    │       ├── BoosterListValue.java
+    │       ├── ItemFilterValue.java
+    │       ├── ItemListValue.java
+    │       ├── LiquidFilterValue.java
+    │       ├── LiquidValue.java
+    │       ├── NumberValue.java
+    │       └── StringValue.java
+    ├── modules
+    │   ├── BlockModule.java
+    │   ├── ConsumeModule.java
+    │   ├── ItemModule.java
+    │   ├── LiquidModule.java
+    │   └── PowerModule.java
+    ├── Pos.java
+    ├── producers
+    │   ├── ProduceItem.java
+    │   └── Produce.java
+    ├── StaticTree.java
+    ├── Tile.java
+    └── WorldContext.java
 </pre>
 </div>
 </div>
@@ -10661,8 +11217,8 @@ Defaults:
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: 2019-10-31</p>
-<p class="author">Author: Simon Woodbury-Forget</p>
-<p class="date">Created: 2019-11-09 周六 21:40</p>
+<p class="author">Author: Simon Woodbury-Forget Translater:PlasGensokyo</p>
+<p class="date">Created: 2019-11-23 周六 19:01</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
