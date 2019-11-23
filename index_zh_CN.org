@@ -13,7 +13,7 @@
 
 #+TODO: TODO UNTESTED | NEW DONE
 
-#+TEXINFO_HEADER: Modding documentation for Mindustry v100 (40)
+#+TEXINFO_HEADER: Modding documentation for Mindustry v100 (59)
 
 提出PR和issue建议请去作者 Github: https://github.com/SimonWoodburyForget/mindustry-modding
 
@@ -86,6 +86,8 @@
    :DESCRIPTION: 内容物目录结构
    :END:
 
+   *[新特性 [[#2d4270406]]]* /现支持 ~.hjson~ 后缀/
+   
    在你的mod的根目录你会有一个 ~content/~ 目录，这里是所有json文件存储的地方，各种type会有不一样的子文件夹，在这个文件夹里面有如下子文件夹:
 
    * ~content/items/~ 用来放 [[物品][物品]], 比如 ~copper~ 和 ~surge-alloy~;
@@ -368,6 +370,26 @@
     * <<Abstract>> 什么是 ~abstract~?关于此类你要知道的,只有这是Java一个修饰符,代表这个类不能直接被加载.如果你强行加载会出现 /"initialization exception"/ 诸如此类的错误;
     * 什么是 ~NullPointerException~?这是一个有一些类中的必须接口没有设置的信息;
     * <<bleeding-edge>> 什么是 ~bleeding-edge~? 这个是开发版的用Github上面的master分支构建.其中的新特性会在下一个正式版本中使用.
+
+** 更新日志
+   :PROPERTIES:
+   :DESCRIPTION: 更新日志
+   :END:
+   这一些是影响modAPI的在主分支下的各类更新.这一部分用时间排序,标注改变了什么东西,和一个去原文的链接.
+
+{% for log in change_log %}
+*** {{ log.hash }}
+    :PROPERTIES:
+    :UNNUMBERED: t
+    :DESCRIPTION: {{ log.message }}
+    :CUSTOM_ID: {{ log.hash }}
+    :END:
+    [ [[https://github.com/Anuken/Mindustry/commit/{{ log.hash }}][commit]] ={{ log.hash }}= {{ log.date_fmt() }} ]   {{ log.message }}
+
+    {% for note in log.notes %}
+       * {{ note }};
+    {% endfor %}
+{% endfor %}
 
 * 世界
   :PROPERTIES:
@@ -2095,7 +2117,7 @@
    
    这个类用来定义消耗的物品及数量.
 
-   *[新特性 [[968f3ace3]]]:* 一个 ~ItemStack~ 可以用这个格式 ~"item/amount"~.
+   *[新特性 [[#968f3ace3]]]:* 一个 ~ItemStack~ 可以用这个格式 ~"item/amount"~.
    
    一个 ~ItemStack~ 要包括以下接口:
    
@@ -2142,7 +2164,7 @@
 
    这个类用来定义消耗的液体及数量.
 
-   *[新特性 [[968f3ace3]]]:* 一个 ~LiquidStack~ 可以用这个格式 ~"liquid/amount"~.
+   *[新特性 [[#968f3ace3]]]:* 一个 ~LiquidStack~ 可以用这个格式 ~"liquid/amount"~.
 
     一个 ~LiquidStack~ 要有一下接口:
 	
@@ -2796,23 +2818,6 @@
   :PROPERTIES:
   :DESCRIPTION: ...
   :END:
-
-** 更新日志
-   :PROPERTIES:
-   :DESCRIPTION: 日志
-   :END:
-   这个是Mindustry的主分支的更新日志.每个大版本用标签分开,比如 [[v100]] 大版本一下用hash值区分, 比如 [[968f3ace3]], 日志都带有世界. 这一些变更会在下一个大版本应用.
-
-*** v100
-**** 968f3ace3
-     :PROPERTIES:
-     :DESCRIPTION: 更好的mod解析
-     :END:
-     [2019-11-21 Thu]
-     * ~"liquid/amount"~ 可以和 ~{ "liquid": "xxxx", "amount": xx }~ 在 [[液体组][液体组]] 中干同样的事;
-     * ~"item/amount"~ 可以和 ~{ "item": "xxxx", "amount": xx }~ 在 [[物品组][物品组]] 中干同样的事;
-     * ~mod.json~ 支持hjson;
-     * ~mod.js~ 可以取代 ~mod.json~.
 
 ** Mindustry源码结构
 
