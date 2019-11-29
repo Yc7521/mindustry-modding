@@ -13,7 +13,7 @@
 
 #+TODO: TODO UNTESTED | NEW DONE
 
-#+TEXINFO_HEADER: Modding documentation for Mindustry v100 (59)
+#+TEXINFO_HEADER: Modding documentation for Mindustry v100 (81)
 
 提出PR和issue建议请去作者 Github: https://github.com/SimonWoodburyForget/mindustry-modding
 
@@ -39,25 +39,67 @@
 
    #+BEGIN_SRC fundamental
    mod名
-   ├── bundles
-   ├── schematics
-   ├── content
-   │   ├── blocks
-   │   └── items
    ├── mod.json
+   ├── content
+   │   ├── items
+   │   ├── blocks
+   │   ├── mechs
+   │   ├── liquids
+   │   ├── units
+   │   └── zones
+   ├── bundles
    ├── sounds
    ├── maps
+   ├── schematics
+   ├── sprites-override
    └── sprites
    #+END_SRC
 
+   /(只有 =mod.json= 是必须)/
+   
    每个平台都有不一样的数据存储目录，存储目录的mods文件夹就是加载mod的地方:
    * Linux: =~/.local/share/Mindustry/mods/=
    * Steam: =steam/steamapps/common/Mindustry/mods/=
    * Windows: =%appdata%/Mindustry/mods/=
+   * Apple: =~/Library/Application Support/Mindustry/mods/=
 
    *Note;* 你的文件名必须全小写而且不能有空格:
    * 正确: ~my-custom-block.json~
    * 不正确: ~My Custom Block.json~
+   
+** Hjson
+   :PROPERTIES:
+   :DESCRIPTION: 内容物解析器
+   :END:
+
+   *[new v99]* /在 v99 加入,但在 v100 工作/
+
+   Mindustry 使用 [[https://hjson.org/][Hjson]], 一个JSON的分支.所以标准JSON格式也可以使用以，下是额外的东西:
+
+   #+BEGIN_SRC yaml
+   # single line comment
+
+   // 单行备注
+
+   /* 多行
+   备注 */
+
+   key1: single line string
+
+   key2: '''
+         multiline
+         string
+         '''
+
+   key3: [ value 1
+           value 2
+           value 3 ]
+
+   key4: { key1: string
+           key2: 0 }
+   #+END_SRC
+
+   *[new #2d4270406]* 文件后缀可以是 =.json= 或 =.hjson= .
    
 ** ~mod.json~
    :PROPERTIES:
@@ -66,21 +108,22 @@
 
    在mod的根目录，你必须要有 ~mod.json~ 这个文件来定义你的mod的基础数据。
 
-   #+BEGIN_SRC json
-   {
-       "name": "Mod名字",
-       "author": "作者名字",
-       "description": "这是一段介绍。",
-       "version": "1.0",
-       "dependencies": [ ]
-   }
+   #+BEGIN_SRC yaml
+   name: Mod Name
+   author: Yourself
+   description: This is a useless description.
+   version: "1.0"
+   minGameVersion: "100.3"
+   dependencies: [ ]
    #+END_SRC
+
 
    说明:
    * ~name~ 会用来引用你的mod，慎重地去命名来避免和其他mod的名字重复
    * ~description~ 是mod加载界面会显示的文本，尽量的写简洁扼要一点。
    * ~dependencies~ 是非必须的;如果你想知道更多，去看[[前置][前置]] 部分.
-
+   * *[new #2c61fcdfa]* ~minGameVersion~ is the minimum build version of the game.
+   
 ** 内容
    :PROPERTIES:
    :DESCRIPTION: 内容物目录结构
@@ -179,6 +222,8 @@
 
    你需要知道的另外一个事情是，材质都会通过一个叫 /anti-aliasing filters/ 的东西，这个东西会让贴图在游戏中显示的有少许不一样. -- 这个过滤器会给炮塔贴图加一个特殊的黑色边,所有你在制作贴图的时候必须注意,留一圈透明的边框,比如: [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/blocks/turrets/ripple.png][Ripple]]
 
+   *[new #a5fbc0756]* to override ingame content sprites, you can simply put them in ~sprites-override/~.
+   
 ** 音效
    :PROPERTIES:
    :DESCRIPTION: 音效文件描述和放置位置
@@ -315,42 +360,11 @@
    * Portuguese  ~bundle_pt.properties~
    * Russian ~bundle_ru.properties~
    * Danish ~bundle_sv.properties~
-   * Turkish ? ~bundle_tk.properties~
-   * Turkish ? ~bundle_tr.properties~
+   * Turkman ~bundle_tk.properties~
+   * Turkish ~bundle_tr.properties~
    * Ukrainian ~bundle_uk_UA.properties~
    * Chinese CN ~bundle_zh_CN.properties~
    * Chinese TW ~bundle_zh_TW.properties~
-
-** Hjson
-   :PROPERTIES:
-   :DESCRIPTION: 内容物解析语法
-   :END:
-
-   *[v99 新特性]* /currently partially implimented, ~content/~ 中使用Hjson./
-
-   现在Mindustry不是用的JSON格式, /(但是JSON格式依旧可以被解析)/ 它解析一个JSON的分支 [[https://hjson.org/][Hjson]].
-
-   #+BEGIN_SRC fundamental
-   {
-       # 备注
-
-       // 备注
-
-       /* 备
-          注 */
-
-       key1: single line string
-
-       key2: '''
-             multiline
-             string
-             '''
-
-       key3: [ value 1
-               value 2
-               value 3 ]
-   }
-   #+END_SRC
 
 ** 蓝图
 
@@ -408,7 +422,7 @@
   | priority            | TargetPriority  |         base | 当方块看到敌人时瞄准的优先配置. |
   | configurable        | boolean         |              | 这个方块是否能被打开GUI配置. |
   | consumesTap         | boolean         |              | 点击这个方块是否触发事件. |
-  | drawLiquidLight     | boolean         |         true | *[新特性 v99 (268)]* 在其中的液体是否发光. |
+  | drawLiquidLight     | boolean         |         true | 在其中的液体是否发光. |
   | posConfig           | boolean         |              | 配置这个方块是否需要点击. |
   | targetable          | boolean         |         true | 单位是否会攻击这个方块. |
   | canOverdrive        | boolean         |         true | 这个方块是否能超频. |
@@ -2047,12 +2061,12 @@
 ** 建筑菜单可见性
 
    有以下选项:
-   * ~hidden~ 隐藏
-   * ~shown~ 显示
-   * ~debugOnly~ debug模式显示
-   * ~sandboxOnly~ 沙盒模式显示
-   * ~campaignOnly~ 战役模式显示
-   * ~lightingOnly~ 黑夜模式显示*[新特性 v99 (268)]*
+   * =hidden= 隐藏
+   * =shown= 显示
+   * =debugOnly= debug模式显示
+   * =sandboxOnly= 沙盒模式显示
+   * =campaignOnly= 战役模式显示
+   * =lightingOnly= 黑夜模式显示
    
 ** 方块组别
 
@@ -2077,8 +2091,8 @@
    | 接口          | 类型     | 默认值 | 备注      |
    |----------------+----------+---------+------------|
    |                |          |         | <10>       |
-   | color          | [[颜色][颜色]]    |         | 分类器显示色 |
-   | type           | [[物品][物品]] |         | ~resource~ 或是 ~material~ ; resource不能进核心，反之 |
+   | color          | [[颜色][颜色]]    |   black      | 分类器显示色 |
+   | type           | [[物品][物品]] | resource        | ~resource~ 或是 ~material~ ; resource不能进核心，反之 |
    | explosiveness  | float    | ~0~     | 爆炸性. |
    | flammability   | float    | ~0~     | 可燃性，大于 0.3 就可以用于燃烧发电机. |
    | radioactivity  | float    |         | 辐射性，0=是没有, 1=切尔诺贝利的辐射性 |
@@ -2126,7 +2140,7 @@
    |               |              |     <r> | <10>       |
    | color         | [[颜色][颜色]]        |         | *[必须]* 液体颜色 |
    | barColor      | [[颜色][颜色]]        |         | /[非必须]/ UI中颜色. |
-   | lightColor    | [[颜色][颜色]]        |         | *[new v99 (268)]* 发光颜色.改变光度不在这里. |
+   | lightColor    | [[颜色][颜色]]        |         | 发光颜色.改变光度不在这里. |
    | flammability  | float        |         | 可燃性，从0 到 1; 0 是完全不可燃, 向上增长会被热源点燃. |
    | temperature   | float        |     0.5 | 温度，0.5 是室温, 0 是很冷, 1 是像融化了一样热 |
    | heatCapacity  | float        |     0.5 | 比热容，用于冷却; 水是 0.4 |
