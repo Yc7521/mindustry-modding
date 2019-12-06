@@ -422,6 +422,7 @@
   | priority            | TargetPriority  |         base | 当方块看到敌人时瞄准的优先配置. |
   | configurable        | boolean         |              | 这个方块是否能被打开GUI配置. |
   | consumesTap         | boolean         |              | 点击这个方块是否触发事件. |
+  | sync                | boolean         |              | *[new a087df077 Dec 4] 是否sync这个方块. |
   | drawLiquidLight     | boolean         |         true | 在其中的液体是否发光. |
   | posConfig           | boolean         |              | 配置这个方块是否需要点击. |
   | targetable          | boolean         |         true | 单位是否会攻击这个方块. |
