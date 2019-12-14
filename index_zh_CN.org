@@ -13,7 +13,7 @@
 
 #+TODO: TODO UNTESTED | NEW DONE
 
-#+TEXINFO_HEADER: Modding documentation for Mindustry v100 (81)
+#+TEXINFO_HEADER: Modding documentation for Mindustry v100 (144)
 
 提出PR和issue建议请去作者 Github: https://github.com/SimonWoodburyForget/mindustry-modding
 
@@ -47,9 +47,10 @@
    │   ├── liquids
    │   ├── units
    │   └── zones
+   ├── maps
    ├── bundles
    ├── sounds
-   ├── maps
+   ├── scripts
    ├── schematics
    ├── sprites-override
    └── sprites
@@ -372,6 +373,117 @@
 
    /现在,蓝图只能用于自定义发射图./
 
+** NEW Scripts
+   :PROPERTIES:
+   :END:
+
+   *[new #268f3cc3c]*
+
+   Scripting in Mindustry is done with the [[https://github.com/mozilla/rhino][Rhino JavaScript]] runtime. Scripts may be added to your mod by putting them in ~scripts/~. Using the built-in ~extendContent~ function, you can extend existing Java types from JS, using /allowed classes/ which are injected into your namespace.
+
+   For example:
+
+   * ~scripts/silo.js~
+
+     #+BEGIN_SRC js
+       // create a simple shockwave effect
+       const siloLaunchEffect = newEffect(20, e => {
+
+           // color goes from white to light gray
+           Draw.color(Color.white, Color.lightGray, e.fin());
+
+           // line thickness goes from 3 to 0
+           Lines.stroke(e.fout() * 3);
+
+           // draw a circle whose radius goes from 0 to 100
+           Lines.circle(e.x, e.y, e.fin() * 100); 
+       });
+
+       // create the block type
+       const silo = extendContent(Block, "scatter-silo", {
+
+           // override the method to build configuration
+           buildConfiguration(tile, table) {
+               table.addImageButton(
+                   Icon.arrowUpSmall, 
+                   Styles.clearTransi,
+
+                   // configure the tile to signal that it has been 
+                   // pressed (this sync on client to server)
+                   run(() => tile.configure(0))
+               ).size(50);
+           },
+
+           // override configure event
+           configured(tile, value) {
+
+               // make sure this silo has the items it needs to fire
+               if (tile.entity.cons.valid()) {
+
+                   // make this effect occur at the tile location
+                   Effects.effect(siloLaunchEffect, tile);
+
+                   // create 10 bullets at this tile's location with
+                   // random rotation and velocity/lifetime
+                   for (var i = 0; i < 10; i++) {
+                       Calls.createBullet(
+                           Bullets.flakExplosive, 
+                           tile.getTeam(), 
+                           tile.drawx(), 
+                           tile.drawy(), 
+                           Mathf.random(360), 
+                           Mathf.random(0.5, 1.0), 
+                           Mathf.random(0.2, 1.0)
+                       );
+                   }
+
+                   // triggering consumption makes it use up the 
+                   // items it requires
+                   tile.entity.cons.trigger();
+               }
+           }
+       });
+     #+END_SRC
+
+   * ~content/blocks/scatter-silo.hjson~
+
+     #+BEGIN_SRC yaml
+       localizedName: "Scatter Silo" 
+       description: "A player-activatable block that scatters bullets everywhere upon use."
+
+       category: turret
+       size: 2
+
+       update: true
+       solid: true
+       hasItems: true
+       configurable: true
+
+       requirements: [ "graphite/75"
+                       "titanium/30" ]
+
+       consumes: { items: { items: [ "scrap/10" ] } }
+     #+END_SRC
+
+*** extendContent
+
+    Function to extend content which takes three arguments.
+
+    1) ~classType~ the type of class you want to extend;
+    2) ~name~ the name of your type;
+    3) ~params~ the object which will be used to extend the type.
+
+*** newEffect
+
+    Function which takes two arguments. 
+
+    1) ~lifetime~
+    2) ~renderer~
+
+*** print
+
+    Function which prints text to stdout with the name of your mod.
+
 ** FAQ
     :PROPERTIES:
     :DESCRIPTION: 一些问题和答案
@@ -416,6 +528,7 @@
   | size                | int             |            1 | 方块大小 |
   | expanded            | boolean         |        false | 是否超范围渲染. |
   | timers              | int             |            0 | 计时器最大记录时间. |
+  | cacheLayer         | [[CacheLayer][CacheLayer]]     |       normal | Cache layer. Only used for 'cached' rendering. |
   | fillesTile          | true            |              | 特殊的接口; 如果是false, [[地板][地板]] 将会在这个方块上面渲染. |
   | alwaysReplace       | boolean         |        false | 这个方块是否自动自动填充空间 |
   | group               | [[方块组别][方块组别]]      |         none | 除非 ~canReplace~ 被重写, 同一组别的方块可以呼吸替换. |
@@ -2536,10 +2649,11 @@
    | collides           | boolean      |    true | 是否开启碰撞. |
    | keepVelocity       | boolean      |    true | 是否定速巡航. |
    | fragBullets        | int          |       9 | 破片弹数           |
-   | fragVelocityMin    | float        |     0.2 | 破片弹最小初速度           |
-   | fragVelocityMax    | float        |       1 | 破片弹最大初速度           |
-   | fragBullet         | [[子弹类][子弹类]]   |    null |  破片弹          |
-   | splashDamageRadius | float        |      -1 | 范围伤害范围.负数来取消范围伤害 |
+   | fragVelocityMin    | float        |     0.2 | Minimum random multiplier. |
+   | fragVelocityMax    | float        |       1 | Maximum random multiplier. |
+   | fragBullet         | [[子弹类][子弹类]]   |    null | The frag bullet that will be created, may be a string, an object or null. If field is null, no frag bullet is created. |
+   | splashDamage       | float        |       0 | Area of effect damage when the bullet despawns or hits a target. Damage is calculated with [[https://en.wikipedia.org/wiki/Linear_interpolation][linear interpolation]], also known as lerp. |
+   | splashDamageRadius | float        |      -1 | Use a negative value to disable splash damage. ~splashDamageRadius~ is a value used in the equation ~lerp(1 - distance / radius, 1, 0.4)~ which is a multiplier for ~splashDamage~. |
    | incendAmount       | int          |       0 | 火焰数量           |
    | incendSpread       | float        |       8 | 火焰蔓延速度           |
    | incendChance       | float        |       1 | 产生火焰几率          |
@@ -2744,16 +2858,26 @@
    * 炸弹:
      * ~bombExplosive~ ~bombIncendiary~ ~bombOil~
 
+** CacheLayer
+   :PROPERTIES:
+   :DESCRIPTION: cached rendering flags
+   :END:
+
+   Flags used by for cache render:
+   + ~normal~ normal layer;
+   + ~walls~ walls layer;
+   + ~water~ water layer, adding tile water shaders, and giving wave reflections;
+   + ~tar~ tar layer, adding tar shaders, making it darker and giving it some bubble reflections;
+
 ** 基础单位
 
    以下是基础单位类:
 
    * ~FlyingUnit~ --飞行单位
-     * ~Revenant~ -- 战机
-     * ~BaseDrone~ -- 基础无人机
-       * ~BuilderDrone~ -- 建筑机
-       * ~MinerDrone~ -- 矿机
-       * ~RepairDrone~ -- 修理机
+     * ~HoverUnit~
+     * ~BuilderDrone~
+     * ~MinerDrone~
+     * ~RepairDrone~
    * ~GroundUnit~ -- 地面单位
 
 ** 特效
