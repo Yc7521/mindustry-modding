@@ -13,7 +13,7 @@
 
 #+TODO: TODO UNTESTED | NEW DONE
 
-#+TEXINFO_HEADER: Modding documentation for Mindustry v100 (144)
+#+TEXINFO_HEADER: Modding documentation for Mindustry v102 (a4e820f90)
 
 提出PR和issue建议请去作者 Github: https://github.com/SimonWoodburyForget/mindustry-modding
 
@@ -26,7 +26,7 @@
 
   Mindustry的mod是一些内容物的整合，你可以用内置的种类，改变其中的数据来加载你的物品，也可以重写原版的内容
 
-  你可以添加自己的贴图和音效，打包上传并分享自己的mod，mod在所有平台上都是同一格式。
+  你可以添加自己的贴图和音效，打包上传并分享自己的mod，mod在所有平台上都是同一格式。如果你确实想用 [[GitHub][GitHub]], 你需要按照Anuken的格式布置: https://github.com/Anuken/ExampleMod
 
   你也可以添加蓝图到mod里面
   
@@ -123,7 +123,7 @@
    * ~name~ 会用来引用你的mod，慎重地去命名来避免和其他mod的名字重复
    * ~description~ 是mod加载界面会显示的文本，尽量的写简洁扼要一点。
    * ~dependencies~ 是非必须的;如果你想知道更多，去看[[前置][前置]] 部分.
-   * *[new #2c61fcdfa]* ~minGameVersion~ is the minimum build version of the game.
+   * *[new #2c61fcdfa]* ~minGameVersion~ 是主游戏最小支持版本.
    
 ** 内容
    :PROPERTIES:
@@ -143,6 +143,10 @@
 
    这个非常重要，这种结构是游戏本体加载mod所读取和结构。里面的各个文件名也很重要，比如在 ~content/blocks/<name>.json~ 目录的 ~name~ 将被当作数据节读取
 
+   [ *new* #62b2b25ee474fcf44aa86832c1373b38e16d703d ] 在 ~content/<content-type>/*~ 目录下的文件可以放在子目录里面, 来帮助你分类, 例如:
+
+   * ~content/items/metals/iron.hjson~, 这个创建了 ~iron~ 的物品.
+   
    内容文件夹的json文件开头应该像这样:
 
    #+BEGIN_SRC json
@@ -223,7 +227,7 @@
 
    你需要知道的另外一个事情是，材质都会通过一个叫 /anti-aliasing filters/ 的东西，这个东西会让贴图在游戏中显示的有少许不一样. -- 这个过滤器会给炮塔贴图加一个特殊的黑色边,所有你在制作贴图的时候必须注意,留一圈透明的边框,比如: [[https://raw.githubusercontent.com/Anuken/Mindustry/master/core/assets-raw/sprites/blocks/turrets/ripple.png][Ripple]]
 
-   *[new #a5fbc0756]* to override ingame content sprites, you can simply put them in ~sprites-override/~.
+   *[new #a5fbc0756]* 要覆盖原版材质, 你可以把材质放 ~sprites-override/~.
    
 ** 音效
    :PROPERTIES:
@@ -373,58 +377,58 @@
 
    /现在,蓝图只能用于自定义发射图./
 
-** NEW Scripts
+** 脚本
    :PROPERTIES:
    :END:
 
    *[new #268f3cc3c]*
 
-   Scripting in Mindustry is done with the [[https://github.com/mozilla/rhino][Rhino JavaScript]] runtime. Scripts may be added to your mod by putting them in ~scripts/~. Using the built-in ~extendContent~ function, you can extend existing Java types from JS, using /allowed classes/ which are injected into your namespace.
+   Mindustry的脚本依赖 [[https://github.com/mozilla/rhino][Rhino JavaScript]]. 你可以把脚本放在 ~scripts/~ 文件夹里面加入你的mod. 使用内建的 ~extendContent~ 方法, 你可以用JS继承Java类, 用 /allowed classes/ 来加入你的命名空间.
 
-   For example:
+   比如:
 
    * ~scripts/silo.js~
 
      #+BEGIN_SRC js
-       // create a simple shockwave effect
+       // 创建一个冲击波特效
        const siloLaunchEffect = newEffect(20, e => {
 
-           // color goes from white to light gray
+           // 颜色从白到灰渐变
            Draw.color(Color.white, Color.lightGray, e.fin());
 
-           // line thickness goes from 3 to 0
+           // 厚度从 3 到 0
            Lines.stroke(e.fout() * 3);
 
-           // draw a circle whose radius goes from 0 to 100
+           // 渲染一个圆，半径 0 到 100
            Lines.circle(e.x, e.y, e.fin() * 100); 
        });
 
-       // create the block type
+       // 创建方块
        const silo = extendContent(Block, "scatter-silo", {
 
-           // override the method to build configuration
+           // 覆盖建筑设置
            buildConfiguration(tile, table) {
                table.addImageButton(
                    Icon.arrowUpSmall, 
                    Styles.clearTransi,
 
-                   // configure the tile to signal that it has been 
-                   // pressed (this sync on client to server)
+                   // 设置此方块的信号
+                   // 点击 (此步骤同步客户端至服务端)
                    run(() => tile.configure(0))
                ).size(50);
            },
 
-           // override configure event
+           // 重写控制事件
            configured(tile, value) {
 
-               // make sure this silo has the items it needs to fire
+               // 确保弹药充足
                if (tile.entity.cons.valid()) {
 
-                   // make this effect occur at the tile location
+                   // 使弹药在此方块处发射
                    Effects.effect(siloLaunchEffect, tile);
 
-                   // create 10 bullets at this tile's location with
-                   // random rotation and velocity/lifetime
+                   // 创建10个子弹
+                   // 随机角度，速度和存在时间
                    for (var i = 0; i < 10; i++) {
                        Calls.createBullet(
                            Bullets.flakExplosive, 
@@ -437,8 +441,7 @@
                        );
                    }
 
-                   // triggering consumption makes it use up the 
-                   // items it requires
+                   // 消耗物品
                    tile.entity.cons.trigger();
                }
            }
@@ -464,25 +467,35 @@
 
        consumes: { items: { items: [ "scrap/10" ] } }
      #+END_SRC
+	 
+** GitHub
 
-*** extendContent
+   你做了一些mod, 并且想发布它, 或者箱多人协力完成mod, 你可以选择使用 [[https://github.com/][GitHub]]. 如果你完全不知道什么是 Git (或 GitHub) , 你可以用 [[https://desktop.github.com/][GitHub Desktop]], 或者使用其他你喜欢的工具. 
 
-    Function to extend content which takes three arguments.
+   你只需要知道怎么在Github创建仓库, 进度的变更都在本地目录, 你需要将其推送到Github上. 如果你的项目在Github上, 这里有三个方法分享它:
 
-    1) ~classType~ the type of class you want to extend;
-    2) ~name~ the name of your type;
-    3) ~params~ the object which will be used to extend the type.
+   * 用仓库名, 比如 ~Anuken/ExampleMod~, 这样可以在游戏内拉取, 与下载;
+   * 用压缩包, 比如 ~https://github.com/Anuken/ExampleMod/archive/master.zip~, 这里下载一个压缩包, 然后放在游戏mod目录 (无需解压);
+   * 加上 ~mindustry-mod~ 这个tag在你的仓库, 这可以让 ~#mods频道~ 的Discord机器人识别并添加至mod列表.
+   
+*** 拓展内容 extendContent
 
-*** newEffect
+    增加内容物方法的方法.
 
-    Function which takes two arguments. 
+    1) ~classType~ 是要继承的类;
+    2) ~name~ 新建类的名字;
+    3) ~params~ 新建类的方法.
+
+*** 新特效 newEffect
+
+    增加特效的方法. 
 
     1) ~lifetime~
     2) ~renderer~
 
 *** print
 
-    Function which prints text to stdout with the name of your mod.
+    聊天框输出方法.
 
 ** FAQ
     :PROPERTIES:
@@ -520,6 +533,7 @@
   | solidifes           | boolean         |              | 这个物体是否能变成固体. |
   | rotate              | boolean         |              | 这个物体是否能旋转 |
   | breakable           | boolean         |              | 这个方块是否能通过右键拆除 |
+  | rebuildable         | boolean         |         true | 这个能不能被建筑机重建 (比如 ~地雷~ 和 ~核电站~) |
   | placeableOn         | boolean         |         true | 这个 [[地板][地板]] 是否能被放上方块. |
   | insulated           | boolean         |        false | 这个方块是否绝缘. |
   | health              | int             |           -1 | 方块血量 |
@@ -697,7 +711,10 @@
     | blendGroup        | [[方块][方块]]        |    this | 这个地板不会拓展渲染到什么方块上. |
     | updateEffect      | [[特效][特效]]       |    none | 地板更新时的特效. |
     | attributes        | [[属性][属性]]   |         | 地板对各种机器的效率倍数. |
-
+    | oreDefault        | boolean      |   false | 是否自然生成矿物在此地被上面.                               |
+    | oreScale          | float        |      24 | 生成规模, for example ~thorium~ is ~25.38~, ~copper~ is ~23.47~. |
+    | oreThreshold      | float        |   0.828 | 生存几率, for example ~thorium~ is ~0.882~, ~copper~ is ~0.81~.  |
+	
     备注:
     * 这个类需要一个贴图显示在地图编辑器中.
 
@@ -793,7 +810,7 @@
    :DESCRIPTION: 加工物品的方块
    :END:
 *** 普通加工厂
-    继承 [[方块][方块]]，英文:GenericCratfer
+    继承 [[方块][方块]]，英文:GenericCrafter
 
     | 接口              | 类型        | 默认值 | 备注 |
     |--------------------+-------------+--------+--|
@@ -843,12 +860,8 @@
     |                  |           |         | <10>       |
     | results          | [[物品组][物品组]] |         | *[必须]*输出物品及概率 |
     | craftTime        | float     |         |            |
-    | spinnerRadius    | float     |     2.5 |  转子范围          |
-    | spinnerLength    | float     |       1 |   转子长         |
-    | spinnerThickness | float     |       1 |    转子宽        |
     | spinnerSpeed     | float     |       2 |   转子速度         |
     | color            | [[颜色][颜色]]     |  858585 | 工作颜色           |
-    | liquidRegion     | int       |         |    液体区域        |
 
     默认值:
     | 接口      | 默认值 |
@@ -860,7 +873,8 @@
     | hasLiquids |    true |
 
     额外贴图:
-    * ~<name>-liquid~
+    * ~<name>-liquid~ 
+    * ~<name>-spinner~
 	
 ** 沙盒
    :PROPERTIES:
@@ -927,6 +941,18 @@
     | liquidCapacity |     100 |
     | configurable   |    true |
     | outputsLiquid  |    true |
+	
+*** 液体黑洞
+
+    继承 [[方块][方块]]，英文：LiquidVoid
+
+    默认值:
+
+    | field      | default |
+    |------------+---------|
+    | hasLiquids | true    |
+    | solid      | true    |
+    | update     | true    |
 
 ** 逻辑
 *** 消息块
@@ -988,7 +1014,7 @@
     | lightningLength | int   |      17 | 闪电长度 |
 
 *** 门
-    继承 [[墙][墙]]，英文:Wall
+    继承 [[墙][墙]]，英文:Door
 
     | 接口   | 类型   |   default | 备注 |
     |---------+--------+-----------+-|
@@ -1109,6 +1135,8 @@
     | solid        |   false |
     | targetable   |   false |
     | layer        | overlay |
+	| rebuildable  | false   |
+	
 ** 炮塔s
    :PROPERTIES:
    :DESCRIPTION: 射东西的方块
@@ -1277,12 +1305,13 @@
     |-----------+---------|
     | targetAir | false   |
 
-*** 破片炮塔
+*** 齐射炮塔
     继承 [[物品炮塔][物品炮塔]] -- 射速很快的炮塔.英文：BurstTurret
 
     | 接口        | 类型  | 默认值 | 备注 |
     |--------------+-------+--------+-|
-    | burstSpacing | float |       5 | 爆裂半径 |
+    | burstSpacing | float |       5 | 连射间隔 |
+	
 *** 能量炮塔
     继承 [[冷却炮塔][冷却炮塔]] -- 用电射击的炮.英文：PowerTurret
 
@@ -1360,6 +1389,19 @@
 *** 装甲传送带
     继承 [[传送带][传送带]]  -不接受两边来物从传送带，英文：ArmoredConveyor
 
+*** 路由器
+    继承 [[方块][方块]]，英文：Router
+
+    默认值:
+    | field        | default        |
+    |--------------+----------------|
+    | solid        | true           |
+    | update       | true           |
+    | hasItems     | true           |
+    | itemCapacity | 1              |
+    | group        | transportation |
+    | uploadable   | false          |
+	
 *** 连接器
     继承 [[方块][方块]]，英文：Junction
 
@@ -1449,27 +1491,13 @@
 
 *** 溢流门
     继承 [[方块][方块]]，英文：OverflowGate
+	
+    溢流门和反向溢流门的类. 
 
-    | 接口 | 类型  | 默认值 | 
-    |-------+-------+---------|
-    | speed | float | 1       |
-
-    默认值:
-
-    | 接口      | 默认值        |
-    |------------+----------------|
-    | hasItems   | true           |
-    | soild      | true           |
-    | update     | true           |
-    | group      | transportation |
-    | unloadable | false          |
-
-*** 路由器
-    继承 [[方块][方块]]，英文：Router
-
-    | 接口 | 类型  | 默认值 | 
-    |-------+-------+---------|
-    | speed | float | 8       |
+    | 接口  | 类型    | 默认值 | 备注                                                                        |
+    |--------+---------+---------+------------------------------------------------------------------------------|
+    | speed  | float   | 1       | 物品通过时间 |
+    | invert | boolean | false   | ~true~ 来反向                                                  |
 
     默认值:
 
@@ -1480,7 +1508,7 @@
     | update     | true           |
     | group      | transportation |
     | unloadable | false          |
-	| itemCapacity | 1            |
+
 *** 质量驱动器
     继承 [[方块][方块]] -- 用 ~driverBolt~ 来传输物品.英文：MassDriver
 
@@ -1690,12 +1718,13 @@
     | baseExplosiveness | 5       |
 
 **** 地热发电机
-    继承 [[发电机][发电机]] -- 用热 [[属性][属性]] 的地板发电. 输出公式是 ~powerProduction * heat~, 和 ~heat~ 必须大于 ~0.01~.英文：ThermalGenerator
+    继承 [[发电机][发电机]] -- 用 [[属性][属性]] 的地板发电. 输出公式是 ~powerProduction * 属性~, 和 ~属性~ 必须大于 ~0.01~.英文：ThermalGenerator
 
     | 接口          | 类型   | 默认值 | 备注      |
     |----------------+--------+---------+------------|
     |                |        |         | <10>       |
     | generateEffect | [[特效][特效]] | none    |   发电特效         |
+	| attribute      | [[属性][属性]] | heat    | 提升效率的属性. |
 
 **** 物品液体发电机
     继承 [[发电机][发电机]] -- 基础发电机.英文：ItemLiquidGenerator
@@ -1767,6 +1796,7 @@
     | liquidCapacity | 30      |
     | hasItems       | true    |
     | hasLiquids     | true    |
+    | rebuildable    | false   |
 
     额外贴图:
     * ~<name>-center~ 顶部
@@ -2315,6 +2345,7 @@
    | lengthRand     | float      |       0 | 子弹出现离武器口距离 |
    | shotDelay      | float      |       0 | 射击延迟 |
    | ignoreRotation | boolean    |   false | 是否在射击时忽略转动. |
+   | targetDistance | float      |       1 | 如果 ~turnCursor~ 是 ~false~ 在一个玩家机甲, 这个武器会瞄准多远. |
    | shootSound     | [[音效][音效]]      |     pew |     射击音效       |
    
    贴图:
@@ -2383,6 +2414,9 @@
    | canHeal            | boolean |   false | 可治疗 |
    | compoundSpeed      | float   |       5 | 混合速度，影响最大速度 |
    | compoundSpeedBoost | float   |       5 | 混合加速度 |
+   | drawCell           | boolean |    true | 是否渲染队伍灯            |
+   | drawItems          | boolean |    true | 是否渲染所持物品                    |
+   | drawLight          | boolean |    true | 是否渲染引擎 |
    | weaponOffsetY      | float   |       5 | 武器偏置距离 |
    | engineOffset       | float   |       5 | 引擎偏置距离 |
    | engineSize         | float   |     2.5 | 引擎大小 |
@@ -2458,7 +2492,7 @@
 
 ** 状态
 
-   /不要和 [[特效][特效]] 搞混/,状态会给一个实体额外属性.现在 *你不可以添加自定义的状态*. -- 状态有时会充当效果的两个条件. 比如一个 ~wet~ 的单位获得了 ~shocked~ 此时它会掉20血.
+   /不要和 [[特效][特效]] 搞混/,状态会给一个实体额外属性. -- 状态有时会充当效果的两个条件. 比如一个 ~wet~ 的单位获得了 ~shocked~ 此时它会掉20血.
 
    | 接口            | 类型   | 默认值 |   备注         |
    |------------------+--------+---------+------------|
@@ -2638,6 +2672,7 @@
    | ammoMultiplier     | float        |       2 | 一个物品/液体可以当多少子弹用 |
    | reloadMultiplier   | float        |       1 | 装弹速度倍率 |
    | recoil             | float        |         | 额外后坐力 |
+   | killShooter        | float        |         | 是否自爆兵|
    | splashDamage       | float        |       0 | 范围伤害           |
    | knockback          | float        |         | 被击中单位减速. |
    | hitTiles           | boolean      |    true | 这个子弹是否打方块. |
@@ -2649,11 +2684,11 @@
    | collides           | boolean      |    true | 是否开启碰撞. |
    | keepVelocity       | boolean      |    true | 是否定速巡航. |
    | fragBullets        | int          |       9 | 破片弹数           |
-   | fragVelocityMin    | float        |     0.2 | Minimum random multiplier. |
-   | fragVelocityMax    | float        |       1 | Maximum random multiplier. |
-   | fragBullet         | [[子弹类][子弹类]]   |    null | The frag bullet that will be created, may be a string, an object or null. If field is null, no frag bullet is created. |
-   | splashDamage       | float        |       0 | Area of effect damage when the bullet despawns or hits a target. Damage is calculated with [[https://en.wikipedia.org/wiki/Linear_interpolation][linear interpolation]], also known as lerp. |
-   | splashDamageRadius | float        |      -1 | Use a negative value to disable splash damage. ~splashDamageRadius~ is a value used in the equation ~lerp(1 - distance / radius, 1, 0.4)~ which is a multiplier for ~splashDamage~. |
+   | fragVelocityMin    | float        |     0.2 | 破片最小速度倍率. |
+   | fragVelocityMax    | float        |       1 | 破片最大速度倍率. |
+   | fragBullet         | [[子弹类][子弹类]]   |    null | 破片弹，null来取消生成. |
+   | splashDamage       | float        |       0 | 范围伤害. 用 [[https://en.wikipedia.org/wiki/Linear_interpolation][linear interpolation]] 计算, 也是熟悉的 lerp 函数. |
+   | splashDamageRadius | float        |      -1 | 范围伤害范围. ~splashDamageRadius~ 这个值与上一个配合作用于函数 ~lerp(1 - distance / radius, 1, 0.4)~ 是 ~splashDamage~ 的倍率. |
    | incendAmount       | int          |       0 | 火焰数量           |
    | incendSpread       | float        |       8 | 火焰蔓延速度           |
    | incendChance       | float        |       1 | 产生火焰几率          |
@@ -2898,15 +2933,17 @@
    * ~fireSmoke~/火焰烟雾/ ~steam~/蒸汽/ ~fireballsmoke~/火球烟雾/ ~ballfire~/获取/ ~freezing~/冰冻/ ~melting~/融化/ ~wet~/湿水/ ~oily~/沾油/ ~overdriven~/超频/ ~dropItem~/丢物品/ ~shockwave~/冲击波/
    * ~bigShockwave~/大冲击波/ ~nuclearShockwave~/核冲击波/ ~explosion~/爆炸/ ~blockExplosion~/方块爆炸/
        ~blockExplosionSmoke~/方块爆炸烟雾/ ~shootSmall~/小型射击/ ~shootHeal~/射击治疗弹/ ~shootSmallSmoke~/小型射击烟雾/ ~shootBig~/大型射击/ ~shootBig2~/大型射击2/ ~shootBigSmoke~/大型射击烟雾/
-   * ~shootBigSmoke2~/大型射击烟雾2/ ~shootSmallFlame~/学习射击火焰/ ~shootPyraFlame~/硫射击火焰/ ~shootLiquid~/射击液体/ ~shellEjectSmall~/小型喷射/ ~shellEjectMedium~/中型喷射/
+   * ~shootBigSmoke2~/大型射击烟雾2/ ~shootSmallFlame~/小型射击火焰/ ~shootPyraFlame~/硫射击火焰/ ~shootLiquid~/射击液体/ ~shellEjectSmall~/小型喷射/ ~shellEjectMedium~/中型喷射/
    * ~shellEjectBig~/大型喷射/ ~lancerLaserShoot~/蓝瑟射击/ ~lancerLaserShootSmoke~/蓝瑟射击烟雾/ ~lancerLaserCharge~/蓝瑟充能/
        ~lancerLaserChargeBegin~/蓝瑟开始充能/ ~lightningCharge~/电弧充能/ ~lightningShoot~/电弧射击/
    * ~unitSpawn~/单位生成/ ~spawnShockwave~/生成冲击波/ ~magmasmoke~/岩浆烟雾/ ~impactShockwave~/冲击堆冲击波/
        ~impactcloud~/冲击堆云/ ~impactsmoke~/冲击堆烟雾/ ~dynamicExplosion~/集束炸弹/ ~padlaunch~/发射台发射/ ~commandSend~/命令发送/ ~coreLand~/核心着陆/
 ** 瞄准优先度
 
-   * ~base~
-   * ~turret~
+   A higher ordinal means a higher priority. Higher priority blocks will always get targeted over those of lower priority, regardless of distance.
+
+   1. ~base~
+   2. ~turret~
 
 
 * 元素
