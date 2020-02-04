@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh_CN" xml:lang="zh_CN">
 <head>
-<!-- 2019-11-29 周五 19:33 -->
+<!-- 2020-01-30 周四 10:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mindustry 模组开发文档</title>
@@ -253,77 +253,80 @@ for the JavaScript code in this tag.
 <h2>目录</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd76ddf8">1. 概览</a>
+<li><a href="#org28fe9bf">1. 概览</a>
 <ul>
-<li><a href="#org7375181">1.1. 文件结构</a></li>
-<li><a href="#orgffeb28e">1.2. Hjson</a></li>
-<li><a href="#orgbb979cc">1.3. <code>mod.json</code></a></li>
-<li><a href="#orgba62d74">1.4. 内容</a></li>
-<li><a href="#org51e1cff">1.5. 种类</a></li>
-<li><a href="#org68144f7">1.6. 科技树</a></li>
-<li><a href="#org649810b">1.7. 贴图</a></li>
-<li><a href="#org5980de3">1.8. 音效</a></li>
-<li><a href="#org36fcec7">1.9. 前置</a></li>
-<li><a href="#orgd57e66e">1.10. 语言包</a></li>
-<li><a href="#org2897412">1.11. 蓝图</a></li>
-<li><a href="#orgcc86cad">1.12. FAQ</a></li>
+<li><a href="#orgc08e875">1.1. 文件结构</a></li>
+<li><a href="#orgfda44a9">1.2. Hjson</a></li>
+<li><a href="#org160de57">1.3. <code>mod.json</code></a></li>
+<li><a href="#org778eb08">1.4. 内容</a></li>
+<li><a href="#org99ced19">1.5. 种类</a></li>
+<li><a href="#org21cd982">1.6. 科技树</a></li>
+<li><a href="#org613d256">1.7. 贴图</a></li>
+<li><a href="#org1c03a2d">1.8. 音效</a></li>
+<li><a href="#orga9d1f66">1.9. 前置</a></li>
+<li><a href="#orgf910d83">1.10. 语言包</a></li>
+<li><a href="#orga3930da">1.11. 蓝图</a></li>
+<li><a href="#org2fbe755">1.12. 脚本</a></li>
+<li><a href="#orgc06ce6d">1.13. GitHub</a></li>
+<li><a href="#org1193053">1.14. FAQ</a></li>
 </ul>
 </li>
-<li><a href="#org36c9d5c">2. 世界</a>
+<li><a href="#orge6e6f5e">2. 世界</a>
 <ul>
-<li><a href="#orgdf716e1">2.1. 方块</a></li>
-<li><a href="#org0b10559">2.2. 消耗器</a></li>
-<li><a href="#org6d63c2a">2.3. 方块存储</a></li>
-<li><a href="#org81f4b81">2.4. 环境</a></li>
-<li><a href="#org2408220">2.5. 工厂</a></li>
-<li><a href="#orgf3f3fa0">2.6. 沙盒</a></li>
-<li><a href="#org5860e37">2.7. 逻辑</a></li>
-<li><a href="#org4eeb6bc">2.8. 防御</a></li>
-<li><a href="#org845924b">2.9. 炮塔s</a></li>
-<li><a href="#org0e243f0">2.10. 运输</a></li>
-<li><a href="#org6036283">2.11. 液体方块M</a></li>
-<li><a href="#org8832510">2.12. 能量</a></li>
-<li><a href="#orgc2036e2">2.13. 生产工厂</a></li>
-<li><a href="#org22ef350">2.14. 单位方块</a></li>
-<li><a href="#org1abcb7d">2.15. 存储</a></li>
-<li><a href="#orgd867e16">2.16. 属性</a></li>
-<li><a href="#org9ee6ff7">2.17. 属性</a></li>
-<li><a href="#org20ce3de">2.18. 建筑菜单可见性</a></li>
-<li><a href="#org56116cf">2.19. 方块组别</a></li>
+<li><a href="#orge65d2dd">2.1. 方块</a></li>
+<li><a href="#org1de1603">2.2. 消耗器</a></li>
+<li><a href="#org3de5fec">2.3. 方块存储</a></li>
+<li><a href="#org264e0df">2.4. 环境</a></li>
+<li><a href="#orge0a02f9">2.5. 工厂</a></li>
+<li><a href="#orgf4dbbe3">2.6. 沙盒</a></li>
+<li><a href="#orgb602e27">2.7. 逻辑</a></li>
+<li><a href="#org54ed275">2.8. 防御</a></li>
+<li><a href="#orga30a28f">2.9. 炮塔s</a></li>
+<li><a href="#org504503d">2.10. 运输</a></li>
+<li><a href="#org7422d83">2.11. 液体方块M</a></li>
+<li><a href="#orgc85eaec">2.12. 能量</a></li>
+<li><a href="#orgebdd9b3">2.13. 生产工厂</a></li>
+<li><a href="#orgae2b552">2.14. 单位方块</a></li>
+<li><a href="#org5f1582b">2.15. 存储</a></li>
+<li><a href="#orgbc1f0a0">2.16. 属性</a></li>
+<li><a href="#org1d87e3a">2.17. 属性</a></li>
+<li><a href="#orgee939ae">2.18. 建筑菜单可见性</a></li>
+<li><a href="#org79759a8">2.19. 方块组别</a></li>
 </ul>
 </li>
-<li><a href="#org8a4998b">3. 种类</a>
+<li><a href="#orgf551bf5">3. 种类</a>
 <ul>
-<li><a href="#org6ea992d">3.1. 物品</a></li>
-<li><a href="#orgd06e0dd">3.2. 物品组</a></li>
-<li><a href="#org553f7bf">3.3. 液体</a></li>
-<li><a href="#orgcd0194a">3.4. 液体组</a></li>
-<li><a href="#org5c9447f">3.5. 武器</a></li>
-<li><a href="#org1a9a4a1">3.6. 单位类</a></li>
-<li><a href="#org3bd572a">3.7. 玩家机甲</a></li>
-<li><a href="#org99a0eb7">3.8. 内容菜单类型</a></li>
-<li><a href="#org8ac998d">3.9. 区域</a></li>
-<li><a href="#org1f42bfd">3.10. 状态</a></li>
+<li><a href="#org52e37a0">3.1. 物品</a></li>
+<li><a href="#org92084a5">3.2. 物品组</a></li>
+<li><a href="#org525e49d">3.3. 液体</a></li>
+<li><a href="#org272062c">3.4. 液体组</a></li>
+<li><a href="#org943b0aa">3.5. 武器</a></li>
+<li><a href="#org4e1ee75">3.6. 单位类</a></li>
+<li><a href="#org7ef113b">3.7. 玩家机甲</a></li>
+<li><a href="#org07a24c4">3.8. 内容菜单类型</a></li>
+<li><a href="#org310718a">3.9. 区域</a></li>
+<li><a href="#orgd091d38">3.10. 状态</a></li>
 </ul>
 </li>
-<li><a href="#org47bace8">4. 图像</a>
+<li><a href="#orgeaada6e">4. 图像</a>
 <ul>
-<li><a href="#org6d6fd97">4.1. 渲染层</a></li>
-<li><a href="#org8cbcedb">4.2. 颜色</a></li>
+<li><a href="#org8edf900">4.1. 渲染层</a></li>
+<li><a href="#org3fb884b">4.2. 颜色</a></li>
 </ul>
 </li>
-<li><a href="#org48495a9">5. 实体</a>
+<li><a href="#orgffec7bc">5. 实体</a>
 <ul>
-<li><a href="#orgccf8907">5.1. 子弹类</a></li>
-<li><a href="#org8b3cc2d">5.2. 基础单位</a></li>
-<li><a href="#orgb203426">5.3. 特效</a></li>
-<li><a href="#org80a4592">5.4. 瞄准优先度</a></li>
+<li><a href="#org38f1646">5.1. 子弹类</a></li>
+<li><a href="#org681e37f">5.2. CacheLayer</a></li>
+<li><a href="#orged395ed">5.3. 基础单位</a></li>
+<li><a href="#org6f74f92">5.4. 特效</a></li>
+<li><a href="#org6aaa2f6">5.5. 瞄准优先度</a></li>
 </ul>
 </li>
-<li><a href="#org132afd8">6. 元素</a></li>
-<li><a href="#org1cef0c5">7. 其他</a>
+<li><a href="#orgd46c2d7">6. 元素</a></li>
+<li><a href="#orgf98ab56">7. 其他</a>
 <ul>
-<li><a href="#orgf0aa0fe">7.1. Mindustry源码结构</a></li>
+<li><a href="#orge8d1666">7.1. Mindustry源码结构</a></li>
 </ul>
 </li>
 </ul>
@@ -333,15 +336,15 @@ for the JavaScript code in this tag.
 提出PR和issue建议请去作者 Github: <a href="https://github.com/SimonWoodburyForget/mindustry-modding">https://github.com/SimonWoodburyForget/mindustry-modding</a>
 </p>
 
-<div id="outline-container-orgd76ddf8" class="outline-2">
-<h2 id="orgd76ddf8"><span class="section-number-2">1</span> 概览</h2>
+<div id="outline-container-org28fe9bf" class="outline-2">
+<h2 id="org28fe9bf"><span class="section-number-2">1</span> 概览</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Mindustry的mod是一些内容物的整合，你可以用内置的种类，改变其中的数据来加载你的物品，也可以重写原版的内容
 </p>
 
 <p>
-你可以添加自己的贴图和音效，打包上传并分享自己的mod，mod在所有平台上都是同一格式。
+你可以添加自己的贴图和音效，打包上传并分享自己的mod，mod在所有平台上都是同一格式。如果你确实想用 <a href="#orgc06ce6d">GitHub</a>, 你需要按照Anuken的格式布置: <a href="https://github.com/Anuken/ExampleMod">https://github.com/Anuken/ExampleMod</a>
 </p>
 
 <p>
@@ -349,8 +352,8 @@ Mindustry的mod是一些内容物的整合，你可以用内置的种类，改�
 </p>
 </div>
 
-<div id="outline-container-org7375181" class="outline-3">
-<h3 id="org7375181"><span class="section-number-3">1.1</span> 文件结构</h3>
+<div id="outline-container-orgc08e875" class="outline-3">
+<h3 id="orgc08e875"><span class="section-number-3">1.1</span> 文件结构</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 你的mod文件结构必须类似于如下结构:
@@ -366,9 +369,10 @@ Mindustry的mod是一些内容物的整合，你可以用内置的种类，改�
 │   ├── liquids
 │   ├── units
 │   └── zones
+├── maps
 ├── bundles
 ├── sounds
-├── maps
+├── scripts
 ├── schematics
 ├── sprites-override
 └── sprites
@@ -399,8 +403,8 @@ Mindustry的mod是一些内容物的整合，你可以用内置的种类，改�
 </div>
 </div>
 
-<div id="outline-container-orgffeb28e" class="outline-3">
-<h3 id="orgffeb28e"><span class="section-number-3">1.2</span> Hjson</h3>
+<div id="outline-container-orgfda44a9" class="outline-3">
+<h3 id="orgfda44a9"><span class="section-number-3">1.2</span> Hjson</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 <b>[new v99]</b> <i>在 v99 加入,但在 v100 工作</i>
@@ -440,8 +444,8 @@ key4: { key1: string
 </div>
 </div>
 
-<div id="outline-container-orgbb979cc" class="outline-3">
-<h3 id="orgbb979cc"><span class="section-number-3">1.3</span> <code>mod.json</code></h3>
+<div id="outline-container-org160de57" class="outline-3">
+<h3 id="org160de57"><span class="section-number-3">1.3</span> <code>mod.json</code></h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 在mod的根目录，你必须要有 <code>mod.json</code> 这个文件来定义你的mod的基础数据。
@@ -464,14 +468,14 @@ dependencies: [ ]
 <ul class="org-ul">
 <li><code>name</code> 会用来引用你的mod，慎重地去命名来避免和其他mod的名字重复</li>
 <li><code>description</code> 是mod加载界面会显示的文本，尽量的写简洁扼要一点。</li>
-<li><code>dependencies</code> 是非必须的;如果你想知道更多，去看<a href="#org36fcec7">前置</a> 部分.</li>
-<li><b>[new #2c61fcdfa]</b> <code>minGameVersion</code> is the minimum build version of the game.</li>
+<li><code>dependencies</code> 是非必须的;如果你想知道更多，去看<a href="#orga9d1f66">前置</a> 部分.</li>
+<li><b>[new #2c61fcdfa]</b> <code>minGameVersion</code> 是主游戏最小支持版本.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgba62d74" class="outline-3">
-<h3 id="orgba62d74"><span class="section-number-3">1.4</span> 内容</h3>
+<div id="outline-container-org778eb08" class="outline-3">
+<h3 id="org778eb08"><span class="section-number-3">1.4</span> 内容</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 <b>[新特性 2d4270406]</b> <i>现支持 <code>.hjson</code> 后缀</i>
@@ -482,17 +486,25 @@ dependencies: [ ]
 </p>
 
 <ul class="org-ul">
-<li><code>content/items/</code> 用来放 <a href="#org6ea992d">物品</a>, 比如 <code>copper</code> 和 <code>surge-alloy</code>;</li>
-<li><code>content/blocks/</code> 用来放 <a href="#orgdf716e1">方块</a>, 比如炮塔和地板;</li>
-<li><code>content/mechs/</code> 用来放 <a href="#org3bd572a">玩家机甲</a>, 比如 <code>tau</code> 和 <code>glaive</code>;</li>
-<li><code>content/liquids/</code> 用来放 <a href="#org553f7bf">液体</a>, 比如 <code>water</code> 和 <code>slag</code>;</li>
-<li><code>content/units/</code> 用来放飞行或地面 <a href="#org1a9a4a1">单位类</a>, 比如 <code>reaper</code> 和 <code>dagger</code>;</li>
-<li><code>content/zones/</code> 用来放 <a href="#org8ac998d">区域</a>, 战役地图的配置文件.</li>
+<li><code>content/items/</code> 用来放 <a href="#org52e37a0">物品</a>, 比如 <code>copper</code> 和 <code>surge-alloy</code>;</li>
+<li><code>content/blocks/</code> 用来放 <a href="#orge65d2dd">方块</a>, 比如炮塔和地板;</li>
+<li><code>content/mechs/</code> 用来放 <a href="#org7ef113b">玩家机甲</a>, 比如 <code>tau</code> 和 <code>glaive</code>;</li>
+<li><code>content/liquids/</code> 用来放 <a href="#org525e49d">液体</a>, 比如 <code>water</code> 和 <code>slag</code>;</li>
+<li><code>content/units/</code> 用来放飞行或地面 <a href="#org4e1ee75">单位类</a>, 比如 <code>reaper</code> 和 <code>dagger</code>;</li>
+<li><code>content/zones/</code> 用来放 <a href="#org310718a">区域</a>, 战役地图的配置文件.</li>
 </ul>
 
 <p>
 这个非常重要，这种结构是游戏本体加载mod所读取和结构。里面的各个文件名也很重要，比如在 <code>content/blocks/&lt;name&gt;.json</code> 目录的 <code>name</code> 将被当作数据节读取
 </p>
+
+<p>
+[ <b>new</b> #62b2b25ee474fcf44aa86832c1373b38e16d703d ] 在 <code>content/&lt;content-type&gt;/*</code> 目录下的文件可以放在子目录里面, 来帮助你分类, 例如:
+</p>
+
+<ul class="org-ul">
+<li><code>content/items/metals/iron.hjson</code>, 这个创建了 <code>iron</code> 的物品.</li>
+</ul>
 
 <p>
 内容文件夹的json文件开头应该像这样:
@@ -551,8 +563,8 @@ dependencies: [ ]
 </div>
 </div>
 
-<div id="outline-container-org51e1cff" class="outline-3">
-<h3 id="org51e1cff"><span class="section-number-3">1.5</span> 种类</h3>
+<div id="outline-container-org99ced19" class="outline-3">
+<h3 id="org99ced19"><span class="section-number-3">1.5</span> 种类</h3>
 <div class="outline-text-3" id="text-1-5">
 <p>
 种类有很多接口,其中最重要的是 <code>种类</code>;这是一个内容分析器分析的关键节点,用来决定这个内容物的种类. <i>一个 <code>Router</code> 不能是 <code>Turret</code> 类</i>, 因为它们完全不一样.
@@ -589,8 +601,8 @@ dependencies: [ ]
 </div>
 </div>
 
-<div id="outline-container-org68144f7" class="outline-3">
-<h3 id="org68144f7"><span class="section-number-3">1.6</span> 科技树</h3>
+<div id="outline-container-org21cd982" class="outline-3">
+<h3 id="org21cd982"><span class="section-number-3">1.6</span> 科技树</h3>
 <div class="outline-text-3" id="text-1-6">
 <p>
 像 <code>type</code> 一样的类，是 <code>research</code> 类，这个类也是根类.
@@ -613,8 +625,8 @@ dependencies: [ ]
 </div>
 </div>
 
-<div id="outline-container-org649810b" class="outline-3">
-<h3 id="org649810b"><span class="section-number-3">1.7</span> 贴图</h3>
+<div id="outline-container-org613d256" class="outline-3">
+<h3 id="org613d256"><span class="section-number-3">1.7</span> 贴图</h3>
 <div class="outline-text-3" id="text-1-7">
 <p>
 制作贴图所需的软件, 是一个支持透明编辑的软件 <i>(比如: PS).</i> 方块的贴图大小是 <code>32 * 大小</code>, 所以一个 <code>2x2</code> 的方块将会需要 <code>64x64</code> 的贴图.贴图必须是 <code>.png</code> 格式，要32位深度.
@@ -644,13 +656,13 @@ dependencies: [ ]
 </p>
 
 <p>
-<b>[new #a5fbc0756]</b> to override ingame content sprites, you can simply put them in <code>sprites-override/</code>.
+<b>[new #a5fbc0756]</b> 要覆盖原版材质, 你可以把材质放 <code>sprites-override/</code>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5980de3" class="outline-3">
-<h3 id="org5980de3"><span class="section-number-3">1.8</span> 音效</h3>
+<div id="outline-container-org1c03a2d" class="outline-3">
+<h3 id="org1c03a2d"><span class="section-number-3">1.8</span> 音效</h3>
 <div class="outline-text-3" id="text-1-8">
 <p>
 自定义的音效文件可以放在 <code>sounds/</code> 文件夹中来添加. 只要在音效文件夹里，就没有问题.各个音效需要两种格式:
@@ -715,8 +727,8 @@ dependencies: [ ]
 </div>
 </div>
 
-<div id="outline-container-org36fcec7" class="outline-3">
-<h3 id="org36fcec7"><span class="section-number-3">1.9</span> 前置</h3>
+<div id="outline-container-orga9d1f66" class="outline-3">
+<h3 id="orga9d1f66"><span class="section-number-3">1.9</span> 前置</h3>
 <div class="outline-text-3" id="text-1-9">
 <p>
 你可以添加依赖mod在 <code>mod.json</code> 里面:
@@ -748,8 +760,8 @@ dependencies: [ ]
 </div>
 </div>
 
-<div id="outline-container-orgd57e66e" class="outline-3">
-<h3 id="orgd57e66e"><span class="section-number-3">1.10</span> 语言包</h3>
+<div id="outline-container-orgf910d83" class="outline-3">
+<h3 id="orgf910d83"><span class="section-number-3">1.10</span> 语言包</h3>
 <div class="outline-text-3" id="text-1-10">
 <p>
 一个mod非必须的部分.语言包主要用来翻译你的内容物,但是这不是你不使用英文的理由.语言包手一个放在 <code>bundles/</code> 文件夹里面的文件,它必须像这样命名 <code>bundle_ru.properties</code> (俄语).
@@ -831,11 +843,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org2897412" class="outline-3">
-<h3 id="org2897412"><span class="section-number-3">1.11</span> 蓝图</h3>
+<div id="outline-container-orga3930da" class="outline-3">
+<h3 id="orga3930da"><span class="section-number-3">1.11</span> 蓝图</h3>
 <div class="outline-text-3" id="text-1-11">
 <p>
-需要 <code>Schematic</code> 接口的类，不能替换原版发射图 <i>(详情请看 <a href="#org8ac998d">区域</a> 部分)</i> 一个base64文字串,或者一个以 <code>.msch</code> 结尾的文件放在 <code>schematics/</code> 子目录里.
+需要 <code>Schematic</code> 接口的类，不能替换原版发射图 <i>(详情请看 <a href="#org310718a">区域</a> 部分)</i> 一个base64文字串,或者一个以 <code>.msch</code> 结尾的文件放在 <code>schematics/</code> 子目录里.
 </p>
 
 <p>
@@ -844,31 +856,194 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-orgcc86cad" class="outline-3">
-<h3 id="orgcc86cad"><span class="section-number-3">1.12</span> FAQ</h3>
+<div id="outline-container-org2fbe755" class="outline-3">
+<h3 id="org2fbe755"><span class="section-number-3">1.12</span> 脚本</h3>
 <div class="outline-text-3" id="text-1-12">
+<p>
+<b>[new #268f3cc3c]</b>
+</p>
+
+<p>
+Mindustry的脚本依赖 <a href="https://github.com/mozilla/rhino">Rhino JavaScript</a>. 你可以把脚本放在 <code>scripts/</code> 文件夹里面加入你的mod. 使用内建的 <code>extendContent</code> 方法, 你可以用JS继承Java类, 用 <i>allowed classes</i> 来加入你的命名空间.
+</p>
+
+<p>
+比如:
+</p>
+
+<ul class="org-ul">
+<li><p>
+<code>scripts/silo.js</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-js">// 创建一个冲击波特效
+const siloLaunchEffect = newEffect(20, e =&gt; {
+
+    // 颜色从白到灰渐变
+    Draw.color(Color.white, Color.lightGray, e.fin());
+
+    // 厚度从 3 到 0
+    Lines.stroke(e.fout() * 3);
+
+    // 渲染一个圆，半径 0 到 100
+    Lines.circle(e.x, e.y, e.fin() * 100); 
+});
+
+// 创建方块
+const silo = extendContent(Block, "scatter-silo", {
+
+    // 覆盖建筑设置
+    buildConfiguration(tile, table) {
+	table.addImageButton(
+	    Icon.arrowUpSmall, 
+	    Styles.clearTransi,
+
+	    // 设置此方块的信号
+	    // 点击 (此步骤同步客户端至服务端)
+	    run(() =&gt; tile.configure(0))
+	).size(50);
+    },
+
+    // 重写控制事件
+    configured(tile, value) {
+
+	// 确保弹药充足
+	if (tile.entity.cons.valid()) {
+
+	    // 使弹药在此方块处发射
+	    Effects.effect(siloLaunchEffect, tile);
+
+	    // 创建10个子弹
+	    // 随机角度，速度和存在时间
+	    for (var i = 0; i &lt; 10; i++) {
+		Calls.createBullet(
+		    Bullets.flakExplosive, 
+		    tile.getTeam(), 
+		    tile.drawx(), 
+		    tile.drawy(), 
+		    Mathf.random(360), 
+		    Mathf.random(0.5, 1.0), 
+		    Mathf.random(0.2, 1.0)
+		);
+	    }
+
+	    // 消耗物品
+	    tile.entity.cons.trigger();
+	}
+    }
+});
+</pre>
+</div></li>
+
+<li><p>
+<code>content/blocks/scatter-silo.hjson</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml">localizedName: "Scatter Silo" 
+description: "A player-activatable block that scatters bullets everywhere upon use."
+
+category: turret
+size: 2
+
+update: true
+solid: true
+hasItems: true
+configurable: true
+
+requirements: [ "graphite/75"
+		"titanium/30" ]
+
+consumes: { items: { items: [ "scrap/10" ] } }
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc06ce6d" class="outline-3">
+<h3 id="orgc06ce6d"><span class="section-number-3">1.13</span> GitHub</h3>
+<div class="outline-text-3" id="text-1-13">
+<p>
+你做了一些mod, 并且想发布它, 或者箱多人协力完成mod, 你可以选择使用 <a href="https://github.com/">GitHub</a>. 如果你完全不知道什么是 Git (或 GitHub) , 你可以用 <a href="https://desktop.github.com/">GitHub Desktop</a>, 或者使用其他你喜欢的工具. 
+</p>
+
+<p>
+你只需要知道怎么在Github创建仓库, 进度的变更都在本地目录, 你需要将其推送到Github上. 如果你的项目在Github上, 这里有三个方法分享它:
+</p>
+
+<ul class="org-ul">
+<li>用仓库名, 比如 <code>Anuken/ExampleMod</code>, 这样可以在游戏内拉取, 与下载;</li>
+<li>用压缩包, 比如 <code>https://github.com/Anuken/ExampleMod/archive/master.zip</code>, 这里下载一个压缩包, 然后放在游戏mod目录 (无需解压);</li>
+<li>加上 <code>mindustry-mod</code> 这个tag在你的仓库, 这可以让 <code>#mods频道</code> 的Discord机器人识别并添加至mod列表.</li>
+</ul>
+</div>
+
+<div id="outline-container-org0960231" class="outline-4">
+<h4 id="org0960231"><span class="section-number-4">1.13.1</span> 拓展内容 extendContent</h4>
+<div class="outline-text-4" id="text-1-13-1">
+<p>
+增加内容物方法的方法.
+</p>
+
+<ol class="org-ol">
+<li><code>classType</code> 是要继承的类;</li>
+<li><code>name</code> 新建类的名字;</li>
+<li><code>params</code> 新建类的方法.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orga305b16" class="outline-4">
+<h4 id="orga305b16"><span class="section-number-4">1.13.2</span> 新特效 newEffect</h4>
+<div class="outline-text-4" id="text-1-13-2">
+<p>
+增加特效的方法. 
+</p>
+
+<ol class="org-ol">
+<li><code>lifetime</code></li>
+<li><code>renderer</code></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org795eb64" class="outline-4">
+<h4 id="org795eb64"><span class="section-number-4">1.13.3</span> print</h4>
+<div class="outline-text-4" id="text-1-13-3">
+<p>
+聊天框输出方法.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1193053" class="outline-3">
+<h3 id="org1193053"><span class="section-number-3">1.14</span> FAQ</h3>
+<div class="outline-text-3" id="text-1-14">
 <ul class="org-ul">
 <li><code>time</code> 在游戏中用 <code>ticks</code> 计算;</li>
 <li><code>ticks</code> <i>有时叫 <code>帧数</code>,</i> 是 60/1 秒;</li>
 <li><code>range</code> 和其他距离都是 1/10 格;</li>
 <li>计算子弹范围需要用 <code>lifetime</code> 和 <code>speed</code> ，公式是 <code>lifetime * speed = range</code>;</li>
-<li><a id="org49d12bb"></a> 什么是 <code>abstract</code>?关于此类你要知道的,只有这是Java一个修饰符,代表这个类不能直接被加载.如果你强行加载会出现 <i>"initialization exception"</i> 诸如此类的错误;</li>
+<li><a id="org293e1a3"></a> 什么是 <code>abstract</code>?关于此类你要知道的,只有这是Java一个修饰符,代表这个类不能直接被加载.如果你强行加载会出现 <i>"initialization exception"</i> 诸如此类的错误;</li>
 <li>什么是 <code>NullPointerException</code>?这是一个有一些类中的必须接口没有设置的信息;</li>
-<li><a id="orgbe85e37"></a> 什么是 <code>bleeding-edge</code>? 这个是开发版的用Github上面的master分支构建.其中的新特性会在下一个正式版本中使用.</li>
+<li><a id="org482d799"></a> 什么是 <code>bleeding-edge</code>? 这个是开发版的用Github上面的master分支构建.其中的新特性会在下一个正式版本中使用.</li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org36c9d5c" class="outline-2">
-<h2 id="org36c9d5c"><span class="section-number-2">2</span> 世界</h2>
+<div id="outline-container-orge6e6f5e" class="outline-2">
+<h2 id="orge6e6f5e"><span class="section-number-2">2</span> 世界</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orgdf716e1" class="outline-3">
-<h3 id="orgdf716e1"><span class="section-number-3">2.1</span> 方块</h3>
+<div id="outline-container-orge65d2dd" class="outline-3">
+<h3 id="orge65d2dd"><span class="section-number-3">2.1</span> 方块</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
-继承 <a href="#org6d63c2a">方块存储</a>，英文:Block
+继承 <a href="#org3de5fec">方块存储</a>，英文:Block
 </p>
 
 <p>
@@ -946,10 +1121,17 @@ Notes:
 </tr>
 
 <tr>
+<td class="org-left">rebuildable</td>
+<td class="org-left">boolean</td>
+<td class="org-right">true</td>
+<td class="org-left">这个能不能被建筑机重建 (比如 <code>地雷</code> 和 <code>核电站</code>)</td>
+</tr>
+
+<tr>
 <td class="org-left">placeableOn</td>
 <td class="org-left">boolean</td>
 <td class="org-right">true</td>
-<td class="org-left">这个 <a href="#orge9d3f0e">地板</a> 是否能被放上方块.</td>
+<td class="org-left">这个 <a href="#org7271ac7">地板</a> 是否能被放上方块.</td>
 </tr>
 
 <tr>
@@ -1002,10 +1184,17 @@ Notes:
 </tr>
 
 <tr>
+<td class="org-left">cacheLayer</td>
+<td class="org-left"><a href="#org681e37f">CacheLayer</a></td>
+<td class="org-right">normal</td>
+<td class="org-left">Cache layer. Only used for 'cached' rendering.</td>
+</tr>
+
+<tr>
 <td class="org-left">fillesTile</td>
 <td class="org-left">true</td>
 <td class="org-right">&#xa0;</td>
-<td class="org-left">特殊的接口; 如果是false, <a href="#orge9d3f0e">地板</a> 将会在这个方块上面渲染.</td>
+<td class="org-left">特殊的接口; 如果是false, <a href="#org7271ac7">地板</a> 将会在这个方块上面渲染.</td>
 </tr>
 
 <tr>
@@ -1017,7 +1206,7 @@ Notes:
 
 <tr>
 <td class="org-left">group</td>
-<td class="org-left"><a href="#org56116cf">方块组别</a></td>
+<td class="org-left"><a href="#org79759a8">方块组别</a></td>
 <td class="org-right">none</td>
 <td class="org-left">除非 <code>canReplace</code> 被重写, 同一组别的方块可以呼吸替换.</td>
 </tr>
@@ -1041,6 +1230,13 @@ Notes:
 <td class="org-left">boolean</td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">点击这个方块是否触发事件.</td>
+</tr>
+
+<tr>
+<td class="org-left">sync</td>
+<td class="org-left">boolean</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-left">*[new a087df077 Dec 4] 是否sync这个方块.</td>
 </tr>
 
 <tr>
@@ -1073,7 +1269,7 @@ Notes:
 
 <tr>
 <td class="org-left">outlineColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">404049</td>
 <td class="org-left">图标描边颜色.</td>
 </tr>
@@ -1094,14 +1290,14 @@ Notes:
 
 <tr>
 <td class="org-left">breakSound</td>
-<td class="org-left"><a href="#org5980de3">音效</a></td>
+<td class="org-left"><a href="#org1c03a2d">音效</a></td>
 <td class="org-right">boom</td>
 <td class="org-left">破坏方块时播放的音效.</td>
 </tr>
 
 <tr>
 <td class="org-left">activeSound</td>
-<td class="org-left"><a href="#org5980de3">音效</a></td>
+<td class="org-left"><a href="#org1c03a2d">音效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">方块工作时的音效，会循环播放</td>
 </tr>
@@ -1115,7 +1311,7 @@ Notes:
 
 <tr>
 <td class="org-left">idleSound</td>
-<td class="org-left"><a href="#org5980de3">音效</a></td>
+<td class="org-left"><a href="#org1c03a2d">音效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">方块空闲时音效.</td>
 </tr>
@@ -1129,14 +1325,14 @@ Notes:
 
 <tr>
 <td class="org-left">requirements</td>
-<td class="org-left"><a href="#orgd06e0dd">物品组</a></td>
+<td class="org-left"><a href="#org92084a5">物品组</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">建筑方块的消耗，会影响到研究消耗，公式在下面.</td>
 </tr>
 
 <tr>
 <td class="org-left">category</td>
-<td class="org-left"><a href="#org99a0eb7">内容菜单类型</a></td>
+<td class="org-left"><a href="#org07a24c4">内容菜单类型</a></td>
 <td class="org-right">distribution</td>
 <td class="org-left">建造菜单上面的种类.</td>
 </tr>
@@ -1150,7 +1346,7 @@ Notes:
 
 <tr>
 <td class="org-left">buildVisibility</td>
-<td class="org-left"><a href="#org20ce3de">建筑菜单可见性</a></td>
+<td class="org-left"><a href="#orgee939ae">建筑菜单可见性</a></td>
 <td class="org-right">hidden</td>
 <td class="org-left">这个物品在建筑菜单是否可见.</td>
 </tr>
@@ -1178,14 +1374,14 @@ Notes:
 
 <tr>
 <td class="org-left">layer</td>
-<td class="org-left"><a href="#org6d6fd97">渲染层</a></td>
+<td class="org-left"><a href="#org8edf900">渲染层</a></td>
 <td class="org-right">null</td>
 <td class="org-left">渲染在哪一层.</td>
 </tr>
 
 <tr>
 <td class="org-left">layer2</td>
-<td class="org-left"><a href="#org6d6fd97">渲染层</a></td>
+<td class="org-left"><a href="#org8edf900">渲染层</a></td>
 <td class="org-right">null</td>
 <td class="org-left">额外渲染在哪一层.</td>
 </tr>
@@ -1201,8 +1397,8 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org0b10559" class="outline-3">
-<h3 id="org0b10559"><span class="section-number-3">2.2</span> 消耗器</h3>
+<div id="outline-container-org1de1603" class="outline-3">
+<h3 id="org1de1603"><span class="section-number-3">2.2</span> 消耗器</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 :DESCRIPTION:消耗液体，物体和能量的基础类，英文:Consume
@@ -1238,19 +1434,19 @@ Notes:
 
 <tr>
 <td class="org-left">items</td>
-<td class="org-left"><a href="#orgcf70a03">消耗物品</a></td>
+<td class="org-left"><a href="#org2533bda">消耗物品</a></td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left">liquid</td>
-<td class="org-left"><a href="#org19eed8b">消耗液体</a></td>
+<td class="org-left"><a href="#org7a12290">消耗液体</a></td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left">power</td>
-<td class="org-left">float or <a href="#org7958390">能量消耗</a></td>
+<td class="org-left">float or <a href="#org82a3fbf">能量消耗</a></td>
 <td class="org-left">&#xa0;</td>
 </tr>
 
@@ -1270,7 +1466,7 @@ Notes:
 </ul>
 
 <p>
-消耗物品例子 <a href="#orgcf70a03">消耗物品</a> 和 <a href="#org19eed8b">消耗液体</a>:
+消耗物品例子 <a href="#org2533bda">消耗物品</a> 和 <a href="#org7a12290">消耗液体</a>:
 </p>
 <div class="org-src-container">
 <pre class="src src-json">{
@@ -1290,11 +1486,11 @@ Notes:
 </pre>
 </div>
 </div>
-<div id="outline-container-orgda588fa" class="outline-4">
-<h4 id="orgda588fa"><span class="section-number-4">2.2.1</span> 消耗</h4>
+<div id="outline-container-org3dcc9b7" class="outline-4">
+<h4 id="org3dcc9b7"><span class="section-number-4">2.2.1</span> 消耗</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <p>
-<a href="#org49d12bb">Abstract</a> 修饰类,英文:Consume
+<a href="#org293e1a3">Abstract</a> 修饰类,英文:Consume
 </p>
 
 <p>
@@ -1347,7 +1543,7 @@ Notes:
 
 <ul class="org-ul">
 <li><p>
-<a id="orgcf70a03"></a> <code>消耗物品</code>, 消耗物品组.
+<a id="org2533bda"></a> <code>消耗物品</code>, 消耗物品组.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1367,13 +1563,13 @@ Notes:
 <tbody>
 <tr>
 <td class="org-left">items</td>
-<td class="org-left"><a href="#orgd06e0dd">物品组</a></td>
+<td class="org-left"><a href="#org92084a5">物品组</a></td>
 </tr>
 </tbody>
 </table></li>
 
 <li><p>
-<a id="org19eed8b"></a> <code>消耗液体</code>, 消耗一种液体.
+<a id="org7a12290"></a> <code>消耗液体</code>, 消耗一种液体.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1401,7 +1597,7 @@ Notes:
 <td class="org-left">liquid</td>
 <td class="org-left">String</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">消耗的 <a href="#org553f7bf">液体</a> 名</td>
+<td class="org-left">消耗的 <a href="#org525e49d">液体</a> 名</td>
 </tr>
 
 <tr>
@@ -1428,7 +1624,7 @@ Notes:
 </ul></li>
 
 <li><p>
-<a id="org7958390"></a> <code>能量消耗</code>, 消耗或存储能量.
+<a id="org82a3fbf"></a> <code>能量消耗</code>, 消耗或存储能量.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1486,11 +1682,11 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org6d63c2a" class="outline-3">
-<h3 id="org6d63c2a"><span class="section-number-3">2.3</span> 方块存储</h3>
+<div id="outline-container-org3de5fec" class="outline-3">
+<h3 id="org3de5fec"><span class="section-number-3">2.3</span> 方块存储</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
-<a href="#org49d12bb">Abstract</a> 修饰类继承 <a href="#orgba62d74">内容</a> &#x2013; 这里定义方块存储的资源.英文:BlockStorage
+<a href="#org293e1a3">Abstract</a> 修饰类继承 <a href="#org778eb08">内容</a> &#x2013; 这里定义方块存储的资源.英文:BlockStorage
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1585,7 +1781,7 @@ Notes:
 
 <tr>
 <td class="org-left">consumes</td>
-<td class="org-left"><a href="#org0b10559">消耗器</a></td>
+<td class="org-left"><a href="#org1de1603">消耗器</a></td>
 <td class="org-right">&#xa0;</td>
 </tr>
 </tbody>
@@ -1593,19 +1789,19 @@ Notes:
 </div>
 </div>
 
-<div id="outline-container-org81f4b81" class="outline-3">
-<h3 id="org81f4b81"><span class="section-number-3">2.4</span> 环境</h3>
+<div id="outline-container-org264e0df" class="outline-3">
+<h3 id="org264e0df"><span class="section-number-3">2.4</span> 环境</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 环境方块只能在地图编辑器里面加入地图,它们也是决定游戏怎么玩的关键方块.这一些方块不会出现在地图上面除非你画一个地图来生成它们.
 </p>
 </div>
 
-<div id="outline-container-orge9d3f0e" class="outline-4">
-<h4 id="orge9d3f0e"><span class="section-number-4">2.4.1</span> 地板</h4>
+<div id="outline-container-org7271ac7" class="outline-4">
+<h4 id="org7271ac7"><span class="section-number-4">2.4.1</span> 地板</h4>
 <div class="outline-text-4" id="text-2-4-1">
 <p>
-继承 <a href="#orgdf716e1">方块</a>,英文:Floor
+继承 <a href="#orge65d2dd">方块</a>,英文:Floor
 </p>
 
 <p>
@@ -1677,21 +1873,21 @@ Notes:
 
 <tr>
 <td class="org-left">walkEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">ripple</td>
-<td class="org-left">单位在这个 <a href="#orge9d3f0e">地板</a>.上行走的特效</td>
+<td class="org-left">单位在这个 <a href="#org7271ac7">地板</a>.上行走的特效</td>
 </tr>
 
 <tr>
 <td class="org-left">drownUpdateEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">bubble</td>
-<td class="org-left">单位在这个 <a href="#orge9d3f0e">地板</a>.上溺水的特效.</td>
+<td class="org-left">单位在这个 <a href="#org7271ac7">地板</a>.上溺水的特效.</td>
 </tr>
 
 <tr>
 <td class="org-left">status</td>
-<td class="org-left"><a href="#org1f42bfd">状态</a></td>
+<td class="org-left"><a href="#orgd091d38">状态</a></td>
 <td class="org-right">none</td>
 <td class="org-left">单位行走在上面时给予的状态.</td>
 </tr>
@@ -1705,14 +1901,14 @@ Notes:
 
 <tr>
 <td class="org-left">liquidDrop</td>
-<td class="org-left"><a href="#org553f7bf">液体</a></td>
+<td class="org-left"><a href="#org525e49d">液体</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">产出液体种类，用泵获取.</td>
 </tr>
 
 <tr>
 <td class="org-left">itemDrop</td>
-<td class="org-left"><a href="#org6ea992d">物品</a></td>
+<td class="org-left"><a href="#org52e37a0">物品</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">产出物品种类，用钻头采集.</td>
 </tr>
@@ -1733,23 +1929,44 @@ Notes:
 
 <tr>
 <td class="org-left">blendGroup</td>
-<td class="org-left"><a href="#orgdf716e1">方块</a></td>
+<td class="org-left"><a href="#orge65d2dd">方块</a></td>
 <td class="org-right">this</td>
 <td class="org-left">这个地板不会拓展渲染到什么方块上.</td>
 </tr>
 
 <tr>
 <td class="org-left">updateEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">地板更新时的特效.</td>
 </tr>
 
 <tr>
 <td class="org-left">attributes</td>
-<td class="org-left"><a href="#orgd867e16">属性</a></td>
+<td class="org-left"><a href="#orgbc1f0a0">属性</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">地板对各种机器的效率倍数.</td>
+</tr>
+
+<tr>
+<td class="org-left">oreDefault</td>
+<td class="org-left">boolean</td>
+<td class="org-right">false</td>
+<td class="org-left">是否自然生成矿物在此地被上面.</td>
+</tr>
+
+<tr>
+<td class="org-left">oreScale</td>
+<td class="org-left">float</td>
+<td class="org-right">24</td>
+<td class="org-left">生成规模, for example <code>thorium</code> is <code>25.38</code>, <code>copper</code> is <code>23.47</code>.</td>
+</tr>
+
+<tr>
+<td class="org-left">oreThreshold</td>
+<td class="org-left">float</td>
+<td class="org-right">0.828</td>
+<td class="org-left">生存几率, for example <code>thorium</code> is <code>0.882</code>, <code>copper</code> is <code>0.81</code>.</td>
 </tr>
 </tbody>
 </table>
@@ -1771,11 +1988,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgf233e58" class="outline-4">
-<h4 id="orgf233e58"><span class="section-number-4">2.4.2</span> 覆盖地板</h4>
+<div id="outline-container-org6e9be7c" class="outline-4">
+<h4 id="org6e9be7c"><span class="section-number-4">2.4.2</span> 覆盖地板</h4>
 <div class="outline-text-4" id="text-2-4-2">
 <p>
-继承 <a href="#orge9d3f0e">地板</a>,英文:OverlayFloor
+继承 <a href="#org7271ac7">地板</a>,英文:OverlayFloor
 </p>
 
 <p>
@@ -1787,11 +2004,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org49d4407" class="outline-4">
-<h4 id="org49d4407"><span class="section-number-4">2.4.3</span> 双层覆盖地板</h4>
+<div id="outline-container-org8a0d1e8" class="outline-4">
+<h4 id="org8a0d1e8"><span class="section-number-4">2.4.3</span> 双层覆盖地板</h4>
 <div class="outline-text-4" id="text-2-4-3">
 <p>
-继承 <a href="#orgf233e58">覆盖地板</a>，英文:DoubleOverlayFloor
+继承 <a href="#org6e9be7c">覆盖地板</a>，英文:DoubleOverlayFloor
 </p>
 
 <p>
@@ -1803,15 +2020,15 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org3f78e97" class="outline-4">
-<h4 id="org3f78e97"><span class="section-number-4">2.4.4</span> 矿物</h4>
+<div id="outline-container-org129fb3e" class="outline-4">
+<h4 id="org129fb3e"><span class="section-number-4">2.4.4</span> 矿物</h4>
 <div class="outline-text-4" id="text-2-4-4">
 <p>
 :DESCRIPTION:获取特定的物品所产生的矿物.
 </p>
 
 <p>
-继承 <a href="#orgf233e58">覆盖地板</a>,英文:OreBlock
+继承 <a href="#org6e9be7c">覆盖地板</a>,英文:OreBlock
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1838,11 +2055,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org4e73c2d" class="outline-4">
-<h4 id="org4e73c2d"><span class="section-number-4">2.4.5</span> 岩石</h4>
+<div id="outline-container-orgd71fda2" class="outline-4">
+<h4 id="orgd71fda2"><span class="section-number-4">2.4.5</span> 岩石</h4>
 <div class="outline-text-4" id="text-2-4-5">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文:Rock
+继承 <a href="#orge65d2dd">方块</a>，英文:Rock
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1899,11 +2116,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgbe9e4f5" class="outline-4">
-<h4 id="orgbe9e4f5"><span class="section-number-4">2.4.6</span> 静止墙</h4>
+<div id="outline-container-org89a14cf" class="outline-4">
+<h4 id="org89a14cf"><span class="section-number-4">2.4.6</span> 静止墙</h4>
 <div class="outline-text-4" id="text-2-4-6">
 <p>
-继承 <a href="#org4e73c2d">岩石</a> -不可破坏的墙，英文:StaticWall
+继承 <a href="#orgd71fda2">岩石</a> -不可破坏的墙，英文:StaticWall
 </p>
 
 <p>
@@ -1955,11 +2172,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org666e999" class="outline-4">
-<h4 id="org666e999"><span class="section-number-4">2.4.7</span> 静止树</h4>
+<div id="outline-container-orgc185377" class="outline-4">
+<h4 id="orgc185377"><span class="section-number-4">2.4.7</span> 静止树</h4>
 <div class="outline-text-4" id="text-2-4-7">
 <p>
-继承 <a href="#orgbe9e4f5">静止墙</a>，英文:StaticTree
+继承 <a href="#org89a14cf">静止墙</a>，英文:StaticTree
 </p>
 
 <p>
@@ -1974,11 +2191,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org9d54e02" class="outline-4">
-<h4 id="org9d54e02"><span class="section-number-4">2.4.8</span> 树</h4>
+<div id="outline-container-org9c7e4b5" class="outline-4">
+<h4 id="org9c7e4b5"><span class="section-number-4">2.4.8</span> 树</h4>
 <div class="outline-text-4" id="text-2-4-8">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文:TreeBlock
+继承 <a href="#orge65d2dd">方块</a>，英文:TreeBlock
 </p>
 
 <p>
@@ -2018,15 +2235,15 @@ Sprites:
 </div>
 </div>
 </div>
-<div id="outline-container-org2408220" class="outline-3">
-<h3 id="org2408220"><span class="section-number-3">2.5</span> 工厂</h3>
+<div id="outline-container-orge0a02f9" class="outline-3">
+<h3 id="orge0a02f9"><span class="section-number-3">2.5</span> 工厂</h3>
 <div class="outline-text-3" id="text-2-5">
 </div>
-<div id="outline-container-orgb2836b5" class="outline-4">
-<h4 id="orgb2836b5"><span class="section-number-4">2.5.1</span> 普通加工厂</h4>
+<div id="outline-container-org0f06d1e" class="outline-4">
+<h4 id="org0f06d1e"><span class="section-number-4">2.5.1</span> 普通加工厂</h4>
 <div class="outline-text-4" id="text-2-5-1">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文:GenericCratfer
+继承 <a href="#orge65d2dd">方块</a>，英文:GenericCrafter
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2052,14 +2269,14 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">outputItem</td>
-<td class="org-left"><a href="#orgd06e0dd">物品组</a></td>
+<td class="org-left"><a href="#org92084a5">物品组</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">输出物品</td>
 </tr>
 
 <tr>
 <td class="org-left">outputLiquid</td>
-<td class="org-left"><a href="#orgcd0194a">液体组</a></td>
+<td class="org-left"><a href="#org272062c">液体组</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">输出液体</td>
 </tr>
@@ -2073,14 +2290,14 @@ Sprites:
 
 <tr>
 <td class="org-left">craftEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">工作特效</td>
 </tr>
 
 <tr>
 <td class="org-left">updateEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">更新特效</td>
 </tr>
@@ -2146,11 +2363,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgf08359a" class="outline-4">
-<h4 id="orgf08359a"><span class="section-number-4">2.5.2</span> 普通冶炼炉</h4>
+<div id="outline-container-orgd984c33" class="outline-4">
+<h4 id="orgd984c33"><span class="section-number-4">2.5.2</span> 普通冶炼炉</h4>
 <div class="outline-text-4" id="text-2-5-2">
 <p>
-继承 <a href="#orgb2836b5">普通加工厂</a>,英文:GenericSmelter
+继承 <a href="#org0f06d1e">普通加工厂</a>,英文:GenericSmelter
 </p>
 
 <p>
@@ -2180,7 +2397,7 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">flameColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-left">ffc999</td>
 <td class="org-right">火焰颜色</td>
 </tr>
@@ -2196,11 +2413,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org8393d16" class="outline-4">
-<h4 id="org8393d16"><span class="section-number-4">2.5.3</span> 分离机</h4>
+<div id="outline-container-org13da73e" class="outline-4">
+<h4 id="org13da73e"><span class="section-number-4">2.5.3</span> 分离机</h4>
 <div class="outline-text-4" id="text-2-5-3">
 <p>
-继承 <a href="#orgdf716e1">方块</a>
+继承 <a href="#orge65d2dd">方块</a>
 </p>
 
 <p>
@@ -2215,7 +2432,7 @@ Sprites:
 
 <col  class="org-left" />
 
-<col  class="org-right" />
+<col  class="org-left" />
 
 <col  class="org-left" />
 </colgroup>
@@ -2223,65 +2440,37 @@ Sprites:
 <tr>
 <th scope="col" class="org-left">接口</th>
 <th scope="col" class="org-left">类型</th>
-<th scope="col" class="org-right">默认值</th>
+<th scope="col" class="org-left">默认值</th>
 <th scope="col" class="org-left">备注</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="org-left">results</td>
-<td class="org-left"><a href="#orgd06e0dd">物品组</a></td>
-<td class="org-right">&#xa0;</td>
+<td class="org-left"><a href="#org92084a5">物品组</a></td>
+<td class="org-left">&#xa0;</td>
 <td class="org-left">*[必须]*输出物品及概率</td>
 </tr>
 
 <tr>
 <td class="org-left">craftTime</td>
 <td class="org-left">float</td>
-<td class="org-right">&#xa0;</td>
 <td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-left">spinnerRadius</td>
-<td class="org-left">float</td>
-<td class="org-right">2.5</td>
-<td class="org-left">转子范围</td>
-</tr>
-
-<tr>
-<td class="org-left">spinnerLength</td>
-<td class="org-left">float</td>
-<td class="org-right">1</td>
-<td class="org-left">转子长</td>
-</tr>
-
-<tr>
-<td class="org-left">spinnerThickness</td>
-<td class="org-left">float</td>
-<td class="org-right">1</td>
-<td class="org-left">转子宽</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 
 <tr>
 <td class="org-left">spinnerSpeed</td>
 <td class="org-left">float</td>
-<td class="org-right">2</td>
+<td class="org-left">2</td>
 <td class="org-left">转子速度</td>
 </tr>
 
 <tr>
 <td class="org-left">color</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
-<td class="org-right">858585</td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
+<td class="org-left">858585</td>
 <td class="org-left">工作颜色</td>
-</tr>
-
-<tr>
-<td class="org-left">liquidRegion</td>
-<td class="org-left">int</td>
-<td class="org-right">&#xa0;</td>
-<td class="org-left">液体区域</td>
 </tr>
 </tbody>
 </table>
@@ -2331,20 +2520,21 @@ Sprites:
 </p>
 <ul class="org-ul">
 <li><code>&lt;name&gt;-liquid</code></li>
+<li><code>&lt;name&gt;-spinner</code></li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf3f3fa0" class="outline-3">
-<h3 id="orgf3f3fa0"><span class="section-number-3">2.6</span> 沙盒</h3>
+<div id="outline-container-orgf4dbbe3" class="outline-3">
+<h3 id="orgf4dbbe3"><span class="section-number-3">2.6</span> 沙盒</h3>
 <div class="outline-text-3" id="text-2-6">
 </div>
-<div id="outline-container-org8a4ceac" class="outline-4">
-<h4 id="org8a4ceac"><span class="section-number-4">2.6.1</span> 能量黑洞</h4>
+<div id="outline-container-orgb3aeb8c" class="outline-4">
+<h4 id="orgb3aeb8c"><span class="section-number-4">2.6.1</span> 能量黑洞</h4>
 <div class="outline-text-4" id="text-2-6-1">
 <p>
-继承 <a href="#orgd6ccfc1">能量方块</a>，英文:PowerVoid
+继承 <a href="#org4df6bde">能量方块</a>，英文:PowerVoid
 </p>
 
 <p>
@@ -2375,11 +2565,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgae6836e" class="outline-4">
-<h4 id="orgae6836e"><span class="section-number-4">2.6.2</span> 无限能源</h4>
+<div id="outline-container-orgcfd3cbf" class="outline-4">
+<h4 id="orgcfd3cbf"><span class="section-number-4">2.6.2</span> 无限能源</h4>
 <div class="outline-text-4" id="text-2-6-2">
 <p>
-继承 <a href="#orgeb31fcf">节点</a>，英文:PowerSource
+继承 <a href="#org9762e2e">节点</a>，英文:PowerSource
 </p>
 
 <p>
@@ -2420,11 +2610,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org7d4234a" class="outline-4">
-<h4 id="org7d4234a"><span class="section-number-4">2.6.3</span> 物品源</h4>
+<div id="outline-container-orgf3ada2d" class="outline-4">
+<h4 id="orgf3ada2d"><span class="section-number-4">2.6.3</span> 物品源</h4>
 <div class="outline-text-4" id="text-2-6-3">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文:ItemSource
+继承 <a href="#orge65d2dd">方块</a>，英文:ItemSource
 </p>
 
 <p>
@@ -2475,11 +2665,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org6697ba0" class="outline-4">
-<h4 id="org6697ba0"><span class="section-number-4">2.6.4</span> 物品黑洞</h4>
+<div id="outline-container-org426c586" class="outline-4">
+<h4 id="org426c586"><span class="section-number-4">2.6.4</span> 物品黑洞</h4>
 <div class="outline-text-4" id="text-2-6-4">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文:ItemVoid
+继承 <a href="#orge65d2dd">方块</a>，英文:ItemVoid
 </p>
 
 <p>
@@ -2515,11 +2705,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgc1f727a" class="outline-4">
-<h4 id="orgc1f727a"><span class="section-number-4">2.6.5</span> 液体源</h4>
+<div id="outline-container-orgeb9e190" class="outline-4">
+<h4 id="orgeb9e190"><span class="section-number-4">2.6.5</span> 液体源</h4>
 <div class="outline-text-4" id="text-2-6-5">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文:LiquidSource
+继承 <a href="#orge65d2dd">方块</a>，英文:LiquidSource
 </p>
 
 <p>
@@ -2574,17 +2764,62 @@ Sprites:
 </table>
 </div>
 </div>
+
+<div id="outline-container-org96a52f6" class="outline-4">
+<h4 id="org96a52f6"><span class="section-number-4">2.6.6</span> 液体黑洞</h4>
+<div class="outline-text-4" id="text-2-6-6">
+<p>
+继承 <a href="#orge65d2dd">方块</a>，英文：LiquidVoid
+</p>
+
+<p>
+默认值:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">field</th>
+<th scope="col" class="org-left">default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">hasLiquids</td>
+<td class="org-left">true</td>
+</tr>
+
+<tr>
+<td class="org-left">solid</td>
+<td class="org-left">true</td>
+</tr>
+
+<tr>
+<td class="org-left">update</td>
+<td class="org-left">true</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 
-<div id="outline-container-org5860e37" class="outline-3">
-<h3 id="org5860e37"><span class="section-number-3">2.7</span> 逻辑</h3>
+<div id="outline-container-orgb602e27" class="outline-3">
+<h3 id="orgb602e27"><span class="section-number-3">2.7</span> 逻辑</h3>
 <div class="outline-text-3" id="text-2-7">
 </div>
-<div id="outline-container-org27c9cb5" class="outline-4">
-<h4 id="org27c9cb5"><span class="section-number-4">2.7.1</span> 消息块</h4>
+<div id="outline-container-orga1203ac" class="outline-4">
+<h4 id="orga1203ac"><span class="section-number-4">2.7.1</span> 消息块</h4>
 <div class="outline-text-4" id="text-2-7-1">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文：MessageBlock
+继承 <a href="#orge65d2dd">方块</a>，英文：MessageBlock
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2662,15 +2897,15 @@ Sprites:
 </div>
 </div>
 </div>
-<div id="outline-container-org4eeb6bc" class="outline-3">
-<h3 id="org4eeb6bc"><span class="section-number-3">2.8</span> 防御</h3>
+<div id="outline-container-org54ed275" class="outline-3">
+<h3 id="org54ed275"><span class="section-number-3">2.8</span> 防御</h3>
 <div class="outline-text-3" id="text-2-8">
 </div>
-<div id="outline-container-org24ff9cc" class="outline-4">
-<h4 id="org24ff9cc"><span class="section-number-4">2.8.1</span> 墙</h4>
+<div id="outline-container-org8e65768" class="outline-4">
+<h4 id="org8e65768"><span class="section-number-4">2.8.1</span> 墙</h4>
 <div class="outline-text-4" id="text-2-8-1">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文：Wall
+继承 <a href="#orge65d2dd">方块</a>，英文：Wall
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2742,11 +2977,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org51b3d7a" class="outline-4">
-<h4 id="org51b3d7a"><span class="section-number-4">2.8.2</span> 反射墙</h4>
+<div id="outline-container-org0abc838" class="outline-4">
+<h4 id="org0abc838"><span class="section-number-4">2.8.2</span> 反射墙</h4>
 <div class="outline-text-4" id="text-2-8-2">
 <p>
-继承 <a href="#org24ff9cc">墙</a> &#x2013; 可以反射低伤害子弹的墙.英文：DeflectorWall
+继承 <a href="#org8e65768">墙</a> &#x2013; 可以反射低伤害子弹的墙.英文：DeflectorWall
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2788,11 +3023,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org78985de" class="outline-4">
-<h4 id="org78985de"><span class="section-number-4">2.8.3</span> 闪电墙</h4>
+<div id="outline-container-orgfd8b92a" class="outline-4">
+<h4 id="orgfd8b92a"><span class="section-number-4">2.8.3</span> 闪电墙</h4>
 <div class="outline-text-4" id="text-2-8-3">
 <p>
-继承 <a href="#org24ff9cc">墙</a> &#x2013; 一种被攻击产生闪电的墙.英文：SurgeWall
+继承 <a href="#org8e65768">墙</a> &#x2013; 一种被攻击产生闪电的墙.英文：SurgeWall
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2841,11 +3076,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org9227701" class="outline-4">
-<h4 id="org9227701"><span class="section-number-4">2.8.4</span> 门</h4>
+<div id="outline-container-orgd5f3cd4" class="outline-4">
+<h4 id="orgd5f3cd4"><span class="section-number-4">2.8.4</span> 门</h4>
 <div class="outline-text-4" id="text-2-8-4">
 <p>
-继承 <a href="#org24ff9cc">墙</a>，英文:Wall
+继承 <a href="#org8e65768">墙</a>，英文:Door
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2871,14 +3106,14 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">openfx</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">dooropen</td>
 <td class="org-left">开门特效</td>
 </tr>
 
 <tr>
 <td class="org-left">closefx</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">doorclose</td>
 <td class="org-left">关门特效</td>
 </tr>
@@ -2930,11 +3165,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org4465b4c" class="outline-4">
-<h4 id="org4465b4c"><span class="section-number-4">2.8.5</span> 修理投影</h4>
+<div id="outline-container-orgf8e5ced" class="outline-4">
+<h4 id="orgf8e5ced"><span class="section-number-4">2.8.5</span> 修理投影</h4>
 <div class="outline-text-4" id="text-2-8-5">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文：MendProjector
+继承 <a href="#orge65d2dd">方块</a>，英文：MendProjector
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -2960,14 +3195,14 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">color</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">84f491</td>
 <td class="org-left">颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">phase</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">ffd59e</td>
 <td class="org-left">加速颜色</td>
 </tr>
@@ -3025,11 +3260,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org67eb31b" class="outline-4">
-<h4 id="org67eb31b"><span class="section-number-4">2.8.6</span> 超频投影</h4>
+<div id="outline-container-org830a1c4" class="outline-4">
+<h4 id="org830a1c4"><span class="section-number-4">2.8.6</span> 超频投影</h4>
 <div class="outline-text-4" id="text-2-8-6">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文：OverdriveProjector
+继承 <a href="#orge65d2dd">方块</a>，英文：OverdriveProjector
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3055,14 +3290,14 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">color</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">feb380</td>
 <td class="org-left">颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">phase</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">ffd59e</td>
 <td class="org-left">加速颜色</td>
 </tr>
@@ -3166,11 +3401,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orge83f4a9" class="outline-4">
-<h4 id="orge83f4a9"><span class="section-number-4">2.8.7</span> 力墙投影</h4>
+<div id="outline-container-org089c764" class="outline-4">
+<h4 id="org089c764"><span class="section-number-4">2.8.7</span> 力墙投影</h4>
 <div class="outline-text-4" id="text-2-8-7">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文：ForceProjector
+继承 <a href="#orge65d2dd">方块</a>，英文：ForceProjector
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3302,13 +3537,13 @@ Sprites:
 
 <tr>
 <td class="org-left">consumes</td>
-<td class="org-left"><a href="#org73e2b81">冷液体</a></td>
+<td class="org-left"><a href="#org22f3d70">冷液体</a></td>
 </tr>
 </tbody>
 </table>
 
 <p>
-<a id="org73e2b81"></a><a href="#org73e2b81">冷液体</a>:
+<a id="org22f3d70"></a><a href="#org22f3d70">冷液体</a>:
 </p>
 <ul class="org-ul">
 <li>温度小于0.5</li>
@@ -3327,11 +3562,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orga57a5a5" class="outline-4">
-<h4 id="orga57a5a5"><span class="section-number-4">2.8.8</span> 地雷</h4>
+<div id="outline-container-orgf13be0c" class="outline-4">
+<h4 id="orgf13be0c"><span class="section-number-4">2.8.8</span> 地雷</h4>
 <div class="outline-text-4" id="text-2-8-8">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文：ShockMine
+继承 <a href="#orge65d2dd">方块</a>，英文：ShockMine
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3434,24 +3669,30 @@ Sprites:
 <td class="org-left">layer</td>
 <td class="org-right">overlay</td>
 </tr>
+
+<tr>
+<td class="org-left">rebuildable</td>
+<td class="org-right">false</td>
+</tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
-<div id="outline-container-org845924b" class="outline-3">
-<h3 id="org845924b"><span class="section-number-3">2.9</span> 炮塔s</h3>
+
+<div id="outline-container-orga30a28f" class="outline-3">
+<h3 id="orga30a28f"><span class="section-number-3">2.9</span> 炮塔s</h3>
 <div class="outline-text-3" id="text-2-9">
 <p>
-这一节是关于炮塔. 所以炮塔的子弹都是 <a href="#orgccf8907">子弹类</a>, 这代表 <a href="#org8bdc918">液体炮塔</a> 可以使用 <a href="#orgba966e2">导弹</a> 和 <a href="#orga0a4c3a">物品炮塔</a> 可以使用 <a href="#org524e542">液体子弹</a>.
+这一节是关于炮塔. 所以炮塔的子弹都是 <a href="#org38f1646">子弹类</a>, 这代表 <a href="#org6ebe0cf">液体炮塔</a> 可以使用 <a href="#org9286297">导弹</a> 和 <a href="#orgf8d5d1e">物品炮塔</a> 可以使用 <a href="#org29d6957">液体子弹</a>.
 </p>
 </div>
 
-<div id="outline-container-orgf37466b" class="outline-4">
-<h4 id="orgf37466b"><span class="section-number-4">2.9.1</span> 炮塔</h4>
+<div id="outline-container-org651c731" class="outline-4">
+<h4 id="org651c731"><span class="section-number-4">2.9.1</span> 炮塔</h4>
 <div class="outline-text-4" id="text-2-9-1">
 <p>
-<a href="#org49d12bb">Abstract</a> 修饰类继承 <a href="#orgdf716e1">方块</a>
+<a href="#org293e1a3">Abstract</a> 修饰类继承 <a href="#orge65d2dd">方块</a>
 </p>
 
 <p>
@@ -3481,35 +3722,35 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">heatColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">turretHeat</td>
 <td class="org-left">发热颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">shootEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">射击特效</td>
 </tr>
 
 <tr>
 <td class="org-left">smokeEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">冒烟特效</td>
 </tr>
 
 <tr>
 <td class="org-left">ammoUseEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">用子弹特效</td>
 </tr>
 
 <tr>
 <td class="org-left">shootSound</td>
-<td class="org-left"><a href="#org5980de3">音效</a></td>
+<td class="org-left"><a href="#org1c03a2d">音效</a></td>
 <td class="org-right">shoot</td>
 <td class="org-left">射击声音</td>
 </tr>
@@ -3689,11 +3930,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgd63904f" class="outline-4">
-<h4 id="orgd63904f"><span class="section-number-4">2.9.2</span> 冷却炮塔</h4>
+<div id="outline-container-orga6603c0" class="outline-4">
+<h4 id="orga6603c0"><span class="section-number-4">2.9.2</span> 冷却炮塔</h4>
 <div class="outline-text-4" id="text-2-9-2">
 <p>
-继承 <a href="#orgf37466b">炮塔</a> &#x2013; 这是一个用 <a href="#org553f7bf">液体</a> 加速的炮塔的类.英文：CoolTurret
+继承 <a href="#org651c731">炮塔</a> &#x2013; 这是一个用 <a href="#org525e49d">液体</a> 加速的炮塔的类.英文：CoolTurret
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -3726,7 +3967,7 @@ Sprites:
 
 <tr>
 <td class="org-left">coolEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-left">shoot</td>
 <td class="org-left">冷却特效</td>
 </tr>
@@ -3743,15 +3984,15 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orga0a4c3a" class="outline-4">
-<h4 id="orga0a4c3a"><span class="section-number-4">2.9.3</span> 物品炮塔</h4>
+<div id="outline-container-orgf8d5d1e" class="outline-4">
+<h4 id="orgf8d5d1e"><span class="section-number-4">2.9.3</span> 物品炮塔</h4>
 <div class="outline-text-4" id="text-2-9-3">
 <p>
-继承 <a href="#orgd63904f">冷却炮塔</a>.英文：ItemTurret
+继承 <a href="#orga6603c0">冷却炮塔</a>.英文：ItemTurret
 </p>
 
 <p>
-这个炮塔类用物品做子弹. <code>ammo</code> 的数据必须是 <a href="#org6ea992d">3.1</a>, 具体值可以是 <a href="#orgc11f9eb">5.1.5</a> 或自定义的 <a href="#orgccf8907">5.1</a>.
+这个炮塔类用物品做子弹. <code>ammo</code> 的数据必须是 <a href="#org52e37a0">3.1</a>, 具体值可以是 <a href="#org45e8298">5.1.5</a> 或自定义的 <a href="#org38f1646">5.1</a>.
 </p>
 
 <div class="org-src-container">
@@ -3808,9 +4049,9 @@ Sprites:
 
 <tr>
 <td class="org-left">ammo</td>
-<td class="org-left">{ 字符串: <a href="#orgccf8907">子弹类</a> }</td>
+<td class="org-left">{ 字符串: <a href="#org38f1646">子弹类</a> }</td>
 <td class="org-right">&#xa0;</td>
-<td class="org-left">字符串是 <a href="#org6ea992d">3.1</a> 的名字, 用来决定消耗的物品.</td>
+<td class="org-left">字符串是 <a href="#org52e37a0">3.1</a> 的名字, 用来决定消耗的物品.</td>
 </tr>
 </tbody>
 </table>
@@ -3843,15 +4084,15 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org8bdc918" class="outline-4">
-<h4 id="org8bdc918"><span class="section-number-4">2.9.4</span> 液体炮塔</h4>
+<div id="outline-container-org6ebe0cf" class="outline-4">
+<h4 id="org6ebe0cf"><span class="section-number-4">2.9.4</span> 液体炮塔</h4>
 <div class="outline-text-4" id="text-2-9-4">
 <p>
-继承 <a href="#orgf37466b">2.9.1</a>
+继承 <a href="#org651c731">2.9.1</a>
 </p>
 
 <p>
-这个炮塔类用液体做子弹. <code>ammo</code> 的数据必须是 <a href="#org553f7bf">3.3</a>, 具体值可以是 <a href="#orgc11f9eb">5.1.5</a> 或自定义的 <a href="#orgccf8907">5.1</a>.英文：LiquidTurret
+这个炮塔类用液体做子弹. <code>ammo</code> 的数据必须是 <a href="#org525e49d">3.3</a>, 具体值可以是 <a href="#org45e8298">5.1.5</a> 或自定义的 <a href="#org38f1646">5.1</a>.英文：LiquidTurret
 </p>
 
 <p>
@@ -3898,8 +4139,8 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">ammo</td>
-<td class="org-left">{ 字符串: <a href="#orgccf8907">5.1</a> }</td>
-<td class="org-left">字符串是 <a href="#org553f7bf">3.3</a>.</td>
+<td class="org-left">{ 字符串: <a href="#org38f1646">5.1</a> }</td>
+<td class="org-left">字符串是 <a href="#org525e49d">3.3</a>.</td>
 </tr>
 </tbody>
 </table>
@@ -3936,11 +4177,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgb8529f0" class="outline-4">
-<h4 id="orgb8529f0"><span class="section-number-4">2.9.5</span> 双管炮</h4>
+<div id="outline-container-org2225405" class="outline-4">
+<h4 id="org2225405"><span class="section-number-4">2.9.5</span> 双管炮</h4>
 <div class="outline-text-4" id="text-2-9-5">
 <p>
-继承 <a href="#orga0a4c3a">物品炮塔</a>,英文：DoubleTurret
+继承 <a href="#orgf8d5d1e">物品炮塔</a>,英文：DoubleTurret
 </p>
 
 <p>
@@ -4004,11 +4245,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orga9291e1" class="outline-4">
-<h4 id="orga9291e1"><span class="section-number-4">2.9.6</span> 火炮塔</h4>
+<div id="outline-container-org96d8eb1" class="outline-4">
+<h4 id="org96d8eb1"><span class="section-number-4">2.9.6</span> 火炮塔</h4>
 <div class="outline-text-4" id="text-2-9-6">
 <p>
-继承 <a href="#orga0a4c3a">物品炮塔</a> &#x2013; 火炮塔有特殊的命中计算.英文：ArtilleryTurret
+继承 <a href="#orgf8d5d1e">物品炮塔</a> &#x2013; 火炮塔有特殊的命中计算.英文：ArtilleryTurret
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4035,11 +4276,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org715f941" class="outline-4">
-<h4 id="org715f941"><span class="section-number-4">2.9.7</span> 破片炮塔</h4>
+<div id="outline-container-org8e80576" class="outline-4">
+<h4 id="org8e80576"><span class="section-number-4">2.9.7</span> 齐射炮塔</h4>
 <div class="outline-text-4" id="text-2-9-7">
 <p>
-继承 <a href="#orga0a4c3a">物品炮塔</a> &#x2013; 射速很快的炮塔.英文：BurstTurret
+继承 <a href="#orgf8d5d1e">物品炮塔</a> &#x2013; 射速很快的炮塔.英文：BurstTurret
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4067,17 +4308,18 @@ Sprites:
 <td class="org-left">burstSpacing</td>
 <td class="org-left">float</td>
 <td class="org-right">5</td>
-<td class="org-left">爆裂半径</td>
+<td class="org-left">连射间隔</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="outline-container-orgbd420ac" class="outline-4">
-<h4 id="orgbd420ac"><span class="section-number-4">2.9.8</span> 能量炮塔</h4>
+
+<div id="outline-container-org4187c18" class="outline-4">
+<h4 id="org4187c18"><span class="section-number-4">2.9.8</span> 能量炮塔</h4>
 <div class="outline-text-4" id="text-2-9-8">
 <p>
-继承 <a href="#orgd63904f">冷却炮塔</a> &#x2013; 用电射击的炮.英文：PowerTurret
+继承 <a href="#orga6603c0">冷却炮塔</a> &#x2013; 用电射击的炮.英文：PowerTurret
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4103,7 +4345,7 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">shootType</td>
-<td class="org-left"><a href="#orgccf8907">子弹类</a></td>
+<td class="org-left"><a href="#org38f1646">子弹类</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">必须</td>
 </tr>
@@ -4145,11 +4387,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org1c90b4a" class="outline-4">
-<h4 id="org1c90b4a"><span class="section-number-4">2.9.9</span> 充能炮塔</h4>
+<div id="outline-container-org8a16078" class="outline-4">
+<h4 id="org8a16078"><span class="section-number-4">2.9.9</span> 充能炮塔</h4>
 <div class="outline-text-4" id="text-2-9-9">
 <p>
-继承 <a href="#orgbd420ac">能量炮塔</a>，英文：ChargeTurret
+继承 <a href="#org4187c18">能量炮塔</a>，英文：ChargeTurret
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4196,14 +4438,14 @@ Sprites:
 
 <tr>
 <td class="org-left">chargeEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">充能特效</td>
 </tr>
 
 <tr>
 <td class="org-left">chargeBeginEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">开始充能特效</td>
 </tr>
@@ -4212,11 +4454,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgd495f5b" class="outline-4">
-<h4 id="orgd495f5b"><span class="section-number-4">2.9.10</span> 激光炮</h4>
+<div id="outline-container-orgac05bf5" class="outline-4">
+<h4 id="orgac05bf5"><span class="section-number-4">2.9.10</span> 激光炮</h4>
 <div class="outline-text-4" id="text-2-9-10">
 <p>
-继承 <a href="#orgbd420ac">能量炮塔</a>，英文：LaserTurret
+继承 <a href="#org4187c18">能量炮塔</a>，英文：LaserTurret
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4297,15 +4539,15 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org0e243f0" class="outline-3">
-<h3 id="org0e243f0"><span class="section-number-3">2.10</span> 运输</h3>
+<div id="outline-container-org504503d" class="outline-3">
+<h3 id="org504503d"><span class="section-number-3">2.10</span> 运输</h3>
 <div class="outline-text-3" id="text-2-10">
 </div>
-<div id="outline-container-org50b230d" class="outline-4">
-<h4 id="org50b230d"><span class="section-number-4">2.10.1</span> 传送带</h4>
+<div id="outline-container-orgc85bd3e" class="outline-4">
+<h4 id="orgc85bd3e"><span class="section-number-4">2.10.1</span> 传送带</h4>
 <div class="outline-text-4" id="text-2-10-1">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文：Conveyor
+继承 <a href="#orge65d2dd">方块</a>，英文：Conveyor
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4413,20 +4655,79 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgcfcd290" class="outline-4">
-<h4 id="orgcfcd290"><span class="section-number-4">2.10.2</span> 装甲传送带</h4>
+<div id="outline-container-org9ee5f09" class="outline-4">
+<h4 id="org9ee5f09"><span class="section-number-4">2.10.2</span> 装甲传送带</h4>
 <div class="outline-text-4" id="text-2-10-2">
 <p>
-继承 <a href="#org50b230d">传送带</a>  -不接受两边来物从传送带，英文：ArmoredConveyor
+继承 <a href="#orgc85bd3e">传送带</a>  -不接受两边来物从传送带，英文：ArmoredConveyor
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga566f56" class="outline-4">
-<h4 id="orga566f56"><span class="section-number-4">2.10.3</span> 连接器</h4>
+<div id="outline-container-org13d09c7" class="outline-4">
+<h4 id="org13d09c7"><span class="section-number-4">2.10.3</span> 路由器</h4>
 <div class="outline-text-4" id="text-2-10-3">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文：Junction
+继承 <a href="#orge65d2dd">方块</a>，英文：Router
+</p>
+
+<p>
+默认值:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">field</th>
+<th scope="col" class="org-left">default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">solid</td>
+<td class="org-left">true</td>
+</tr>
+
+<tr>
+<td class="org-left">update</td>
+<td class="org-left">true</td>
+</tr>
+
+<tr>
+<td class="org-left">hasItems</td>
+<td class="org-left">true</td>
+</tr>
+
+<tr>
+<td class="org-left">itemCapacity</td>
+<td class="org-left">1</td>
+</tr>
+
+<tr>
+<td class="org-left">group</td>
+<td class="org-left">transportation</td>
+</tr>
+
+<tr>
+<td class="org-left">uploadable</td>
+<td class="org-left">false</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-org11a372d" class="outline-4">
+<h4 id="org11a372d"><span class="section-number-4">2.10.4</span> 连接器</h4>
+<div class="outline-text-4" id="text-2-10-4">
+<p>
+继承 <a href="#orge65d2dd">方块</a>，英文：Junction
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4513,11 +4814,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org6d8d5ea" class="outline-4">
-<h4 id="org6d8d5ea"><span class="section-number-4">2.10.4</span> 物品桥</h4>
-<div class="outline-text-4" id="text-2-10-4">
+<div id="outline-container-org92c9859" class="outline-4">
+<h4 id="org92c9859"><span class="section-number-4">2.10.5</span> 物品桥</h4>
+<div class="outline-text-4" id="text-2-10-5">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文：ItemBridge
+继承 <a href="#orge65d2dd">方块</a>，英文：ItemBridge
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4643,11 +4944,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgff8e6dd" class="outline-4">
-<h4 id="orgff8e6dd"><span class="section-number-4">2.10.5</span> 延展物品桥</h4>
-<div class="outline-text-4" id="text-2-10-5">
+<div id="outline-container-org93f20fa" class="outline-4">
+<h4 id="org93f20fa"><span class="section-number-4">2.10.6</span> 延展物品桥</h4>
+<div class="outline-text-4" id="text-2-10-6">
 <p>
-继承 <a href="#org6d8d5ea">物品桥</a>，英文：ExtendingItemBridge
+继承 <a href="#org92c9859">物品桥</a>，英文：ExtendingItemBridge
 </p>
 
 <p>
@@ -4677,11 +4978,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org7ddff52" class="outline-4">
-<h4 id="org7ddff52"><span class="section-number-4">2.10.6</span> 储物物品桥</h4>
-<div class="outline-text-4" id="text-2-10-6">
+<div id="outline-container-orgb66be73" class="outline-4">
+<h4 id="orgb66be73"><span class="section-number-4">2.10.7</span> 储物物品桥</h4>
+<div class="outline-text-4" id="text-2-10-7">
 <p>
-继承 <a href="#orgff8e6dd">延展物品桥</a>，英文：BufferedItemBridge
+继承 <a href="#org93f20fa">延展物品桥</a>，英文：BufferedItemBridge
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4753,11 +5054,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgd8087f8" class="outline-4">
-<h4 id="orgd8087f8"><span class="section-number-4">2.10.7</span> 分类器</h4>
-<div class="outline-text-4" id="text-2-10-7">
+<div id="outline-container-orgf7e9fd0" class="outline-4">
+<h4 id="orgf7e9fd0"><span class="section-number-4">2.10.8</span> 分类器</h4>
+<div class="outline-text-4" id="text-2-10-8">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文：Sorter
+继承 <a href="#orge65d2dd">方块</a>，英文：Sorter
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4843,92 +5144,15 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org834711b" class="outline-4">
-<h4 id="org834711b"><span class="section-number-4">2.10.8</span> 溢流门</h4>
-<div class="outline-text-4" id="text-2-10-8">
-<p>
-继承 <a href="#orgdf716e1">方块</a>，英文：OverflowGate
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-
-<col  class="org-right" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">接口</th>
-<th scope="col" class="org-left">类型</th>
-<th scope="col" class="org-right">默认值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">speed</td>
-<td class="org-left">float</td>
-<td class="org-right">1</td>
-</tr>
-</tbody>
-</table>
-
-<p>
-默认值:
-</p>
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-
-
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-left" />
-</colgroup>
-<thead>
-<tr>
-<th scope="col" class="org-left">接口</th>
-<th scope="col" class="org-left">默认值</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="org-left">hasItems</td>
-<td class="org-left">true</td>
-</tr>
-
-<tr>
-<td class="org-left">soild</td>
-<td class="org-left">true</td>
-</tr>
-
-<tr>
-<td class="org-left">update</td>
-<td class="org-left">true</td>
-</tr>
-
-<tr>
-<td class="org-left">group</td>
-<td class="org-left">transportation</td>
-</tr>
-
-<tr>
-<td class="org-left">unloadable</td>
-<td class="org-left">false</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-
-<div id="outline-container-orge88675f" class="outline-4">
-<h4 id="orge88675f"><span class="section-number-4">2.10.9</span> 路由器</h4>
+<div id="outline-container-org3b9805b" class="outline-4">
+<h4 id="org3b9805b"><span class="section-number-4">2.10.9</span> 溢流门</h4>
 <div class="outline-text-4" id="text-2-10-9">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文：Router
+继承 <a href="#orge65d2dd">方块</a>，英文：OverflowGate
+</p>
+
+<p>
+溢流门和反向溢流门的类. 
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -4939,20 +5163,31 @@ Sprites:
 
 <col  class="org-left" />
 
-<col  class="org-right" />
+<col  class="org-left" />
+
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
 <th scope="col" class="org-left">接口</th>
 <th scope="col" class="org-left">类型</th>
-<th scope="col" class="org-right">默认值</th>
+<th scope="col" class="org-left">默认值</th>
+<th scope="col" class="org-left">备注</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="org-left">speed</td>
 <td class="org-left">float</td>
-<td class="org-right">8</td>
+<td class="org-left">1</td>
+<td class="org-left">物品通过时间</td>
+</tr>
+
+<tr>
+<td class="org-left">invert</td>
+<td class="org-left">boolean</td>
+<td class="org-left">false</td>
+<td class="org-left"><code>true</code> 来反向</td>
 </tr>
 </tbody>
 </table>
@@ -5000,20 +5235,16 @@ Sprites:
 <td class="org-left">unloadable</td>
 <td class="org-left">false</td>
 </tr>
-
-<tr>
-<td class="org-left">itemCapacity</td>
-<td class="org-left">1</td>
-</tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="outline-container-orgf713031" class="outline-4">
-<h4 id="orgf713031"><span class="section-number-4">2.10.10</span> 质量驱动器</h4>
+
+<div id="outline-container-org78ee8f5" class="outline-4">
+<h4 id="org78ee8f5"><span class="section-number-4">2.10.10</span> 质量驱动器</h4>
 <div class="outline-text-4" id="text-2-10-10">
 <p>
-继承 <a href="#orgdf716e1">方块</a> &#x2013; 用 <code>driverBolt</code> 来传输物品.英文：MassDriver
+继承 <a href="#orge65d2dd">方块</a> &#x2013; 用 <code>driverBolt</code> 来传输物品.英文：MassDriver
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5081,21 +5312,21 @@ Sprites:
 
 <tr>
 <td class="org-left">shootEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">shootBig2</td>
 <td class="org-left">射击特效</td>
 </tr>
 
 <tr>
 <td class="org-left">smokeEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">shootBigSmoke2</td>
 <td class="org-left">冒烟特效</td>
 </tr>
 
 <tr>
 <td class="org-left">recieveEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">mineBig</td>
 <td class="org-left">到达特效</td>
 </tr>
@@ -5185,15 +5416,15 @@ Sprites:
 </div>
 </div>
 </div>
-<div id="outline-container-org6036283" class="outline-3">
-<h3 id="org6036283"><span class="section-number-3">2.11</span> 液体方块M</h3>
+<div id="outline-container-org7422d83" class="outline-3">
+<h3 id="org7422d83"><span class="section-number-3">2.11</span> 液体方块M</h3>
 <div class="outline-text-3" id="text-2-11">
 </div>
-<div id="outline-container-org0171b25" class="outline-4">
-<h4 id="org0171b25"><span class="section-number-4">2.11.1</span> 液体方块</h4>
+<div id="outline-container-orgd37a5db" class="outline-4">
+<h4 id="orgd37a5db"><span class="section-number-4">2.11.1</span> 液体方块</h4>
 <div class="outline-text-4" id="text-2-11-1">
 <p>
-继承 <a href="#orgdf716e1">方块</a> &#x2013; 用于有液体的方块. 比其他方块有更多参数, 和更多贴图.
+继承 <a href="#orge65d2dd">方块</a> &#x2013; 用于有液体的方块. 比其他方块有更多参数, 和更多贴图.
 </p>
 
 <p>
@@ -5253,11 +5484,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org24452a5" class="outline-4">
-<h4 id="org24452a5"><span class="section-number-4">2.11.2</span> 泵</h4>
+<div id="outline-container-orgb9776b9" class="outline-4">
+<h4 id="orgb9776b9"><span class="section-number-4">2.11.2</span> 泵</h4>
 <div class="outline-text-4" id="text-2-11-2">
 <p>
-继承 <a href="#org0171b25">液体方块</a>，英文：Pump
+继承 <a href="#orgd37a5db">液体方块</a>，英文：Pump
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5327,11 +5558,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orge154d88" class="outline-4">
-<h4 id="orge154d88"><span class="section-number-4">2.11.3</span> 导管</h4>
+<div id="outline-container-org9da076a" class="outline-4">
+<h4 id="org9da076a"><span class="section-number-4">2.11.3</span> 导管</h4>
 <div class="outline-text-4" id="text-2-11-3">
 <p>
-继承 <a href="#org0171b25">液体方块</a>，英文：Conduit
+继承 <a href="#orgd37a5db">液体方块</a>，英文：Conduit
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5409,11 +5640,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org78a8c2d" class="outline-4">
-<h4 id="org78a8c2d"><span class="section-number-4">2.11.4</span> 装甲导管</h4>
+<div id="outline-container-orgd516d83" class="outline-4">
+<h4 id="orgd516d83"><span class="section-number-4">2.11.4</span> 装甲导管</h4>
 <div class="outline-text-4" id="text-2-11-4">
 <p>
-<b>[新特性 v99 (268)]</b> &#x2013; 继承 <a href="#orge154d88">2.11.3</a>，英文:ArmoredConduit
+<b>[新特性 v99 (268)]</b> &#x2013; 继承 <a href="#org9da076a">2.11.3</a>，英文:ArmoredConduit
 </p>
 
 <p>
@@ -5450,11 +5681,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org059e411" class="outline-4">
-<h4 id="org059e411"><span class="section-number-4">2.11.5</span> 液体溢流门</h4>
+<div id="outline-container-orgf25f36e" class="outline-4">
+<h4 id="orgf25f36e"><span class="section-number-4">2.11.5</span> 液体溢流门</h4>
 <div class="outline-text-4" id="text-2-11-5">
 <p>
-<b>[新特性 v99 (268)]</b> &#x2013; 继承 <a href="#org0171b25">2.11.1</a>，英文:LiquidOverflowGate
+<b>[新特性 v99 (268)]</b> &#x2013; 继承 <a href="#orgd37a5db">2.11.1</a>，英文:LiquidOverflowGate
 </p>
 
 <p>
@@ -5491,38 +5722,38 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orga2c3fbd" class="outline-4">
-<h4 id="orga2c3fbd"><span class="section-number-4">2.11.6</span> 液体路由器</h4>
+<div id="outline-container-org6aebd83" class="outline-4">
+<h4 id="org6aebd83"><span class="section-number-4">2.11.6</span> 液体路由器</h4>
 <div class="outline-text-4" id="text-2-11-6">
 <p>
-继承 <a href="#org0171b25">液体方块</a>，英文：LiquidRouter
+继承 <a href="#orgd37a5db">液体方块</a>，英文：LiquidRouter
 </p>
 </div>
 </div>
 
-<div id="outline-container-org7f624d2" class="outline-4">
-<h4 id="org7f624d2"><span class="section-number-4">2.11.7</span> 液罐</h4>
+<div id="outline-container-orge6c2d0f" class="outline-4">
+<h4 id="orge6c2d0f"><span class="section-number-4">2.11.7</span> 液罐</h4>
 <div class="outline-text-4" id="text-2-11-7">
 <p>
-继承 <a href="#orga2c3fbd">液体路由器</a>，英文：LiquidTank
+继承 <a href="#org6aebd83">液体路由器</a>，英文：LiquidTank
 </p>
 </div>
 </div>
 
-<div id="outline-container-org71aac02" class="outline-4">
-<h4 id="org71aac02"><span class="section-number-4">2.11.8</span> 液体连接点</h4>
+<div id="outline-container-orgc256ced" class="outline-4">
+<h4 id="orgc256ced"><span class="section-number-4">2.11.8</span> 液体连接点</h4>
 <div class="outline-text-4" id="text-2-11-8">
 <p>
-继承 <a href="#org0171b25">液体方块</a>，英文：LiquidJunction
+继承 <a href="#orgd37a5db">液体方块</a>，英文：LiquidJunction
 </p>
 </div>
 </div>
 
-<div id="outline-container-org41af679" class="outline-4">
-<h4 id="org41af679"><span class="section-number-4">2.11.9</span> 液体桥</h4>
+<div id="outline-container-orgdebf04e" class="outline-4">
+<h4 id="orgdebf04e"><span class="section-number-4">2.11.9</span> 液体桥</h4>
 <div class="outline-text-4" id="text-2-11-9">
 <p>
-继承 <a href="#org6d8d5ea">物品桥</a>，英文：LiquidBridge
+继承 <a href="#org92c9859">物品桥</a>，英文：LiquidBridge
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5564,11 +5795,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgeb01e1c" class="outline-4">
-<h4 id="orgeb01e1c"><span class="section-number-4">2.11.10</span> 拓展液体桥</h4>
+<div id="outline-container-org200b3eb" class="outline-4">
+<h4 id="org200b3eb"><span class="section-number-4">2.11.10</span> 拓展液体桥</h4>
 <div class="outline-text-4" id="text-2-11-10">
 <p>
-继承 <a href="#org6d8d5ea">物品桥</a>，英文：LiquidExtendingBridge
+继承 <a href="#org92c9859">物品桥</a>，英文：LiquidExtendingBridge
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5610,15 +5841,15 @@ Sprites:
 </div>
 </div>
 </div>
-<div id="outline-container-org8832510" class="outline-3">
-<h3 id="org8832510"><span class="section-number-3">2.12</span> 能量</h3>
+<div id="outline-container-orgc85eaec" class="outline-3">
+<h3 id="orgc85eaec"><span class="section-number-3">2.12</span> 能量</h3>
 <div class="outline-text-3" id="text-2-12">
 </div>
-<div id="outline-container-orgd6ccfc1" class="outline-4">
-<h4 id="orgd6ccfc1"><span class="section-number-4">2.12.1</span> 能量方块</h4>
+<div id="outline-container-org4df6bde" class="outline-4">
+<h4 id="org4df6bde"><span class="section-number-4">2.12.1</span> 能量方块</h4>
 <div class="outline-text-4" id="text-2-12-1">
 <p>
-<a href="#org49d12bb">Abstract</a> 修饰类继承 <a href="#orgdf716e1">方块</a>
+<a href="#org293e1a3">Abstract</a> 修饰类继承 <a href="#orge65d2dd">方块</a>
 </p>
 
 <p>
@@ -5664,11 +5895,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgeb31fcf" class="outline-4">
-<h4 id="orgeb31fcf"><span class="section-number-4">2.12.2</span> 节点</h4>
+<div id="outline-container-org9762e2e" class="outline-4">
+<h4 id="org9762e2e"><span class="section-number-4">2.12.2</span> 节点</h4>
 <div class="outline-text-4" id="text-2-12-2">
 <p>
-继承 <a href="#orgd6ccfc1">能量方块</a>，英文：PowerNode
+继承 <a href="#org4df6bde">能量方块</a>，英文：PowerNode
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5756,11 +5987,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgb9fda13" class="outline-4">
-<h4 id="orgb9fda13"><span class="section-number-4">2.12.3</span> 能量运输器</h4>
+<div id="outline-container-org07f75d0" class="outline-4">
+<h4 id="org07f75d0"><span class="section-number-4">2.12.3</span> 能量运输器</h4>
 <div class="outline-text-4" id="text-2-12-3">
 <p>
-继承 <a href="#orgd6ccfc1">能量方块</a>，英文：PowerDistributor
+继承 <a href="#org4df6bde">能量方块</a>，英文：PowerDistributor
 </p>
 
 <p>
@@ -5795,11 +6026,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org1b803cf" class="outline-4">
-<h4 id="org1b803cf"><span class="section-number-4">2.12.4</span> 电池</h4>
+<div id="outline-container-org0083d7b" class="outline-4">
+<h4 id="org0083d7b"><span class="section-number-4">2.12.4</span> 电池</h4>
 <div class="outline-text-4" id="text-2-12-4">
 <p>
-继承 <a href="#orgb9fda13">能量运输器</a> &#x2013; 就是一个普通方块.英文：Battery
+继承 <a href="#org07f75d0">能量运输器</a> &#x2013; 就是一个普通方块.英文：Battery
 </p>
 
 <p>
@@ -5835,15 +6066,15 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org603ef59" class="outline-4">
-<h4 id="org603ef59"><span class="section-number-4">2.12.5</span> 发电机</h4>
+<div id="outline-container-org1528085" class="outline-4">
+<h4 id="org1528085"><span class="section-number-4">2.12.5</span> 发电机</h4>
 <div class="outline-text-4" id="text-2-12-5">
 <p>
-继承 <a href="#orgb9fda13">能量运输器</a>，英文：PowerGenerator
+继承 <a href="#org07f75d0">能量运输器</a>，英文：PowerGenerator
 </p>
 
 <p>
-发电机会用 <a href="#org0b10559">消耗器</a> 产生能量.
+发电机会用 <a href="#org1de1603">消耗器</a> 产生能量.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5898,11 +6129,11 @@ Sprites:
 </table>
 </div>
 
-<div id="outline-container-orgb259bed" class="outline-5">
-<h5 id="orgb259bed"><span class="section-number-5">2.12.5.1</span> 地热发电机</h5>
+<div id="outline-container-org7f1838b" class="outline-5">
+<h5 id="org7f1838b"><span class="section-number-5">2.12.5.1</span> 地热发电机</h5>
 <div class="outline-text-5" id="text-2-12-5-1">
 <p>
-继承 <a href="#org603ef59">发电机</a> &#x2013; 用热 <a href="#orgd867e16">属性</a> 的地板发电. 输出公式是 <code>powerProduction * heat</code>, 和 <code>heat</code> 必须大于 <code>0.01</code>.英文：ThermalGenerator
+继承 <a href="#org1528085">发电机</a> &#x2013; 用 <a href="#orgbc1f0a0">属性</a> 的地板发电. 输出公式是 <code>powerProduction * 属性</code>, 和 <code>属性</code> 必须大于 <code>0.01</code>.英文：ThermalGenerator
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5928,20 +6159,27 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">generateEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-left">none</td>
 <td class="org-left">发电特效</td>
+</tr>
+
+<tr>
+<td class="org-left">attribute</td>
+<td class="org-left"><a href="#orgbc1f0a0">属性</a></td>
+<td class="org-left">heat</td>
+<td class="org-left">提升效率的属性.</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 
-<div id="outline-container-org4702630" class="outline-5">
-<h5 id="org4702630"><span class="section-number-5">2.12.5.2</span> 物品液体发电机</h5>
+<div id="outline-container-org878518c" class="outline-5">
+<h5 id="org878518c"><span class="section-number-5">2.12.5.2</span> 物品液体发电机</h5>
 <div class="outline-text-5" id="text-2-12-5-2">
 <p>
-继承 <a href="#org603ef59">发电机</a> &#x2013; 基础发电机.英文：ItemLiquidGenerator
+继承 <a href="#org1528085">发电机</a> &#x2013; 基础发电机.英文：ItemLiquidGenerator
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -5995,21 +6233,21 @@ Sprites:
 
 <tr>
 <td class="org-left">generateEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-left">generatespark</td>
 <td class="org-left">发电特效</td>
 </tr>
 
 <tr>
 <td class="org-left">explodeEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-left">generatespark</td>
 <td class="org-left">爆炸特效</td>
 </tr>
 
 <tr>
 <td class="org-left">heatColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-left">ff9b59</td>
 <td class="org-left">热的颜色</td>
 </tr>
@@ -6052,27 +6290,27 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgf15d009" class="outline-5">
-<h5 id="orgf15d009"><span class="section-number-5">2.12.5.3</span> 物品发电机</h5>
+<div id="outline-container-org6210fad" class="outline-5">
+<h5 id="org6210fad"><span class="section-number-5">2.12.5.3</span> 物品发电机</h5>
 <div class="outline-text-5" id="text-2-12-5-3">
 <p>
-继承 <a href="#org4702630">物品液体发电机</a> &#x2013; 从物体中发电.英文：SingleTypeGenerator
+继承 <a href="#org878518c">物品液体发电机</a> &#x2013; 从物体中发电.英文：SingleTypeGenerator
 </p>
 </div>
 </div>
-<div id="outline-container-orge80c8a6" class="outline-5">
-<h5 id="orge80c8a6"><span class="section-number-5">2.12.5.4</span> 火力发电机</h5>
+<div id="outline-container-org8b295e8" class="outline-5">
+<h5 id="org8b295e8"><span class="section-number-5">2.12.5.4</span> 火力发电机</h5>
 <div class="outline-text-5" id="text-2-12-5-4">
 <p>
-继承 <a href="#org4702630">物品液体发电机</a> &#x2013; 通过可燃物发电.英文：BurnerGenerator
+继承 <a href="#org878518c">物品液体发电机</a> &#x2013; 通过可燃物发电.英文：BurnerGenerator
 </p>
 </div>
 </div>
-<div id="outline-container-orgf80c9cb" class="outline-5">
-<h5 id="orgf80c9cb"><span class="section-number-5">2.12.5.5</span> 衰变发电机</h5>
+<div id="outline-container-orgf4960f7" class="outline-5">
+<h5 id="orgf4960f7"><span class="section-number-5">2.12.5.5</span> 衰变发电机</h5>
 <div class="outline-text-5" id="text-2-12-5-5">
 <p>
-继承 <a href="#org4702630">物品液体发电机</a> &#x2013; 通过辐射性发电.英文：DecayGenerator
+继承 <a href="#org878518c">物品液体发电机</a> &#x2013; 通过辐射性发电.英文：DecayGenerator
 </p>
 
 <p>
@@ -6108,11 +6346,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org9dd1300" class="outline-4">
-<h4 id="org9dd1300"><span class="section-number-4">2.12.6</span> 太阳能发电机</h4>
+<div id="outline-container-org44001ea" class="outline-4">
+<h4 id="org44001ea"><span class="section-number-4">2.12.6</span> 太阳能发电机</h4>
 <div class="outline-text-4" id="text-2-12-6">
 <p>
-继承 <a href="#org603ef59">发电机</a> &#x2013; 一个一直满效率的发电机.英文：SolarGenerator
+继承 <a href="#org1528085">发电机</a> &#x2013; 一个一直满效率的发电机.英文：SolarGenerator
 </p>
 
 <p>
@@ -6123,11 +6361,11 @@ Sprites:
 </ul>
 </div>
 
-<div id="outline-container-org088c28b" class="outline-5">
-<h5 id="org088c28b"><span class="section-number-5">2.12.6.1</span> 新核电站</h5>
+<div id="outline-container-org912a5e4" class="outline-5">
+<h5 id="org912a5e4"><span class="section-number-5">2.12.6.1</span> 新核电站</h5>
 <div class="outline-text-5" id="text-2-12-6-1">
 <p>
-继承 <a href="#org603ef59">发电机</a> &#x2013; 通过物品除了发电，无冷却爆炸.英文：NuclearReactor
+继承 <a href="#org1528085">发电机</a> &#x2013; 通过物品除了发电，无冷却爆炸.英文：NuclearReactor
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6153,21 +6391,21 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">lightColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">7f19ea</td>
 <td class="org-left"><b>[new v99 (268)]</b></td>
 </tr>
 
 <tr>
 <td class="org-left">coolColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">ffffff00</td>
 <td class="org-left">冷却液颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">hotColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">ff9575a3</td>
 <td class="org-left">过热颜色</td>
 </tr>
@@ -6261,6 +6499,11 @@ Sprites:
 <td class="org-left">hasLiquids</td>
 <td class="org-left">true</td>
 </tr>
+
+<tr>
+<td class="org-left">rebuildable</td>
+<td class="org-left">false</td>
+</tr>
 </tbody>
 </table>
 
@@ -6274,11 +6517,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org8fc6af0" class="outline-5">
-<h5 id="org8fc6af0"><span class="section-number-5">2.12.6.2</span> 冲击反应堆</h5>
+<div id="outline-container-org6608ff7" class="outline-5">
+<h5 id="org6608ff7"><span class="section-number-5">2.12.6.2</span> 冲击反应堆</h5>
 <div class="outline-text-5" id="text-2-12-6-2">
 <p>
-继承 <a href="#org603ef59">发电机</a> &#x2013; 需要能量和时间启动的发电机.英文：ImpactReactor
+继承 <a href="#org1528085">发电机</a> &#x2013; 需要能量和时间启动的发电机.英文：ImpactReactor
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6339,14 +6582,14 @@ Sprites:
 
 <tr>
 <td class="org-left">plasma1</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">ffd06b</td>
 <td class="org-left">等离子体1颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">plasma2</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">ff361b</td>
 <td class="org-left">等离子体2颜色</td>
 </tr>
@@ -6414,11 +6657,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org1f022b1" class="outline-4">
-<h4 id="org1f022b1"><span class="section-number-4">2.12.7</span> 二极管</h4>
+<div id="outline-container-orga72ca76" class="outline-4">
+<h4 id="orga72ca76"><span class="section-number-4">2.12.7</span> 二极管</h4>
 <div class="outline-text-4" id="text-2-12-7">
 <p>
-继承 <a href="#orgdf716e1">2.1</a>
+继承 <a href="#orge65d2dd">2.1</a>
 </p>
 
 <p>
@@ -6470,11 +6713,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org3d7db00" class="outline-4">
-<h4 id="org3d7db00"><span class="section-number-4">2.12.8</span> 灯</h4>
+<div id="outline-container-orgbed7596" class="outline-4">
+<h4 id="orgbed7596"><span class="section-number-4">2.12.8</span> 灯</h4>
 <div class="outline-text-4" id="text-2-12-8">
 <p>
-<b>[新特性 v99 (268)]</b> &#x2013; 继承 <a href="#orgdf716e1">2.1</a>，英文：LightBlock
+<b>[新特性 v99 (268)]</b> &#x2013; 继承 <a href="#orge65d2dd">2.1</a>，英文：LightBlock
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6559,15 +6802,15 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgc2036e2" class="outline-3">
-<h3 id="orgc2036e2"><span class="section-number-3">2.13</span> 生产工厂</h3>
+<div id="outline-container-orgebdd9b3" class="outline-3">
+<h3 id="orgebdd9b3"><span class="section-number-3">2.13</span> 生产工厂</h3>
 <div class="outline-text-3" id="text-2-13">
 </div>
-<div id="outline-container-org03cff6e" class="outline-4">
-<h4 id="org03cff6e"><span class="section-number-4">2.13.1</span> 钻头</h4>
+<div id="outline-container-org41f2e69" class="outline-4">
+<h4 id="org41f2e69"><span class="section-number-4">2.13.1</span> 钻头</h4>
 <div class="outline-text-4" id="text-2-13-1">
 <p>
-继承 <a href="#orgdf716e1">方块</a> &#x2013; 一组能从 <a href="#org3f78e97">矿物</a> 获取物品的方块.英文：Drill
+继承 <a href="#orge65d2dd">方块</a> &#x2013; 一组能从 <a href="#org129fb3e">矿物</a> 获取物品的方块.英文：Drill
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6628,7 +6871,7 @@ Sprites:
 
 <tr>
 <td class="org-left">drillEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-left">mine</td>
 <td class="org-left">工作特效.</td>
 </tr>
@@ -6642,7 +6885,7 @@ Sprites:
 
 <tr>
 <td class="org-left">updateEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-left">pulverizeSmall</td>
 <td class="org-left">随机特效.</td>
 </tr>
@@ -6663,7 +6906,7 @@ Sprites:
 
 <tr>
 <td class="org-left">heatColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-left">ff5512</td>
 <td class="org-left">加热颜色</td>
 </tr>
@@ -6746,11 +6989,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org0ea1935" class="outline-4">
-<h4 id="org0ea1935"><span class="section-number-4">2.13.2</span> 固体泵</h4>
+<div id="outline-container-orgc9181e3" class="outline-4">
+<h4 id="orgc9181e3"><span class="section-number-4">2.13.2</span> 固体泵</h4>
 <div class="outline-text-4" id="text-2-13-2">
 <p>
-继承 <a href="#org24452a5">泵</a> &#x2013; 一个用能量在固体地面抽液体的机器，只能放在固体上面.英文：SolidPump
+继承 <a href="#orgb9776b9">泵</a> &#x2013; 一个用能量在固体地面抽液体的机器，只能放在固体上面.英文：SolidPump
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6776,14 +7019,14 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">result</td>
-<td class="org-left"><a href="#org553f7bf">液体</a></td>
+<td class="org-left"><a href="#org525e49d">液体</a></td>
 <td class="org-right">water</td>
 <td class="org-left">产物</td>
 </tr>
 
 <tr>
 <td class="org-left">updateEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">随机特效</td>
 </tr>
@@ -6804,7 +7047,7 @@ Sprites:
 
 <tr>
 <td class="org-left">attribute</td>
-<td class="org-left"><a href="#orgd867e16">属性</a></td>
+<td class="org-left"><a href="#orgbc1f0a0">属性</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">加速需求属性</td>
 </tr>
@@ -6845,11 +7088,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org0a6b723" class="outline-4">
-<h4 id="org0a6b723"><span class="section-number-4">2.13.3</span> 培养机</h4>
+<div id="outline-container-orgc159be6" class="outline-4">
+<h4 id="orgc159be6"><span class="section-number-4">2.13.3</span> 培养机</h4>
 <div class="outline-text-4" id="text-2-13-3">
 <p>
-继承 <a href="#orgb2836b5">普通加工厂</a>，英文：Cultivator
+继承 <a href="#org0f06d1e">普通加工厂</a>，英文：Cultivator
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6917,11 +7160,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org880d90a" class="outline-4">
-<h4 id="org880d90a"><span class="section-number-4">2.13.4</span> 石油钻</h4>
+<div id="outline-container-org6fb45fc" class="outline-4">
+<h4 id="org6fb45fc"><span class="section-number-4">2.13.4</span> 石油钻</h4>
 <div class="outline-text-4" id="text-2-13-4">
 <p>
-继承 <a href="#org0ea1935">固体泵</a>，英文：Fracker
+继承 <a href="#orgc9181e3">固体泵</a>，英文：Fracker
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -6985,11 +7228,11 @@ Sprites:
 </ul>
 </div>
 </div>
-<div id="outline-container-org745ea28" class="outline-4">
-<h4 id="org745ea28"><span class="section-number-4">2.13.5</span> 焚化炉</h4>
+<div id="outline-container-org906e192" class="outline-4">
+<h4 id="org906e192"><span class="section-number-4">2.13.5</span> 焚化炉</h4>
 <div class="outline-text-4" id="text-2-13-5">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文：Incinerator
+继承 <a href="#orge65d2dd">方块</a>，英文：Incinerator
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7015,14 +7258,14 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">effect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-left">fuelburn</td>
 <td class="org-right">特效</td>
 </tr>
 
 <tr>
 <td class="org-left">flameColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-left">ffad9d</td>
 <td class="org-right">火焰颜色</td>
 </tr>
@@ -7072,15 +7315,15 @@ Sprites:
 </div>
 </div>
 </div>
-<div id="outline-container-org22ef350" class="outline-3">
-<h3 id="org22ef350"><span class="section-number-3">2.14</span> 单位方块</h3>
+<div id="outline-container-orgae2b552" class="outline-3">
+<h3 id="orgae2b552"><span class="section-number-3">2.14</span> 单位方块</h3>
 <div class="outline-text-3" id="text-2-14">
 </div>
-<div id="outline-container-org655e9d9" class="outline-4">
-<h4 id="org655e9d9"><span class="section-number-4">2.14.1</span> 修复点</h4>
+<div id="outline-container-org993893d" class="outline-4">
+<h4 id="org993893d"><span class="section-number-4">2.14.1</span> 修复点</h4>
 <div class="outline-text-4" id="text-2-14-1">
 <p>
-继承 <a href="#orgdf716e1">方块</a> &#x2013; 用激光修复附近单位.英文：RepairPoint
+继承 <a href="#orge65d2dd">方块</a> &#x2013; 用激光修复附近单位.英文：RepairPoint
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7186,11 +7429,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgaab2edd" class="outline-4">
-<h4 id="orgaab2edd"><span class="section-number-4">2.14.2</span> 单位工厂</h4>
+<div id="outline-container-org6b61362" class="outline-4">
+<h4 id="org6b61362"><span class="section-number-4">2.14.2</span> 单位工厂</h4>
 <div class="outline-text-4" id="text-2-14-2">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文：UnitFactory
+继承 <a href="#orge65d2dd">方块</a>，英文：UnitFactory
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7237,7 +7480,7 @@ Sprites:
 
 <tr>
 <td class="org-left">unitType</td>
-<td class="org-left"><a href="#org1a9a4a1">单位类</a></td>
+<td class="org-left"><a href="#org4e1ee75">单位类</a></td>
 <td class="org-right">none</td>
 <td class="org-left">制作单位</td>
 </tr>
@@ -7299,11 +7542,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org3385fcf" class="outline-4">
-<h4 id="org3385fcf"><span class="section-number-4">2.14.3</span> 指挥中心</h4>
+<div id="outline-container-org30deb48" class="outline-4">
+<h4 id="org30deb48"><span class="section-number-4">2.14.3</span> 指挥中心</h4>
 <div class="outline-text-4" id="text-2-14-3">
 <p>
-继承 <a href="#orgdf716e1">方块</a>，英文：CommandCenter
+继承 <a href="#orge65d2dd">方块</a>，英文：CommandCenter
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7329,21 +7572,21 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">topColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-left">command</td>
 <td class="org-left">顶部颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">bottomColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-left">5e5e5e</td>
 <td class="org-left">底部颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">effect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-left">commandSend</td>
 <td class="org-left">特效</td>
 </tr>
@@ -7393,11 +7636,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org90c7827" class="outline-4">
-<h4 id="org90c7827"><span class="section-number-4">2.14.4</span> 玩家机甲板</h4>
+<div id="outline-container-org50cc36a" class="outline-4">
+<h4 id="org50cc36a"><span class="section-number-4">2.14.4</span> 玩家机甲板</h4>
 <div class="outline-text-4" id="text-2-14-4">
 <p>
-继承 <a href="#orgdf716e1">方块</a> &#x2013; 生存玩家机甲的板子.英文：MechPad
+继承 <a href="#orge65d2dd">方块</a> &#x2013; 生存玩家机甲的板子.英文：MechPad
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7423,7 +7666,7 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">mech</td>
-<td class="org-left"><a href="#org3bd572a">玩家机甲</a></td>
+<td class="org-left"><a href="#org7ef113b">玩家机甲</a></td>
 <td class="org-left">none</td>
 <td class="org-left">玩家机甲种类</td>
 </tr>
@@ -7486,15 +7729,15 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org1abcb7d" class="outline-3">
-<h3 id="org1abcb7d"><span class="section-number-3">2.15</span> 存储</h3>
+<div id="outline-container-org5f1582b" class="outline-3">
+<h3 id="org5f1582b"><span class="section-number-3">2.15</span> 存储</h3>
 <div class="outline-text-3" id="text-2-15">
 </div>
-<div id="outline-container-org215364f" class="outline-4">
-<h4 id="org215364f"><span class="section-number-4">2.15.1</span> 存储方块</h4>
+<div id="outline-container-org6d8121a" class="outline-4">
+<h4 id="org6d8121a"><span class="section-number-4">2.15.1</span> 存储方块</h4>
 <div class="outline-text-4" id="text-2-15-1">
 <p>
-<a href="#org49d12bb">Abstract</a> 修饰类继承 <a href="#orgdf716e1">方块</a>，英文：StorageBlock
+<a href="#org293e1a3">Abstract</a> 修饰类继承 <a href="#orge65d2dd">方块</a>，英文：StorageBlock
 </p>
 
 <p>
@@ -7524,11 +7767,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org6094907" class="outline-4">
-<h4 id="org6094907"><span class="section-number-4">2.15.2</span> 核心</h4>
+<div id="outline-container-org08aa720" class="outline-4">
+<h4 id="org08aa720"><span class="section-number-4">2.15.2</span> 核心</h4>
 <div class="outline-text-4" id="text-2-15-2">
 <p>
-继承 <a href="#org215364f">存储方块</a>，英文：CoreBlock
+继承 <a href="#org6d8121a">存储方块</a>，英文：CoreBlock
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7614,11 +7857,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgd1ce4ca" class="outline-4">
-<h4 id="orgd1ce4ca"><span class="section-number-4">2.15.3</span> 仓库</h4>
+<div id="outline-container-org4cd9423" class="outline-4">
+<h4 id="org4cd9423"><span class="section-number-4">2.15.3</span> 仓库</h4>
 <div class="outline-text-4" id="text-2-15-3">
 <p>
-继承 <a href="#org215364f">存储方块</a>，英文：Vault
+继承 <a href="#org6d8121a">存储方块</a>，英文：Vault
 </p>
 
 <p>
@@ -7659,12 +7902,12 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org2d73c13" class="outline-4">
-<h4 id="org2d73c13"><span class="section-number-4">2.15.4</span> 卸载器</h4>
+<div id="outline-container-org660b400" class="outline-4">
+<h4 id="org660b400"><span class="section-number-4">2.15.4</span> 卸载器</h4>
 <div class="outline-text-4" id="text-2-15-4">
 <p>
-继承 <a href="#orgdf716e1">方块</a>
-一个方块可以从 <a href="#org215364f">存储方块</a>, 比如 <a href="#orgd1ce4ca">仓库</a>, <a href="#org6094907">核心</a> 或 <a href="#org2408220">工厂</a> 中拿物品.英文：Unloader
+继承 <a href="#orge65d2dd">方块</a>
+一个方块可以从 <a href="#org6d8121a">存储方块</a>, 比如 <a href="#org4cd9423">仓库</a>, <a href="#org08aa720">核心</a> 或 <a href="#orge0a02f9">工厂</a> 中拿物品.英文：Unloader
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7753,11 +7996,11 @@ Sprites:
 </div>
 
 
-<div id="outline-container-org59e2040" class="outline-4">
-<h4 id="org59e2040"><span class="section-number-4">2.15.5</span> 发射器</h4>
+<div id="outline-container-org466001a" class="outline-4">
+<h4 id="org466001a"><span class="section-number-4">2.15.5</span> 发射器</h4>
 <div class="outline-text-4" id="text-2-15-5">
 <p>
-继承 <a href="#org215364f">存储方块</a>，英文：LaunchPad
+继承 <a href="#org6d8121a">存储方块</a>，英文：LaunchPad
 </p>
 
 <p>
@@ -7833,11 +8076,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgd867e16" class="outline-3">
-<h3 id="orgd867e16"><span class="section-number-3">2.16</span> 属性</h3>
+<div id="outline-container-orgbc1f0a0" class="outline-3">
+<h3 id="orgbc1f0a0"><span class="section-number-3">2.16</span> 属性</h3>
 <div class="outline-text-3" id="text-2-16">
 <p>
-属于一个抽象物品的一个组 <a href="#orgd867e16">属性</a>. 在 <code>地板</code> 中使用来给地板一个特殊属性, 比如 <i>热量</i> 和 <i>孢子度</i> 来给某些机器提效, 比如泵和培养机.
+属于一个抽象物品的一个组 <a href="#orgbc1f0a0">属性</a>. 在 <code>地板</code> 中使用来给地板一个特殊属性, 比如 <i>热量</i> 和 <i>孢子度</i> 来给某些机器提效, 比如泵和培养机.
 </p>
 
 <p>
@@ -7864,7 +8107,7 @@ Sprites:
 </div>
 
 <p>
-你可以把这个放 <a href="#orge9d3f0e">地板</a> 类的文件里面，比如:
+你可以把这个放 <a href="#org7271ac7">地板</a> 类的文件里面，比如:
 </p>
 
 <div class="org-src-container">
@@ -7879,8 +8122,8 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org9ee6ff7" class="outline-3">
-<h3 id="org9ee6ff7"><span class="section-number-3">2.17</span> 属性</h3>
+<div id="outline-container-org1d87e3a" class="outline-3">
+<h3 id="org1d87e3a"><span class="section-number-3">2.17</span> 属性</h3>
 <div class="outline-text-3" id="text-2-17">
 <p>
 不能添加新属性. 这里是内建属性:
@@ -7894,8 +8137,8 @@ Sprites:
 </ul>
 </div>
 </div>
-<div id="outline-container-org20ce3de" class="outline-3">
-<h3 id="org20ce3de"><span class="section-number-3">2.18</span> 建筑菜单可见性</h3>
+<div id="outline-container-orgee939ae" class="outline-3">
+<h3 id="orgee939ae"><span class="section-number-3">2.18</span> 建筑菜单可见性</h3>
 <div class="outline-text-3" id="text-2-18">
 <p>
 有以下选项:
@@ -7911,8 +8154,8 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org56116cf" class="outline-3">
-<h3 id="org56116cf"><span class="section-number-3">2.19</span> 方块组别</h3>
+<div id="outline-container-org79759a8" class="outline-3">
+<h3 id="org79759a8"><span class="section-number-3">2.19</span> 方块组别</h3>
 <div class="outline-text-3" id="text-2-19">
 <p>
 各个内建组别:
@@ -7930,16 +8173,16 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org8a4998b" class="outline-2">
-<h2 id="org8a4998b"><span class="section-number-2">3</span> 种类</h2>
+<div id="outline-container-orgf551bf5" class="outline-2">
+<h2 id="orgf551bf5"><span class="section-number-2">3</span> 种类</h2>
 <div class="outline-text-2" id="text-3">
 </div>
 
-<div id="outline-container-org6ea992d" class="outline-3">
-<h3 id="org6ea992d"><span class="section-number-3">3.1</span> 物品</h3>
+<div id="outline-container-org52e37a0" class="outline-3">
+<h3 id="org52e37a0"><span class="section-number-3">3.1</span> 物品</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
-继承 <a href="#orgba62d74">内容</a> &#x2013; 只是一个可以上传送带，分类器和物品容器的东西的东西，经常用于工厂中。
+继承 <a href="#org778eb08">内容</a> &#x2013; 只是一个可以上传送带，分类器和物品容器的东西的东西，经常用于工厂中。
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -7965,14 +8208,14 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">color</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-left">black</td>
 <td class="org-left">分类器显示色</td>
 </tr>
 
 <tr>
 <td class="org-left">type</td>
-<td class="org-left"><a href="#org6ea992d">物品</a></td>
+<td class="org-left"><a href="#org52e37a0">物品</a></td>
 <td class="org-left">resource</td>
 <td class="org-left"><code>resource</code> 或是 <code>material</code> ; resource不能进核心，反之</td>
 </tr>
@@ -8022,7 +8265,7 @@ Sprites:
 </table>
 
 <p>
-<a id="orgaa440c9"></a> <b>ItemTypes:</b>
+<a id="org2584b9b"></a> <b>ItemTypes:</b>
 </p>
 <ul class="org-ul">
 <li><code>resource</code> 可以进入核心;</li>
@@ -8031,8 +8274,8 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgd06e0dd" class="outline-3">
-<h3 id="orgd06e0dd"><span class="section-number-3">3.2</span> 物品组</h3>
+<div id="outline-container-org92084a5" class="outline-3">
+<h3 id="org92084a5"><span class="section-number-3">3.2</span> 物品组</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 这个类用来定义消耗的物品及数量.
@@ -8076,7 +8319,7 @@ Sprites:
 
 <tr>
 <td class="org-left">item</td>
-<td class="org-left"><a href="#org6ea992d">物品</a></td>
+<td class="org-left"><a href="#org52e37a0">物品</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">物品名字</td>
 </tr>
@@ -8097,15 +8340,15 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org553f7bf" class="outline-3">
-<h3 id="org553f7bf"><span class="section-number-3">3.3</span> 液体</h3>
+<div id="outline-container-org525e49d" class="outline-3">
+<h3 id="org525e49d"><span class="section-number-3">3.3</span> 液体</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
-继承 <a href="#orgba62d74">内容</a>
+继承 <a href="#org778eb08">内容</a>
 </p>
 
 <p>
-定义液体的东西. 像 <a href="#org6ea992d">3.1</a> 一样，这个内容物有自己的子文件夹 <code>content/liquids/liquid-name.json</code>, 这个液体名字可以在其他内容物重复使用.
+定义液体的东西. 像 <a href="#org52e37a0">3.1</a> 一样，这个内容物有自己的子文件夹 <code>content/liquids/liquid-name.json</code>, 这个液体名字可以在其他内容物重复使用.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -8131,21 +8374,21 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">color</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left"><b>[必须]</b> 液体颜色</td>
 </tr>
 
 <tr>
 <td class="org-left">barColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left"><i>[非必须]</i> UI中颜色.</td>
 </tr>
 
 <tr>
 <td class="org-left">lightColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">发光颜色.改变光度不在这里.</td>
 </tr>
@@ -8187,7 +8430,7 @@ Sprites:
 
 <tr>
 <td class="org-left">effect</td>
-<td class="org-left"><a href="#org1f42bfd">状态</a></td>
+<td class="org-left"><a href="#orgd091d38">状态</a></td>
 <td class="org-right">none</td>
 <td class="org-left">接触此液体获得的状态.</td>
 </tr>
@@ -8203,8 +8446,8 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgcd0194a" class="outline-3">
-<h3 id="orgcd0194a"><span class="section-number-3">3.4</span> 液体组</h3>
+<div id="outline-container-org272062c" class="outline-3">
+<h3 id="org272062c"><span class="section-number-3">3.4</span> 液体组</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 这个类用来定义消耗的液体及数量.
@@ -8238,7 +8481,7 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">liquid</td>
-<td class="org-left"><a href="#org553f7bf">液体</a></td>
+<td class="org-left"><a href="#org525e49d">液体</a></td>
 <td class="org-left">液体种类</td>
 </tr>
 
@@ -8264,8 +8507,8 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org5c9447f" class="outline-3">
-<h3 id="org5c9447f"><span class="section-number-3">3.5</span> 武器</h3>
+<div id="outline-container-org943b0aa" class="outline-3">
+<h3 id="org943b0aa"><span class="section-number-3">3.5</span> 武器</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 武器被单位使用,无论是飞行单位还是地面单位,或是玩家机甲.这个是它们射子弹的工具.
@@ -8315,14 +8558,14 @@ Sprites:
 
 <tr>
 <td class="org-left">bullet</td>
-<td class="org-left"><a href="#orgccf8907">子弹类</a></td>
+<td class="org-left"><a href="#org38f1646">子弹类</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">射的子弹类型</td>
 </tr>
 
 <tr>
 <td class="org-left">ejectEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">none</td>
 <td class="org-left">射击特效</td>
 </tr>
@@ -8419,8 +8662,15 @@ Sprites:
 </tr>
 
 <tr>
+<td class="org-left">targetDistance</td>
+<td class="org-left">float</td>
+<td class="org-right">1</td>
+<td class="org-left">如果 <code>turnCursor</code> 是 <code>false</code> 在一个玩家机甲, 这个武器会瞄准多远.</td>
+</tr>
+
+<tr>
 <td class="org-left">shootSound</td>
-<td class="org-left"><a href="#org5980de3">音效</a></td>
+<td class="org-left"><a href="#org1c03a2d">音效</a></td>
 <td class="org-right">pew</td>
 <td class="org-left">射击音效</td>
 </tr>
@@ -8436,11 +8686,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org1a9a4a1" class="outline-3">
-<h3 id="org1a9a4a1"><span class="section-number-3">3.6</span> 单位类</h3>
+<div id="outline-container-org4e1ee75" class="outline-3">
+<h3 id="org4e1ee75"><span class="section-number-3">3.6</span> 单位类</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
-继承 <a href="#orgba62d74">内容</a>
+继承 <a href="#org778eb08">内容</a>
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -8466,7 +8716,7 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">type</td>
-<td class="org-left"><a href="#org8b3cc2d">基础单位</a></td>
+<td class="org-left"><a href="#orged395ed">基础单位</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">单位类型</td>
 </tr>
@@ -8606,7 +8856,7 @@ Sprites:
 
 <tr>
 <td class="org-left">weapon</td>
-<td class="org-left"><a href="#org5c9447f">武器</a></td>
+<td class="org-left"><a href="#org943b0aa">武器</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">武器</td>
 </tr>
@@ -8634,14 +8884,14 @@ Sprites:
 
 <tr>
 <td class="org-left">toMine</td>
-<td class="org-left"><a href="#org6ea992d">物品</a></td>
+<td class="org-left"><a href="#org52e37a0">物品</a></td>
 <td class="org-right">copper,lead</td>
 <td class="org-left">挖的东西</td>
 </tr>
 
 <tr>
 <td class="org-left">deathSound</td>
-<td class="org-left"><a href="#org5980de3">音效</a></td>
+<td class="org-left"><a href="#org1c03a2d">音效</a></td>
 <td class="org-right">bang</td>
 <td class="org-left">死亡音效</td>
 </tr>
@@ -8659,11 +8909,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org3bd572a" class="outline-3">
-<h3 id="org3bd572a"><span class="section-number-3">3.7</span> 玩家机甲</h3>
+<div id="outline-container-org7ef113b" class="outline-3">
+<h3 id="org7ef113b"><span class="section-number-3">3.7</span> 玩家机甲</h3>
 <div class="outline-text-3" id="text-3-7">
 <p>
-继承 <a href="#orgba62d74">内容</a> &#x2013; 玩家机甲是玩家控制的实体.
+继承 <a href="#org778eb08">内容</a> &#x2013; 玩家机甲是玩家控制的实体.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -8780,7 +9030,7 @@ Sprites:
 
 <tr>
 <td class="org-left">engineColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">boostTo</td>
 <td class="org-left">引擎颜色</td>
 </tr>
@@ -8821,6 +9071,27 @@ Sprites:
 </tr>
 
 <tr>
+<td class="org-left">drawCell</td>
+<td class="org-left">boolean</td>
+<td class="org-right">true</td>
+<td class="org-left">是否渲染队伍灯</td>
+</tr>
+
+<tr>
+<td class="org-left">drawItems</td>
+<td class="org-left">boolean</td>
+<td class="org-right">true</td>
+<td class="org-left">是否渲染所持物品</td>
+</tr>
+
+<tr>
+<td class="org-left">drawLight</td>
+<td class="org-left">boolean</td>
+<td class="org-right">true</td>
+<td class="org-left">是否渲染引擎</td>
+</tr>
+
+<tr>
 <td class="org-left">weaponOffsetY</td>
 <td class="org-left">float</td>
 <td class="org-right">5</td>
@@ -8843,7 +9114,7 @@ Sprites:
 
 <tr>
 <td class="org-left">weapon</td>
-<td class="org-left"><a href="#org5c9447f">武器</a></td>
+<td class="org-left"><a href="#org943b0aa">武器</a></td>
 <td class="org-right">null</td>
 <td class="org-left">武器</td>
 </tr>
@@ -8852,8 +9123,8 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org99a0eb7" class="outline-3">
-<h3 id="org99a0eb7"><span class="section-number-3">3.8</span> 内容菜单类型</h3>
+<div id="outline-container-org07a24c4" class="outline-3">
+<h3 id="org07a24c4"><span class="section-number-3">3.8</span> 内容菜单类型</h3>
 <div class="outline-text-3" id="text-3-8">
 <p>
 建筑菜单中的内容类型:
@@ -8873,11 +9144,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org8ac998d" class="outline-3">
-<h3 id="org8ac998d"><span class="section-number-3">3.9</span> 区域</h3>
+<div id="outline-container-org310718a" class="outline-3">
+<h3 id="org310718a"><span class="section-number-3">3.9</span> 区域</h3>
 <div class="outline-text-3" id="text-3-9">
 <p>
-继承 <a href="#orgba62d74">内容</a> 
+继承 <a href="#org778eb08">内容</a> 
 </p>
 
 <p>
@@ -8915,21 +9186,21 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">baseLaunchCost</td>
-<td class="org-left"><a href="#orgd06e0dd">物品组</a></td>
+<td class="org-left"><a href="#org92084a5">物品组</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">基础发射消耗资源</td>
 </tr>
 
 <tr>
 <td class="org-left">launchCost</td>
-<td class="org-left"><a href="#orgd06e0dd">物品组</a></td>
+<td class="org-left"><a href="#org92084a5">物品组</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">发射消耗资源</td>
 </tr>
 
 <tr>
 <td class="org-left">startingItems</td>
-<td class="org-left"><a href="#orgd06e0dd">物品组</a></td>
+<td class="org-left"><a href="#org92084a5">物品组</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">初始物品.</td>
 </tr>
@@ -8957,7 +9228,7 @@ Sprites:
 
 <tr>
 <td class="org-left">loadout</td>
-<td class="org-left"><a href="#org2897412">蓝图</a></td>
+<td class="org-left"><a href="#orga3930da">蓝图</a></td>
 <td class="org-left">basicShard</td>
 <td class="org-left">初始核心.</td>
 </tr>
@@ -8966,26 +9237,26 @@ Sprites:
 <td class="org-left">resources</td>
 <td class="org-left">[ String ]</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">一个 <a href="#org6ea992d">物品</a> 名字的组.</td>
+<td class="org-left">一个 <a href="#org52e37a0">物品</a> 名字的组.</td>
 </tr>
 
 <tr>
 <td class="org-left">requirements</td>
-<td class="org-left">[ <a href="#org132afd8">元素</a> ]</td>
+<td class="org-left">[ <a href="#orgd46c2d7">元素</a> ]</td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">一组开启地图的条件.</td>
 </tr>
 
 <tr>
 <td class="org-left">configureObjective</td>
-<td class="org-left"><a href="#org132afd8">元素</a></td>
+<td class="org-left"><a href="#orgd46c2d7">元素</a></td>
 <td class="org-left">ZoneWave 15</td>
 <td class="org-left">可自定义发射物品波次</td>
 </tr>
 
 <tr>
 <td class="org-left">defaultStartingItems</td>
-<td class="org-left"><a href="#orgd06e0dd">物品组</a></td>
+<td class="org-left"><a href="#org92084a5">物品组</a></td>
 <td class="org-left">&#xa0;</td>
 <td class="org-left">默认初始物品</td>
 </tr>
@@ -9032,11 +9303,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-org1f42bfd" class="outline-3">
-<h3 id="org1f42bfd"><span class="section-number-3">3.10</span> 状态</h3>
+<div id="outline-container-orgd091d38" class="outline-3">
+<h3 id="orgd091d38"><span class="section-number-3">3.10</span> 状态</h3>
 <div class="outline-text-3" id="text-3-10">
 <p>
-<i>不要和 <a href="#orgb203426">特效</a> 搞混</i>,状态会给一个实体额外属性.现在 <b>你不可以添加自定义的状态</b>. &#x2013; 状态有时会充当效果的两个条件. 比如一个 <code>wet</code> 的单位获得了 <code>shocked</code> 此时它会掉20血.
+<i>不要和 <a href="#org6f74f92">特效</a> 搞混</i>,状态会给一个实体额外属性. &#x2013; 状态有时会充当效果的两个条件. 比如一个 <code>wet</code> 的单位获得了 <code>shocked</code> 此时它会掉20血.
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -9083,7 +9354,7 @@ Sprites:
 
 <tr>
 <td class="org-left">color</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-left">white</td>
 <td class="org-left">颜色</td>
 </tr>
@@ -9097,7 +9368,7 @@ Sprites:
 
 <tr>
 <td class="org-left">effect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-left">none</td>
 <td class="org-left">在单位上出现，状态特效 (一帧0.15%几率触发).</td>
 </tr>
@@ -9436,12 +9707,12 @@ Sprites:
 </div>
 
 
-<div id="outline-container-org47bace8" class="outline-2">
-<h2 id="org47bace8"><span class="section-number-2">4</span> 图像</h2>
+<div id="outline-container-orgeaada6e" class="outline-2">
+<h2 id="orgeaada6e"><span class="section-number-2">4</span> 图像</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org6d6fd97" class="outline-3">
-<h3 id="org6d6fd97"><span class="section-number-3">4.1</span> 渲染层</h3>
+<div id="outline-container-org8edf900" class="outline-3">
+<h3 id="org8edf900"><span class="section-number-3">4.1</span> 渲染层</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 渲染层是一个类,会让渲染器在如下层数渲染方块:
@@ -9456,8 +9727,8 @@ Sprites:
 </ul>
 </div>
 </div>
-<div id="outline-container-org8cbcedb" class="outline-3">
-<h3 id="org8cbcedb"><span class="section-number-3">4.2</span> 颜色</h3>
+<div id="outline-container-org3fb884b" class="outline-3">
+<h3 id="org3fb884b"><span class="section-number-3">4.2</span> 颜色</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 颜色是十六进制的文字串, <code>&lt;rr&gt;&lt;gg&gt;&lt;bb&gt;</code> 比如:
@@ -9476,26 +9747,26 @@ Sprites:
 </div>
 
 
-<div id="outline-container-org48495a9" class="outline-2">
-<h2 id="org48495a9"><span class="section-number-2">5</span> 实体</h2>
+<div id="outline-container-orgffec7bc" class="outline-2">
+<h2 id="orgffec7bc"><span class="section-number-2">5</span> 实体</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-orgccf8907" class="outline-3">
-<h3 id="orgccf8907"><span class="section-number-3">5.1</span> 子弹类</h3>
+<div id="outline-container-org38f1646" class="outline-3">
+<h3 id="org38f1646"><span class="section-number-3">5.1</span> 子弹类</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
-<a href="#org49d12bb">Abstract</a> 修饰类继承 <a href="#orgba62d74">内容</a>
+<a href="#org293e1a3">Abstract</a> 修饰类继承 <a href="#org778eb08">内容</a>
 </p>
 
 <p>
-子弹类可以是一个元素 <code>{}</code> 或一个 <code>"字符串"</code>, 字符串就是调用 <a href="#orgc11f9eb">5.1.5</a> 元素就是自定义子弹.
+子弹类可以是一个元素 <code>{}</code> 或一个 <code>"字符串"</code>, 字符串就是调用 <a href="#org45e8298">5.1.5</a> 元素就是自定义子弹.
 </p>
 
 <p>
 这里有两个主要的子弹类:
 </p>
 <ul class="org-ul">
-<li><a href="#orgfabfe03">基础子弹</a> 和,</li>
+<li><a href="#org843769e">基础子弹</a> 和,</li>
 <li>其他特殊的子弹类.</li>
 </ul>
 
@@ -9611,35 +9882,35 @@ Sprites:
 
 <tr>
 <td class="org-left">hitEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">击中特效</td>
 </tr>
 
 <tr>
 <td class="org-left">despawnEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">超时特效</td>
 </tr>
 
 <tr>
 <td class="org-left">shootEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">射击特效</td>
 </tr>
 
 <tr>
 <td class="org-left">smokeEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">射击烟雾特效</td>
 </tr>
 
 <tr>
 <td class="org-left">hitSound</td>
-<td class="org-left"><a href="#org5980de3">音效</a></td>
+<td class="org-left"><a href="#org1c03a2d">音效</a></td>
 <td class="org-right">&#xa0;</td>
 <td class="org-left">子弹击中音效</td>
 </tr>
@@ -9673,6 +9944,13 @@ Sprites:
 </tr>
 
 <tr>
+<td class="org-left">killShooter</td>
+<td class="org-left">float</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-left">是否自爆兵</td>
+</tr>
+
+<tr>
 <td class="org-left">splashDamage</td>
 <td class="org-left">float</td>
 <td class="org-right">0</td>
@@ -9695,7 +9973,7 @@ Sprites:
 
 <tr>
 <td class="org-left">status</td>
-<td class="org-left"><a href="#org1f42bfd">状态</a></td>
+<td class="org-left"><a href="#orgd091d38">状态</a></td>
 <td class="org-right">none</td>
 <td class="org-left">击中给予状态.</td>
 </tr>
@@ -9753,28 +10031,35 @@ Sprites:
 <td class="org-left">fragVelocityMin</td>
 <td class="org-left">float</td>
 <td class="org-right">0.2</td>
-<td class="org-left">破片弹最小初速度</td>
+<td class="org-left">破片最小速度倍率.</td>
 </tr>
 
 <tr>
 <td class="org-left">fragVelocityMax</td>
 <td class="org-left">float</td>
 <td class="org-right">1</td>
-<td class="org-left">破片弹最大初速度</td>
+<td class="org-left">破片最大速度倍率.</td>
 </tr>
 
 <tr>
 <td class="org-left">fragBullet</td>
-<td class="org-left"><a href="#orgccf8907">子弹类</a></td>
+<td class="org-left"><a href="#org38f1646">子弹类</a></td>
 <td class="org-right">null</td>
-<td class="org-left">破片弹</td>
+<td class="org-left">破片弹，null来取消生成.</td>
+</tr>
+
+<tr>
+<td class="org-left">splashDamage</td>
+<td class="org-left">float</td>
+<td class="org-right">0</td>
+<td class="org-left">范围伤害. 用 <a href="https://en.wikipedia.org/wiki/Linear_interpolation">linear interpolation</a> 计算, 也是熟悉的 lerp 函数.</td>
 </tr>
 
 <tr>
 <td class="org-left">splashDamageRadius</td>
 <td class="org-left">float</td>
 <td class="org-right">-1</td>
-<td class="org-left">范围伤害范围.负数来取消范围伤害</td>
+<td class="org-left">范围伤害范围. <code>splashDamageRadius</code> 这个值与上一个配合作用于函数 <code>lerp(1 - distance / radius, 1, 0.4)</code> 是 <code>splashDamage</code> 的倍率.</td>
 </tr>
 
 <tr>
@@ -9836,11 +10121,11 @@ Sprites:
 </table>
 </div>
 
-<div id="outline-container-orgfabfe03" class="outline-4">
-<h4 id="orgfabfe03"><span class="section-number-4">5.1.1</span> 基础子弹</h4>
+<div id="outline-container-org843769e" class="outline-4">
+<h4 id="org843769e"><span class="section-number-4">5.1.1</span> 基础子弹</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <p>
-继承 <a href="#orgccf8907">子弹类</a>，英文：BasicBulletType
+继承 <a href="#org38f1646">子弹类</a>，英文：BasicBulletType
 </p>
 
 <p>
@@ -9884,14 +10169,14 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">backColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">bulletYellowBack</td>
 <td class="org-left"><code>&lt;name&gt;-back</code> 贴图的颜色.</td>
 </tr>
 
 <tr>
 <td class="org-left">frontColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">bulletYellow</td>
 <td class="org-left"><code>&lt;name&gt;</code> 贴图的颜色.</td>
 </tr>
@@ -9947,11 +10232,11 @@ Sprites:
 </ul>
 </div>
 
-<div id="outline-container-orga1f4204" class="outline-5">
-<h5 id="orga1f4204"><span class="section-number-5">5.1.1.1</span> 炮塔弹</h5>
+<div id="outline-container-orge7b4b01" class="outline-5">
+<h5 id="orge7b4b01"><span class="section-number-5">5.1.1.1</span> 炮塔弹</h5>
 <div class="outline-text-5" id="text-5-1-1-1">
 <p>
-继承 <a href="#orgfabfe03">基础子弹</a>，英文：ArtilleryBulletType
+继承 <a href="#org843769e">基础子弹</a>，英文：ArtilleryBulletType
 </p>
 
 <p>
@@ -9981,7 +10266,7 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">trailEffect</td>
-<td class="org-left"><a href="#orgb203426">特效</a></td>
+<td class="org-left"><a href="#org6f74f92">特效</a></td>
 <td class="org-left">artilleryTrail</td>
 <td class="org-left">尾迹特效</td>
 </tr>
@@ -10041,11 +10326,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orge61510e" class="outline-5">
-<h5 id="orge61510e"><span class="section-number-5">5.1.1.2</span> 破片弹</h5>
+<div id="outline-container-org956fdd8" class="outline-5">
+<h5 id="org956fdd8"><span class="section-number-5">5.1.1.2</span> 破片弹</h5>
 <div class="outline-text-5" id="text-5-1-1-2">
 <p>
-继承 <a href="#orgfabfe03">基础子弹</a>，英文：FlakBulletType
+继承 <a href="#org843769e">基础子弹</a>，英文：FlakBulletType
 </p>
 
 <p>
@@ -10130,11 +10415,11 @@ Sprites:
 </div>
 </div>
 
-<div id="outline-container-orgba966e2" class="outline-5">
-<h5 id="orgba966e2"><span class="section-number-5">5.1.1.3</span> 导弹</h5>
+<div id="outline-container-org9286297" class="outline-5">
+<h5 id="org9286297"><span class="section-number-5">5.1.1.3</span> 导弹</h5>
 <div class="outline-text-5" id="text-5-1-1-3">
 <p>
-继承 <a href="#orgfabfe03">基础子弹</a>，英文：MissileBulletType
+继承 <a href="#org843769e">基础子弹</a>，英文：MissileBulletType
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -10160,7 +10445,7 @@ Sprites:
 <tbody>
 <tr>
 <td class="org-left">trailColor</td>
-<td class="org-left"><a href="#org8cbcedb">颜色</a></td>
+<td class="org-left"><a href="#org3fb884b">颜色</a></td>
 <td class="org-right">missileYellowBack</td>
 <td class="org-left">尾迹颜色</td>
 </tr>
@@ -10208,11 +10493,11 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-org6e76a4d" class="outline-5">
-<h5 id="org6e76a4d"><span class="section-number-5">5.1.1.4</span> 炸弹</h5>
+<div id="outline-container-org536e510" class="outline-5">
+<h5 id="org536e510"><span class="section-number-5">5.1.1.4</span> 炸弹</h5>
 <div class="outline-text-5" id="text-5-1-1-4">
 <p>
-继承 <a href="#orgfabfe03">基础子弹</a>，英文：BombBulletType
+继承 <a href="#org843769e">基础子弹</a>，英文：BombBulletType
 </p>
 
 <p>
@@ -10279,11 +10564,11 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-org89c2aba" class="outline-4">
-<h4 id="org89c2aba"><span class="section-number-4">5.1.2</span> 治疗子弹</h4>
+<div id="outline-container-org4af5d2a" class="outline-4">
+<h4 id="org4af5d2a"><span class="section-number-4">5.1.2</span> 治疗子弹</h4>
 <div class="outline-text-4" id="text-5-1-2">
 <p>
-继承 <a href="#orgccf8907">子弹类</a> &#x2013; 可以治疗同队方块和单位的子弹.英文：HealBulletType
+继承 <a href="#org38f1646">子弹类</a> &#x2013; 可以治疗同队方块和单位的子弹.英文：HealBulletType
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -10364,11 +10649,11 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-org524e542" class="outline-4">
-<h4 id="org524e542"><span class="section-number-4">5.1.3</span> 液体子弹</h4>
+<div id="outline-container-org29d6957" class="outline-4">
+<h4 id="org29d6957"><span class="section-number-4">5.1.3</span> 液体子弹</h4>
 <div class="outline-text-4" id="text-5-1-3">
 <p>
-继承 <a href="#orgccf8907">子弹类</a>，英文：LiquidBulletType
+继承 <a href="#org38f1646">子弹类</a>，英文：LiquidBulletType
 </p>
 
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -10396,7 +10681,7 @@ Defaults:
 <td class="org-left">liquid</td>
 <td class="org-left">String</td>
 <td class="org-left">null</td>
-<td class="org-left"><b>[必须]</b> <a href="#org553f7bf">液体</a>的名字</td>
+<td class="org-left"><b>[必须]</b> <a href="#org525e49d">液体</a>的名字</td>
 </tr>
 </tbody>
 </table>
@@ -10464,11 +10749,11 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-org0d74da7" class="outline-4">
-<h4 id="org0d74da7"><span class="section-number-4">5.1.4</span> 质驱子弹</h4>
+<div id="outline-container-org6a4a000" class="outline-4">
+<h4 id="org6a4a000"><span class="section-number-4">5.1.4</span> 质驱子弹</h4>
 <div class="outline-text-4" id="text-5-1-4">
 <p>
-继承 <a href="#orgccf8907">子弹类</a>，英文：MassDriverBolt
+继承 <a href="#org38f1646">子弹类</a>，英文：MassDriverBolt
 </p>
 
 <p>
@@ -10519,8 +10804,8 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-orgc11f9eb" class="outline-4">
-<h4 id="orgc11f9eb"><span class="section-number-4">5.1.5</span> 内建子弹</h4>
+<div id="outline-container-org45e8298" class="outline-4">
+<h4 id="org45e8298"><span class="section-number-4">5.1.5</span> 内建子弹</h4>
 <div class="outline-text-4" id="text-5-1-5">
 <ul class="org-ul">
 <li>炮塔弹:
@@ -10560,9 +10845,24 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-org8b3cc2d" class="outline-3">
-<h3 id="org8b3cc2d"><span class="section-number-3">5.2</span> 基础单位</h3>
+<div id="outline-container-org681e37f" class="outline-3">
+<h3 id="org681e37f"><span class="section-number-3">5.2</span> CacheLayer</h3>
 <div class="outline-text-3" id="text-5-2">
+<p>
+Flags used by for cache render:
+</p>
+<ul class="org-ul">
+<li><code>normal</code> normal layer;</li>
+<li><code>walls</code> walls layer;</li>
+<li><code>water</code> water layer, adding tile water shaders, and giving wave reflections;</li>
+<li><code>tar</code> tar layer, adding tar shaders, making it darker and giving it some bubble reflections;</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orged395ed" class="outline-3">
+<h3 id="orged395ed"><span class="section-number-3">5.3</span> 基础单位</h3>
+<div class="outline-text-3" id="text-5-3">
 <p>
 以下是基础单位类:
 </p>
@@ -10570,22 +10870,19 @@ Defaults:
 <ul class="org-ul">
 <li><code>FlyingUnit</code> &#x2013;飞行单位
 <ul class="org-ul">
-<li><code>Revenant</code> &#x2013; 战机</li>
-<li><code>BaseDrone</code> &#x2013; 基础无人机
-<ul class="org-ul">
-<li><code>BuilderDrone</code> &#x2013; 建筑机</li>
-<li><code>MinerDrone</code> &#x2013; 矿机</li>
-<li><code>RepairDrone</code> &#x2013; 修理机</li>
-</ul></li>
+<li><code>HoverUnit</code></li>
+<li><code>BuilderDrone</code></li>
+<li><code>MinerDrone</code></li>
+<li><code>RepairDrone</code></li>
 </ul></li>
 <li><code>GroundUnit</code> &#x2013; 地面单位</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb203426" class="outline-3">
-<h3 id="orgb203426"><span class="section-number-3">5.3</span> 特效</h3>
-<div class="outline-text-3" id="text-5-3">
+<div id="outline-container-org6f74f92" class="outline-3">
+<h3 id="org6f74f92"><span class="section-number-3">5.4</span> 特效</h3>
+<div class="outline-text-3" id="text-5-4">
 <p>
 你需要输入 <code>文字串</code>. 你不能创建新特效. 这里是内建特效:
 </p>
@@ -10605,7 +10902,7 @@ Defaults:
 <li>~fireSmoke~/火焰烟雾/ ~steam~/蒸汽/ ~fireballsmoke~/火球烟雾/ ~ballfire~/获取/ ~freezing~/冰冻/ ~melting~/融化/ ~wet~/湿水/ ~oily~/沾油/ ~overdriven~/超频/ ~dropItem~/丢物品/ ~shockwave~/冲击波/</li>
 <li>~bigShockwave~/大冲击波/ ~nuclearShockwave~/核冲击波/ ~explosion~/爆炸/ ~blockExplosion~/方块爆炸/
 ~blockExplosionSmoke~/方块爆炸烟雾/ ~shootSmall~/小型射击/ ~shootHeal~/射击治疗弹/ ~shootSmallSmoke~/小型射击烟雾/ ~shootBig~/大型射击/ ~shootBig2~/大型射击2/ ~shootBigSmoke~/大型射击烟雾/</li>
-<li>~shootBigSmoke2~/大型射击烟雾2/ ~shootSmallFlame~/学习射击火焰/ ~shootPyraFlame~/硫射击火焰/ ~shootLiquid~/射击液体/ ~shellEjectSmall~/小型喷射/ ~shellEjectMedium~/中型喷射/</li>
+<li>~shootBigSmoke2~/大型射击烟雾2/ ~shootSmallFlame~/小型射击火焰/ ~shootPyraFlame~/硫射击火焰/ ~shootLiquid~/射击液体/ ~shellEjectSmall~/小型喷射/ ~shellEjectMedium~/中型喷射/</li>
 <li>~shellEjectBig~/大型喷射/ ~lancerLaserShoot~/蓝瑟射击/ ~lancerLaserShootSmoke~/蓝瑟射击烟雾/ ~lancerLaserCharge~/蓝瑟充能/
 ~lancerLaserChargeBegin~/蓝瑟开始充能/ ~lightningCharge~/电弧充能/ ~lightningShoot~/电弧射击/</li>
 <li>~unitSpawn~/单位生成/ ~spawnShockwave~/生成冲击波/ ~magmasmoke~/岩浆烟雾/ ~impactShockwave~/冲击堆冲击波/
@@ -10613,23 +10910,27 @@ Defaults:
 </ul>
 </div>
 </div>
-<div id="outline-container-org80a4592" class="outline-3">
-<h3 id="org80a4592"><span class="section-number-3">5.4</span> 瞄准优先度</h3>
-<div class="outline-text-3" id="text-5-4">
-<ul class="org-ul">
+<div id="outline-container-org6aaa2f6" class="outline-3">
+<h3 id="org6aaa2f6"><span class="section-number-3">5.5</span> 瞄准优先度</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+A higher ordinal means a higher priority. Higher priority blocks will always get targeted over those of lower priority, regardless of distance.
+</p>
+
+<ol class="org-ol">
 <li><code>base</code></li>
 <li><code>turret</code></li>
-</ul>
+</ol>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-org132afd8" class="outline-2">
-<h2 id="org132afd8"><span class="section-number-2">6</span> 元素</h2>
+<div id="outline-container-orgd46c2d7" class="outline-2">
+<h2 id="orgd46c2d7"><span class="section-number-2">6</span> 元素</h2>
 <div class="outline-text-2" id="text-6">
 <p>
-元素是某个参数的特征,有几个类引用它,用于 <a href="#org8ac998d">区域</a> 地图设置中的元素设定. 
+元素是某个参数的特征,有几个类引用它,用于 <a href="#org310718a">区域</a> 地图设置中的元素设定. 
 </p>
 
 <p>
@@ -10660,7 +10961,7 @@ Defaults:
 <tr>
 <td class="org-left">zone</td>
 <td class="org-left">String</td>
-<td class="org-left">目标 <a href="#org8ac998d">区域</a> 名字</td>
+<td class="org-left">目标 <a href="#org310718a">区域</a> 名字</td>
 </tr>
 
 <tr>
@@ -10695,7 +10996,7 @@ Defaults:
 <tr>
 <td class="org-left">zone</td>
 <td class="org-left">String</td>
-<td class="org-left">目标 <a href="#org8ac998d">区域</a> 名字</td>
+<td class="org-left">目标 <a href="#org310718a">区域</a> 名字</td>
 </tr>
 </tbody>
 </table></li>
@@ -10724,7 +11025,7 @@ Defaults:
 <tr>
 <td class="org-left">block</td>
 <td class="org-left">String</td>
-<td class="org-left">目标 <a href="#orgdf716e1">区域</a> 名字</td>
+<td class="org-left">目标 <a href="#orge65d2dd">区域</a> 名字</td>
 </tr>
 </tbody>
 </table></li>
@@ -10732,13 +11033,13 @@ Defaults:
 </div>
 </div>
 
-<div id="outline-container-org1cef0c5" class="outline-2">
-<h2 id="org1cef0c5"><span class="section-number-2">7</span> 其他</h2>
+<div id="outline-container-orgf98ab56" class="outline-2">
+<h2 id="orgf98ab56"><span class="section-number-2">7</span> 其他</h2>
 <div class="outline-text-2" id="text-7">
 </div>
 
-<div id="outline-container-orgf0aa0fe" class="outline-3">
-<h3 id="orgf0aa0fe"><span class="section-number-3">7.1</span> Mindustry源码结构</h3>
+<div id="outline-container-orge8d1666" class="outline-3">
+<h3 id="orge8d1666"><span class="section-number-3">7.1</span> Mindustry源码结构</h3>
 <div class="outline-text-3" id="text-7-1">
 <div class="org-src-container">
 <pre class="src src-fundamental">core/src/io/anuke/mindustry/
@@ -11233,7 +11534,7 @@ Defaults:
 <div id="postamble" class="status">
 <p class="date">Date: 2019-10-31</p>
 <p class="author">Author: Simon Woodbury-Forget Translater:PlasGensokyo</p>
-<p class="date">Created: 2019-11-29 周五 19:33</p>
+<p class="date">Created: 2020-01-30 周四 10:36</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
